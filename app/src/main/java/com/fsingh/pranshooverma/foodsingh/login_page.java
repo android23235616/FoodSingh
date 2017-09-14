@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class login_page extends AppCompatActivity {
-EditText mobile,password;
+    EditText mobile,password;
     Button login,new_user;
     ProgressDialog progress;
     @Override
@@ -43,18 +43,15 @@ EditText mobile,password;
         setContentView(R.layout.activity_login_page);
 
         initialize();
+
         setTypeFace();
 
         if(check_if_logged_in())
         {
-
             Intent as1=new Intent(getApplicationContext(),menu.class);
             startActivity(as1);
             finish();
         }
-        else
-        {
-
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -62,9 +59,14 @@ EditText mobile,password;
             public void onClick(View view) {
                 String num=mobile.getText().toString();
                 String pass=password.getText().toString();
+
                 if(checking_net_permission())
                 {
-                    check_login_details(num,pass);
+                    if(num.length()==12 & pass.length()>=4)
+                    {
+                        check_login_details(num,pass);
+                    }
+
                 }
                 else
                 {
@@ -81,7 +83,7 @@ EditText mobile,password;
                 finish();
             }
         });
-        }
+
     }
 
     private void setTypeFace() {
@@ -96,13 +98,13 @@ EditText mobile,password;
     private Boolean check_if_logged_in() {
         SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
         String pass=as.getString("password","123");
-        if(!(pass.equals("123")))
+        if(pass.equals("123"))
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
