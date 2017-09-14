@@ -8,14 +8,17 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.SubMenu;
 import android.view.View;
@@ -27,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +47,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
 
     ProgressDialog progress;
     RecyclerView recylerView;
@@ -52,7 +57,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     List<String> categories=new ArrayList<>();
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
-
+    localdatabase local;
+    ImageButton next, back;
+    pagerAdapter pageradater;
+    ViewPager pager;
+    AppBarLayout appBarLayout;
+    public static int width;
     public static TextView cartitemcount1;
 
     @Override
@@ -67,14 +77,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -109,17 +112,40 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         //here the coding part is:
 
         initialize();
-
+        next = (ImageButton) findViewById(R.id.right_arrow);
+        back = (ImageButton) findViewById(R.id.left_arrow);
+        width = getScreenWidth();
         if(checking_net_permission())
         {
             getting_categories();
         }
         else {
             Display("No Internet Connection...");
-        }
 
+        }
+        local = new localdatabase();
+        pageradater = new pagerAdapter(local);
+        pager.setAdapter(pageradater);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = pager.getCurrentItem() + 1;
+                pager.setCurrentItem(current);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = pager.getCurrentItem() - 1;
+                if (current >= 0)
+                    pager.setCurrentItem(current);
+            }
+        });
 
     }
+
+
 
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
@@ -129,11 +155,33 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void initialize() {
+        pager = (ViewPager) findViewById(R.id.view_pager);
+        appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         progress=new ProgressDialog(this);
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
         layoutmanager=new GridLayoutManager(this,3);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
+    }
+
+    public int getScreenWidth() {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+        return width;
+    }
+
+    public static int showRandomInteger(int aStart, int aEnd, Random aRandom) {
+        if (aStart > aEnd) {
+            throw new IllegalArgumentException("Start cannot exceed End.");
+        }
+        //get the range, casting to long to avoid overflow problems
+        long range = (long) aEnd - (long) aStart + 1;
+        // compute a fraction of the range, 0 <= frac < range
+        long fraction = (long) (range * aRandom.nextDouble());
+        int randomNumber = (int) (fraction + aStart);
+        return randomNumber;
     }
 
     private void getting_categories() {
@@ -196,12 +244,26 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (position == local.url.length - 1) {
+            next.setVisibility(View.GONE);
+        } else {
+            next.setVisibility(View.VISIBLE);
+        }
 
 
+    }
 
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
-
-
+    }
 
 
 

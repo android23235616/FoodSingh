@@ -9,31 +9,66 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:alpha="0.8"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-
-
+        android:id="@+id/appbar"
+        android:layout_height="270dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:contentScrim="@color/colorPrimaryDark"
+            android:id="@+id/collapsingToolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/view_pager_include"/>
+
+            <android.support.v7.widget.Toolbar
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/abc_action_bar_default_height_material"
+                android:id="@+id/toolbar"
+
+                app:layout_collapseMode="pin">
+                <FrameLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+
+                    <TextView
+                        android:id="@+id/new_location"
+                        android:padding="10dp"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:background="@drawable/shaper_change_location"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:text="Everything is For You."/>
+
+                </FrameLayout>
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="270dp">
+
+
+    </LinearLayout>
+
     <include layout="@layout/content_menu" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
 
-        app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
-        tools:ignore="VectorDrawableCompat" />
 
 </android.support.design.widget.CoordinatorLayout>
