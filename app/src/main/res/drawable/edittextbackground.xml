@@ -9,7 +9,7 @@
 
     <stroke
         android:color="#ffffff"
-        android:width="2dp"
+        android:width="2px"
 
         ></stroke>
 

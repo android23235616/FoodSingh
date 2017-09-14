@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -34,9 +37,13 @@ EditText mobile,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_page);
 
         initialize();
+        setTypeFace();
 
         if(check_if_logged_in())
         {
@@ -75,6 +82,15 @@ EditText mobile,password;
             }
         });
         }
+    }
+
+    private void setTypeFace() {
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        mobile.setTypeface(t);
+        password.setTypeface(t);
+        login.setTypeface(t);
+        new_user.setTypeface(t);
+
     }
 
     private Boolean check_if_logged_in() {
