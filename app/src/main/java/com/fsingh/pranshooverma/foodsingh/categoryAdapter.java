@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,8 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
             img=(ImageView) itemView.findViewById(R.id.img);
             txt=(TextView) itemView.findViewById(R.id.text_char_name);
             cardView=(CardView) itemView.findViewById(R.id.card_view);
+            Typeface t = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/android.ttf");
+            txt.setTypeface(t);
         }
     }
     @Override
@@ -58,8 +61,12 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         img_cat=(ImageView) holder.itemView.findViewById(R.id.img);
         String path=images_data.get(position);
         String name=categories.get(position);
+        name = name.toLowerCase();
+        String new_name = name.charAt(0)+"";
+        new_name = new_name.toUpperCase();
+        new_name+=name.substring(1,name.length()-1);
         Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
-        holder.txt.setText(name);
+        holder.txt.setText(new_name);
 
         img_cat.setOnClickListener(new View.OnClickListener() {
             @Override

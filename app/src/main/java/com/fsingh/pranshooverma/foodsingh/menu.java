@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +14,10 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.TypedValue;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -59,7 +63,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         setContentView(R.layout.activity_menu);
 
 //FOR NAVIGATION DRAWER
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,6 +86,23 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getBackground().setAlpha(122);
 
+        Menu m = navigationView.getMenu();
+        for (int i=0;i<m.size();i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu!=null && subMenu.size() >0 ) {
+                for (int j=0; j <subMenu.size();j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CODING  CODING CODING CODING
@@ -100,10 +121,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
+
     private void initialize() {
         progress=new ProgressDialog(this);
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
-        layoutmanager=new GridLayoutManager(this,1);
+        layoutmanager=new GridLayoutManager(this,3);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
     }
@@ -116,10 +144,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         StringRequest as=new StringRequest(Request.Method.POST, constants.get_categories, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               if(progress.isShowing())
-               {
-                   progress.dismiss();
-               }
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
                 try {
                     JSONArray a=new JSONArray(response);
                     for(int i=0;i<a.length();i++)
@@ -130,7 +158,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                         categories.add(nm);
                         images.add(img);
                     }
-                   send_to_adapter();
+                    send_to_adapter();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,7 +192,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
-        recylerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(5),true));
+        recylerView.addItemDecoration(new GridSpacingItemDecoration(1,dpToPx(1),true));
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
 
@@ -177,7 +205,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //writing function for Categories
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -276,9 +304,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-    //    if (id == R.id.action_settings) {
-      //      return true;
-       // }
+        //    if (id == R.id.action_settings) {
+        //      return true;
+        // }
 
         return super.onOptionsItemSelected(item);
     }
