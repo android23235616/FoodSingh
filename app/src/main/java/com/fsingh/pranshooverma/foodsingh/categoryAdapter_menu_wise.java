@@ -1,6 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -46,6 +47,10 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
             pl=(ImageView) itemView.findViewById(R.id.plus);
             mi=(ImageView) itemView.findViewById(R.id.minus);
+            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
+            diname.setTypeface(t);
+            diprice.setTypeface(t);
+            item_quantity.setTypeface(t);
         }
     }
 

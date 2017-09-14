@@ -64,7 +64,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         name = name.toLowerCase();
         String new_name = name.charAt(0)+"";
         new_name = new_name.toUpperCase();
-        new_name+=name.substring(1,name.length()-1);
+        new_name+=name.substring(1,name.length());
         Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
         holder.txt.setText(new_name);
 

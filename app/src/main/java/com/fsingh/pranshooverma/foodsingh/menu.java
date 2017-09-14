@@ -159,9 +159,19 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         progress=new ProgressDialog(this);
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
-        layoutmanager=new GridLayoutManager(this,3);
+        layoutmanager=new GridLayoutManager(this,2);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
+        setTypeface();
+
+    }
+
+    private void setTypeface(){
+        TextView t1 = (TextView)findViewById(R.id.new_location);
+        TextView t2 = (TextView)findViewById(R.id.attack);
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        t1.setTypeface(t);
+        t2.setTypeface(t);
     }
 
     public int getScreenWidth() {
