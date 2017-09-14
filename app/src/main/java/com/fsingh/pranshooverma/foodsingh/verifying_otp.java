@@ -4,12 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.support.constraint.solver.SolverVariable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,10 +36,13 @@ public class verifying_otp extends AppCompatActivity {
     Button verify;
     EditText otp;
     String pass,mob;
+    TextView t1, t2, t3;
     ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_verifying_otp);
         initialize();
 
@@ -185,5 +193,19 @@ public class verifying_otp extends AppCompatActivity {
         otp=(EditText) findViewById(R.id.otp);
         progress=new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        t1 = (TextView)findViewById(R.id.welcome);
+        t2 = (TextView)findViewById(R.id.Confirmation);
+        t3 = (TextView)findViewById(R.id.textCode);
+        setTypeface();
+    }
+
+    private void setTypeface(){
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        verify.setTypeface(t);
+        otp.setTypeface(t);
+        t1.setTypeface(t);
+        t2.setTypeface(t);
+        t3.setTypeface(t);
+
     }
 }

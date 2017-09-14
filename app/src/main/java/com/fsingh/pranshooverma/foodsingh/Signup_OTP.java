@@ -3,12 +3,17 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 public class Signup_OTP extends AppCompatActivity {
 
@@ -27,7 +33,11 @@ public class Signup_OTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_signup__otp);
+
 
         initialize();
 
@@ -116,11 +126,26 @@ public class Signup_OTP extends AppCompatActivity {
     }
 
     private void initialize() {
+
         signup=(Button)findViewById(R.id.btnSignup);
         loginme=(Button)findViewById(R.id.btnLinkToLoginScreen);
         mobnumber=(EditText)findViewById(R.id.mob);
         password=(EditText)findViewById(R.id.password);
         progress=new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        //Glide.with(this).load(R.drawable.background_image2).into(main_image);
+        setTypeface();
+    }
+
+    private void setTypeface(){
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        signup.setTypeface(t);
+        loginme.setTypeface(t);
+        mobnumber.setTypeface(t);
+        password.setTypeface(t);
+        password.setTypeface(t);
+        TextView welcome = (TextView)findViewById(R.id.welcome);
+        welcome.setTypeface(t);
     }
 }

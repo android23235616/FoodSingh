@@ -39,7 +39,7 @@
             android:textStyle="normal"
             android:fontFamily="serif"
             android:textColor="#ffffff"
-            android:text="Welcome To FoodSingh"/>
+            android:text="Login To FoodSingh"/>
     </FrameLayout>
     <LinearLayout
         android:layout_marginTop="90dp"
@@ -111,7 +111,7 @@
             android:textSize="10dp"
             android:id="@+id/btnlogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="40dip"
             android:background="@drawable/buttonbackground"
             android:text="LogIn"
