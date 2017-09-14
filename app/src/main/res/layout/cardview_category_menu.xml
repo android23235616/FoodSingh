@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="90dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:elevation="3dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:id="@+id/dish_name"
+                android:text="Barbeque chicken"
+                android:gravity="center"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:id="@+id/dish_price"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:layout_below="@+id/dish_name"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/minus"
+                android:id="@+id/minus"
+                android:layout_marginTop="46dp"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/plus"
+                android:id="@+id/plus"
+                android:layout_marginBottom="14dp"
+                android:foregroundGravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/minus"
+                android:layout_marginStart="28dp" />
+
+            <TextView
+                android:id="@+id/item_quantity"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/plus"
+                android:layout_marginStart="24dp"
+                android:layout_toEndOf="@+id/plus"
+                android:text="0"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_marginBottom="5dp"
+                />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

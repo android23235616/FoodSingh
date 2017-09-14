@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:elevation="3dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PAYMENT SUMMARY"
+                android:textSize="25dp"
+                android:id="@+id/one"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                 android:textSize="25dp"
+                android:text="Subtotal"
+                android:layout_margin="7dp"
+                android:layout_below="@+id/one"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/total_amount"
+                android:textSize="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_alignEnd="@+id/one"
+                android:layout_marginEnd="23dp"
+                android:text="Rs.0" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/one"
+                android:layout_below="@+id/textView2"
+
+                android:textSize="25dp"
+                android:layout_marginTop="23dp"
+                android:text="Shipping" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView4"
+                android:layout_alignEnd="@+id/total_amount"
+                android:text="FREE"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textSize="25dp"
+                />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView4"
+                android:layout_below="@+id/textView5"
+                android:layout_marginTop="26dp"
+                android:text="Total"
+                android:textSize="25dp"/>
+
+            <TextView
+                android:id="@+id/final_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/total_amount"
+                android:layout_alignTop="@+id/textView7"
+                android:text="Rs.0"
+                android:textSize="25dp"
+                />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginTop="60dp"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="Enter Your Delivery Address"
+        android:textSize="18dp"
+        android:id="@+id/delivery_address"
+        android:textStyle="normal"
+        />
+</ScrollView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/offer" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click this to have 10 % disount on the Total amount"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toEndOf="@+id/imageView2" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/final_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Button" />
+
+</LinearLayout>
