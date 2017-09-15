@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -109,7 +110,18 @@ public class order_history extends AppCompatActivity
         }
         else
         {
-            Display("No Internet Connection");
+            setContentView(R.layout.no_internet);
+            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+            TextView calm = (TextView)findViewById(R.id.calm);
+            final TextView retry = (TextView)findViewById(R.id.menu);
+            calm.setTypeface(tf);
+            retry.setTypeface(tf);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
         }
 
         Menu m = navigationView.getMenu();

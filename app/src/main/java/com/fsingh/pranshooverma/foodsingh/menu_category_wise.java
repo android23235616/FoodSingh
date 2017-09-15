@@ -181,7 +181,18 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
                 {
                     progress.dismiss();
                 }
-                Display("Some error occured may be due to bad Internet Connection");
+                setContentView(R.layout.no_internet);
+                Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+                TextView calm = (TextView)findViewById(R.id.calm);
+                final TextView retry = (TextView)findViewById(R.id.menu);
+                calm.setTypeface(tf);
+                retry.setTypeface(tf);
+                retry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
             }
         })
         {

@@ -123,7 +123,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             getting_categories();
         }
         else {
-            Display("No Internet Connection...");
+            setContentView(R.layout.no_internet);
+            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+            TextView calm = (TextView)findViewById(R.id.calm);
+            final TextView retry = (TextView)findViewById(R.id.menu);
+            calm.setTypeface(tf);
+            retry.setTypeface(tf);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
 
         }
         local = new localdatabase();
