@@ -270,7 +270,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> maps=new HashMap<>();
                 maps.put("item",local_list.toString());
-                maps.put("amount", String.valueOf(final_am));
+                maps.put("amount", String.valueOf(after_discount));
                 maps.put("mobile",mobile_number);
                 maps.put("address",addy);
 
