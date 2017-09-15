@@ -12,6 +12,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.SubMenu;
@@ -33,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -62,6 +65,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
     int counter=0,ii=0;
     int discount_amount=0;
+    String CouponText="";
 
     RelativeLayout relativeLayout_coupon;
 
@@ -141,19 +145,32 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                     if (counter % 2 == 1) {
                         if (final_am != 0 & discount_amount != 0) {
                             Snackbar.make(view, "Coupon applied.....", Snackbar.LENGTH_SHORT).show();
-                            final_amount.setText(String.valueOf(final_am - (((discount_amount) * final_am) / 100)));
+                            String mainString = String.valueOf(final_am - (((discount_amount) * final_am) / 100));
+                            final_amount.setText(mainString);
+                            multiLineStrikeThrough(textCoupon, CouponText);
+
                         } else {
                             Snackbar.make(view, "Cant apply the coupon.....", Snackbar.LENGTH_SHORT).show();
                         }
                     } else {
                         Snackbar.make(view, "Coupon removed.....", Snackbar.LENGTH_SHORT).show();
                         final_amount.setText(String.valueOf(final_am));
+                        multiLineStrikeThrough(textCoupon, "");
                     }
 
                 }
             });
 
         }
+    }
+
+    private void multiLineStrikeThrough(TextView description, String textContent){
+
+        description.setText(textContent, TextView.BufferType.SPANNABLE);
+        Spannable spannable = (Spannable)description.getText();
+        spannable.setSpan(new StrikethroughSpan(), 0, textContent.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        if(textContent.equals(""))
+            description.setText(CouponText);
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -198,10 +215,12 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                     if(dis.equals("0"))
                     {
                         textCoupon.setText("No coupon to reedem");
+
                         textCoupon.setGravity(Gravity.CENTER);
                     }
                     else
                     {
+                        CouponText="Click this to redeem "+dis+" % discount on final amount";
                         textCoupon.setText("Click this to redeem "+dis+" % discount on final amount");
 
                     }
@@ -267,6 +286,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             re.add(str);
             ii++;
         }
+        str.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     }
 
@@ -287,6 +310,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         TextView t1 = (TextView)findViewById(R.id.textView2);
         TextView t2 = (TextView)findViewById(R.id.textView4);
         TextView t3 = (TextView)findViewById(R.id.textView7);
+        TextView couponText = (TextView)findViewById(R.id.coupontext);
         total_amount=(TextView)findViewById(R.id.total_amount);
         final_amount=(TextView)findViewById(R.id.final_amount);
         address=(EditText) findViewById(R.id.delivery_address);
@@ -310,6 +334,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         t2.setTypeface(t);
         t3.setTypeface(t);
         textCoupon.setTypeface(t);
+        couponText.setTypeface(t);
 
 
     }

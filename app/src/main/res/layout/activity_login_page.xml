@@ -4,33 +4,30 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background"
+    android:background="@drawable/background_another"
     android:gravity="center"
     android:orientation="vertical"
 
     tools:context="com.fsingh.pranshooverma.foodsingh.login_page">
+
+
 
     <FrameLayout
 
         android:background="#673AB7"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+
 <ImageView
     android:alpha="0.8"
     android:scaleType="centerCrop"
-    android:src="@drawable/background"
+    android:src="@drawable/background_another"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
-   <ImageView
-       android:layout_gravity="center_horizontal"
-       android:layout_marginTop="35dp"
 
-       android:layout_width="match_parent"
-       android:layout_marginLeft="5dp"
-       android:layout_height="200dp"
-       android:background="@drawable/signin"/>
         <TextView
+            android:id="@+id/logintofoodsingh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
@@ -40,6 +37,14 @@
             android:fontFamily="serif"
             android:textColor="#ffffff"
             android:text="Login To FoodSingh"/>
+        <ImageView
+            android:layout_gravity="center_horizontal"
+          android:layout_marginTop="40dp"
+
+            android:layout_width="96dp"
+            android:layout_marginLeft="2dp"
+            android:layout_height="96dp"
+            android:background="@drawable/logo7"/>
     </FrameLayout>
     <LinearLayout
         android:layout_marginTop="90dp"
