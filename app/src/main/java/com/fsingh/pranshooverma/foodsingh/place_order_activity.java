@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -63,19 +66,16 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_place_order_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(t);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -263,6 +263,9 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     }
 
     private void initialize() {
+        TextView t1 = (TextView)findViewById(R.id.textView2);
+        TextView t2 = (TextView)findViewById(R.id.textView4);
+        TextView t3 = (TextView)findViewById(R.id.textView7);
         total_amount=(TextView)findViewById(R.id.total_amount);
         final_amount=(TextView)findViewById(R.id.final_amount);
         address=(EditText) findViewById(R.id.delivery_address);
@@ -277,6 +280,16 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         }
         relativeLayout_coupon=(RelativeLayout)findViewById(R.id.relative_layout_coupon);
         textCoupon=(TextView) findViewById(R.id.textView_coupon);
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        total_amount.setTypeface(t);
+        final_amount.setTypeface(t);
+        address.setTypeface(t);
+        finally_place_order.setTypeface(t);
+        t1.setTypeface(t);
+        t2.setTypeface(t);
+        t3.setTypeface(t);
+        textCoupon.setTypeface(t);
+
 
     }
 
