@@ -116,7 +116,9 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/relative_layout_coupon"
+            >
 
         <ImageView
             android:id="@+id/imageView2"
@@ -127,10 +129,10 @@
             app:srcCompat="@drawable/offer" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/textView_coupon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click this to have 10 % disount on the Total amount"
+            android:text=""
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_alignTop="@+id/imageView2"

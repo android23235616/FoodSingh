@@ -8,7 +8,9 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -40,13 +46,18 @@ import java.util.Map;
 
 public class place_order_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView total_amount,final_amount;
+    TextView total_amount,final_amount,textCoupon;
     EditText address;
     Button finally_place_order;
     List<String> local_list=new ArrayList<>();
     int final_am=0;
     String mobile_number;
     ProgressDialog progress;
+
+    int counter=0;
+    int discount_amount=0;
+
+    RelativeLayout relativeLayout_coupon;
 
     SharedPreferences shared;
     @Override
@@ -81,6 +92,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
         gettin_amount();
 
+        coupon_from_data();
+
 
         finally_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +119,96 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 }
             }
         });
+
+        relativeLayout_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                counter++;
+
+                if(counter%2==1)
+                {
+                    if(final_am!=0 & discount_amount!=0){
+                        Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
+                    final_amount.setText(String.valueOf(final_am-(((discount_amount)*final_am)/100)));
+                    }
+                    else
+                    {
+                        Snackbar.make(view,"Cant apply the coupon.....",Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+
+                else {
+                    Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
+                    final_amount.setText(String.valueOf(final_am));
+                }
+
+            }
+        });
+
+    }
+
+    private void coupon_from_data() {
+        if(checking_net_permission())
+        {
+            getting_coupon();
+        }
+        else
+        {
+            Display("No internet Connection");
+        }
+    }
+
+    private void getting_coupon() {
+
+        progress.setMessage("Fetching coupon code....");
+
+        if(!progress.isShowing())
+        {
+         progress.show();
+        }
+
+        StringRequest str=new StringRequest(Request.Method.POST, constants.discount_coupon, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                try {
+                    JSONObject obj=new JSONObject(response);
+                    String dis=obj.getString("discount");
+                    discount_amount= Integer.parseInt(dis);
+                    if(dis.equals("0"))
+                    {
+                        textCoupon.setText("No coupon to reedem");
+                        textCoupon.setGravity(Gravity.CENTER);
+                    }
+                    else
+                    {
+                        textCoupon.setText("Click this to redeem "+dis+" % discount on final amount");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue r=Volley.newRequestQueue(this);
+        r.add(str);
+
+    }
+
+
+    private void  Display(String s)
+    {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void send_to_deb(final String addy) {
@@ -172,7 +275,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             Toast.makeText(this, "Number is missing,kindly logout and log in again", Toast.LENGTH_SHORT).show();
             finish();
         }
-
+        relativeLayout_coupon=(RelativeLayout)findViewById(R.id.relative_layout_coupon);
+        textCoupon=(TextView) findViewById(R.id.textView_coupon);
 
     }
 
