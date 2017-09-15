@@ -28,9 +28,11 @@
         android:id="@+id/place_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="PLACE YOU ORDER"
-        android:layout_margin="5dp"/>
+        />
 
 </RelativeLayout>

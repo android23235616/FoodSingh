@@ -1,6 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,9 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
             diname=(TextView) itemView.findViewById(R.id.item_name);
             diprice=(TextView) itemView.findViewById(R.id.item_price);
             del=(ImageView) itemView.findViewById(R.id.delete);
+            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
+            diname.setTypeface(t);
+            diprice.setTypeface(t);
 
         }
     }

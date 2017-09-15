@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,15 +39,6 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         ///////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -85,8 +77,9 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void initialize() {
-
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         place_order=(Button)findViewById(R.id.place_order);
+        place_order.setTypeface(t);
 
         recycler=(RecyclerView)findViewById(R.id.recyclerView_cart);
         layout=new GridLayoutManager(this,1);

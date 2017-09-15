@@ -160,7 +160,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
-        layoutmanager=new GridLayoutManager(this,2);
+        layoutmanager=new GridLayoutManager(this,3);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
         setTypeface();

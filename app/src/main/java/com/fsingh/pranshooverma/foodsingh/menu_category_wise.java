@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,11 +56,12 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     ProgressDialog progress;
 
-    public static TextView cartitemcount;
+    public static TextView cartitemcount, toolbarText;
 
     RecyclerView recyclerView;
     List<String> dish_name=new ArrayList<>();
     List<String> dish_price=new ArrayList<>();
+
     RecyclerView.LayoutManager layoutManager;
     categoryAdapter_menu_wise adapter_menu_wise;
 
@@ -66,6 +70,9 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
 
        /////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +183,9 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         layoutManager=new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(true);
+        toolbarText = (TextView)findViewById(R.id.toolbarText);
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        toolbarText.setTypeface(t);
 
     }
 
