@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -97,6 +98,8 @@ public class login_page extends AppCompatActivity {
         password.setTypeface(t);
         login.setTypeface(t);
         new_user.setTypeface(t);
+        TextView loginpage = (TextView)findViewById(R.id.logintofoodsingh);
+        loginpage.setTypeface(t);
 
     }
 
