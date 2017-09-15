@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -69,6 +70,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     categoryAdapter_menu_wise adapter_menu_wise;
 
     String category=null;
+
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +213,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         toolbarText.setTypeface(t);
 
+        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
     }
 
     private void send_to_adapter()
@@ -371,6 +375,18 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             startActivity(new Intent(getApplicationContext(),order_history.class));
 
         } else if (id == R.id.SignOut) {
+
+
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
 
         }
 

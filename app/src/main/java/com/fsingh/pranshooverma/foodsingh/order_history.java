@@ -67,6 +67,8 @@ public class order_history extends AppCompatActivity
 
     String number_for_history="1";
 
+    SharedPreferences shared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,6 +222,7 @@ public class order_history extends AppCompatActivity
         recylerview.setAdapter(mAdapter);
         recylerview.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recylerview.setItemAnimator(new DefaultItemAnimator());
+        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
     }
 
     private Boolean checking_net_permission() {
@@ -356,6 +359,16 @@ public class order_history extends AppCompatActivity
         } else if (id == R.id.orders) {
 
         } else if (id == R.id.SignOut) {
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

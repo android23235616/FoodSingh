@@ -139,7 +139,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 {
                     if(final_am!=0 & discount_amount!=0){
                         Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
-                    final_amount.setText(String.valueOf(final_am-(((discount_amount)*final_am)/100)));
+                        final_am=final_am-(((discount_amount)*final_am)/100);
+                    final_amount.setText(String.valueOf(final_am));
                     }
                     else
                     {
@@ -149,6 +150,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
                 else {
                     Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
+                    final_am=final_am+(((discount_amount)*final_am)/100);
                     final_amount.setText(String.valueOf(final_am));
                 }
 
@@ -207,7 +209,12 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Toast.makeText(place_order_activity.this, "Some error occured may be due to bad internet connection", Toast.LENGTH_SHORT).show();
+                discount_amount=0;
             }
         });
         RequestQueue r=Volley.newRequestQueue(this);
@@ -373,6 +380,16 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             startActivity(new Intent(getApplicationContext(),order_history.class));
         } else if (id == R.id.SignOut) {
 
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
