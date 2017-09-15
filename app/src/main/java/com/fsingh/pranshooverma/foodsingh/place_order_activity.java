@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -57,7 +60,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     String mobile_number;
     ProgressDialog progress;
 
-    int counter=0;
+    int counter=0,ii=0;
     int discount_amount=0;
 
     RelativeLayout relativeLayout_coupon;
@@ -74,7 +77,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolbar);
 
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+        TextView toolbarText = (TextView) findViewById(R.id.toolbarText);
         toolbarText.setTypeface(t);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,56 +97,70 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
         coupon_from_data();
 
+        Menu m = navigationView.getMenu();
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
 
-        finally_place_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(checking_net_permission())
-                {
-                    if(final_am==0)
-                    {
-                        Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        String add=address.getText().toString();
-
-                        send_to_deb(add);
-
-                    }
-
-                }
-                else
-                {
-                    Toast.makeText(place_order_activity.this, "you dont have net connection...", Toast.LENGTH_SHORT).show();
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
                 }
             }
-        });
 
-        relativeLayout_coupon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                counter++;
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
 
-                if(counter%2==1)
-                {
-                    if(final_am!=0 & discount_amount!=0){
-                        Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
-                    final_amount.setText(String.valueOf(final_am-(((discount_amount)*final_am)/100)));
-                    }
-                    else
-                    {
-                        Snackbar.make(view,"Cant apply the coupon.....",Snackbar.LENGTH_SHORT).show();
+
+            finally_place_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (checking_net_permission()) {
+                        if (final_am == 0) {
+                            Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String add = address.getText().toString();
+                            ii=0;
+                            send_to_deb(add);
+
+                        }
+
+                    } else {
+                        Toast.makeText(place_order_activity.this, "you dont have net connection...", Toast.LENGTH_SHORT).show();
                     }
                 }
+            });
 
-                else {
-                    Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
-                    final_amount.setText(String.valueOf(final_am));
+            relativeLayout_coupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    counter++;
+
+                    if (counter % 2 == 1) {
+                        if (final_am != 0 & discount_amount != 0) {
+                            Snackbar.make(view, "Coupon applied.....", Snackbar.LENGTH_SHORT).show();
+                            final_amount.setText(String.valueOf(final_am - (((discount_amount) * final_am) / 100)));
+                        } else {
+                            Snackbar.make(view, "Cant apply the coupon.....", Snackbar.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Snackbar.make(view, "Coupon removed.....", Snackbar.LENGTH_SHORT).show();
+                        final_amount.setText(String.valueOf(final_am));
+                    }
+
                 }
+            });
 
-            }
-        });
+        }
+    }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
 
     }
 
@@ -246,7 +263,11 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             }
         };
         RequestQueue re= Volley.newRequestQueue(this);
-        re.add(str);
+        if(ii==0) {
+            re.add(str);
+            ii++;
+        }
+
     }
 
     private void gettin_amount() {

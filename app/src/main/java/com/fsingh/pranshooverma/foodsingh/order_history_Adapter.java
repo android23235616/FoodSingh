@@ -1,6 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     List<String> date=new ArrayList<>();
     List<String> amount=new ArrayList<>();
     List<String> address=new ArrayList<>();
+    int counter=0;
     List<String> orders=new ArrayList<>();
 
     public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders) {
@@ -33,16 +35,23 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView date_text,amount_text,orders_text,address_text;
+        TextView date_text,amount_text,orders_text,address_text,order_qt;
 
         public ViewHolder(View itemView)
         {
             super(itemView);
 
-            date_text=(TextView) itemView.findViewById(R.id.textview_date);
+            date_text=(TextView) itemView.findViewById(R.id.date);
+            order_qt=(TextView) itemView.findViewById(R.id.item_quantity);
             amount_text=(TextView) itemView.findViewById(R.id.textView_amount);
             orders_text=(TextView) itemView.findViewById(R.id.textview_scroll_items);
             address_text=(TextView) itemView.findViewById(R.id.textview_scroll_address);
+            Typeface t = Typeface.createFromAsset(date_text.getContext().getAssets(), "fonts/android.ttf");
+            date_text.setTypeface(t);
+            amount_text.setTypeface(t);
+            orders_text.setTypeface(t);
+            order_qt.setTypeface(t);
+            address_text.setTypeface(t);
 
         }
     }
@@ -57,15 +66,16 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        String d=date.get(position);
-        String a=amount.get(position);
-        String o=orders.get(position);
-        String add=address.get(position);
+        String d=date.get(holder.getAdapterPosition());
+        String a=amount.get(holder.getAdapterPosition());
+        String o=orders.get(holder.getAdapterPosition());
+        String add=address.get(holder.getAdapterPosition());
 
         holder.date_text.setText(d);
         holder.amount_text.setText(a);
         holder.orders_text.setText(o);
         holder.address_text.setText(add);
+        holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
 
 
     }
