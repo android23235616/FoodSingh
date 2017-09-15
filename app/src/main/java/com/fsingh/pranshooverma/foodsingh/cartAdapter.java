@@ -80,7 +80,7 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                 {
                     constants.item_quant_deb.set(index, String.valueOf(prev_value-1));
                 }
-                Toast.makeText(mContext, constants.item_name_deb.toString() + "\n" + constants.item_quant_deb, Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(mContext, constants.item_name_deb.toString() + "\n" + constants.item_quant_deb, Toast.LENGTH_SHORT).show();
 
                 constants.items_name.remove(item_name.get(position));
                 constants.items_price.remove(item_price.get(position));

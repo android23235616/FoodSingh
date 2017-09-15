@@ -59,6 +59,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
     int counter=0;
     int discount_amount=0;
+    int after_discount=0;
+
 
     RelativeLayout relativeLayout_coupon;
 
@@ -94,6 +96,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
         coupon_from_data();
 
+        after_discount=final_am;
 
         finally_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,8 +142,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 {
                     if(final_am!=0 & discount_amount!=0){
                         Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
-                        final_am=final_am-(((discount_amount)*final_am)/100);
-                    final_amount.setText(String.valueOf(final_am));
+                        after_discount=final_am-(((discount_amount)*final_am)/100);
+                        final_amount.setText(String.valueOf(after_discount));
                     }
                     else
                     {
@@ -150,8 +153,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
                 else {
                     Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
-                    final_am=final_am+(((discount_amount)*final_am)/100);
                     final_amount.setText(String.valueOf(final_am));
+                    after_discount=final_am;
                 }
 
             }
