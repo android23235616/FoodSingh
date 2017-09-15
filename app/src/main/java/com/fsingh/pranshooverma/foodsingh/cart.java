@@ -21,7 +21,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class cart extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,13 +32,20 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView recycler;
     RecyclerView.LayoutManager layout;
     cartAdapter mAdapter;
-
+    Toolbar toolbar;
     Button place_order;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cart);
 
+
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(t);
         ///////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
