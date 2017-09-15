@@ -76,7 +76,20 @@ public class login_page extends AppCompatActivity {
                 }
                 else
                 {
-                    Display("No internet connection,kindly have it to proceed");
+                   // Display("No internet connection,kindly have it to proceed");
+                    setContentView(R.layout.no_internet);
+                    Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+                    TextView calm = (TextView)findViewById(R.id.calm);
+                    final TextView retry = (TextView)findViewById(R.id.menu);
+                    calm.setTypeface(tf);
+                    retry.setTypeface(tf);
+                    retry.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recreate();
+                        }
+                    });
+
                 }
             }
         });

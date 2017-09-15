@@ -56,7 +56,18 @@ public class verifying_otp extends AppCompatActivity {
                     verify_otp(mob,otp_input);
                 }
                 else {
-                    Display("No Internet conneciton ,kindly have the proper connection");
+                    setContentView(R.layout.no_internet);
+                    Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+                    TextView calm = (TextView)findViewById(R.id.calm);
+                    final TextView retry = (TextView)findViewById(R.id.menu);
+                    calm.setTypeface(tf);
+                    retry.setTypeface(tf);
+                    retry.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recreate();
+                        }
+                    });
                 }
 
             }

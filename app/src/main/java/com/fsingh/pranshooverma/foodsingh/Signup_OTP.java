@@ -57,7 +57,18 @@ public class Signup_OTP extends AppCompatActivity {
                     }
                     else
                     {
-                        Display("You dont have internet permission ,kindly have the Internet Connection to proceed");
+                        setContentView(R.layout.no_internet);
+                        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+                        TextView calm = (TextView)findViewById(R.id.calm);
+                        final TextView retry = (TextView)findViewById(R.id.menu);
+                        calm.setTypeface(tf);
+                        retry.setTypeface(tf);
+                        retry.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                recreate();
+                            }
+                        });
                     }
 
                 }
