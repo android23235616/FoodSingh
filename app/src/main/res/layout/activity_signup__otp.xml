@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
             android:background="@drawable/edittextbackground"
-            android:hint="Mobile Number"
+            android:hint="10 Digit Mobile Number"
             android:textSize="15dp"
             android:gravity="center"
             android:inputType="phone"

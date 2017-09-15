@@ -1,6 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -37,6 +38,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     cartAdapter mAdapter;
     Toolbar toolbar;
     Button place_order;
+    SharedPreferences shared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +127,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         layout=new GridLayoutManager(this,1);
         recycler.setLayoutManager(layout);
         recycler.setNestedScrollingEnabled(true);
+        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
     }
 
     private void send_to_adapter()
@@ -238,17 +242,27 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.menu) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(getApplicationContext(),menu.class));
+        } else if (id == R.id.cart) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.orders) {
+            startActivity(new Intent(getApplicationContext(),order_history.class));
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.SignOut) {
 
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
 
         }
 

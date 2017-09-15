@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -65,6 +66,8 @@ public class order_history extends AppCompatActivity
     ProgressDialog progress;
 
     String number_for_history="1";
+
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +222,7 @@ public class order_history extends AppCompatActivity
         recylerview.setAdapter(mAdapter);
         recylerview.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recylerview.setItemAnimator(new DefaultItemAnimator());
+        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
     }
 
     private Boolean checking_net_permission() {
@@ -347,18 +351,24 @@ public class order_history extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.menu) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(getApplicationContext(),menu.class));
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(getApplicationContext(),cart.class));
+        } else if (id == R.id.orders) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.SignOut) {
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

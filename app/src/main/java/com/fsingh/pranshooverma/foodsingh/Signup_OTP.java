@@ -47,10 +47,11 @@ public class Signup_OTP extends AppCompatActivity {
                 String mob=mobnumber.getText().toString();
                 String pass=password.getText().toString();
 
-                if(mob.length()==12 & pass.length()>=4)
+                if(mob.length()==10 & pass.length()>=4)
                 {
                     if(checking_net_permission())
                     {
+                        mob="91"+mob;
                         send_otp(mob,pass);
 
                     }
@@ -61,7 +62,7 @@ public class Signup_OTP extends AppCompatActivity {
 
                 }
                 else {
-                    Display("Give your Mobile No. with 91 & password should contain minimum 4 characters");
+                    Display("Give your Mobile No. WITHOUT 91 OR 0 & password should contain minimum 4 characters");
                 }
             }
         });
