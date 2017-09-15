@@ -245,7 +245,19 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 {
                     progress.dismiss();
                 }
-                Toast.makeText(place_order_activity.this, response, Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String main_status = object.getString("message");
+                    if(main_status.equals("SUCCESS")){
+
+                        startActivity(new Intent(place_order_activity.this, FakeActivity.class));
+                        finish();
+                    }else{
+                        Toast.makeText(place_order_activity.this, "We are unable to process your order right now.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override

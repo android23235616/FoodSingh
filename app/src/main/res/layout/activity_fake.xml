@@ -32,7 +32,7 @@
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:id="@+id/menu"
-        android:layout_marginLeft="149dp"
+        android:layout_marginLeft="119dp"
         android:padding="15dp"
         android:background="@drawable/shapeitem2"/>
 
