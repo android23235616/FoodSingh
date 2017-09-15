@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -261,7 +262,21 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 {
                     progress.dismiss();
                 }
-                Toast.makeText(place_order_activity.this, response, Toast.LENGTH_SHORT).show();
+
+
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String main_status = object.getString("message");
+                    if(main_status.equals("SUCCESS")){
+
+                       startActivity(new Intent(place_order_activity.this, FakeActivity.class));
+                        finish();
+                    }else{
+                        Toast.makeText(place_order_activity.this, "We are unable to process your order right now.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -391,19 +406,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
