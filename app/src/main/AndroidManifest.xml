@@ -13,21 +13,27 @@
         android:roundIcon="@drawable/logo7"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Signup_OTP">
+        <activity android:name=".Signup_OTP"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".verifying_otp">
+        <activity android:name=".verifying_otp"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".login_page">
+        <activity android:name=".login_page"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +41,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:name=".menu"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme">
@@ -45,18 +53,26 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:name=".menu_category_wise"
             android:label="@string/title_activity_menu_category_wise"
             android:theme="@style/AppTheme" />
         <activity
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:name=".cart"
             android:label="@string/title_activity_cart"
             android:theme="@style/AppTheme" />
         <activity
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:name=".place_order_activity"
-            android:label="@string/title_activity_place_order_activity"
+            android:label="Place Order"
             android:theme="@style/AppTheme" />
-        <activity android:name=".FakeActivity">
+        <activity android:name=".FakeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,8 +80,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:name=".order_history"
-            android:label="@string/title_activity_order_history"
+            android:label="Order Hostory"
             android:theme="@style/AppTheme"></activity>
     </application>
 

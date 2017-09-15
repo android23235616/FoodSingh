@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -46,7 +47,24 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //////////////////////////////////
+
+
+        if(constants.items_name.isEmpty()&&constants.items_price.isEmpty()){
+            setContentView(R.layout.activity_fake);
+            TextView t = (TextView)findViewById(R.id.calm);
+            TextView home = (TextView)findViewById(R.id.menu);
+            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+            t.setTypeface(tf);
+            home.setTypeface(tf);
+        }
+        //////////////////////
+
+
         setContentView(R.layout.activity_cart);
+
+
 
 
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
