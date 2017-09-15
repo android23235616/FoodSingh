@@ -211,7 +211,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_categories() {
-        progress.setMessage("Fethcing Data.....");
+        progress.setMessage("Fetching Data.....");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.show();
 
