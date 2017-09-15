@@ -50,15 +50,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         //////////////////////////////////
 
+//Toast.makeText(this, constants.item_quant_deb.size()+"",Toast.LENGTH_LONG).show();
 
-        if(constants.items_name.isEmpty()&&constants.items_price.isEmpty()){
-            setContentView(R.layout.activity_fake);
-            TextView t = (TextView)findViewById(R.id.calm);
-            TextView home = (TextView)findViewById(R.id.menu);
-            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-            t.setTypeface(tf);
-            home.setTypeface(tf);
-        }
         //////////////////////
 
 

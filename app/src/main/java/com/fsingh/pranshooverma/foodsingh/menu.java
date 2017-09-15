@@ -61,6 +61,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     categoryAdapter adapter;
     localdatabase local;
     ImageButton next, back;
+    boolean nav=true;
     pagerAdapter pageradater;
     ViewPager pager;
     AppBarLayout appBarLayout;
@@ -113,7 +114,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
 //CODING  CODING CODING CODING
         //here the coding part is:
-
+        nav=true;
         initialize();
         next = (ImageButton) findViewById(R.id.right_arrow);
         back = (ImageButton) findViewById(R.id.left_arrow);
@@ -123,6 +124,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             getting_categories();
         }
         else {
+            nav=false;
             setContentView(R.layout.no_internet);
             Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
             TextView calm = (TextView)findViewById(R.id.calm);
@@ -354,11 +356,15 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(nav){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }else{
+            finish();
         }
     }
 

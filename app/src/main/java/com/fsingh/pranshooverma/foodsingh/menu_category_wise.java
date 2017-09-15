@@ -65,6 +65,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     RecyclerView recyclerView;
     List<String> dish_name=new ArrayList<>();
     List<String> dish_price=new ArrayList<>();
+    boolean nav=true;
 
     RecyclerView.LayoutManager layoutManager;
     categoryAdapter_menu_wise adapter_menu_wise;
@@ -80,7 +81,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
-
+nav=true;
         /////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,8 +112,20 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             }
 
         } else {
-            Display("You dont have Internet connection");
-            finish();
+            nav=false;
+            setContentView(R.layout.no_internet);
+            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+            TextView calm = (TextView)findViewById(R.id.calm);
+            final TextView retry = (TextView)findViewById(R.id.menu);
+            calm.setTypeface(tf);
+            retry.setTypeface(tf);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
+
 
         }
 
@@ -324,11 +337,15 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(nav){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }else{
+            finish();
         }
     }
 

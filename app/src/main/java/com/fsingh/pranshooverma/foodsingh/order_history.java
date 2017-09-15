@@ -56,7 +56,7 @@ public class order_history extends AppCompatActivity
     //for recycler view init
     RecyclerView recylerview;
     RecyclerView.LayoutManager layoutmanager;
-
+boolean nav=true;
     List<String> date=new ArrayList<>();
     List<String> amount=new ArrayList<>();
     List<String> address=new ArrayList<>();
@@ -110,6 +110,7 @@ public class order_history extends AppCompatActivity
         }
         else
         {
+            nav = false;
             setContentView(R.layout.no_internet);
             Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
             TextView calm = (TextView)findViewById(R.id.calm);
@@ -327,11 +328,15 @@ public class order_history extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(nav){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }else{
+            finish();
         }
     }
 
