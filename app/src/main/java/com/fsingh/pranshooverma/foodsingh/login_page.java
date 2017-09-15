@@ -63,9 +63,14 @@ public class login_page extends AppCompatActivity {
 
                 if(checking_net_permission())
                 {
-                    if(num.length()==12 & pass.length()>=4)
+                    if(num.length()==10 & pass.length()>=4)
                     {
+                        num="91"+num;
                         check_login_details(num,pass);
+                    }
+                    else
+                    {
+                        Display("Enter 10 Digit mobile number & password should have atleast 4 characters");
                     }
 
                 }
