@@ -210,7 +210,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     private void getting_category_from_previous_activity() {
         Bundle d=getIntent().getExtras();
         category=d.getString("category");
-        Display(category);
+    //    Display(category);
     }
 
     private void initialize() {

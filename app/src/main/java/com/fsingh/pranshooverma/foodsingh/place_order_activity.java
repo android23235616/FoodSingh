@@ -249,7 +249,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         progress.setCancelable(false);
         progress.show();
 
-        Toast.makeText(this, addy+"\n"+String.valueOf(final_am)+"\n"+local_list+"\n"+mobile_number, Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, addy+"\n"+String.valueOf(final_am)+"\n"+local_list+"\n"+mobile_number, Toast.LENGTH_SHORT).show();
         StringRequest str=new StringRequest(Request.Method.POST, constants.send_to_debian, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -276,6 +276,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
                 Toast.makeText(place_order_activity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){

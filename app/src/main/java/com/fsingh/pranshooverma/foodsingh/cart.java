@@ -92,13 +92,13 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(cart.this, "Order place krna  hai yahan se", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(cart.this, "Order place krna  hai yahan se", Toast.LENGTH_SHORT).show();
                 int sum=0;
                 for(int i=0;i<constants.items_price.size();i++) {
                     sum= sum+Integer.parseInt((constants.items_price.get(i)).substring(3));
                 }
 
-                Toast.makeText(cart.this,String.valueOf(sum), Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(cart.this,String.valueOf(sum), Toast.LENGTH_SHORT).show();
 
                 Intent aas=new Intent(getApplicationContext(),place_order_activity.class);
                 Bundle a=new Bundle();

@@ -145,7 +145,7 @@ public class login_page extends AppCompatActivity {
                     String status=obj.getString("status");
                     if(status.equals("1"))
                     {
-                        Display("Successfully logged in");
+                 //       Display("Successfully logged in");
                         SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
                         SharedPreferences.Editor edit=as.edit();
                         edit.putString("password",passy);//100 defined for logged in

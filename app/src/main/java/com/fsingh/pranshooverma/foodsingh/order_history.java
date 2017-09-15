@@ -182,7 +182,7 @@ public class order_history extends AppCompatActivity
                         address.add(ad);
                     }
 
-                    Display(amount.toString());
+                //    Display(amount.toString());
                     send_to_adapter();
 
                 } catch (JSONException e) {

@@ -101,7 +101,7 @@ public class Signup_OTP extends AppCompatActivity {
             public void onResponse(String response) {
               if(progress.isShowing())
               {   progress.dismiss();
-                  Display(response);
+           //       Display(response);
                   Intent as=new Intent(getApplicationContext(),verifying_otp.class);
                   Bundle a=new Bundle();
                   a.putString("mob",mob);
