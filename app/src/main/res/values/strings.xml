@@ -21,4 +21,5 @@
     <string name="title_activity_menu_category_wise">menu_category_wise</string>
     <string name="title_activity_cart">cart</string>
     <string name="title_activity_place_order_activity">place_order_activity</string>
+    <string name="title_activity_order_history">order_history</string>
 </resources>

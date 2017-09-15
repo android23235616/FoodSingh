@@ -57,6 +57,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +113,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         progress.setCancelable(false);
         progress.show();
 
+        Toast.makeText(this, addy+"\n"+String.valueOf(final_am)+"\n"+local_list+"\n"+mobile_number, Toast.LENGTH_SHORT).show();
         StringRequest str=new StringRequest(Request.Method.POST, constants.send_to_debian, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -180,48 +182,6 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

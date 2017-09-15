@@ -59,12 +59,19 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         img_cat=(ImageView) holder.itemView.findViewById(R.id.img);
+
         String path=images_data.get(position);
+
         String name=categories.get(position);
+
         name = name.toLowerCase();
+
         String new_name = name.charAt(0)+"";
+
         new_name = new_name.toUpperCase();
+
         new_name+=name.substring(1,name.length());
+
         Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
         holder.txt.setText(new_name);
 

@@ -158,6 +158,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         pager = (ViewPager) findViewById(R.id.view_pager);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         progress=new ProgressDialog(this);
+        progress.setCancelable(false);
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
         layoutmanager=new GridLayoutManager(this,2);
         recylerView.setLayoutManager(layoutmanager);
@@ -392,6 +393,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(getApplicationContext(),order_history.class));
 
         } else if (id == R.id.nav_slideshow) {
 
