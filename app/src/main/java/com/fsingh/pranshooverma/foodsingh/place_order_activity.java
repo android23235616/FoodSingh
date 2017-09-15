@@ -56,6 +56,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     Button finally_place_order;
     List<String> local_list=new ArrayList<>();
     int final_am=0;
+    boolean nav=true;
     String mobile_number;
     ProgressDialog progress;
 
@@ -171,6 +172,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         }
         else
         {
+            nav=false;
             setContentView(R.layout.no_internet);
             Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
             TextView calm = (TextView)findViewById(R.id.calm);
@@ -368,11 +370,15 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if(nav){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }else{
+            finish();
         }
     }
 
