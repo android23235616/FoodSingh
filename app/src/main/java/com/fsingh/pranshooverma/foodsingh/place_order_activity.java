@@ -7,17 +7,11 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.StrikethroughSpan;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -64,9 +57,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     String mobile_number;
     ProgressDialog progress;
 
-    int counter=0,ii=0;
+    int counter=0;
     int discount_amount=0;
-    String CouponText="";
+    int after_discount=0;
+
 
     RelativeLayout relativeLayout_coupon;
 
@@ -82,7 +76,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolbar);
 
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        TextView toolbarText = (TextView) findViewById(R.id.toolbarText);
+        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
         toolbarText.setTypeface(t);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -102,83 +96,69 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
         coupon_from_data();
 
-        Menu m = navigationView.getMenu();
-        for (int i = 0; i < m.size(); i++) {
-            MenuItem mi = m.getItem(i);
+        after_discount=final_am;
 
-            //for aapplying a font to subMenu ...
-            SubMenu subMenu = mi.getSubMenu();
-            if (subMenu != null && subMenu.size() > 0) {
-                for (int j = 0; j < subMenu.size(); j++) {
-                    MenuItem subMenuItem = subMenu.getItem(j);
-                    applyFontToMenuItem(subMenuItem);
+        finally_place_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checking_net_permission())
+                {
+                    if(final_am==0)
+                    {
+                        Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        String add=address.getText().toString();
+
+                        if(add.length()>=7)
+                        {
+                            SharedPreferences.Editor edit =shared.edit();
+                            edit.putString("address",add);
+                            edit.apply();
+                            send_to_deb(add);
+                        }
+                        else
+                        {
+                            Toast.makeText(place_order_activity.this, "Give your full address", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(place_order_activity.this, "you dont have net connection...", Toast.LENGTH_SHORT).show();
                 }
             }
+        });
 
-            //the method we have create in activity
-            applyFontToMenuItem(mi);
+        relativeLayout_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                counter++;
 
-
-            finally_place_order.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (checking_net_permission()) {
-                        if (final_am == 0) {
-                            Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
-                        } else {
-                            String add = address.getText().toString();
-                            ii=0;
-                            send_to_deb(add);
-
-                        }
-
-                    } else {
-                        Toast.makeText(place_order_activity.this, "you dont have net connection...", Toast.LENGTH_SHORT).show();
+                if(counter%2==1)
+                {
+                    if(final_am!=0 & discount_amount!=0){
+                        Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
+                        after_discount=final_am-(((discount_amount)*final_am)/100);
+                        final_amount.setText(String.valueOf(after_discount));
+                    }
+                    else
+                    {
+                        Snackbar.make(view,"Cant apply the coupon.....",Snackbar.LENGTH_SHORT).show();
                     }
                 }
-            });
 
-            relativeLayout_coupon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    counter++;
-
-                    if (counter % 2 == 1) {
-                        if (final_am != 0 & discount_amount != 0) {
-                            Snackbar.make(view, "Coupon applied.....", Snackbar.LENGTH_SHORT).show();
-                            String mainString = String.valueOf(final_am - (((discount_amount) * final_am) / 100));
-                            final_amount.setText(mainString);
-                            multiLineStrikeThrough(textCoupon, CouponText);
-
-                        } else {
-                            Snackbar.make(view, "Cant apply the coupon.....", Snackbar.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Snackbar.make(view, "Coupon removed.....", Snackbar.LENGTH_SHORT).show();
-                        final_amount.setText(String.valueOf(final_am));
-                        multiLineStrikeThrough(textCoupon, "");
-                    }
-
+                else {
+                    Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
+                    final_amount.setText(String.valueOf(final_am));
+                    after_discount=final_am;
                 }
-            });
 
-        }
-    }
-
-    private void multiLineStrikeThrough(TextView description, String textContent){
-
-        description.setText(textContent, TextView.BufferType.SPANNABLE);
-        Spannable spannable = (Spannable)description.getText();
-        spannable.setSpan(new StrikethroughSpan(), 0, textContent.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        if(textContent.equals(""))
-            description.setText(CouponText);
-    }
-
-    private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        mi.setTitle(mNewTitle);
+            }
+        });
 
     }
 
@@ -216,12 +196,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                     if(dis.equals("0"))
                     {
                         textCoupon.setText("No coupon to reedem");
-
                         textCoupon.setGravity(Gravity.CENTER);
                     }
                     else
                     {
-                        CouponText="Click this to redeem "+dis+" % discount on final amount";
                         textCoupon.setText("Click this to redeem "+dis+" % discount on final amount");
 
                     }
@@ -234,7 +212,12 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Toast.makeText(place_order_activity.this, "Some error occured may be due to bad internet connection", Toast.LENGTH_SHORT).show();
+                discount_amount=0;
             }
         });
         RequestQueue r=Volley.newRequestQueue(this);
@@ -262,21 +245,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 {
                     progress.dismiss();
                 }
-
-
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String main_status = object.getString("message");
-                    if(main_status.equals("SUCCESS")){
-
-                       startActivity(new Intent(place_order_activity.this, FakeActivity.class));
-                        finish();
-                    }else{
-                        Toast.makeText(place_order_activity.this, "We are unable to process your order right now.", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Toast.makeText(place_order_activity.this, response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -297,15 +266,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             }
         };
         RequestQueue re= Volley.newRequestQueue(this);
-        if(ii==0) {
-            re.add(str);
-            ii++;
-        }
-        str.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
+        re.add(str);
     }
 
     private void gettin_amount() {
@@ -325,12 +286,12 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         TextView t1 = (TextView)findViewById(R.id.textView2);
         TextView t2 = (TextView)findViewById(R.id.textView4);
         TextView t3 = (TextView)findViewById(R.id.textView7);
-        TextView couponText = (TextView)findViewById(R.id.coupontext);
         total_amount=(TextView)findViewById(R.id.total_amount);
         final_amount=(TextView)findViewById(R.id.final_amount);
         address=(EditText) findViewById(R.id.delivery_address);
         finally_place_order=(Button)findViewById(R.id.final_order);
         progress=new ProgressDialog(this);
+        progress.setCancelable(false);
         shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
         mobile_number=shared.getString("mobile","123");
         if(mobile_number.equals("123"))
@@ -349,8 +310,15 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         t2.setTypeface(t);
         t3.setTypeface(t);
         textCoupon.setTypeface(t);
-        couponText.setTypeface(t);
 
+        String addy=shared.getString("address","no");
+        if(addy.equals("no"))
+        {
+            address.setHint("Enter Your Full address");
+        }
+        else {
+            address.setText(addy);
+        }
 
     }
 
@@ -406,7 +374,26 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if (id == R.id.menu) {
+            // Handle the camera action
+            startActivity(new Intent(getApplicationContext(),menu.class));
+        } else if (id == R.id.cart) {
+            startActivity(new Intent(getApplicationContext(),cart.class));
+        } else if (id == R.id.orders) {
+            startActivity(new Intent(getApplicationContext(),order_history.class));
+        } else if (id == R.id.SignOut) {
 
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

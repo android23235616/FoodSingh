@@ -94,7 +94,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                 //showing at the toolbar
                 menu_category_wise.cartitemcount.setText(String.valueOf(constants.items_name.size()));
                 menu.cartitemcount1.setText(String.valueOf(constants.items_name.size()));
-                Toast.makeText(mContext, "Added to cart", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(mContext, "Added to cart", Toast.LENGTH_SHORT).show();
 
 
                 //making the quantity count
@@ -104,7 +104,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                     int index= constants.item_name_deb.indexOf(dish_name.get(position));
                     int prev_value= Integer.parseInt(constants.item_quant_deb.get(index));
                     constants.item_quant_deb.set(index,String.valueOf(prev_value+1));
-                    Toast.makeText(mContext, constants.item_name_deb.toString()+"\n"+constants.item_quant_deb, Toast.LENGTH_SHORT).show();
+              //      Toast.makeText(mContext, constants.item_name_deb.toString()+"\n"+constants.item_quant_deb, Toast.LENGTH_SHORT).show();
 
                 }
                 else
@@ -112,7 +112,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                     //add that item to the arraylist
                     constants.item_name_deb.add(dish_name.get(position));
                     constants.item_quant_deb.add("1");
-                    Toast.makeText(mContext, "added 1", Toast.LENGTH_SHORT).show();
+          //          Toast.makeText(mContext, "added 1", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -144,7 +144,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                     else {
                         constants.item_quant_deb.set(index, String.valueOf(prev_value - 1));
                     }
-                    Toast.makeText(mContext, constants.item_name_deb.toString() + "\n" + constants.item_quant_deb, Toast.LENGTH_SHORT).show();
+          //          Toast.makeText(mContext, constants.item_name_deb.toString() + "\n" + constants.item_quant_deb, Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -155,11 +155,11 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                     constants.items_price.remove(dish_price.get(position));
                     menu_category_wise.cartitemcount.setText(String.valueOf(constants.items_name.size()));
                     menu.cartitemcount1.setText(String.valueOf(constants.items_name.size()));
-                    Toast.makeText(mContext, "Removed from cart", Toast.LENGTH_SHORT).show();
+            //        Toast.makeText(mContext, "Removed from cart", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(mContext, "You dont have this item in cart", Toast.LENGTH_SHORT).show();
+            //        Toast.makeText(mContext, "You dont have this item in cart", Toast.LENGTH_SHORT).show();
                 }
             }
         });
