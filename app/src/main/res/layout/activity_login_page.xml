@@ -133,7 +133,6 @@
             android:textAllCaps="false"
             android:textStyle="bold"
             android:layout_margin="20dp"
-
             android:textColor="@color/white"
             android:textSize="15dp" />
 
