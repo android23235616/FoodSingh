@@ -31,8 +31,10 @@ public class FakeActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(FakeActivity.this, cart.class));
-                finish();
+
+                Intent a=new Intent(getApplicationContext(),menu.class);
+                a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(a);
             }
         });
     }

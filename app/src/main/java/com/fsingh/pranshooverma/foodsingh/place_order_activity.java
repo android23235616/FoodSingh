@@ -493,4 +493,5 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

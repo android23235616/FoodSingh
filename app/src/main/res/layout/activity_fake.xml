@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="Back To Cart"
+        android:text="Back To Menu"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:id="@+id/menu"
