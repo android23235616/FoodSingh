@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -143,13 +144,18 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                         Snackbar.make(view, "Coupon applied.....", Snackbar.LENGTH_SHORT).show();
                         after_discount = final_am - (((discount_amount) * final_am) / 100);
                         final_amount.setText(String.valueOf(after_discount));
+                        textCoupon.setBackgroundResource(R.drawable.strike);
+                        Display("Coupon Applied!");
                     } else {
                         Snackbar.make(view, "Cant apply the coupon.....", Snackbar.LENGTH_SHORT).show();
+
                     }
                 } else {
+                    textCoupon.setBackgroundResource(R.drawable.normal);
                     Snackbar.make(view, "Coupon removed.....", Snackbar.LENGTH_SHORT).show();
                     final_amount.setText(String.valueOf(final_am));
                     after_discount = final_am;
+                    Display("Coupon Removed!");
                 }
 
             }

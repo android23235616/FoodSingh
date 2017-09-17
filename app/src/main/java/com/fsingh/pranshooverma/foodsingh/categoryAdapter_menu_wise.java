@@ -26,6 +26,8 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
     private Context mContext;
     private List<String> dish_name=new ArrayList<>();
     private List<String> dish_price=new ArrayList<>();
+    private List<String> NA = new ArrayList<>();
+    boolean check=false;
 
     ImageView plus,minus;
 
@@ -70,7 +72,17 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
         String rupees=dish_price.get(position);
 
         holder.diname.setText(name);
+
         holder.diprice.setText(rupees);
+        if(rupees.equals("Rs.0")){
+            holder.diprice.setText("NA");
+           check = true;
+        }else{
+            check = false;
+        }
+
+
+
 
         if(constants.item_name_deb.contains(name))
         {
@@ -83,6 +95,11 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(holder.diprice.getText().toString().equals("NA")){
+
+                }else{
+
                 //adding to the list
                 constants.items_name.add(dish_name.get(position));
                 constants.items_price.add(dish_price.get(position));
@@ -115,13 +132,16 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
           //          Toast.makeText(mContext, "added 1", Toast.LENGTH_SHORT).show();
                 }
 
+                }
             }
         });
 
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(holder.diprice.getText().toString().equals("NA")){
 
+                }else{
                 int a=Integer.parseInt((String) holder.item_quantity.getText());
                 if(a!=0)
                 {
@@ -157,10 +177,9 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                     menu.cartitemcount1.setText(String.valueOf(constants.items_name.size()));
             //        Toast.makeText(mContext, "Removed from cart", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-            //        Toast.makeText(mContext, "You dont have this item in cart", Toast.LENGTH_SHORT).show();
-                }
+                else {
+                    //        Toast.makeText(mContext, "You dont have this item in cart", Toast.LENGTH_SHORT).show();
+                }        }
             }
         });
 
@@ -176,3 +195,6 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
         return dish_name.size();
     }
 }
+
+
+///adlasdjlakdjlaskdkj
