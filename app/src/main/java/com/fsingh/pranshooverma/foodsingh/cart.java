@@ -293,4 +293,6 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    //sefgdhtgfjygh
+
 }
