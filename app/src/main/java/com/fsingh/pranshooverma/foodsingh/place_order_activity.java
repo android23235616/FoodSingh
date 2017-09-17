@@ -460,11 +460,11 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             shared.edit().remove("mobile").apply();
 
             this.finish();
-            Intent intent=new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Intent intent=new Intent(getApplicationContext(),login_page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
