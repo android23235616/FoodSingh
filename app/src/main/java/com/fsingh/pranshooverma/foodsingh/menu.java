@@ -439,4 +439,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         return true;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
+    }
 }
