@@ -9,6 +9,8 @@ import java.util.List;
 
 public class constants {
 
+    public static final String sharedPreferencesName = "FoodSingh1";
+
     public static String login_details_url="http://mindwires.in/foodsingh_app/logini_save_and_check.php";
     public static String login_check_url="http://mindwires.in/foodsingh_app/login.php";
     public  static  String get_categories="http://mindwires.in/foodsingh_app/get_categories2.php";
@@ -17,6 +19,7 @@ public class constants {
     public static String order_history="http://mindwires.in/foodsingh_app/get_order_history.php";
     public static String discount_coupon="http://mindwires.in/foodsingh_app/get_discount.php";
 public static String forgot_password="http://mindwires.in/foodsingh_app/forgot_password.php";
+    public static String set_version = "http://mindwires.in/foodsingh_app/set_version.php";
 
 
     public static List<String> items_name=new ArrayList<>();

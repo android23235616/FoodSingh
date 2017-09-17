@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ boolean nav=true;
     List<String> orders=new ArrayList<>();
 
     order_history_Adapter mAdapter;
+    NavigationView navigationView;
 
     ProgressDialog progress;
 
@@ -86,7 +88,7 @@ boolean nav=true;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     /////////////////////////////////////////////////////////////////////////////////////////
         //coding coding coding
@@ -124,7 +126,7 @@ boolean nav=true;
                 }
             });
         }
-
+manipulatenavigationdrawer();
         Menu m = navigationView.getMenu();
         for (int i = 0; i < m.size(); i++) {
             MenuItem mi = m.getItem(i);
@@ -142,6 +144,21 @@ boolean nav=true;
             applyFontToMenuItem(mi);
 
         }
+    }
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
     }
 
     private void applyFontToMenuItem(MenuItem mi) {

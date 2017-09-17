@@ -144,7 +144,7 @@ public class verifying_otp extends AppCompatActivity {
                         edit.putString("mobile",mob);
                         edit.apply();
 
-                        Intent asd=new Intent(getApplicationContext(),menu.class);
+                        Intent asd=new Intent(getApplicationContext(),Splash.class);
                         startActivity(asd);
                         finish();
                     }

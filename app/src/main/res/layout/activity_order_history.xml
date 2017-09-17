@@ -15,7 +15,7 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:background="#96000000"
+        android:background="#56000000"
         app:itemTextColor="#ffffff"
         app:itemTextAppearance="@style/NavDrawerTextStyle"
         app:itemIconTint="#ffffff"

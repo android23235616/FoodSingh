@@ -6,12 +6,23 @@
 
 
     >
-    <ImageView
-        android:layout_width="match_parent"
-        android:scaleType="center"
+    <FrameLayout
+
+        android:background="#673AB7"
         android:layout_height="match_parent"
-        android:src="@drawable/splashbackground"
-        />
+        android:layout_width="match_parent">
+        <ImageView
+            android:src="@drawable/background"
+            android:alpha="0.8"
+            android:scaleType="centerCrop"
+            android:id="@+id/main_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/splash2"
