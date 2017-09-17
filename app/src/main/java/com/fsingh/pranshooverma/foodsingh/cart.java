@@ -40,6 +40,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     Toolbar toolbar;
     Button place_order;
     SharedPreferences shared;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

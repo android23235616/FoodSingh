@@ -3,13 +3,17 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.print.PrintHelper;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Display;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,6 +50,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     private  EditText name,email,old_password,new_password;
     private ProgressDialog progress;
     String old_password_check,mobile_old;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +59,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,7 +67,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     /////////////////////////////////////////////////////////////////////////////
         //CODING CODING CODING
@@ -110,11 +110,60 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
             }
         });
+        Menu m = navigationView.getMenu();
+
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+
+        }
+        manipulatenavigationdrawer();
+    }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
 
     }
 
+
+
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
+    }
+
     private void upudate_to_deb( final String n, final String e, final String np) {
-        SharedPreferences sh=getSharedPreferences("foodsingh", MODE_PRIVATE);
+        SharedPreferences sh=getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
           mobile_old=sh.getString("mobile","000");
         if(mobile_old.equals("000"))
         {
@@ -145,9 +194,11 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
                     if(m.equals("SUCCESS") && r.equals("true"))
                     {
-                        SharedPreferences sg=getSharedPreferences("foodsingh",MODE_PRIVATE);
+                        SharedPreferences sg=getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
                         SharedPreferences.Editor edit=sg.edit();
                         edit.putString("password",np);
+                        edit.putString("name",n);
+                        edit.putString("email",e);
                         edit.apply();
                         Display("Details Has been Updated....");
                         finish();
