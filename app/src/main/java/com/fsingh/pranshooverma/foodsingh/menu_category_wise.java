@@ -411,12 +411,21 @@ manipulatenavigationdrawer();
 
         if (id == R.id.menu) {
             // Handle the camera action
-            startActivity(new Intent(getApplicationContext(),menu.class));
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
         } else if (id == R.id.cart) {
-            startActivity(new Intent(getApplicationContext(),cart
-            .class));
+            Intent a=new Intent(getApplicationContext(),cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
         } else if (id == R.id.orders) {
-            startActivity(new Intent(getApplicationContext(),order_history.class));
+            Intent a=new Intent(getApplicationContext(),order_history.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
+
 
         } else if (id == R.id.SignOut) {
 
@@ -431,7 +440,12 @@ manipulatenavigationdrawer();
             startActivity(intent);
             finish();
 
-
+        }
+        else if(id==R.id.details)
+        {
+            Intent a=new Intent(getApplicationContext(),details.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

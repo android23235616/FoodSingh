@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -51,6 +52,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     private ProgressDialog progress;
     String old_password_check,mobile_old;
     NavigationView navigationView;
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,7 +326,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         old_password =(EditText)findViewById(R.id.text_cur_pass);
         new_password =(EditText)findViewById(R.id.text_new_pass);
         button_save_change=(Button)findViewById(R.id.button_save_change);
-
+        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
     }
@@ -406,20 +408,39 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.menu) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.cart) {
+            Intent a=new Intent(getApplicationContext(),cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.orders) {
+            Intent a=new Intent(getApplicationContext(),order_history.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.SignOut) {
 
-        } else if (id == R.id.nav_send) {
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(getApplicationContext(),login_page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
 
         }
+        else if(id==R.id.details)
+        {
 
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

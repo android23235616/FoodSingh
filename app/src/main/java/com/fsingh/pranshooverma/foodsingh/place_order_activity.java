@@ -448,11 +448,20 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
 
         if (id == R.id.menu) {
             // Handle the camera action
-            startActivity(new Intent(getApplicationContext(),menu.class));
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
         } else if (id == R.id.cart) {
-            startActivity(new Intent(getApplicationContext(),cart.class));
+            Intent a=new Intent(getApplicationContext(),cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
         } else if (id == R.id.orders) {
-            startActivity(new Intent(getApplicationContext(),order_history.class));
+            Intent a=new Intent(getApplicationContext(),order_history.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
         } else if (id == R.id.SignOut) {
 
             shared.edit().remove("address").apply();
@@ -464,6 +473,13 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
+
+        }
+        else if(id==R.id.details)
+        {
+            Intent a=new Intent(getApplicationContext(),details.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
         }
 
