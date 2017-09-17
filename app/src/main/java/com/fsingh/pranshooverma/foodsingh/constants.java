@@ -24,4 +24,6 @@ public class constants {
     //this list is going to the database and to the restaurant owner
     public static List<String> item_name_deb=new ArrayList<>();
     public static List<String>  item_quant_deb=new ArrayList<>();
+
+    public static String version_no;
 }
