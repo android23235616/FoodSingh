@@ -35,7 +35,7 @@ import java.util.Map;
 public class verifying_otp extends AppCompatActivity {
     Button verify;
     EditText otp;
-    String pass,mob;
+    String pass,mob,name,email;
     TextView t1, t2, t3;
     ProgressDialog progress;
     @Override
@@ -44,6 +44,7 @@ public class verifying_otp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_verifying_otp);
+
         initialize();
 
         getting_pass_mob();
@@ -177,6 +178,8 @@ public class verifying_otp extends AppCompatActivity {
                 Map<String,String> maps=new HashMap<>();
                 maps.put("number",mob);
                 maps.put("password",pass);
+                maps.put("name",name);
+                maps.put("email",email);
                 return maps;
             }
         };
@@ -188,10 +191,14 @@ public class verifying_otp extends AppCompatActivity {
     {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
+
     private void getting_pass_mob() {
         Bundle as=getIntent().getExtras();
         pass=as.getString("pass");
         mob=as.getString("mob");
+        name=as.getString("name");
+        email=as.getString("email");
+
     }
 
     private Boolean checking_net_permission() {

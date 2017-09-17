@@ -27,7 +27,7 @@ import com.bumptech.glide.Glide;
 public class Signup_OTP extends AppCompatActivity {
 
     Button signup,loginme;
-    EditText mobnumber,password;
+    EditText mobnumber,password,name,email;
     ProgressDialog progress;
 
     @Override
@@ -46,13 +46,16 @@ public class Signup_OTP extends AppCompatActivity {
             public void onClick(View view) {
                 String mob=mobnumber.getText().toString();
                 String pass=password.getText().toString();
+                String na=name.getText().toString();
+                String ema=email.getText().toString();
 
-                if(mob.length()==10 & pass.length()>=4)
+
+                if(mob.length()==10 & pass.length()>=4 & na.length()>1 & ema.length()>4 )
                 {
                     if(checking_net_permission())
                     {
                         mob="91"+mob;
-                        send_otp(mob,pass);
+                        send_otp(mob,pass,na,ema);
 
                     }
                     else
@@ -89,7 +92,7 @@ public class Signup_OTP extends AppCompatActivity {
 
     }
 
-    private void send_otp(final String mob, final String pass) {
+    private void send_otp(final String mob, final String pass, final String nam, final String ema) {
         progress.setMessage("Sending OTP message....");
         progress.setCancelable(false);
         progress.show();
@@ -106,6 +109,8 @@ public class Signup_OTP extends AppCompatActivity {
                   Bundle a=new Bundle();
                   a.putString("mob",mob);
                   a.putString("pass",pass);
+                  a.putString("name",nam);
+                  a.putString("email",ema);
                   as.putExtras(a);
                   startActivity(as);
                   finish();
@@ -143,6 +148,10 @@ public class Signup_OTP extends AppCompatActivity {
         loginme=(Button)findViewById(R.id.btnLinkToLoginScreen);
         mobnumber=(EditText)findViewById(R.id.mob);
         password=(EditText)findViewById(R.id.password);
+
+        name=(EditText)findViewById(R.id.name);
+        email=(EditText)findViewById(R.id.email);
+
         progress=new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 

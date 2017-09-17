@@ -35,6 +35,8 @@ public class login_page extends AppCompatActivity {
     EditText mobile,password;
     Button login,new_user;
     ProgressDialog progress;
+    TextView forgot_password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,32 @@ public class login_page extends AppCompatActivity {
             }
         });
 
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mobile_number=mobile.getText().toString();
+                mobile_number="91"+mobile_number;
+
+                if(mobile.length()==10)
+                {
+                    if(checking_net_permission())
+                    {
+                        send_forgot_password(mobile_number);
+                    }
+                    else
+                    {
+                        Display("No Internet Connection,Kindly have Connection to proceed");
+                    }
+
+                }
+                else
+                {
+                    Display("Please enter your 10 Digit Mobile number, and then press this");
+                }
+
+            }
+        });
+
         new_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +130,52 @@ public class login_page extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    private void send_forgot_password(final String mobile_number) {
+        if(progress.isShowing())
+        {
+            progress.dismiss();
+        }
+        else
+        {
+            progress.setMessage("Sending Password to Your Registered Mobile Number");
+            progress.show();
+            progress.setCancelable(false);
+        }
+
+        StringRequest str=new StringRequest(Request.Method.POST, constants.forgot_password, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Display(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Display("Some Error Occured :"+error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> maps=new HashMap<>();
+                maps.put("mobile",mobile_number);
+                return maps;
+            }
+        };
+
+        RequestQueue re=Volley.newRequestQueue(this);
+        re.add(str);
 
     }
 
@@ -205,5 +279,6 @@ public class login_page extends AppCompatActivity {
         login=(Button)findViewById(R.id.btnlogin);
         new_user=(Button)findViewById(R.id.btnToSignUp);
         progress=new ProgressDialog(this);
+        forgot_password=(TextView)findViewById(R.id.Forgot_Password);
     }
 }
