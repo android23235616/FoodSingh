@@ -89,7 +89,11 @@
             android:label="Order History"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Splash"></activity>
+        <activity android:name=".Splash" />
+        <activity
+            android:name=".details"
+            android:label="@string/title_activity_details"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

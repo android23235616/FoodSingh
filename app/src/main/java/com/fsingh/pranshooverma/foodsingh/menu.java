@@ -433,6 +433,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             finish();
 
         }
+        else if(id==R.id.details)
+        {
+            startActivity(new Intent(getApplicationContext(),details.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

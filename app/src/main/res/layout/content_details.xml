@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.fsingh.pranshooverma.foodsingh.details"
+    tools:showIn="@layout/app_bar_details">
+
+    <EditText
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:hint="Name"/>
+
+    <EditText
+        android:id="@+id/text_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/text_name"
+        android:layout_below="@+id/text_name"
+        android:layout_marginTop="73dp"
+        android:hint="Email id" />
+
+    <EditText
+        android:id="@+id/text_cur_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Old Password"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/button_save_change" />
+
+    <EditText
+        android:id="@+id/text_new_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text_cur_pass"
+        android:layout_below="@+id/text_cur_pass"
+        android:layout_marginTop="54dp"
+        android:hint="New Password"/>
+
+    <Button
+        android:id="@+id/button_save_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_new_pass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="Save Changes" />
+</RelativeLayout>

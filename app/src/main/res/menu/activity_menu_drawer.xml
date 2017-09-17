@@ -18,10 +18,17 @@
             android:id="@+id/orders"
             android:icon="@drawable/ic_timer_black_24dp"
             android:title="Orders" />
+
+
+        <item
+            android:id="@+id/details"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Edit Details" />
         <item
             android:id="@+id/SignOut"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="SignOut" />
+
     </group>
 
 </menu>
