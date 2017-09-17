@@ -51,9 +51,10 @@ public class login_page extends AppCompatActivity {
 
         if(check_if_logged_in())
         {
-            Intent as1=new Intent(getApplicationContext(),menu.class);
+            Intent as1=new Intent(getApplicationContext(),Splash.class);
             startActivity(as1);
             finish();
+
         }
 
 
@@ -153,7 +154,21 @@ public class login_page extends AppCompatActivity {
                 {
                     progress.dismiss();
                 }
-                Display(response);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    String responseString = jsonObject.getString("message");
+                    if(responseString.equals("SUCCESS")){
+                        Display("Password sent! Check Your Registered Mobile");
+                    }else{
+                        Display("Some Error Occured! Please check your number.");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Display(e.toString());
+                }
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -227,7 +242,7 @@ public class login_page extends AppCompatActivity {
                         edit.apply();
 
 
-                        Intent f=new Intent(getApplicationContext(),menu.class);
+                        Intent f=new Intent(getApplicationContext(),Splash.class);
                         startActivity(f);
                         finish();
                     }

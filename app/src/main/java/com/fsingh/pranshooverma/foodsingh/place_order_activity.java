@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +63,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     boolean nav=true;
     String mobile_number;
     ProgressDialog progress;
+    NavigationView navigationView;
 
     int counter=0;
     int discount_amount=0;
@@ -79,7 +84,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         setSupportActionBar(toolbar);
 
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+        TextView toolbarText = (TextView) findViewById(R.id.toolbarText);
         toolbarText.setTypeface(t);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,49 +93,41 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         /////////////////////////////////////
 //coding coding
 
+        manipulatenavigationdrawer();
         initialize();
 
         gettin_amount();
 
         coupon_from_data();
 
-        after_discount=final_am;
+        after_discount = final_am;
 
         finally_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checking_net_permission())
-                {
-                    if(final_am==0)
-                    {
+                if (checking_net_permission()) {
+                    if (final_am == 0) {
                         Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        String add=address.getText().toString();
+                    } else {
+                        String add = address.getText().toString();
 
-                        if(add.length()>=7)
-                        {
-                            SharedPreferences.Editor edit =shared.edit();
-                            edit.putString("address",add);
+                        if (add.length() >= 7) {
+                            SharedPreferences.Editor edit = shared.edit();
+                            edit.putString("address", add);
                             edit.apply();
                             send_to_deb(add);
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(place_order_activity.this, "Give your full address", Toast.LENGTH_SHORT).show();
                         }
 
                     }
 
-                }
-                else
-                {
+                } else {
                     Toast.makeText(place_order_activity.this, "you dont have net connection...", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -141,30 +138,68 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
             public void onClick(View view) {
                 counter++;
 
-                if(counter%2==1)
-                {
-                    if(final_am!=0 & discount_amount!=0){
-                        Snackbar.make(view,"Coupon applied.....",Snackbar.LENGTH_SHORT).show();
-                        after_discount=final_am-(((discount_amount)*final_am)/100);
+                if (counter % 2 == 1) {
+                    if (final_am != 0 & discount_amount != 0) {
+                        Snackbar.make(view, "Coupon applied.....", Snackbar.LENGTH_SHORT).show();
+                        after_discount = final_am - (((discount_amount) * final_am) / 100);
                         final_amount.setText(String.valueOf(after_discount));
+                    } else {
+                        Snackbar.make(view, "Cant apply the coupon.....", Snackbar.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Snackbar.make(view,"Cant apply the coupon.....",Snackbar.LENGTH_SHORT).show();
-                    }
-                }
-
-                else {
-                    Snackbar.make(view,"Coupon removed.....",Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(view, "Coupon removed.....", Snackbar.LENGTH_SHORT).show();
                     final_amount.setText(String.valueOf(final_am));
-                    after_discount=final_am;
+                    after_discount = final_am;
                 }
 
             }
         });
 
+        Menu m = navigationView.getMenu();
+
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+
+        }
     }
 
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+
+    }
+
+
+
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+    }
     private void coupon_from_data() {
         if(checking_net_permission())
         {

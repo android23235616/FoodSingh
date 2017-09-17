@@ -22,6 +22,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -33,6 +34,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     ImageButton next, back;
     boolean nav=true;
     pagerAdapter pageradater;
+    NavigationView navigationView;
     ViewPager pager;
     AppBarLayout appBarLayout;
     public static int width;
@@ -89,9 +92,16 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getBackground().setAlpha(122);
+
+        //manipulate navigation drawer
+
+         manipulatenavigationdrawer();
+
+
+        ////////////////////////
 
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
@@ -161,6 +171,21 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+
+    }
 
 
     private void applyFontToMenuItem(MenuItem mi) {
