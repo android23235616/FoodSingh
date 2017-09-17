@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -205,6 +206,86 @@ public class login_page extends AppCompatActivity {
 
     }
 
+    private void getting_setting_details() {
+        if(checking_net_permission())
+        {
+            SharedPreferences pref=getSharedPreferences("foodsingh",MODE_PRIVATE);
+            String mobile=pref.getString("mobile","000");
+            if(mobile.equals("000"))
+            {
+                Display("Some Error is there,Kindly log out and then log in again");
+            }
+            else
+            {
+                get_data_deb(mobile);
+            }
+
+        }
+        else {
+            Display("You need Internet connection,to see and edit your details");
+        }
+    }
+
+    private void get_data_deb(final String mobile) {
+        if(progress.isShowing())
+        {
+            progress.dismiss();
+        }
+        else
+        {
+            progress.setMessage("Getting your details from server.....");
+            progress.show();
+        }
+
+        StringRequest str=new StringRequest(Request.Method.POST, constants.get_details, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+               // Display(response);
+
+                try {
+                    JSONArray array=new JSONArray(response);
+                    JSONObject obj=array.getJSONObject(0);
+                    SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name",obj.getString("name"));
+                    editor.putString("email",obj.getString("email"));
+                    editor.putString("password", obj.getString("password"));
+                    editor.apply();
+                    //editor..setText(obj.getString("name"));
+                    //email.setText(obj.getString("email"));
+                    //old_password_check=obj.getString("password");
+                    Intent f=new Intent(getApplicationContext(),Splash.class);
+                    startActivity(f);
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Display("Some Error occured,may be due to bad internet connection or server problem");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> maps=new HashMap<>();
+                maps.put("mobile",mobile);
+                return maps;
+            }
+        };
+        RequestQueue r= Volley.newRequestQueue(this);
+        r.add(str);
+    }
     private Boolean check_if_logged_in() {
         SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
         String pass=as.getString("password","123");
@@ -225,10 +306,7 @@ public class login_page extends AppCompatActivity {
         StringRequest das=new StringRequest(Request.Method.POST, constants.login_check_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
+
                 try {
                     JSONObject obj=new JSONObject(response);
                     String status=obj.getString("status");
@@ -240,11 +318,9 @@ public class login_page extends AppCompatActivity {
                         edit.putString("password",passy);//100 defined for logged in
                         edit.putString("mobile",numy);
                         edit.apply();
+                        getting_setting_details();
 
 
-                        Intent f=new Intent(getApplicationContext(),Splash.class);
-                        startActivity(f);
-                        finish();
                     }
                     else
                     {

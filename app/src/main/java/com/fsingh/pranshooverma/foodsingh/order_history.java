@@ -159,8 +159,12 @@ manipulatenavigationdrawer();
                 drawer.closeDrawers();
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
     }
-
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());

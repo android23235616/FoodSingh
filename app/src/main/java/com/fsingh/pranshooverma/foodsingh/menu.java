@@ -184,7 +184,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 drawer.closeDrawers();
             }
         });
-
+        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
     }
 
 

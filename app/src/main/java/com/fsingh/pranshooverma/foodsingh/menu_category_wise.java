@@ -163,6 +163,11 @@ manipulatenavigationdrawer();
                 drawer.closeDrawers();
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
     }
 
     private void applyFontToMenuItem(MenuItem mi) {

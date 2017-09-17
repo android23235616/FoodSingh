@@ -1,5 +1,6 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +76,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -120,6 +122,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             applyFontToMenuItem(mi);
 
         }
+        manipulatenavigationdrawer();
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -128,6 +131,26 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
 
+    }
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
     }
 
     private void initialize() {
