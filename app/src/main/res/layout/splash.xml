@@ -4,14 +4,31 @@
     android:layout_height="match_parent"
 
 
-    >
 
+    >
     <ImageView
         android:layout_width="match_parent"
+        android:scaleType="center"
         android:layout_height="match_parent"
-        android:src="@drawable/splash"
-        android:scaleX="1.3"
-        android:layout_marginLeft="38dp"
+        android:src="@drawable/splashbackground"
+        />
+
+    <ImageView
+        android:id="@+id/splash2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+android:src="@drawable/splashh"
+
+        android:gravity="center"
         android:scaleType="centerCrop"/>
+
+    <ImageView
+
+        android:layout_width="70dp"
+        android:id="@+id/progressBar"
+        android:layout_height="70dp"
+        android:layout_marginLeft="150dp"
+        android:src="@drawable/logo7"
+        android:layout_marginTop="480dp"/>
 
 </FrameLayout>
