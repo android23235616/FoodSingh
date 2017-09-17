@@ -56,7 +56,7 @@ import java.util.Map;
 public class place_order_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView total_amount,final_amount,textCoupon;
-    EditText address;
+    EditText address,comments;
     Button finally_place_order;
     List<String> local_list=new ArrayList<>();
     int final_am=0;
@@ -115,12 +115,12 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                         Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
                     } else {
                         String add = address.getText().toString();
-
+                        String com=comments.getText().toString();
                         if (add.length() >= 7) {
                             SharedPreferences.Editor edit = shared.edit();
                             edit.putString("address", add);
                             edit.apply();
-                            send_to_deb(add);
+                            send_to_deb(add,com);
                         } else {
                             Toast.makeText(place_order_activity.this, "Give your full address", Toast.LENGTH_SHORT).show();
                         }
@@ -281,7 +281,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    private void send_to_deb(final String addy) {
+    private void send_to_deb(final String addy, final String com) {
         progress.setMessage("Sending Order........");
         progress.setCancelable(false);
         progress.show();
@@ -327,7 +327,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 maps.put("amount", String.valueOf(after_discount));
                 maps.put("mobile",mobile_number);
                 maps.put("address",addy);
-
+                maps.put("comments",com);
                 return maps;
             }
         };
@@ -357,6 +357,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         final_amount=(TextView)findViewById(R.id.final_amount);
         address=(EditText) findViewById(R.id.delivery_address);
         finally_place_order=(Button)findViewById(R.id.final_order);
+        comments=(EditText)findViewById(R.id.comments);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
         shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
