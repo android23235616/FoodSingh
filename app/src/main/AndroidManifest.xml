@@ -13,7 +13,8 @@
         android:roundIcon="@drawable/logo7"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Signup_OTP"
+        <activity
+            android:name=".Signup_OTP"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -22,7 +23,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".verifying_otp"
+        <activity
+            android:name=".verifying_otp"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -31,7 +33,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".login_page"
+        <activity
+            android:name=".login_page"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -41,10 +44,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".menu"
+            android:configChanges="orientation"
             android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,24 +56,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".menu_category_wise"
+            android:configChanges="orientation"
             android:label="@string/title_activity_menu_category_wise"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".cart"
+            android:configChanges="orientation"
             android:label="@string/title_activity_cart"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".place_order_activity"
+            android:configChanges="orientation"
             android:label="Place Order"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".FakeActivity"
+        <activity
+            android:name=".FakeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -80,11 +84,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".order_history"
-            android:label="Order Hostory"
-            android:theme="@style/AppTheme"></activity>
+            android:configChanges="orientation"
+            android:label="Order History"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Splash"></activity>
     </application>
 
 </manifest>
