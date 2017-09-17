@@ -17,6 +17,9 @@ public class constants {
     public static String order_history="http://mindwires.in/foodsingh_app/get_order_history.php";
     public static String discount_coupon="http://mindwires.in/foodsingh_app/get_discount.php";
 public static String forgot_password="http://mindwires.in/foodsingh_app/forgot_password.php";
+public static String update_details="http://mindwires.in/foodsingh_app/update_user_data.php";
+    public static String get_details="http://mindwires.in/foodsingh_app/get_user_data.php";
+
 
 
     public static List<String> items_name=new ArrayList<>();
@@ -27,6 +30,6 @@ public static String forgot_password="http://mindwires.in/foodsingh_app/forgot_p
     public static List<String> item_name_deb=new ArrayList<>();
     public static List<String>  item_quant_deb=new ArrayList<>();
 
-    public static String version_no;
+    public static String set_version="http://mindwires.in/foodsingh_app/set_version.php";
 
 }
