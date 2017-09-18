@@ -307,6 +307,11 @@ public class login_page extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+
                 try {
                     JSONObject obj=new JSONObject(response);
                     String status=obj.getString("status");
@@ -319,7 +324,6 @@ public class login_page extends AppCompatActivity {
                         edit.putString("mobile",numy);
                         edit.apply();
                         getting_setting_details();
-
 
                     }
                     else
