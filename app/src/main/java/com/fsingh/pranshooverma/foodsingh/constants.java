@@ -19,7 +19,7 @@ public class constants {
 public static String forgot_password="http://mindwires.in/foodsingh_app/forgot_password.php";
 public static String update_details="http://mindwires.in/foodsingh_app/update_user_data.php";
     public static String get_details="http://mindwires.in/foodsingh_app/get_user_data.php";
-
+    public static String get_service_status="http://mindwires.in/foodsingh_app/get_service_status.php";
 
 
     public static List<String> items_name=new ArrayList<>();

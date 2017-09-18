@@ -91,14 +91,21 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                            String n=name.getText().toString();
                            String e=email.getText().toString();
                            String np=new_password.getText().toString();
-                           if(np.length()<4 || e.length()<=4 || n.length()<=1)
+                           if((np.length()<4 & np.length()>0) || e.length()<=4 || n.length()<=1)
                            {
                                Display("Kindly give proper details");
                            }
-                           else
+                            if(np.length()==0 & e.length()>=4 & n.length()>=1)
                            {
+                               np=old_password_check;
+                               Display("Your password will be same");
                             upudate_to_deb(n,e,np);
                            }
+                           if(np.length()!=0 & np.length()>=4 & e.length()>=4 & n.length()>=1)
+                           {
+                               upudate_to_deb(n,e,np);
+                           }
+
                        }
                        else
                        {
@@ -140,8 +147,6 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         mi.setTitle(mNewTitle);
 
     }
-
-
 
 
     private void manipulatenavigationdrawer() {
