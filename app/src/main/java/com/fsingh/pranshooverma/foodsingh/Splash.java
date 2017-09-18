@@ -7,8 +7,12 @@ import android.content.SharedPreferences;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.fsingh.pranshooverma.foodsingh.BuildConfig;
+
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -17,6 +21,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -55,11 +60,36 @@ public class Splash extends AppCompatActivity {
        //Display("Loading! Please Wait");
 
 progressBar = ProgressDialog.show(this, "Loading","Please Wait");
+        progressBar.setCancelable(false);
         sharedPreferences = getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","User");
         String number = sharedPreferences.getString("mobile","000");
 
-        uploadDetails(name, number);
+
+        if(checking_net_permission())
+        {
+            uploadDetails(name, number);
+        }
+        else
+        {
+            if(progressBar.isShowing())
+            {
+                progressBar.dismiss();
+            }
+            setContentView(R.layout.no_internet);
+            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+            TextView calm = (TextView)findViewById(R.id.calm);
+            final TextView retry = (TextView)findViewById(R.id.menu);
+            calm.setTypeface(tf);
+            retry.setTypeface(tf);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
+        }
+
     }
 
     private void uploadDetails(String name, final String number) {
@@ -93,7 +123,7 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
             public void onErrorResponse(VolleyError error) {
                 Display(error.toString());
                 if(progressBar.isShowing()){
-                    progressBar.cancel();
+                    progressBar.dismiss();
                 }
             }
         }){
@@ -111,6 +141,11 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
         request.add(str);
 
         str.setRetryPolicy(new DefaultRetryPolicy(0,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    private Boolean checking_net_permission() {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     private void Display(String s){

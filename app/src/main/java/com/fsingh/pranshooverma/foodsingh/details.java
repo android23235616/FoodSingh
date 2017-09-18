@@ -280,7 +280,6 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                 {
                     progress.dismiss();
                 }
-                Display(response);
 
                 try {
                     JSONArray array=new JSONArray(response);
