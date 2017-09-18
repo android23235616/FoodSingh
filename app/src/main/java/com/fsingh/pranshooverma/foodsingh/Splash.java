@@ -10,6 +10,8 @@ import com.fsingh.pranshooverma.foodsingh.BuildConfig;
 
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,12 +47,14 @@ public class Splash extends AppCompatActivity {
     SharedPreferences sharedPreferences ;
     SharedPreferences.Editor editor;
     ProgressDialog progressBar;
+    Context ctx;
     boolean checker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checker=false;
+        ctx = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -108,6 +112,7 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
 
                         startActivity(new Intent(Splash.this, menu.class));
                         finish();
+
                     }else{
                         Display("Data Transfer Failed! Please check Network connection and try again.");
                         finish();

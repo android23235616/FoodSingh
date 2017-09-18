@@ -4,25 +4,22 @@ package com.fsingh.pranshooverma.foodsingh;
  * Created by Tanmay on 16-09-2016.
  */
 public class localdatabase {
-    public static final String url[] = {"https://static.pexels.com/photos/5876/food-salad-healthy-vegetables-medium.jpg",
+    public static final String url[] = {
+            "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,
             "https://static.pexels.com/photos/5317/food-salad-restaurant-person-medium.jpg",
             "https://static.pexels.com/photos/62097/pexels-photo-62097-medium.jpeg",
-            "https://static.pexels.com/photos/131893/pexels-photo-131893-medium.jpeg",
             "https://static.pexels.com/photos/5249/bread-food-restaurant-people-medium.jpg",
             "https://static.pexels.com/photos/86753/pexels-photo-86753-medium.jpeg",
             "https://static.pexels.com/photos/131044/pexels-photo-131044-medium.jpeg",
             "https://static.pexels.com/photos/5122/food-healthy-man-person-medium.jpeg",
             "https://static.pexels.com/photos/104987/pexels-photo-104987-medium.jpeg",
             "https://static.pexels.com/photos/9708/food-pizza-restaurant-eating-medium.jpg",
+
             "https://static.pexels.com/photos/1398/food-vegetables-meal-kitchen-medium.jpg"
             ,"https://static.pexels.com/photos/47725/hamburger-food-meal-tasty-47725-medium.jpeg",
             "https://static.pexels.com/photos/132694/pexels-photo-132694-medium.jpeg",
-            "https://static.pexels.com/photos/59999/raspberries-fruits-fruit-berries-59999-medium.jpeg",
             "https://static.pexels.com/photos/6863/food-plate-toast-restaurant-medium.jpg",
-            "https://static.pexels.com/photos/53517/eat-food-vitamins-vegetables-53517-medium.jpeg",
-            "https://static.pexels.com/photos/57426/paprika-vegetables-colorful-food-57426-medium.jpeg",
             "https://static.pexels.com/photos/106343/pexels-photo-106343-medium.jpeg",
-            "https://static.pexels.com/photos/65175/pexels-photo-65175-medium.jpeg",
             "https://static.pexels.com/photos/128403/pexels-photo-128403-medium.jpeg",
             "https://static.pexels.com/photos/7765/food-medium.jpg",
             "https://static.pexels.com/photos/54296/pexels-photo-54296-medium.jpeg"

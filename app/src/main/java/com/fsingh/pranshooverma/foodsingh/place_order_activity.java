@@ -87,6 +87,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         TextView toolbarText = (TextView) findViewById(R.id.toolbarText);
         toolbarText.setTypeface(t);
+        toolbarText.setTypeface(t);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -430,12 +431,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.place_order_activity, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
