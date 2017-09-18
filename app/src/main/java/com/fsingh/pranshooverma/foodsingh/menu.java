@@ -263,6 +263,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                         categories.add(nm);
                         images.add(img);
                     }
+                    getting_service_status();
                     send_to_adapter();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -280,6 +281,57 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         });
         RequestQueue qw= Volley.newRequestQueue(this);
         qw.add(as);
+    }
+
+    private void getting_service_status() {
+        if(progress.isShowing())
+        {
+            progress.dismiss();
+        }
+        else
+        {
+            progress.setMessage("Getting Kitchen Status...");
+            progress.show();
+        }
+
+        StringRequest str=new StringRequest(Request.Method.POST, constants.get_service_status, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                try {
+                    JSONObject a=new JSONObject(response);
+                    String b=a.getString("service");
+                    if(b.equals(true))
+                    {
+                        Display("Kitchen Is Open....");
+                    }
+                    else {
+                        Display("Kitchen is closed....");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Display("Some error occured:May be due to server fault or bad internet connection");
+            }
+        });
+
+        RequestQueue s=Volley.newRequestQueue(this);
+        s.add(str);
     }
 
 
