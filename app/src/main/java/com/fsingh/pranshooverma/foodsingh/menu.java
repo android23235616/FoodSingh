@@ -305,7 +305,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 try {
                     JSONObject a=new JSONObject(response);
                     String b=a.getString("service");
-                    if(b.equals(true))
+                    if(b.equals("true"))
                     {
                         Display("Kitchen Is Open....");
                     }
