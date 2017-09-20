@@ -185,6 +185,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             public void onRefresh() {
                 swipe = true;
                 recylerView.removeItemDecoration(itemDecoration);
+                categories.clear();
+                images.clear();
+
                 getting_categories();
 
             }
@@ -424,6 +427,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
         recylerView.addItemDecoration(itemDecoration);
+
+
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
 
