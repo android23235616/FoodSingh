@@ -163,7 +163,7 @@ manipulatenavigationdrawer();
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -258,7 +258,7 @@ manipulatenavigationdrawer();
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         toolbarText.setTypeface(t);
 
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
     }
 
     private void send_to_adapter()

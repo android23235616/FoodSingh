@@ -146,7 +146,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -162,7 +162,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         layout=new GridLayoutManager(this,1);
         recycler.setLayoutManager(layout);
         recycler.setNestedScrollingEnabled(true);
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
     }
 
     private void send_to_adapter()

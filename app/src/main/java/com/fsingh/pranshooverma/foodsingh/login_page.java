@@ -55,7 +55,6 @@ public class login_page extends AppCompatActivity {
             Intent as1=new Intent(getApplicationContext(),Splash.class);
             startActivity(as1);
             finish();
-
         }
 
 
@@ -209,7 +208,7 @@ public class login_page extends AppCompatActivity {
     private void getting_setting_details() {
         if(checking_net_permission())
         {
-            SharedPreferences pref=getSharedPreferences("foodsingh",MODE_PRIVATE);
+            SharedPreferences pref=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
             String mobile=pref.getString("mobile","000");
             if(mobile.equals("000"))
             {
@@ -249,7 +248,7 @@ public class login_page extends AppCompatActivity {
                 try {
                     JSONArray array=new JSONArray(response);
                     JSONObject obj=array.getJSONObject(0);
-                    SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name",obj.getString("name"));
                     editor.putString("email",obj.getString("email"));
@@ -287,7 +286,7 @@ public class login_page extends AppCompatActivity {
         r.add(str);
     }
     private Boolean check_if_logged_in() {
-        SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        SharedPreferences as=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         String pass=as.getString("password","123");
         if(pass.equals("123"))
         {
@@ -318,7 +317,7 @@ public class login_page extends AppCompatActivity {
                     if(status.equals("1"))
                     {
                  //       Display("Successfully logged in");
-                        SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
+                        SharedPreferences as=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
                         SharedPreferences.Editor edit=as.edit();
                         edit.putString("password",passy);//100 defined for logged in
                         edit.putString("mobile",numy);

@@ -2,13 +2,16 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +19,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,6 +86,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
+        //Display(versionStatus());
+
 
 //FOR NAVIGATION DRAWER
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,6 +192,37 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private void action(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(menu.this);
+        dialog.setTitle("Announcement");
+        dialog.setCancelable(false);
+        dialog.setMessage("You are using an older version of this app. To continue using this app, Please update");
+        dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //rec = true;
+                String url = "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh";
+                Intent i11 = new Intent(Intent.ACTION_VIEW);
+                i11.setData(Uri.parse(url));
+                startActivity(i11);
+            }
+        });
+
+        dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        dialog.show();
+    }
+
+    private String versionStatus(){
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        return sharedPreferences.getString("version","null");
+    }
+
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
@@ -199,7 +236,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -231,7 +268,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         recylerView.setNestedScrollingEnabled(true);
         itemDecoration=new GridSpacingItemDecoration(1,dpToPx(1),true);
         setTypeface();
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
     }
 

@@ -71,7 +71,8 @@ public class Splash extends AppCompatActivity {
 
 progressBar = ProgressDialog.show(this, "Loading","Please Wait");
         progressBar.setCancelable(false);
-        sharedPreferences = getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         String name = sharedPreferences.getString("name","User");
         String number = sharedPreferences.getString("mobile","000");
 
@@ -117,7 +118,8 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
                     JSONObject object= new JSONObject(response);
                     String result = object.getString("message");
                     String version = object.getString("version");
-
+                    editor.putString("version",version);
+                    editor.apply();
                    if(version.equals("NEW")){
                        if(result.equals("SUCCESS")){
 

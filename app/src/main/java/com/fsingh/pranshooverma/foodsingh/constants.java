@@ -9,6 +9,10 @@ import java.util.List;
 
 public class constants {
 
+
+
+    public static final String foodsingh = "kjhkjh";
+
     public static String login_details_url="http://mindwires.in/foodsingh_app/logini_save_and_check.php";
     public static String login_check_url="http://mindwires.in/foodsingh_app/login.php";
     public  static  String get_categories="http://mindwires.in/foodsingh_app/get_categories2.php";

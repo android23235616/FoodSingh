@@ -162,7 +162,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -170,7 +170,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     }
 
     private void upudate_to_deb( final String n, final String e, final String np) {
-        SharedPreferences sh=getSharedPreferences("foodsingh", Context.MODE_PRIVATE);
+        SharedPreferences sh=getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
           mobile_old=sh.getString("mobile","000");
         if(mobile_old.equals("000"))
         {
@@ -201,7 +201,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
                     if(m.equals("SUCCESS") && r.equals("true"))
                     {
-                        SharedPreferences sg=getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+                        SharedPreferences sg=getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
                         SharedPreferences.Editor edit=sg.edit();
                         edit.putString("password",np);
                         edit.putString("name",n);
@@ -250,7 +250,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     private void getting_setting_details() {
         if(checking_net_permission())
         {
-            SharedPreferences pref=getSharedPreferences("foodsingh",MODE_PRIVATE);
+            SharedPreferences pref=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
             String mobile=pref.getString("mobile","000");
             if(mobile.equals("000"))
             {
@@ -330,7 +330,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         old_password =(EditText)findViewById(R.id.text_cur_pass);
         new_password =(EditText)findViewById(R.id.text_new_pass);
         button_save_change=(Button)findViewById(R.id.button_save_change);
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
     }

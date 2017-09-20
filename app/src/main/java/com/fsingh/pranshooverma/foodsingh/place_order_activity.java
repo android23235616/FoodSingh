@@ -210,7 +210,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -379,7 +379,7 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         comments=(EditText)findViewById(R.id.comments);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         mobile_number=shared.getString("mobile","123");
         if(mobile_number.equals("123"))
         {

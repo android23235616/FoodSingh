@@ -98,7 +98,7 @@ boolean nav=true;
         if(checking_net_permission())
         {
 
-            SharedPreferences a=getSharedPreferences("foodsingh",MODE_PRIVATE);
+            SharedPreferences a=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
             String number=a.getString("mobile","abc");
             if(number.equals("abc"))
             {
@@ -159,7 +159,7 @@ manipulatenavigationdrawer();
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("foodsingh",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -256,7 +256,7 @@ manipulatenavigationdrawer();
         recylerview.setAdapter(mAdapter);
         recylerview.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recylerview.setItemAnimator(new DefaultItemAnimator());
-        shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
+        shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
     }
 
     private Boolean checking_net_permission() {

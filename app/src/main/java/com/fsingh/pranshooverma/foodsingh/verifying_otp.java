@@ -138,7 +138,7 @@ public class verifying_otp extends AppCompatActivity {
                     {
                         Display("Successfully Registered");
                         //saving mobile number and password
-                        SharedPreferences as=getSharedPreferences("foodsingh",MODE_PRIVATE);
+                        SharedPreferences as=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
                         SharedPreferences.Editor edit=as.edit();
                         edit.putString("password",pass);//100 defined for logged in
                         edit.putString("mobile",mob);
