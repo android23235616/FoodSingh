@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -115,7 +116,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                 if (checking_net_permission()) {
                     if (final_am == 0) {
                         Toast.makeText(place_order_activity.this, "You have not added anything in the cart", Toast.LENGTH_SHORT).show();
-                    } else {
+                    } else if(constants.min_order>Integer.parseInt(final_amount.getText().toString())){
+                        Display("Order can't be placed. The minimum order is "+constants.min_order);
+
+                    } else{
                         String add = address.getText().toString();
                         String com=comments.getText().toString();
                         if (add.length() >= 7) {
@@ -253,8 +257,10 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
                     progress.dismiss();
                 }
                 try {
+                   // Display(response);
                     JSONObject obj=new JSONObject(response);
                     String dis=obj.getString("discount");
+                    constants.min_order = obj.getInt("min_order");
                     discount_amount= Integer.parseInt(dis);
                     if(dis.equals("0"))
                     {

@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -10,8 +11,10 @@ import com.fsingh.pranshooverma.foodsingh.BuildConfig;
 
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,12 +51,15 @@ public class Splash extends AppCompatActivity {
     SharedPreferences.Editor editor;
     ProgressDialog progressBar;
     Context ctx;
+    boolean rec = false;
+
     boolean checker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checker=false;
+        rec = false;
         ctx = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -106,17 +112,47 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
                 }
                 try {
 
+                    //Display(response);
+
                     JSONObject object= new JSONObject(response);
                     String result = object.getString("message");
-                    if(result.equals("SUCCESS")){
+                    String version = object.getString("version");
 
-                        startActivity(new Intent(Splash.this, menu.class));
-                        finish();
+                   if(version.equals("NEW")){
+                       if(result.equals("SUCCESS")){
 
-                    }else{
-                        Display("Data Transfer Failed! Please check Network connection and try again.");
-                        finish();
-                    }
+                           startActivity(new Intent(Splash.this, menu.class));
+                           finish();
+
+                       }else{
+                           Display("Data Transfer Failed! Please check Network connection and try again.");
+                           finish();
+                       }
+                   }else{
+                       AlertDialog.Builder dialog = new AlertDialog.Builder(Splash.this);
+                       dialog.setTitle("Announcement");
+                       dialog.setCancelable(false);
+                       dialog.setMessage("You are using an older version of this app. To continue using this app, Please update");
+                       dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               rec = true;
+                               String url = "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh";
+                               Intent i11 = new Intent(Intent.ACTION_VIEW);
+                               i11.setData(Uri.parse(url));
+                               startActivity(i11);
+                           }
+                       });
+
+                       dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               finish();
+                           }
+                       });
+                       dialog.show();
+                   }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Display(e.toString());
@@ -163,6 +199,8 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
         return versionCode+"";
     }
 
+
+
     @Override
     public void onPause(){
         super.onPause();
@@ -183,5 +221,10 @@ progressBar = ProgressDialog.show(this, "Loading","Please Wait");
                 }
             }
         }
+
+        if(rec){
+            recreate();
+        }
+
     }
 }
