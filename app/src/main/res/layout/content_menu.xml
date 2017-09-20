@@ -15,12 +15,14 @@
         android:layout_height="25dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
+        android:layout_marginTop="255dp"
         android:textColor="#ffffff"
+        android:scrollbars="vertical"
         android:padding="3dp"
         android:text="Attack! On the Food."/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-
+android:scrollbars="vertical"
     android:layout_height="match_parent"
     android:id="@+id/recyclerView"
     >

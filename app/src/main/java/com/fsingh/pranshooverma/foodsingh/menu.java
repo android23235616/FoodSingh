@@ -15,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,6 +71,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     AppBarLayout appBarLayout;
     public static int width;
     public static TextView cartitemcount1;
+    boolean swipe = false;
+    SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
 
     @Override
@@ -126,6 +129,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         //here the coding part is:
         nav=true;
         initialize();
+
         next = (ImageButton) findViewById(R.id.right_arrow);
         back = (ImageButton) findViewById(R.id.left_arrow);
         width = getScreenWidth();
@@ -169,6 +173,15 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe = true;
+                getting_categories();
+
+            }
+        });
+
     }
 
     private void manipulatenavigationdrawer() {
@@ -204,6 +217,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_1,
+                R.color.refresh_progress_2,
+                R.color.refresh_progress_3);
+        //swipeRefreshLayout.canScrollVertically()
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
         layoutmanager=new GridLayoutManager(this,3);
         recylerView.setLayoutManager(layoutmanager);
@@ -242,16 +261,21 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_categories() {
-        progress.setMessage("Fetching Data.....");
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.show();
-
+        if(!swipeRefreshLayout.isRefreshing()) {
+            progress.setMessage("Fetching Data.....");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.show();
+        }
         StringRequest as=new StringRequest(Request.Method.POST, constants.get_categories, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(progress.isShowing())
                 {
                     progress.dismiss();
+                }
+
+                if(swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
                 }
                 try {
                     JSONArray a=new JSONArray(response);
@@ -276,6 +300,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 {
                     progress.dismiss();
                 }
+                if(swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
                 Display("Some Error occurred,may be due to bad internet connection...");
             }
         });
@@ -290,8 +318,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
         else
         {
-            progress.setMessage("Getting Kitchen Status...");
-            progress.show();
+            if(!swipeRefreshLayout.isRefreshing()) {
+                progress.setMessage("Getting Kitchen Status...");
+                progress.show();
+            }
         }
 
         StringRequest str=new StringRequest(Request.Method.POST, constants.get_service_status, new Response.Listener<String>() {
@@ -302,6 +332,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 {
                     progress.dismiss();
                 }
+                if(swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
                 try {
                     JSONObject a=new JSONObject(response);
                     String b=a.getString("service");

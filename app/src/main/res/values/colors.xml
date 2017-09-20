@@ -18,4 +18,8 @@
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
 
+    <color name="refresh_progress_1">@color/colorPrimary</color>
+    <color name="refresh_progress_2">@color/cardview_dark_background</color>
+    <color name="refresh_progress_3">@color/white</color>
+
 </resources>
