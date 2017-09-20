@@ -72,6 +72,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     public static int width;
     public static TextView cartitemcount1;
     boolean swipe = false;
+    RecyclerView.ItemDecoration itemDecoration;
     SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
 
@@ -177,6 +178,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onRefresh() {
                 swipe = true;
+                recylerView.removeItemDecoration(itemDecoration);
                 getting_categories();
 
             }
@@ -227,6 +229,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         layoutmanager=new GridLayoutManager(this,3);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
+        itemDecoration=new GridSpacingItemDecoration(1,dpToPx(1),true);
         setTypeface();
         shared=getSharedPreferences("foodsingh",MODE_PRIVATE);
 
@@ -383,7 +386,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
-        recylerView.addItemDecoration(new GridSpacingItemDecoration(1,dpToPx(1),true));
+        recylerView.addItemDecoration(itemDecoration);
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
 
