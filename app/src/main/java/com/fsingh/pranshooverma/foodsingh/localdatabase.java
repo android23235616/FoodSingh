@@ -2,6 +2,9 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.location.Location;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Tanmay on 16-09-2016.
  */
@@ -39,4 +42,9 @@ public class localdatabase {
     final static String file_path = "/fav.tom";
 
     public static Location deliveryLocation = null;
+
+    public static List<MasterMenuItems> masterList = new ArrayList<>();
+    public static List<String> BannerUrls = new ArrayList<>();
+
+    public static MetaData metaData;
 }

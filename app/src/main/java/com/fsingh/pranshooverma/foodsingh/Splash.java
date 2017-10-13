@@ -53,10 +53,13 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Splash extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
@@ -64,9 +67,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    ProgressDialog progressBar;
+    ProgressBar progressBar;
     Context ctx;
     boolean rec = false;
+    TextView header;
+
+    ProgressBar progressbar;
     GoogleApiClient apiClient;
     private boolean LocationChecked = false, LocationPermission;
     boolean checker = false;
@@ -81,11 +87,15 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash);
-        ImageView AnimationTarget = (ImageView) findViewById(R.id.progressBar);
+       progressBar = (ProgressBar)findViewById(R.id.real_progressbar) ;
+        header = (TextView)findViewById(R.id.metadata);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        header.setTypeface(tf);
+
         // Glide.with(this).load(R.drawable.signin).into(AnimationTarget);
         //Display("Loading! Please Wait");
 
-        Initiate_Meta_Daya();
+        Initiate_Meta_Data();
 
         // progressBar = ProgressDialog.show(this, "Loading","Please Wait");
         //progressBar.setCancelable(false);
@@ -95,9 +105,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         String number = sharedPreferences.getString("mobile", "000");
 
 
+        //New_Details(name,number,constants.main_url);
+
         /*if(checking_net_permission())
         {
-            uploadDetails(name, number);
+
         }
         else
         {
@@ -121,7 +133,75 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
-    private void Initiate_Meta_Daya() {
+    private void New_Details(String name, String number, String main_url) {
+
+        RequestQueue request = Volley.newRequestQueue(Splash.this);
+
+        StringRequest st = new StringRequest(Request.Method.GET, main_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject mainObject = new JSONObject(response);
+                    localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
+                    ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
+                    );
+
+                    JSONArray Categories = mainObject.getJSONArray("categories");
+                    for (int i=0; i<Categories.length(); i++){
+                        String name,image,cuisine, time, combo;
+                        List<MenuItems> menuItemsList = new ArrayList<>();
+                        JSONObject tempObject = Categories.getJSONObject(i);
+                        name = tempObject.getString("name");
+                        image = tempObject.getString("image");
+                        cuisine = tempObject.getString("cuisine");
+                        time = tempObject.getString("time");
+                        combo = tempObject.getString("combo");
+                        JSONArray miniMenu = tempObject.getJSONArray("menu");
+
+                        for(int j=0; j<miniMenu.length(); j++){
+                            String id, name_, category, price, image_;
+                            JSONObject miniTempObject = miniMenu.getJSONObject(j);
+                            id = miniTempObject.getString("id");
+                            name_ = miniTempObject.getString("name");
+                            category = miniTempObject.getString("category");
+                            price = miniTempObject.getString("price");
+                            image_ = miniTempObject.getString("image");
+                            MenuItems menuItems = new MenuItems(id,name_,category,price,image_);
+                            menuItemsList.add(menuItems);
+                        }
+                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time);
+                        localdatabase.masterList.add(menuItemsObject);
+
+
+                    }
+                    JSONArray BannerImages = mainObject.getJSONArray("home_images");
+
+                    for(int i=0; i<BannerImages.length(); i++){
+                        localdatabase.BannerUrls.add(BannerImages.getJSONObject(i).getString("url"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Display(e.toString());
+                }finally {
+                    startActivity(new Intent(Splash.this, menu.class));
+                    finish();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Display(error.toString());
+            }
+        });
+
+        request.add(st);
+
+        st.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    private void Initiate_Meta_Data() {
 
         if (!checkPermission()) {
             // requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
@@ -130,6 +210,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             LocationPermission = false;
         } else {
             LocationPermission = true;
+            New_Details("","",constants.main_url);
         }
 
     }
@@ -157,9 +238,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         StringRequest str = new StringRequest(Request.Method.POST, constants.set_version, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (progressBar.isShowing()) {
-                    progressBar.cancel();
-                }
+              //  if (progressBar.isShowing()) {
+                //    progressBar.cancel();
+                //}
                 try {
 
                     //Display(response);
@@ -214,9 +295,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onErrorResponse(VolleyError error) {
                 Display(error.toString());
-                if (progressBar.isShowing()) {
-                    progressBar.dismiss();
-                }
+              //  if (progressBar.isShowing()) {
+                //    progressBar.dismiss();
+                //}
             }
         }) {
             @Override
@@ -254,18 +335,18 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     @Override
     public void onPause() {
         super.onPause();
-        if (progressBar != null)
+       /* if (progressBar != null)
             if (progressBar.isShowing()) {
                 progressBar.cancel();
                 checker = true;
-            }
+            }*/
     }
 
     @Override
 
     public void onResume() {
         super.onResume();
-        if (checker) {
+      /*  if (checker) {
             if (progressBar != null) {
                 if (!progressBar.isShowing()) {
                     progressBar = ProgressDialog.show(Splash.this, "Loading.", "Please Wait!");
@@ -275,7 +356,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         if (rec) {
             recreate();
-        }
+        }*/
 
     }
 
@@ -288,6 +369,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     LocationPermission = false;
                 } else {
                     LocationPermission = true;
+                    New_Details("","",constants.main_url);
                 }
             }
 
