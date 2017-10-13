@@ -1,5 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.location.Location;
+
 /**
  * Created by Tanmay on 16-09-2016.
  */
@@ -35,4 +37,6 @@ public class localdatabase {
         ,"http://www.zastavki.com/pictures/640x480/2015/Food___Seafood_Cream_soup_with_prawns_105848_29.jpg"};
 
     final static String file_path = "/fav.tom";
+
+    public static Location deliveryLocation = null;
 }
