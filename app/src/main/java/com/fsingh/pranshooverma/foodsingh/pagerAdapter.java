@@ -39,7 +39,8 @@ public class pagerAdapter extends PagerAdapter {
         View v = inflater.inflate(R.layout.view_pager_layout, parent, false);
         imageView = (ImageView)v.findViewById(R.id.view_pager_cover);
         Random rand = new Random();
-                Glide.with(parent.getContext()).load(database.BannerUrls.get(position)).
+
+                Glide.with(parent.getContext()).load(database.BannerUrls.get(position%database.BannerUrls.size())).
                       override(new menu().width, getPx(270,parent.getContext())).centerCrop().thumbnail(0.001f).
                     crossFade().into(imageView);
         Log.i("pager", "adapter has been called");

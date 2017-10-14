@@ -170,7 +170,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View v) {
                 int current = pager.getCurrentItem() + 1;
-                pager.setCurrentItem(current);
+                if(current == localdatabase.BannerUrls.size()) {
+                    pager.setCurrentItem(0);
+                }else{
+                    pager.setCurrentItem(current);
+                }
             }
         });
 
@@ -180,6 +184,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 int current = pager.getCurrentItem() - 1;
                 if (current >= 0)
                     pager.setCurrentItem(current);
+                else{
+                    pager.setCurrentItem(localdatabase.BannerUrls.size()-1);
+                }
             }
         });
 
