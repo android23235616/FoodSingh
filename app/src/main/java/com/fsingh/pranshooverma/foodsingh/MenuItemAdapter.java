@@ -125,6 +125,9 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     if(!localdatabase.cartList.contains(item)){
                         localdatabase.cartList.add(item);
                     }
+
+                    menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 }
 
             }
@@ -142,6 +145,9 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     if(quantity == 0){
                         localdatabase.cartList.remove(item);
                     }
+
+                    menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 }
             }
         });

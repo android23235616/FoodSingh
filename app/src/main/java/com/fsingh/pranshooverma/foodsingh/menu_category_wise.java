@@ -375,7 +375,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         View actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount=(TextView) actionView.findViewById(R.id.cart_badge);
 
-        cartitemcount.setText(String.valueOf(constants.items_name.size()));
+        cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override

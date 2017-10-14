@@ -489,7 +489,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         View actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
-        cartitemcount1.setText(String.valueOf(constants.items_name.size()));
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
