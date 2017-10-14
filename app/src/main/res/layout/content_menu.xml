@@ -13,45 +13,74 @@
         android:id="@+id/attack"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/colorPrimary"
+        android:background="#75E990"
+        android:fontFamily="monospace"
         android:gravity="center"
         android:layout_marginTop="255dp"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorAccent"
         android:scrollbars="vertical"
         android:padding="3dp"
         android:text="Attack! On the Food."/>
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/dummy_ad"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/advertisement1"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="SORT BY"
+        android:fontFamily="monospace"
+        android:textColor="@color/grey"
         />
 
-    <RelativeLayout
+    <LinearLayout
+    android:orientation="horizontal"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:layout_margin="5dp"
+            android:layout_height="30dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
             android:id="@+id/cuisine"
+            android:background="@drawable/clicked_button"
             android:text="Cuisine"
+            android:textColor="#ffffff"
             />
         <Button
+            android:fontFamily="monospace"
+            android:layout_margin="5dp"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:id="@+id/time"
             android:text="Time"
+
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/cuisine" />
         <Button
+            android:fontFamily="monospace"
+            android:textColor="#ffffff"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:id="@+id/combo"
             android:text="Combo"
             android:layout_toEndOf="@+id/time"
             android:layout_alignParentTop="true"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

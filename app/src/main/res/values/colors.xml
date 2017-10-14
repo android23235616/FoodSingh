@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#B71c1c</color>
-    <color name="colorPrimaryDark">#B71c1c</color>
+    <color name="colorPrimary">#EAE19E</color>
+    <color name="colorPrimaryDark">#EAE19E</color>
+    <color name="menu_text">#069655</color>
     <color name="colorAccent">#B71c1c</color>
-
+    <color name = "background_color_new">#DCE4C0</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
     <color name="bg_main">#428bca</color>
     <color name="white">#ffffff</color>
     <color name="input_login">#222222</color>
+    <color name = "grey">#5c5d5e</color>
+    <color name = "button_background_menu">#A0A09F</color>
+    <color name ="clicked_button">#72895E</color>
     <color name="input_login_hint">#999999</color>
     <color name="input_register">#888888</color>
     <color name="input_register_bg">#3b4148</color>

@@ -34,6 +34,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,6 +85,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         super.onCreate(savedInstanceState);
 
+        RemoveTop();
+
         setContentView(R.layout.activity_menu);
         //Display(versionStatus());
 
@@ -103,7 +107,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getBackground().setAlpha(122);
+       // navigationView.getBackground().setAlpha(122);
 
         //manipulate navigation drawer
 
@@ -195,6 +199,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         cuisine_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.clicked_button);
+
+                time_btn.setBackgroundResource(R.drawable.menu_button);
+                combo_btn.setBackgroundResource(R.drawable.menu_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -213,6 +221,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+
+                time_btn.setBackgroundResource(R.drawable.clicked_button);
+                combo_btn.setBackgroundResource(R.drawable.menu_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -230,6 +242,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         combo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+
+                time_btn.setBackgroundResource(R.drawable.menu_button);
+                combo_btn.setBackgroundResource(R.drawable.clicked_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -247,6 +263,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
     private void action(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(menu.this);
         dialog.setTitle("Announcement");

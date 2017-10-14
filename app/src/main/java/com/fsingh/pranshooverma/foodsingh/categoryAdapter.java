@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,8 +48,9 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
             txt=(TextView) itemView.findViewById(R.id.text_char_name);
             cardView=(CardView) itemView.findViewById(R.id.card_view);
             Typeface t = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/android.ttf");
-            txt.setTypeface(t);
+            //txt.setTypeface(t);
         }
+
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -89,6 +92,8 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
