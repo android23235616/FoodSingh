@@ -7,21 +7,15 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -35,7 +29,6 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +43,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +64,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     categoryAdapter_menu_wise adapter_menu_wise;
 
     String category=null;
+    int position;
 
     SharedPreferences shared;
 
@@ -82,7 +75,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
-nav=true;
+        nav=true;
         /////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,7 +87,7 @@ nav=true;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ///////////////////////////////////////////////////////////////////
@@ -107,7 +100,8 @@ nav=true;
 
         if (checking_net_permission()) {
             if (category != null) {
-                receive_menu_for_category(category);
+                //receive_menu_for_category(category);
+
             } else {
                 Display("Something went wrong");
             }
@@ -126,11 +120,9 @@ nav=true;
                     recreate();
                 }
             });
-
-
         }
 
-manipulatenavigationdrawer();
+        manipulatenavigationdrawer();
         Menu m = navigationView.getMenu();
         for (int i = 0; i < m.size(); i++) {
             MenuItem mi = m.getItem(i);
@@ -148,6 +140,9 @@ manipulatenavigationdrawer();
             applyFontToMenuItem(mi);
 
         }
+
+        populateUI();
+
     }
 
     private void manipulatenavigationdrawer() {
@@ -244,6 +239,8 @@ manipulatenavigationdrawer();
     private void getting_category_from_previous_activity() {
         Bundle d=getIntent().getExtras();
         category=d.getString("category");
+        position= d.getInt("position");
+
     //    Display(category);
     }
 
@@ -457,4 +454,22 @@ manipulatenavigationdrawer();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
+    private void populateUI() {
+
+        List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
+        MenuItemAdapter adapter = new MenuItemAdapter(this, menuItems);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        //Toast.makeText(this, ""+Splash.masterMenuItems.size(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, ""+localdatabase.masterList.get(position).getMenuList(), Toast.LENGTH_LONG).show();
+
+    }
+
 }

@@ -77,6 +77,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     private boolean LocationChecked = false, LocationPermission;
     boolean checker = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,8 +173,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         }
                         MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time);
                         localdatabase.masterList.add(menuItemsObject);
-
-
                     }
                     JSONArray BannerImages = mainObject.getJSONArray("home_images");
 

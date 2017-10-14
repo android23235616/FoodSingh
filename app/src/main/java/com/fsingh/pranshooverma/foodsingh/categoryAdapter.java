@@ -82,6 +82,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
                 Intent as=new Intent(mContext,menu_category_wise.class);
                 Bundle a=new Bundle();
                 a.putString("category",category_name);
+                a.putInt("position", position);
                 as.putExtras(a);
                 view.getContext().startActivity(as);
 
