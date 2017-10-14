@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,14 +19,12 @@ import java.util.List;
  * Created by PRANSHOO VERMA on 13/09/2017.
  */
 
-public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
+public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder> {
 
     private Context mContext;
 
     private  List<MenuItems> menuItems = new ArrayList<>();
 
-    private List<String> dish_name=new ArrayList<>();
-    private List<String> dish_price=new ArrayList<>();
     private List<String> NA = new ArrayList<>();
     boolean check=false;
 
@@ -43,7 +40,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
 */
 
-    public MenuItemAdapter(Context mContext, List<MenuItems> menuItems) {
+    public CartItemAdapter(Context mContext, List<MenuItems> menuItems) {
         this.mContext = mContext;
         this.menuItems = menuItems;
     }
@@ -51,16 +48,17 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView diname,diprice,item_quantity;
-        ImageView pl,mi, image;
+        TextView diname,diprice,item_quantity, total_diprice;
+        ImageView pl,mi, delete;
         public ViewHolder(View itemView) {
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
+            total_diprice=(TextView) itemView.findViewById(R.id.total_dish_price);
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
+            delete=(ImageView) itemView.findViewById(R.id.delete);
             pl=(ImageView) itemView.findViewById(R.id.plus);
             mi=(ImageView) itemView.findViewById(R.id.minus);
-            image=(ImageView) itemView.findViewById(R.id.img_item);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
@@ -70,7 +68,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_category_menu,parent,false);
+        View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_cart_item,parent,false);
         ViewHolder vh=new ViewHolder(v);
 
         return vh;
@@ -87,12 +85,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         String rupees=dish_price.get(position);
         */
 
-        final MenuItems menuItem = menuItems.get(position);
-        String name = menuItem.getName();
-        String rupees = menuItem.getPrice();
-
+        final MenuItems item = menuItems.get(position);
+        String name = item.getName();
+        String rupees = item.getPrice();
+        int qty = item.getQuantity();
         holder.diname.setText(name);
-        int qty = menuItem.getQuantity();
+        holder.total_diprice.setText("₹"+Integer.parseInt(rupees)*qty);
         holder.item_quantity.setText(""+qty);
         holder.diprice.setText("₹"+rupees);
         if(rupees.equals("0")){
@@ -102,9 +100,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             check = false;
         }
 
-        String url = menuItem.getImage();
-        Glide.with(mContext).load(url).skipMemoryCache(true).thumbnail(0.05f)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.image);
 
         if(constants.item_name_deb.contains(name))
         {
@@ -116,12 +111,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItems item = menuItems.get(position);
                 if(!holder.diprice.getText().toString().equals("NA")){
                     int quantity = item.getQuantity();
                     quantity++;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
+                    holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
                     if(!localdatabase.cartList.contains(item)){
                         localdatabase.cartList.add(item);
                     }
@@ -133,16 +128,27 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItems item = menuItems.get(position);
+
                 if(!holder.diprice.getText().toString().equals("NA") && item.getQuantity()!=0){
                     int quantity = item.getQuantity();
                     quantity--;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
+                    holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
                     if(quantity == 0){
                         localdatabase.cartList.remove(item);
+                        cart.adapter.notifyDataSetChanged();
                     }
                 }
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.setQuantity(0);
+                localdatabase.cartList.remove(item);
+                cart.adapter.notifyDataSetChanged();
             }
         });
 /*
