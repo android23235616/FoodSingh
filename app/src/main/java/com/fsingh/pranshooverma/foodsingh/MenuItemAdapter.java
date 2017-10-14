@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView diname,diprice,item_quantity;
-        ImageView pl,mi;
+        ImageView pl,mi, image;
         public ViewHolder(View itemView) {
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name);
@@ -57,6 +60,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
             pl=(ImageView) itemView.findViewById(R.id.plus);
             mi=(ImageView) itemView.findViewById(R.id.minus);
+            image=(ImageView) itemView.findViewById(R.id.img_item);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
@@ -83,20 +87,23 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         String rupees=dish_price.get(position);
         */
 
-        MenuItems menuItem = menuItems.get(position);
+        final MenuItems menuItem = menuItems.get(position);
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
 
         holder.diname.setText(name);
 
-        holder.diprice.setText(rupees);
-        if(rupees.equals("Rs.0")){
+        holder.diprice.setText("₹"+rupees);
+        if(rupees.equals("0")){
             holder.diprice.setText("NA");
            check = true;
         }else{
             check = false;
         }
 
+        String url = menuItem.getImage();
+        Glide.with(mContext).load(url).skipMemoryCache(true).thumbnail(0.05f)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.image);
 
         if(constants.item_name_deb.contains(name))
         {
@@ -105,6 +112,38 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             holder.item_quantity.setText(String.valueOf(qa));
         }
 
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuItems item = menuItems.get(position);
+                if(!holder.diprice.getText().toString().equals("NA")){
+                    int quantity = item.getQuantity();
+                    quantity++;
+                    item.setQuantity(quantity);
+                    holder.item_quantity.setText(String.valueOf(quantity));
+                    if(!localdatabase.cartList.contains(item)){
+                        localdatabase.cartList.add(item);
+                    }
+                }
+
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuItems item = menuItems.get(position);
+                if(!holder.diprice.getText().toString().equals("NA") && item.getQuantity()!=0){
+                    int quantity = item.getQuantity();
+                    quantity--;
+                    item.setQuantity(quantity);
+                    holder.item_quantity.setText(String.valueOf(quantity));
+                    if(quantity == 0){
+                        localdatabase.cartList.remove(item);
+                    }
+                }
+            }
+        });
 /*
         plus.setOnClickListener(new View.OnClickListener() {
             @Override

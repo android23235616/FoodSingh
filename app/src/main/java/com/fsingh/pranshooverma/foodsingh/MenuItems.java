@@ -7,6 +7,7 @@ package com.fsingh.pranshooverma.foodsingh;
 public class MenuItems {
 
     private String Id, Name, Category, Price, Image;
+    private int quantity = 0;
 
     MenuItems(String Id, String Name, String Category, String Price, String Image){
         this.Id = Id;
@@ -14,6 +15,14 @@ public class MenuItems {
         this.Category = Category;
         this.Price = Price;
         this.Image = Image;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getId(){
