@@ -48,4 +48,6 @@ public class localdatabase {
     public static List<String> BannerUrls = new ArrayList<>();
 
     public static MetaData metaData;
+
+    public static List<MenuItems> cartList = new ArrayList<>();
 }

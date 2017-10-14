@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -43,6 +44,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     Button place_order;
     SharedPreferences shared;
     NavigationView navigationView;
+    public static CartItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,9 +169,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void send_to_adapter()
     {
-        mAdapter=new cartAdapter(this,constants.items_name,constants.items_price);
-        recycler.setAdapter(mAdapter);
-        recycler.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+        adapter = new CartItemAdapter(this, localdatabase.cartList);
+        //mAdapter=new cartAdapter(this,constants.items_name,constants.items_price);
+        recycler.setAdapter(adapter);
+        //recycler.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+        recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setItemAnimator(new DefaultItemAnimator());
     }
 

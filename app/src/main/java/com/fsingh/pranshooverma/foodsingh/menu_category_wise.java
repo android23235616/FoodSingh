@@ -375,7 +375,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         View actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount=(TextView) actionView.findViewById(R.id.cart_badge);
 
-        cartitemcount.setText(String.valueOf(constants.items_name.size()));
+        cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -464,7 +464,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
         MenuItemAdapter adapter = new MenuItemAdapter(this, menuItems);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //Toast.makeText(this, ""+Splash.masterMenuItems.size(), Toast.LENGTH_LONG).show();
