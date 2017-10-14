@@ -18,6 +18,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -191,6 +192,59 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+        cuisine_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categories.clear();
+                images.clear();
+                for(int i=0;i<localdatabase.masterList.size();i++)
+                {
+                    MasterMenuItems a=localdatabase.masterList.get(i);
+                    if(a.getCuisine().equals("1"))
+                    {
+                        categories.add(a.getName());
+                        images.add(a.getImage());
+                    }
+                }
+                send_to_adapter();
+
+            }
+        });
+        time_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categories.clear();
+                images.clear();
+                for(int i=0;i<localdatabase.masterList.size();i++)
+                {
+                    MasterMenuItems a=localdatabase.masterList.get(i);
+                    if(a.getTime().equals("1"))
+                    {
+                        categories.add(a.getName());
+                        images.add(a.getImage());
+                    }
+                }
+                send_to_adapter();
+            }
+        });
+        combo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                categories.clear();
+                images.clear();
+                for(int i=0;i<localdatabase.masterList.size();i++)
+                {
+                    MasterMenuItems a=localdatabase.masterList.get(i);
+                    if(a.getCombo().equals("1"))
+                    {
+                        categories.add(a.getName());
+                        images.add(a.getImage());
+                    }
+                }
+                send_to_adapter();
+            }
+        });
+
     }
 
     private void action(){
@@ -264,10 +318,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 R.color.refresh_progress_3);
         //swipeRefreshLayout.canScrollVertically()
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
-        layoutmanager=new GridLayoutManager(this,1);
+        layoutmanager=new LinearLayoutManager(this);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
-        itemDecoration=new GridSpacingItemDecoration(1,dpToPx(1),true);
+        recylerView.setItemAnimator(new DefaultItemAnimator());
         setTypeface();
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
@@ -306,6 +360,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_categories() {
+        getting_service_status();
         if (!swipeRefreshLayout.isRefreshing())
         {
             progress.setMessage("Fetching Data.....");
@@ -344,49 +399,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 progress.show();
             }
         }
-
-        StringRequest str=new StringRequest(Request.Method.POST, constants.get_service_status, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
-                if(swipeRefreshLayout.isRefreshing()){
+        if(swipeRefreshLayout.isRefreshing()){
                     swipeRefreshLayout.setRefreshing(false);
                 }
 
-                try {
-                    JSONObject a=new JSONObject(response);
-                    String b=a.getString("service");
-                    if(b.equals("true"))
-                    {
-                        Display("Kitchen Is Open....");
-                    }
-                    else {
-                        Display("Kitchen is closed....");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
-                Display("Some error occured:May be due to server fault or bad internet connection");
-            }
-        });
-
-        RequestQueue s=Volley.newRequestQueue(this);
-        s.add(str);
+        if(local.metaData.getservice().equals("true"))
+        {
+            Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -404,7 +428,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
-        recylerView.addItemDecoration(itemDecoration);
+//        recylerView.addItemDecoration(itemDecoration);
 
 
         recylerView.setItemAnimator(new DefaultItemAnimator());
@@ -422,8 +446,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         } else {
             next.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override
@@ -435,53 +457,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //writing function for Categories
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-
-
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
-    }
-
-
-
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
