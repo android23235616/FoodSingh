@@ -44,6 +44,7 @@ public class localdatabase {
     public static Location deliveryLocation = null;
 
     public static List<MasterMenuItems> masterList = new ArrayList<>();
+
     public static List<String> BannerUrls = new ArrayList<>();
 
     public static MetaData metaData;

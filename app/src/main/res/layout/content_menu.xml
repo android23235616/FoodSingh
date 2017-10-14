@@ -20,11 +20,45 @@
         android:scrollbars="vertical"
         android:padding="3dp"
         android:text="Attack! On the Food."/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="SORT BY"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cuisine"
+            android:text="Cuisine"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:text="Time"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/cuisine" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/combo"
+            android:text="Combo"
+            android:layout_toEndOf="@+id/time"
+            android:layout_alignParentTop="true"
+            />
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-android:scrollbars="vertical"
-    android:layout_height="match_parent"
-    android:id="@+id/recyclerView"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
     >
 </android.support.v7.widget.RecyclerView>
 

@@ -11,11 +11,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,7 +23,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -38,6 +33,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,6 +76,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
 
+    Button cuisine_btn,time_btn,combo_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -87,6 +84,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         setContentView(R.layout.activity_menu);
         //Display(versionStatus());
+
 
 
 //FOR NAVIGATION DRAWER
@@ -266,12 +264,16 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 R.color.refresh_progress_3);
         //swipeRefreshLayout.canScrollVertically()
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
-        layoutmanager=new GridLayoutManager(this,3);
+        layoutmanager=new GridLayoutManager(this,1);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
         itemDecoration=new GridSpacingItemDecoration(1,dpToPx(1),true);
         setTypeface();
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
+
+        cuisine_btn=(Button)findViewById(R.id.cuisine);
+        time_btn=(Button)findViewById(R.id.time);
+        combo_btn=(Button)findViewById(R.id.combo);
 
     }
 
@@ -304,54 +306,30 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_categories() {
-        if(!swipeRefreshLayout.isRefreshing()) {
+        if (!swipeRefreshLayout.isRefreshing())
+        {
             progress.setMessage("Fetching Data.....");
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.show();
         }
-        StringRequest as=new StringRequest(Request.Method.POST, constants.get_categories, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(progress.isShowing())
-                {
+
+                if (progress.isShowing()) {
                     progress.dismiss();
                 }
 
-                if(swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
-                try {
-                    JSONArray a=new JSONArray(response);
-                    for(int i=0;i<a.length();i++)
-                    {
-                        JSONObject js=a.getJSONObject(i);
-                        String nm=js.getString("name");
-                        String img=js.getString("image");
-                        categories.add(nm);
-                        images.add(img);
-                    }
-                    getting_service_status();
-                    send_to_adapter();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
-                if(swipeRefreshLayout.isRefreshing()){
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+        int i;
+        for (i = 0; i < localdatabase.masterList.size(); i++) {
+            MasterMenuItems a=localdatabase.masterList.get(i);
+            String name=a.getName();
+            String img=a.getImage();
+            categories.add(name);
+            images.add(img);
+            send_to_adapter();
 
-                Display("Some Error occurred,may be due to bad internet connection...");
-            }
-        });
-        RequestQueue qw= Volley.newRequestQueue(this);
-        qw.add(as);
+        }
     }
 
     private void getting_service_status() {
