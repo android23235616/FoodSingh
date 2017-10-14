@@ -383,7 +383,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             categories.add(name);
             images.add(img);
             send_to_adapter();
-
         }
     }
 
