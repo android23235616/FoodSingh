@@ -84,7 +84,7 @@
                 />
 
             <TextView
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:text="0"
                 android:id="@+id/item_quantity_slide2"
                 android:textColor="#ffffff"
@@ -95,10 +95,10 @@
                 android:background="@color/grey"
                 android:layout_below="@+id/dish_price2"
                 android:layout_toLeftOf="@+id/plus_slide2"
-                android:layout_marginRight="4dp"
-
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+android:layout_marginTop="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 />
 
             <ImageButton
