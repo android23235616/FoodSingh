@@ -6,6 +6,7 @@
     android:layout_height="100dp"
     app:cardCornerRadius="10dp"
     android:layout_margin="5dp"
+    android:id="@+id/card_view"
     android:padding="5dp"
     android:layout_width = "match_parent"
 >
@@ -20,7 +21,7 @@
     android:layout_height="100dp">
 
     <ImageView
-        android:src="@drawable/ic_add_circle_outline_black_24dp"
+        android:src="@drawable/whatsapp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/img"

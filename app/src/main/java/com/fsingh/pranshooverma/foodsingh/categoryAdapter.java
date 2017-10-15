@@ -78,7 +78,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
         holder.txt.setText(new_name);
 
-        img_cat.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String category_name=categories.get(position);

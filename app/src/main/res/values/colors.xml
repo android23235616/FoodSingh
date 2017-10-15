@@ -4,9 +4,10 @@
     <color name="colorPrimaryDark">#EAE19E</color>
     <color name="menu_text">#069655</color>
     <color name="colorAccent">#B71c1c</color>
-    <color name = "background_color_new">#DCE4C0</color>
+    <color name = "background_color_new">#e8f4cb</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
+    <color name="red">#FF0000</color>
     <color name="bg_main">#428bca</color>
     <color name="white">#ffffff</color>
     <color name="input_login">#222222</color>

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -57,7 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
+public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener, AppBarLayout.OnOffsetChangedListener {
 
     ProgressDialog progress;
     RecyclerView recylerView;
@@ -68,6 +70,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     localdatabase local;
     ImageButton next, back;
     boolean nav=true;
+    TextView attack;
     pagerAdapter pageradater;
     NavigationView navigationView;
     ViewPager pager;
@@ -138,6 +141,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 //CODING  CODING CODING CODING
         //here the coding part is:
         nav=true;
+        attack = (TextView)findViewById(R.id.attack);
         initialize();
 
         next = (ImageButton) findViewById(R.id.right_arrow);
@@ -271,6 +275,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
 
+
+
     private void RemoveTop(){
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -312,6 +318,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
+        TextView location = (TextView)v.findViewById(R.id.location);
+        location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -365,7 +373,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         TextView t2 = (TextView)findViewById(R.id.attack);
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         t1.setTypeface(t);
-        t2.setTypeface(t);
+        //t2.setTypeface(t);
     }
 
     public int getScreenWidth() {
@@ -434,10 +442,14 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(local.metaData.getservice().equals("true"))
         {
             Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+            attack.setText("Kitchen is Open.");
+            attack.setBackgroundColor(Color.parseColor("#75E990"));
         }
         else
         {
             Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
+            attack.setText("Kitchen is Closed.");
+            attack.setBackgroundColor(Color.parseColor("#e55512"));
         }
     }
 
@@ -456,6 +468,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
+        recylerView.setNestedScrollingEnabled(true);
 //        recylerView.addItemDecoration(itemDecoration);
 
 
@@ -598,5 +611,26 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            swipeRefreshLayout.setEnabled(true);
+        } else {
+            swipeRefreshLayout.setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        appBarLayout.removeOnOffsetChangedListener(this);
     }
 }

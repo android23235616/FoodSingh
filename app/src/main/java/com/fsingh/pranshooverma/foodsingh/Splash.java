@@ -13,6 +13,8 @@ import com.fsingh.pranshooverma.foodsingh.BuildConfig;
 
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -57,9 +59,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Splash extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
@@ -309,6 +313,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             }
         };
 
+
+
         RequestQueue request = Volley.newRequestQueue(this);
         request.add(str);
 
@@ -418,5 +424,24 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         LocationChecked = true;
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
+        localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
+    }
+
+    private String getCity(double latitude, double longitude){
+        Geocoder geocoder;
+        List<Address> addresses = new ArrayList<>();
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+            Display(e.toString());
+        }
+        String address, city;
+        if(addresses.size()>0)
+         address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+         city = addresses.get(0).getLocality();
+        return city;
     }
 }

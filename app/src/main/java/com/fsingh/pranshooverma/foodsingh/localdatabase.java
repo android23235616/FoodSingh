@@ -50,4 +50,6 @@ public class localdatabase {
     public static MetaData metaData;
 
     public static List<MenuItems> cartList = new ArrayList<>();
+
+    public static String city = null;
 }

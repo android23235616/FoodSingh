@@ -36,11 +36,12 @@
     android:textStyle="bold"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:text="Loading Metadata...\nDetecting Current Location"
     android:textSize="16dp"
     android:id="@+id/metadata"
-    android:textColor="@color/colorPrimary"
-    android:fontFamily="casual"
+    android:textColor="@color/colorAccent"
+    android:fontFamily="monospace"
     android:gravity="center"
     android:layout_marginTop="470dp"/>
 </FrameLayout>
