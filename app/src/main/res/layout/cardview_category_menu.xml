@@ -105,13 +105,19 @@
         </LinearLayout>
 
     <ImageView
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:padding="4dp"
-        android:src="@drawable/ic_not_fav"
+        android:id="@+id/fav"
+        android:clickable="true"
+        android:src="@drawable/ic_fav"
         android:layout_margin="4dp"
         android:layout_gravity="end"
         />
+
+
+
+
 
 
 </android.support.v7.widget.CardView>
