@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +49,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         ImageView pl,mi, delete;
         public ViewHolder(View itemView) {
             super(itemView);
-            diname=(TextView) itemView.findViewById(R.id.dish_name);
+            diname=(TextView) itemView.findViewById(R.id.dish_name_slide);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
             total_diprice=(TextView) itemView.findViewById(R.id.total_dish_price);
-            item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
+            item_quantity=(TextView) itemView.findViewById(R.id.item_quantity_slide);
             delete=(ImageView) itemView.findViewById(R.id.delete);
-            pl=(ImageView) itemView.findViewById(R.id.plus);
-            mi=(ImageView) itemView.findViewById(R.id.minus);
+            pl=(ImageView) itemView.findViewById(R.id.plus_slide);
+            mi=(ImageView) itemView.findViewById(R.id.minus_slide);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
@@ -77,8 +74,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        plus=(ImageView) holder.itemView.findViewById(R.id.plus);
-        minus=(ImageView) holder.itemView.findViewById(R.id.minus);
+        plus=(ImageView) holder.itemView.findViewById(R.id.plus_slide);
+        minus=(ImageView) holder.itemView.findViewById(R.id.minus_slide);
 
         /*
         String name=dish_name.get(position);

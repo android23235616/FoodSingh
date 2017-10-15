@@ -2,11 +2,8 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -58,13 +55,13 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         ImageView pl,mi, image,fav;
         public ViewHolder(View itemView) {
             super(itemView);
-            diname=(TextView) itemView.findViewById(R.id.dish_name);
+            diname=(TextView) itemView.findViewById(R.id.dish_name_slide);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
-            item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
-            pl=(ImageView) itemView.findViewById(R.id.plus);
-            mi=(ImageView) itemView.findViewById(R.id.minus);
+            item_quantity=(TextView) itemView.findViewById(R.id.item_quantity_slide);
+            pl=(ImageView) itemView.findViewById(R.id.plus_slide);
+            mi=(ImageView) itemView.findViewById(R.id.minus_slide);
             fav=(ImageView) itemView.findViewById(R.id.fav);
-            image=(ImageView) itemView.findViewById(R.id.img_item);
+            image=(ImageView) itemView.findViewById(R.id.img_item_slide);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
@@ -83,8 +80,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        plus=(ImageView) holder.itemView.findViewById(R.id.plus);
-        minus=(ImageView) holder.itemView.findViewById(R.id.minus);
+        plus=(ImageView) holder.itemView.findViewById(R.id.plus_slide);
+        minus=(ImageView) holder.itemView.findViewById(R.id.minus_slide);
         fav=(ImageView) holder.itemView.findViewById(R.id.fav);
         /*
         String name=dish_name.get(position);

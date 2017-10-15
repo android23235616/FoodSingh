@@ -29,7 +29,7 @@
 
             <TextView
 
-                android:id="@+id/dish_name"
+                android:id="@+id/dish_name_slide"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="16dp"
@@ -64,7 +64,7 @@
 
                 <ImageButton
                     android:layout_width="30dp"
-                    android:id="@+id/minus"
+                    android:id="@+id/minus_slide"
                     android:layout_marginTop="41dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
@@ -79,9 +79,9 @@
             <TextView
                 android:textSize="16dp"
                 android:text="0"
-                android:id="@+id/item_quantity"
+                android:id="@+id/item_quantity_slide"
                 android:textColor="#96184FFF"
-                android:layout_toRightOf="@id/minus"
+                android:layout_toRightOf="@id/minus_slide"
                 android:textStyle="bold"
                 android:layout_marginLeft="4dp"
                 android:gravity="center"
@@ -95,9 +95,9 @@
             <ImageButton
                 android:layout_marginTop="41dp"
                 android:layout_width="30dp"
-                android:id="@+id/plus"
+                android:id="@+id/plus_slide"
                 android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@id/item_quantity"
+                android:layout_toRightOf="@id/item_quantity_slide"
                 android:layout_marginBottom="16dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="4dp"
@@ -116,7 +116,7 @@
                 android:layout_marginLeft="30dp"
                 android:textSize="18dp"
                 android:text="X"
-                android:layout_toRightOf="@id/plus"
+                android:layout_toRightOf="@id/plus_slide"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20dp"
                 />
@@ -128,7 +128,7 @@
                 android:layout_marginLeft="75dp"
                 android:textSize="18dp"
                 android:text="₹190"
-                android:layout_toRightOf="@id/plus"
+                android:layout_toRightOf="@id/plus_slide"
                 android:id="@+id/dish_price"
                 android:textColor="#2ECC71"
                 android:layout_alignParentBottom="true"

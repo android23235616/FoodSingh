@@ -19,7 +19,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:id="@+id/img_item"
+                android:id="@+id/img_item_slide"
                 />
 
             <RelativeLayout
@@ -29,7 +29,7 @@
                 >
                 <TextView
 
-                    android:id="@+id/dish_name"
+                    android:id="@+id/dish_name_slide"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
@@ -68,7 +68,7 @@
                 <ImageButton
                     android:layout_marginTop="41dp"
                     android:layout_width="30dp"
-                    android:id="@+id/plus"
+                    android:id="@+id/plus_slide"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="10dp"
@@ -78,11 +78,11 @@
                 <TextView
                     android:textSize="16dp"
                     android:text="0"
-                    android:id="@+id/item_quantity"
+                    android:id="@+id/item_quantity_slide"
                     android:textColor="#96184FFF"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:layout_toLeftOf="@+id/plus"
+                    android:layout_toLeftOf="@+id/plus_slide"
                     android:layout_marginRight="4dp"
                     android:layout_marginTop="41dp"
                     android:layout_width="30dp"
@@ -91,10 +91,10 @@
 
                 <ImageButton
                     android:layout_width="30dp"
-                    android:id="@+id/minus"
+                    android:id="@+id/minus_slide"
                     android:layout_marginTop="41dp"
                     android:layout_height="30dp"
-                    android:layout_toLeftOf="@id/item_quantity"
+                    android:layout_toLeftOf="@id/item_quantity_slide"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/ic_remove_circle_outline_black_24dp"
                     />

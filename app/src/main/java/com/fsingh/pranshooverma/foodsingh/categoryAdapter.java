@@ -2,12 +2,14 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +77,15 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
 
         new_name+=name.substring(1,name.length());
 
-        Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
+        //Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
         holder.txt.setText(new_name);
+
+
+          Glide.with(mContext).load(path).thumbnail(0.05f).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop()
+                .override(getPx(90,holder.img.getContext()), getPx(130,mContext)).
+                crossFade().into(holder.img);
+
+
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +103,12 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
     }
 
 
+
+    public int getPx(int r1, Context context){
+        Resources r = context.getResources();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r1, r.getDisplayMetrics());
+        return (int)px;
+    }
 
     @Override
     public int getItemCount() {
