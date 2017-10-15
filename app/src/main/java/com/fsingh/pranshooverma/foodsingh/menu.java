@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +36,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,7 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener {
+public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener, AppBarLayout.OnOffsetChangedListener {
 
     ProgressDialog progress;
     RecyclerView recylerView;
@@ -66,6 +70,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     localdatabase local;
     ImageButton next, back;
     boolean nav=true;
+    TextView attack;
     pagerAdapter pageradater;
     NavigationView navigationView;
     ViewPager pager;
@@ -82,6 +87,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        RemoveTop();
 
         setContentView(R.layout.activity_menu);
         //Display(versionStatus());
@@ -103,7 +110,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getBackground().setAlpha(122);
+       // navigationView.getBackground().setAlpha(122);
 
         //manipulate navigation drawer
 
@@ -134,6 +141,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 //CODING  CODING CODING CODING
         //here the coding part is:
         nav=true;
+        attack = (TextView)findViewById(R.id.attack);
         initialize();
 
         next = (ImageButton) findViewById(R.id.right_arrow);
@@ -166,7 +174,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View v) {
                 int current = pager.getCurrentItem() + 1;
-                pager.setCurrentItem(current);
+                if(current == localdatabase.BannerUrls.size()) {
+                    pager.setCurrentItem(0);
+                }else{
+                    pager.setCurrentItem(current);
+                }
             }
         });
 
@@ -176,6 +188,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 int current = pager.getCurrentItem() - 1;
                 if (current >= 0)
                     pager.setCurrentItem(current);
+                else{
+                    pager.setCurrentItem(localdatabase.BannerUrls.size()-1);
+                }
             }
         });
 
@@ -195,6 +210,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         cuisine_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.clicked_button);
+
+                time_btn.setBackgroundResource(R.drawable.menu_button);
+                combo_btn.setBackgroundResource(R.drawable.menu_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -213,6 +232,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+
+                time_btn.setBackgroundResource(R.drawable.clicked_button);
+                combo_btn.setBackgroundResource(R.drawable.menu_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -230,6 +253,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         combo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+
+                time_btn.setBackgroundResource(R.drawable.menu_button);
+                combo_btn.setBackgroundResource(R.drawable.clicked_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -247,6 +274,14 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+
+
+
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
     private void action(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(menu.this);
         dialog.setTitle("Announcement");
@@ -283,6 +318,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
+        TextView location = (TextView)v.findViewById(R.id.location);
+        location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -336,7 +373,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         TextView t2 = (TextView)findViewById(R.id.attack);
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         t1.setTypeface(t);
-        t2.setTypeface(t);
+        //t2.setTypeface(t);
     }
 
     public int getScreenWidth() {
@@ -405,10 +442,14 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(local.metaData.getservice().equals("true"))
         {
             Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+            attack.setText("Kitchen is Open.");
+            attack.setBackgroundColor(Color.parseColor("#75E990"));
         }
         else
         {
             Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
+            attack.setText("Kitchen is Closed.");
+            attack.setBackgroundColor(Color.parseColor("#e55512"));
         }
     }
 
@@ -427,6 +468,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
+        recylerView.setNestedScrollingEnabled(true);
 //        recylerView.addItemDecoration(itemDecoration);
 
 
@@ -569,5 +611,26 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            swipeRefreshLayout.setEnabled(true);
+        } else {
+            swipeRefreshLayout.setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        appBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        appBarLayout.removeOnOffsetChangedListener(this);
     }
 }

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
+    android:background="@color/background_color_new"
     android:layout_height="match_parent"
     tools:context="com.fsingh.pranshooverma.foodsingh.menu">
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"
         android:id="@+id/swiperefresh"
         android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="270dp">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +23,7 @@
             android:layout_width="match_parent"
             app:contentScrim="@color/colorPrimaryDark"
             android:id="@+id/collapsingToolbar"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:expandedTitleTextAppearance="@android:color/transparent"
             android:layout_height="match_parent">
 
@@ -31,7 +33,7 @@
 
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/abc_action_bar_default_height_material"
+                android:layout_height="50dp"
                 android:id="@+id/toolbar"
 
                 app:layout_collapseMode="pin">
@@ -48,9 +50,11 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:textSize="15dp"
+                        android:visibility="gone"
                         android:background="@drawable/shaper_change_location"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="180dp"
+                        android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
                         android:text="Everything is For You."/>
@@ -58,22 +62,15 @@
 
                 </FrameLayout>
 
+
             </android.support.v7.widget.Toolbar>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="270dp">
 
-
-    </LinearLayout>
-
+</android.support.v4.widget.SwipeRefreshLayout>
     <include layout="@layout/content_menu" />
 
 
