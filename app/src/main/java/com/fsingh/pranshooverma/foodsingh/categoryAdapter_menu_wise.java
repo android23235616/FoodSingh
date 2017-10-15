@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView diname,diprice,item_quantity;
-        ImageView pl,mi;
+        ImageView pl,mi,fav,not_fav;
         public ViewHolder(View itemView) {
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name);
@@ -83,7 +84,6 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
 
 
 
-
         if(constants.item_name_deb.contains(name))
         {
             int index=constants.item_name_deb.indexOf(name);
@@ -117,7 +117,6 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                 //making the quantity count
                 if(constants.item_name_deb.contains(dish_name.get(position)))
                 {
-
                     int index= constants.item_name_deb.indexOf(dish_name.get(position));
                     int prev_value= Integer.parseInt(constants.item_quant_deb.get(index));
                     constants.item_quant_deb.set(index,String.valueOf(prev_value+1));
@@ -182,6 +181,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
                 }        }
             }
         });
+
 
     }
 

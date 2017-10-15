@@ -20,13 +20,14 @@
         android:visibility="gone"
         android:text="Cart"/>
 
-<ImageView
+<!-- <ImageView
     android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:scaleType="centerInside"
     android:gravity="center"
-    android:src="@drawable/foodsingh"/>
+    android:src="@drawable/cart"/> -->
+
 </LinearLayout>
 
 </android.support.v7.widget.Toolbar>
