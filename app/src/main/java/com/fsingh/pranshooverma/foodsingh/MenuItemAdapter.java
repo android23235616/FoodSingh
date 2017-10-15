@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -162,7 +164,30 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 if(holder.fav.getDrawable().getConstantState()==holder.fav.getResources().getDrawable(R.drawable.ic_fav).getConstantState())
                 {
                     holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
+                   int i=0;
 
+                    MenuItems menu=menuItems.get(position);
+                    String item_name=menu.getName();
+                   Toast.makeText(mContext, item_name, Toast.LENGTH_SHORT).show();
+                    for( i=0;i<localdatabase.masterList.size();i++)
+                   {
+                       MasterMenuItems a=localdatabase.masterList.get(i);
+                       List<MenuItems> b=a.getMenuList();
+                   for(int j=0;j<b.size();j++)
+                   {
+                       MenuItems c=b.get(j);
+                       String name=c.getName();
+                       if(name.contains(item_name))
+                       {
+                           String price=c.getPrice();
+                           String img=c.getImage();
+                           Favourites as=new Favourites(name,price,img);
+                           localdatabase.favouritesList.add(as);
+                           Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
+                       }
+                   }
+                   }
+      //              Toast.makeText(mContext,String.valueOf(localdatabase.masterList.size()) , Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
