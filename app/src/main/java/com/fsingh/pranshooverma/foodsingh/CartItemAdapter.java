@@ -51,7 +51,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name_slide);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
-            total_diprice=(TextView) itemView.findViewById(R.id.total_dish_price);
+            total_diprice=(TextView)itemView.findViewById(R.id.total_dish_price);
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity_slide);
             delete=(ImageView) itemView.findViewById(R.id.delete);
             pl=(ImageView) itemView.findViewById(R.id.plus_slide);

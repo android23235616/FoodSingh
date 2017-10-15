@@ -32,12 +32,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class cart extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    RecyclerView recycler;
+    RecyclerView recycler,sides;
     RecyclerView.LayoutManager layout;
     cartAdapter mAdapter;
     Toolbar toolbar;
@@ -163,8 +164,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         place_order.setTypeface(t);
 
         recycler=(RecyclerView)findViewById(R.id.recyclerView_cart);
+        sides=(RecyclerView)findViewById(R.id.sides_recycler);
         layout=new GridLayoutManager(this,1);
         recycler.setLayoutManager(layout);
+
+        sides.setNestedScrollingEnabled(true);
         recycler.setNestedScrollingEnabled(true);
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
     }
@@ -174,9 +178,15 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         adapter = new CartItemAdapter(this, localdatabase.cartList);
         //mAdapter=new cartAdapter(this,constants.items_name,constants.items_price);
         recycler.setAdapter(adapter);
+        Sides_Adapter s = new Sides_Adapter(this, localdatabase.cartList);
+        sides.setAdapter(s);
+        s.notifyDataSetChanged();
+        sides.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        sides.setItemAnimator(new DefaultItemAnimator());
         //recycler.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+
         recycler.setItemAnimator(new DefaultItemAnimator());
+
     }
 
 
