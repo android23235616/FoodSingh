@@ -30,7 +30,7 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
     private List<String> NA = new ArrayList<>();
     boolean check=false;
 
-    ImageView plus,minus,fav1,not_fav;
+    ImageView plus,minus;
 
 
     public categoryAdapter_menu_wise(Context mContext,List<String> dish_name,List<String> dish_price) {
@@ -50,8 +50,6 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
             pl=(ImageView) itemView.findViewById(R.id.plus);
             mi=(ImageView) itemView.findViewById(R.id.minus);
-            fav=(ImageView) itemView.findViewById(R.id.fav);
-      //      not_fav=(ImageView) itemView.findViewById(R.id.not_fav);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
@@ -70,15 +68,6 @@ public class categoryAdapter_menu_wise extends RecyclerView.Adapter<categoryAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         plus=(ImageView) holder.itemView.findViewById(R.id.plus);
         minus=(ImageView) holder.itemView.findViewById(R.id.minus);
-        fav1=(ImageView) holder.itemView.findViewById(R.id.fav);
-//       not_fav=(ImageView) holder.itemView.findViewById(R.id.not_fav);
-
-        fav1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "jvscsd", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);

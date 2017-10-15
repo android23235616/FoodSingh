@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     private List<String> NA = new ArrayList<>();
     boolean check=false;
 
-    ImageView plus,minus;
+    ImageView plus,minus,fav;
 
 
 /*
@@ -52,7 +53,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView diname,diprice,item_quantity;
-        ImageView pl,mi, image;
+        ImageView pl,mi, image,fav;
         public ViewHolder(View itemView) {
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name);
@@ -60,6 +61,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity);
             pl=(ImageView) itemView.findViewById(R.id.plus);
             mi=(ImageView) itemView.findViewById(R.id.minus);
+            fav=(ImageView) itemView.findViewById(R.id.fav);
             image=(ImageView) itemView.findViewById(R.id.img_item);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
             diname.setTypeface(t);
@@ -81,7 +83,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
         plus=(ImageView) holder.itemView.findViewById(R.id.plus);
         minus=(ImageView) holder.itemView.findViewById(R.id.minus);
-
+        fav=(ImageView) holder.itemView.findViewById(R.id.fav);
         /*
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
@@ -151,6 +153,24 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 }
             }
         });
+
+
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.fav.getDrawable().getConstantState()==holder.fav.getResources().getDrawable(R.drawable.ic_fav).getConstantState())
+                {
+                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
+
+                }
+                else
+                {
+                   holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
+                }
+            }
+        });
+
 /*
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
