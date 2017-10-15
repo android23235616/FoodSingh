@@ -21,6 +21,7 @@ public class pagerAdapter extends PagerAdapter {
     LayoutInflater inflater;
     localdatabase database;
     ImageView imageView;
+
     public pagerAdapter(localdatabase database){
         this.database = database;
     }
@@ -43,6 +44,7 @@ public class pagerAdapter extends PagerAdapter {
                 Glide.with(parent.getContext()).load(database.BannerUrls.get(position%database.BannerUrls.size())).
                       override(new menu().width, getPx(270,parent.getContext())).centerCrop().thumbnail(0.001f).
                     crossFade().into(imageView);
+
         Log.i("pager", "adapter has been called");
         parent.addView(v);
         return v;
@@ -53,6 +55,8 @@ public class pagerAdapter extends PagerAdapter {
         View view = (View)object;
         container.removeView(view);
     }
+
+
 
     public int getPx(int r1,Context context){
         Resources r = context.getResources();

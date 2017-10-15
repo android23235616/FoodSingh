@@ -20,7 +20,8 @@
         android:fitsSystemWindows="true"
         app:layout_collapseMode="pin"
         android:id="@+id/right_arrow"
-        android:layout_gravity="right|center"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="right"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_keyboard_arrow_right_white_48dp"/>
@@ -30,11 +31,55 @@
         android:fitsSystemWindows="true"
         app:layout_collapseMode="pin"
         android:id="@+id/left_arrow"
-
-        android:layout_gravity="left|center"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="left"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/back_arrow"/>
     />
 
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp">
+
+        <ImageView
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:id="@+id/view_pager_1"
+            android:layout_height="10dp" />
+        <ImageView
+            android:alpha="0.5"
+            android:id="@+id/view_pager_2"
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:alpha="0.5"
+            android:id="@+id/view_pager_3"
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:alpha="0.5"
+            android:id="@+id/view_pager_4"
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:alpha="0.5"
+            android:id="@+id/view_pager_5"
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:layout_height="10dp" />
+        <ImageView
+            android:alpha="0.5"
+            android:id="@+id/view_pager_6"
+            android:src="@drawable/ic_brightness_1_black_24dp"
+            android:layout_width="15dp"
+            android:layout_height="10dp" />
+
+    </LinearLayout>
 </FrameLayout>
