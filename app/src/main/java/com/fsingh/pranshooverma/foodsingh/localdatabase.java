@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.location.Location;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,4 +53,7 @@ public class localdatabase {
     public static List<MenuItems> cartList = new ArrayList<>();
 
     public static String city = null;
+
+
+    public static List<Favourites> favouritesList=new ArrayList<>();
 }
