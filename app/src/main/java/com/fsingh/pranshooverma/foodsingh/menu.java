@@ -365,6 +365,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 R.color.refresh_progress_3);
         //swipeRefreshLayout.canScrollVertically()
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
+        recylerView.setFocusable(false);
         layoutmanager=new LinearLayoutManager(this);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
