@@ -31,12 +31,12 @@
             <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="wrap_content"
                 android:id="@+id/swiperefresh"
-                android:layout_marginTop="50dp"
+
                 android:layout_height="wrap_content">
                 <include layout="@layout/view_pager_include"/>
             </android.support.v4.widget.SwipeRefreshLayout>
             <android.support.v7.widget.Toolbar
-                android:background="@color/colorPrimary"
+
                 android:fitsSystemWindows="true"
                 app:contentInsetStartWithNavigation="0dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -58,6 +58,7 @@
                         android:id="@+id/new_location"
                         android:padding="10dp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         android:textSize="15dp"
                         android:scaleType="centerCrop"
                         android:background="@drawable/shaper_change_location"
