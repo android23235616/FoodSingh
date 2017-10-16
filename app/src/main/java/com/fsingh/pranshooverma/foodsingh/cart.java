@@ -225,7 +225,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
         else {
-            bottomBar.setVisibility(View.INVISIBLE);
+         //   bottomBar.setVisibility(View.GONE);
         }
 
             tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
