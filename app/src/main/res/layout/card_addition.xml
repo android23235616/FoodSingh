@@ -90,15 +90,16 @@
       android:layout_toRightOf="@+id/r2"
         android:background="@color/colorPrimary"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
+
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="8dp"
+            android:textSize="10dp"
             android:textStyle="bold"
             android:paddingLeft="1dp"
             android:gravity="right"
@@ -138,7 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
+                android:textSize="15dp"
                 android:text="Discount"
                 android:fontFamily="monospace"/>
 
@@ -163,7 +164,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
+                android:textSize="15dp"
                 android:text="Delivery"
                 android:fontFamily="monospace"/>
 
