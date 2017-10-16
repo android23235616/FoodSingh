@@ -202,7 +202,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         }
 
 
-
                 }
                 else
                 {
