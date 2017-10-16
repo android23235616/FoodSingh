@@ -1,12 +1,10 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,9 +13,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by PRANSHOO VERMA on 13/09/2017.
@@ -26,15 +29,15 @@ import java.util.List;
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
 
     private Context mContext;
-
     private  List<MenuItems> menuItems = new ArrayList<>();
-
     private List<String> dish_name=new ArrayList<>();
     private List<String> dish_price=new ArrayList<>();
     private List<String> NA = new ArrayList<>();
     boolean check=false;
 
     ImageView plus,minus,fav;
+
+    SharedPreferences store;
 
 
 /*
@@ -69,6 +72,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             diname.setTypeface(t);
             diprice.setTypeface(t);
             item_quantity.setTypeface(t);
+
         }
     }
 
@@ -86,12 +90,34 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         plus=(ImageView) holder.itemView.findViewById(R.id.plus);
         minus=(ImageView) holder.itemView.findViewById(R.id.minus);
         fav=(ImageView) holder.itemView.findViewById(R.id.fav);
+        store=mContext.getSharedPreferences("favourites",Context.MODE_PRIVATE);
+        final SharedPreferences.Editor prefer=store.edit();
         /*
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
         */
 
-        final MenuItems menuItem = menuItems.get(position);
+        String ad=store.getString("fav_list","nothing");
+        if(!(ad.equals("nothing")))
+        {
+           // Toast.makeText(mContext, ad, Toast.LENGTH_SHORT).show();
+            List<String> strings=new ArrayList<>(Arrays.asList(ad));
+            localdatabase.fav_list= (ArrayList<String>) strings;
+            Toast.makeText(mContext,String.valueOf(localdatabase.fav_list), Toast.LENGTH_SHORT).show();
+        }
+
+        if(localdatabase.fav_list.contains(menuItems.get(holder.getAdapterPosition()).getName()))
+        {
+            Toast.makeText(mContext, "yes", Toast.LENGTH_SHORT).show();
+            holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
+        }else{
+            holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
+        }
+
+
+
+
+        final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
 
@@ -120,7 +146,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItems item = menuItems.get(position);
+                MenuItems item = menuItems.get(holder.getAdapterPosition());
                 if(!holder.diprice.getText().toString().equals("NA")){
                     int quantity = item.getQuantity();
                     quantity++;
@@ -140,7 +166,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItems item = menuItems.get(position);
+                MenuItems item = menuItems.get(holder.getAdapterPosition());
                 if(!holder.diprice.getText().toString().equals("NA") && item.getQuantity()!=0){
                     int quantity = item.getQuantity();
                     quantity--;
@@ -158,41 +184,42 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
 
 
-        fav.setOnClickListener(new View.OnClickListener() {
+        holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.fav.getDrawable().getConstantState()==holder.fav.getResources().getDrawable(R.drawable.ic_fav).getConstantState())
+                if((holder.fav.getDrawable().getConstantState())==(holder.fav.getResources().getDrawable(R.drawable.ic_fav).getConstantState()))
                 {
-                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
-                   int i=0;
 
-                    MenuItems menu=menuItems.get(position);
-                    String item_name=menu.getName();
-                   Toast.makeText(mContext, item_name, Toast.LENGTH_SHORT).show();
-                    for( i=0;i<localdatabase.masterList.size();i++)
-                   {
-                       MasterMenuItems a=localdatabase.masterList.get(i);
-                       List<MenuItems> b=a.getMenuList();
-                   for(int j=0;j<b.size();j++)
-                   {
-                       MenuItems c=b.get(j);
-                       String name=c.getName();
-                       if(name.contains(item_name))
-                       {
-                           String price=c.getPrice();
-                           String img=c.getImage();
-                           Favourites as=new Favourites(name,price,img);
-                           localdatabase.favouritesList.add(as);
-                           Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
-                       }
-                   }
-                   }
-      //              Toast.makeText(mContext,String.valueOf(localdatabase.masterList.size()) , Toast.LENGTH_SHORT).show();
+                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
+                    int i=0;
+                    MenuItems menu=menuItems.get(holder.getAdapterPosition());
+                    if(localdatabase.fav_list.contains(menu.getName()))
+                        {
+                            localdatabase.fav_list.remove(menu.getName());
+                            prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));
+                            prefer.commit();
+                            Toast.makeText(mContext, "Removed from favourites", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
                 }
                 else
                 {
                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
+                    int i=0;
+                    MenuItems menu=menuItems.get(holder.getAdapterPosition());
+                    if(!(localdatabase.fav_list.contains(menu.getName())))
+                        {
+                            localdatabase.fav_list.add(menu.getName());
+                            prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));
+                            prefer.commit();
+                            Toast.makeText(mContext, "Added to Favourite", Toast.LENGTH_SHORT).show();
+                        }
+
+
                 }
+
             }
         });
 
