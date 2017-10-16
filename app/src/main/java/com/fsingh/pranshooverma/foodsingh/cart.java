@@ -249,10 +249,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);
-        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
         TextView location = (TextView)v.findViewById(R.id.location);
+        location.setTypeface(tp);
         location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

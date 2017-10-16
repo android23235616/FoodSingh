@@ -46,40 +46,43 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <ImageButton
             android:layout_margin="5dp"
             android:layout_height="30dp"
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="monospace"
+            android:src="@drawable/cuisine"
             android:id="@+id/cuisine"
-            android:background="@drawable/clicked_button"
-            android:text="Cuisine"
+            android:scaleType="centerCrop"
+            android:background="@color/background_color_new"
+
             android:textColor="#ffffff"
             />
-        <Button
-            android:fontFamily="monospace"
+        <ImageButton
+            android:background="@color/background_color_new"
             android:layout_margin="5dp"
-            android:textColor="#ffffff"
+
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/time"
-            android:text="Time"
+            android:scaleType="centerCrop"
 
+            android:src="@drawable/time_"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/cuisine" />
-        <Button
-            android:fontFamily="monospace"
-            android:textColor="#ffffff"
+        <ImageButton
+
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@drawable/menu_button"
+         android:src="@drawable/combo"
+            android:background="@color/background_color_new"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:scaleType="centerCrop"
             android:id="@+id/combo"
-            android:text="Combo"
+
             android:layout_toEndOf="@+id/time"
             android:layout_alignParentTop="true"
             />

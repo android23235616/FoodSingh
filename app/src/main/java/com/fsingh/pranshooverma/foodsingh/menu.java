@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -87,7 +88,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
 
-    Button cuisine_btn,time_btn,combo_btn;
+    ImageButton cuisine_btn,time_btn,combo_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -222,10 +223,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         cuisine_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cuisine_btn.setBackgroundResource(R.drawable.clicked_button);
-
-                time_btn.setBackgroundResource(R.drawable.menu_button);
-                combo_btn.setBackgroundResource(R.drawable.menu_button);
+                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
+                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -244,10 +244,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
-
-                time_btn.setBackgroundResource(R.drawable.clicked_button);
-                combo_btn.setBackgroundResource(R.drawable.menu_button);
+                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time));
+                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -265,10 +264,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         combo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+              //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo_));
 
-                time_btn.setBackgroundResource(R.drawable.menu_button);
-                combo_btn.setBackgroundResource(R.drawable.clicked_button);
                 categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
@@ -327,10 +327,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);
-        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
         TextView location = (TextView)v.findViewById(R.id.location);
+        location.setTypeface(tp);
         location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -340,7 +341,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 drawer.closeDrawers();
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
             t.setText("Hello, "+name);
@@ -373,12 +374,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
         recylerView.setItemAnimator(new DefaultItemAnimator());
+        recylerView.setNestedScrollingEnabled(true);
         setTypeface();
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
-        cuisine_btn=(Button)findViewById(R.id.cuisine);
-        time_btn=(Button)findViewById(R.id.time);
-        combo_btn=(Button)findViewById(R.id.combo);
+        cuisine_btn=(ImageButton) findViewById(R.id.cuisine);
+        time_btn=(ImageButton) findViewById(R.id.time);
+        combo_btn=(ImageButton) findViewById(R.id.combo);
 
     }
 
