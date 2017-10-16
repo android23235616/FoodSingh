@@ -1,5 +1,6 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,19 +34,40 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class cart extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView recycler,sides;
     RecyclerView.LayoutManager layout;
-    cartAdapter mAdapter;
+    Sides_Adapter sidesAdapter;
     Toolbar toolbar;
-    Button place_order;
+    Button checkout;
     SharedPreferences shared;
     NavigationView navigationView;
     public static CartItemAdapter adapter;
+    ProgressDialog progress;
+    static RelativeLayout bottomBar;
+
+    static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +86,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         setContentView(R.layout.activity_cart);
 
 
-
-
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        TextView toolbarText = (TextView)findViewById(R.id.toolbarText);
+        TextView toolbarText = (TextView) findViewById(R.id.toolbarText);
         toolbarText.setTypeface(t);
         ///////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,8 +98,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        progress = new ProgressDialog(this);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -88,7 +108,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         //CODING CODING CODING
         initialize();
         send_to_adapter();
-        place_order.setOnClickListener(new View.OnClickListener() {
+
+        if (localdatabase.sidesList.size() == 0){
+            getSides();
+        }
+
+        checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             //    Toast.makeText(cart.this, "Order place krna  hai yahan se", Toast.LENGTH_SHORT).show();
@@ -128,6 +153,88 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         manipulatenavigationdrawer();
     }
 
+    private void getSides() {
+        progress.setMessage("Please wait...");
+        progress.show();
+        StringRequest str=new StringRequest(Request.Method.POST, constants.get_sides, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Toast.makeText(cart.this, response, Toast.LENGTH_LONG).show();
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jo = jsonArray.getJSONObject(i);
+                        String id = jo.getString("id");
+                        String name = jo.getString("name");
+                        String category = jo.getString("category");
+                        String price = jo.getString("price");
+                        String image = jo.getString("image");
+
+                        MenuItems item = new MenuItems(id, name, category, price, image);
+                        localdatabase.sidesList.add(item);
+
+                    }
+
+                    //Toast.makeText(cart.this, ""+localdatabase.sidesList.size(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(cart.this, ""+localdatabase.sidesList.get(2).getName(), Toast.LENGTH_LONG).show();
+                    sidesAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+
+            }
+        });
+
+        RequestQueue re= Volley.newRequestQueue(this);
+        re.add(str);
+
+    }
+
+
+    public static void calculateTotal(){
+
+        int totalAmount=0;
+
+        if(localdatabase.cartList.size()>0) {
+            bottomBar.setVisibility(View.VISIBLE);
+            for (int i = 0; i < localdatabase.cartList.size(); i++) {
+                MenuItems item = localdatabase.cartList.get(i);
+                totalAmount += item.getQuantity() * Integer.parseInt(item.getPrice());
+            }
+
+            totalAmount = totalAmount + localdatabase.deliveryCharge;
+
+        }
+        else {
+            bottomBar.setVisibility(View.INVISIBLE);
+        }
+
+            tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
+            tvTotalAmount.setText("₹" + totalAmount);
+            tvTotalAmount2.setText("₹" + totalAmount);
+
+
+    }
+
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
@@ -160,8 +267,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void initialize() {
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        place_order=(Button)findViewById(R.id.place_order);
-        place_order.setTypeface(t);
+        checkout=(Button)findViewById(R.id.btn_checkout);
+        checkout.setTypeface(t);
 
         recycler=(RecyclerView)findViewById(R.id.recyclerView_cart);
         sides=(RecyclerView)findViewById(R.id.sides_recycler);
@@ -171,6 +278,14 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         sides.setNestedScrollingEnabled(true);
         recycler.setNestedScrollingEnabled(true);
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
+
+        tvTotalAmount = (TextView) findViewById(R.id.total_amount);
+        tvTotalAmount2 = (TextView) findViewById(R.id.total_amount_2);
+        tvDeliveryCharge = (TextView)findViewById(R.id.delivery_charge);
+        bottomBar = (RelativeLayout) findViewById(R.id.place_order);
+
+
+        calculateTotal();
     }
 
     private void send_to_adapter()
@@ -178,9 +293,9 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         adapter = new CartItemAdapter(this, localdatabase.cartList);
         //mAdapter=new cartAdapter(this,constants.items_name,constants.items_price);
         recycler.setAdapter(adapter);
-        Sides_Adapter s = new Sides_Adapter(this, localdatabase.cartList);
-        sides.setAdapter(s);
-        s.notifyDataSetChanged();
+        sidesAdapter = new Sides_Adapter(this, localdatabase.sidesList);
+        sides.setAdapter(sidesAdapter);
+        sidesAdapter.notifyDataSetChanged();
         sides.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         sides.setItemAnimator(new DefaultItemAnimator());
         //recycler.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
@@ -188,9 +303,6 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         recycler.setItemAnimator(new DefaultItemAnimator());
 
     }
-
-
-
 
 
 

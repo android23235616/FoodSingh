@@ -5,9 +5,8 @@
     android:padding="10dp"
     android:layout_marginTop="10dp"
     android:id="@+id/r1"
-    android:background="@color/white"
+    android:background="@color/white">
 
-    >
 <RelativeLayout
 
     android:id="@+id/r2"
@@ -175,6 +174,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
                 android:text="Rs.10"
+                android:id="@+id/delivery_charge"
                 android:textColor="@color/red"
                 android:fontFamily="monospace"/>
 
@@ -206,6 +206,7 @@
         <TextView
             android:layout_marginLeft="20dp"
             android:alpha="0.5"
+            android:id="@+id/total_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp"

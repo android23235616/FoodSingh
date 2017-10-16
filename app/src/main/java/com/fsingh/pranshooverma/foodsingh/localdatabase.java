@@ -56,4 +56,8 @@ public class localdatabase {
 
 
     public static List<Favourites> favouritesList=new ArrayList<>();
+
+    public static List<MenuItems> sidesList = new ArrayList<>();
+
+    public static  int deliveryCharge = 10;
 }

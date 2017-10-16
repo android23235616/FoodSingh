@@ -43,7 +43,7 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
 
     public Sides_Adapter(Context mContext, List<MenuItems> menuItems) {
         this.mContext = mContext;
-        Display(mContext, "called con");
+        //Display(mContext, "called con");
         this.menuItems = menuItems;
     }
 
@@ -81,7 +81,7 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
 
         plus=(ImageView) holder.itemView.findViewById(R.id.plus_slide2);
         minus=(ImageView) holder.itemView.findViewById(R.id.minus_slide2);
-        Display(plus.getContext(), "Called here");
+        //Display(plus.getContext(), "Called here");
         /*
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
@@ -94,6 +94,7 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
         holder.diname.setText(name);
         holder.total_diprice.setText("₹"+Integer.parseInt(rupees)*qty);
         holder.item_quantity.setText(""+qty);
+        holder.total_diprice.setText("₹"+item.getPrice());
         Glide.with(holder.pic.getContext()).load(item.getImage()).thumbnail(0.01f).into(holder.pic);
         //holder.diprice.setText("₹"+rupees);
         if(rupees.equals("0")){
@@ -119,10 +120,12 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
                     quantity++;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
-                    holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
+                    //holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
                     if(!localdatabase.cartList.contains(item)){
                         localdatabase.cartList.add(item);
                     }
+                    cart.adapter.notifyDataSetChanged();
+                    cart.calculateTotal();
                 }
 
             }
@@ -137,11 +140,11 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
                     quantity--;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
-                    holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
                     if(quantity == 0){
                         localdatabase.cartList.remove(item);
-                        cart.adapter.notifyDataSetChanged();
                     }
+                    cart.adapter.notifyDataSetChanged();
+                    cart.calculateTotal();
                 }
             }
         });
@@ -163,7 +166,7 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
     @Override
     public int getItemCount() {
 
-        Display(mContext,menuItems.size()+"");
+        //Display(mContext,menuItems.size()+"");
         return menuItems.size();
     }
 }

@@ -39,4 +39,7 @@ public class constants {
 
     public static String set_version="http://mindwires.in/foodsingh_app/set_version.php";
 
+    public static String get_sides="http://mindwires.in/foodsingh_app/get_sides.php";
+
+
 }

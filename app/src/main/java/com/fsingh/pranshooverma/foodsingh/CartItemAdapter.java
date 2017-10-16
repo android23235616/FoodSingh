@@ -135,6 +135,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     if(quantity == 0){
                         localdatabase.cartList.remove(item);
                         cart.adapter.notifyDataSetChanged();
+                        cart.calculateTotal();
                     }
                 }
             }
@@ -146,6 +147,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                 item.setQuantity(0);
                 localdatabase.cartList.remove(item);
                 cart.adapter.notifyDataSetChanged();
+                cart.calculateTotal();
             }
         });
 /*

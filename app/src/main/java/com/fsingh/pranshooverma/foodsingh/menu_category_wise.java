@@ -40,6 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +62,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     boolean nav=true;
     NavigationView navigationView;
     RecyclerView.LayoutManager layoutManager;
-    categoryAdapter_menu_wise adapter_menu_wise;
+
 
     String category=null;
     int position;
@@ -262,8 +263,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     private void send_to_adapter()
     {
-        adapter_menu_wise=new categoryAdapter_menu_wise(this,dish_name,dish_price);
-        recyclerView.setAdapter(adapter_menu_wise);
+       // adapter_menu_wise=new categoryAdapter_menu_wise(this,dish_name,dish_price);
+       // recyclerView.setAdapter(adapter_menu_wise);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
