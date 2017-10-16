@@ -20,7 +20,7 @@
         android:fitsSystemWindows="true"
         app:layout_collapseMode="pin"
         android:id="@+id/right_arrow"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="right"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -31,7 +31,7 @@
         android:fitsSystemWindows="true"
         app:layout_collapseMode="pin"
         android:id="@+id/left_arrow"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="left"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -43,7 +43,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp">
+        android:layout_marginTop="120dp">
 
         <ImageView
             android:src="@drawable/ic_brightness_1_black_24dp"
