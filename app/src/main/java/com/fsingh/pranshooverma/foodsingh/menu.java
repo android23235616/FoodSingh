@@ -417,10 +417,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void setTypeface(){
-        TextView t1 = (TextView)findViewById(R.id.new_location);
+        ImageView t1 = (ImageView) findViewById(R.id.new_location);
         TextView t2 = (TextView)findViewById(R.id.attack);
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        t1.setTypeface(t);
+       // t1.setTypeface(t);
         //t2.setTypeface(t);
     }
 
