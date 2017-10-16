@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/background_color_new"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color_new"
+    >
+
+    <include layout="@layout/my_toolbar"/>
+
+    <RelativeLayout
+        android:background="@color/cart_bg"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/r1">
+        <TextView
+
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:id="@+id/order_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Order Review"/>
+
+        <TextView
+            android:padding="4dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="50dp"
+
+            android:fontFamily="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/repeatorder"
+            android:layout_toRightOf="@id/order_rev"
+            android:text="REPEAT ORDER"
+            />
+
+        <TextView
+            android:padding="4dp"
+
+            android:layout_marginLeft="5dp"
+
+            android:fontFamily="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/order_number_dummy"
+            android:layout_below="@id/order_rev"
+            android:text="Order No"
+            />
+
+        <TextView
+            android:padding="4dp"
+
+            android:layout_marginLeft="10dp"
+
+            android:fontFamily="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:id="@+id/order_number"
+            android:layout_below="@id/order_number_dummy"
+            android:text="FS674"
+            />
+
+        <TextView
+            android:layout_marginLeft="60dp"
+
+            android:fontFamily="monospace"
+            android:id="@+id/price"
+            android:layout_toRightOf="@id/order_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_below="@id/repeatorder"
+
+            android:text="Rs 240"/>
+
+        <TextView
+            android:padding="4dp"
+
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/order_rev"
+            android:fontFamily="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/date"
+            android:layout_below="@id/price"
+            android:text="3rd October 2017"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:background="@color/cart_bg"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/r2">
+        <TextView
+
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:id="@+id/items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Items"/>
+
+       <android.support.v7.widget.RecyclerView
+           android:layout_marginTop="5dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/items">
+
+       </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/cart_bg"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/r3">
+        <TextView
+
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:id="@+id/tracks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Track"/>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:scaleType="fitCenter"
+            android:layout_below="@id/tracks"
+            android:id="@+id/trackimage"
+            android:src="@drawable/orderplaced"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:id="@+id/issue"
+            android:layout_below="@+id/trackimage"
+            android:text="Have An issue?  "
+            android:fontFamily="monospace"
+            android:gravity="right"
+            android:textColor="@color/text_color"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/cart_bg"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/r4">
+        <TextView
+
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:id="@+id/logisticinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Logistic Info"/>
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/info"
+            android:layout_below="@+id/logisticinfo"
+            android:text="Kundu"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:gravity="left"
+
+            />
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/number_info"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/logisticinfo"
+            android:text="1234444234"
+
+            android:fontFamily="monospace"
+            android:gravity="right"
+
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

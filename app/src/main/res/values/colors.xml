@@ -7,6 +7,10 @@
     <color name = "background_color_new">#e8f4cb</color>
     <color name = "nav_bar_color">#EAE19E</color>
     <color name="bg_login">#26ae90</color>
+    <color name="text_color">#f29908</color>
+    <color name = "toolbar_color">#ece8b2</color>
+    <color name = "extra1">#ece8b2</color>
+    <color name = "cart_bg">#f7f7f7</color>
     <color name="bg_register">#2e3237</color>
     <color name="red">#FF0000</color>
     <color name="bg_main">#428bca</color>
