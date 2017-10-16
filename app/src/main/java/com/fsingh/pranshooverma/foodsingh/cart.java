@@ -59,7 +59,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView.LayoutManager layout;
     Sides_Adapter sidesAdapter;
     Toolbar toolbar;
-    Button checkout;
+    static Button checkout;
     SharedPreferences shared;
     NavigationView navigationView;
     public static CartItemAdapter adapter;
@@ -67,6 +67,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     static RelativeLayout bottomBar;
 
     static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
+
+    static int totalAmount;
 
 
     @Override
@@ -117,16 +119,16 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
             //    Toast.makeText(cart.this, "Order place krna  hai yahan se", Toast.LENGTH_SHORT).show();
-                int sum=0;
+       /*         int sum=0;
                 for(int i=0;i<constants.items_price.size();i++) {
                     sum= sum+Integer.parseInt((constants.items_price.get(i)).substring(3));
-                }
+                } */
 
             //    Toast.makeText(cart.this,String.valueOf(sum), Toast.LENGTH_SHORT).show();
 
-                Intent aas=new Intent(getApplicationContext(),place_order_activity.class);
+                Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
                 Bundle a=new Bundle();
-                a.putString("sum", String.valueOf(sum));
+                a.putInt("total_amount", totalAmount);
                 aas.putExtras(a);
                 startActivity(aas);
 
@@ -212,10 +214,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     public static void calculateTotal(){
 
-        int totalAmount=0;
+        totalAmount=0;
 
         if(localdatabase.cartList.size()>0) {
-            bottomBar.setVisibility(View.VISIBLE);
+            checkout.setClickable(true);
+            checkout.setBackgroundResource(R.drawable.back_checkout);
             for (int i = 0; i < localdatabase.cartList.size(); i++) {
                 MenuItems item = localdatabase.cartList.get(i);
                 totalAmount += item.getQuantity() * Integer.parseInt(item.getPrice());
@@ -225,7 +228,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
         else {
-         //   bottomBar.setVisibility(View.GONE);
+            checkout.setClickable(false);
+            checkout.setBackgroundResource(R.drawable.back_checkout_grey);
         }
 
             tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
