@@ -51,6 +51,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
             cardView=(CardView) itemView.findViewById(R.id.card_view);
             Typeface t = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/Alisandra Demo.ttf");
             txt.setTypeface(t);
+
         }
 
     }

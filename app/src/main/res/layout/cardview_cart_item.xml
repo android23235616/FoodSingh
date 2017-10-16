@@ -35,12 +35,13 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="16dp"
                 android:fontFamily="casual"
+                android:textColor="@color/bg_login"
                 android:gravity="left"
                 android:layout_toLeftOf="@+id/delete"
                 android:maxLines="1"
                 android:layout_marginTop="16dp"
                 android:text="Egg Chicken Fried Rice"
-                android:textSize="12dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
                  />
@@ -78,18 +79,22 @@
                   />
 
             <TextView
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:alpha="0.6"
                 android:textSize="16dp"
                 android:text="0"
                 android:id="@+id/item_quantity_slide"
-                android:textColor="#96184FFF"
+
                 android:layout_toRightOf="@id/minus_slide"
-                android:textStyle="bold"
+
                 android:layout_marginLeft="4dp"
-                android:gravity="center"
+                android:background="@color/grey"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 />
 
 
@@ -126,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="75dp"
+                android:layout_marginLeft="65dp"
                 android:textSize="18dp"
                 android:text="₹190"
                 android:layout_toRightOf="@id/plus_slide"

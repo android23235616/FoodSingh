@@ -56,7 +56,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             delete=(ImageView) itemView.findViewById(R.id.delete);
             pl=(ImageView) itemView.findViewById(R.id.plus_slide);
             mi=(ImageView) itemView.findViewById(R.id.minus_slide);
-            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
+            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/MTCORSVA.TTF");
             diname.setTypeface(t);
             diprice.setTypeface(t);
             item_quantity.setTypeface(t);

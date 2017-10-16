@@ -68,7 +68,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             mi=(ImageView) itemView.findViewById(R.id.minus_slide);
             fav=(ImageView) itemView.findViewById(R.id.fav);
             image=(ImageView) itemView.findViewById(R.id.img_item_slide);
-            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/android.ttf");
+            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/gadugib.ttf");
             diname.setTypeface(t);
             diprice.setTypeface(t);
             item_quantity.setTypeface(t);
