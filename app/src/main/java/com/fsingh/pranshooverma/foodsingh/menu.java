@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
@@ -74,6 +75,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     pagerAdapter pageradater;
     NavigationView navigationView;
     ViewPager pager;
+    static int[] dotPositions = {R.id.view_pager_1, R.id.view_pager_2,R.id.view_pager_3,R.id.view_pager_4,R.id.view_pager_5,R.id.view_pager_6};
     AppBarLayout appBarLayout;
     public static int width;
     public static TextView cartitemcount1;
@@ -169,6 +171,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
         local = new localdatabase();
         pageradater = new pagerAdapter(local);
+
         pager.setAdapter(pageradater);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,9 +179,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 int current = pager.getCurrentItem() + 1;
                 if(current == localdatabase.BannerUrls.size()) {
                     pager.setCurrentItem(0);
+                    getPositionsForDots(0);
                 }else{
                     pager.setCurrentItem(current);
+                    getPositionsForDots(current%dotPositions.length);
                 }
+
             }
         });
 
@@ -186,10 +192,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View v) {
                 int current = pager.getCurrentItem() - 1;
-                if (current >= 0)
+                if (current >= 0) {
                     pager.setCurrentItem(current);
+                    getPositionsForDots(current % dotPositions.length);
+                }
                 else{
                     pager.setCurrentItem(localdatabase.BannerUrls.size()-1);
+                    getPositionsForDots(dotPositions.length-1);
                 }
             }
         });
@@ -345,6 +354,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void initialize() {
         pager = (ViewPager) findViewById(R.id.view_pager);
+        pager.addOnPageChangeListener(this);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
@@ -355,6 +365,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 R.color.refresh_progress_3);
         //swipeRefreshLayout.canScrollVertically()
         recylerView=(RecyclerView) findViewById(R.id.recyclerView);
+        recylerView.setFocusable(false);
         layoutmanager=new LinearLayoutManager(this);
         recylerView.setLayoutManager(layoutmanager);
         recylerView.setNestedScrollingEnabled(true);
@@ -365,6 +376,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         cuisine_btn=(Button)findViewById(R.id.cuisine);
         time_btn=(Button)findViewById(R.id.time);
         combo_btn=(Button)findViewById(R.id.combo);
+
+    }
+
+    private void getPositionsForDots(int position){
+
+        for (int i=0; i<dotPositions.length; i++){
+            ImageView temp = (ImageView)findViewById(dotPositions[i]);
+            temp.setAlpha(0.5f);
+        }
+        ImageView temp = (ImageView)findViewById(dotPositions[position]);
+        temp.setAlpha(1f);
 
     }
 
@@ -478,21 +500,24 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+        getPositionsForDots(position%dotPositions.length);
+       // Display("Called at "+position);
+
     }
 
     @Override
     public void onPageSelected(int position) {
-        if (position == local.url.length - 1) {
-            next.setVisibility(View.GONE);
-        } else {
-            next.setVisibility(View.VISIBLE);
-        }
+//       Display("Page selected at "+position);
+        getPositionsForDots(position%dotPositions.length);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+  //      getPositionsForDots(3);
+
     }
+
 
 
 

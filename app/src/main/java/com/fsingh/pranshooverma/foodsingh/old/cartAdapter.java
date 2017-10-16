@@ -1,4 +1,4 @@
-package com.fsingh.pranshooverma.foodsingh;
+package com.fsingh.pranshooverma.foodsingh.old;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.fsingh.pranshooverma.foodsingh.R;
+import com.fsingh.pranshooverma.foodsingh.constants;
+import com.fsingh.pranshooverma.foodsingh.menu;
+import com.fsingh.pranshooverma.foodsingh.menu_category_wise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +71,7 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
             public void onClick(View view) {
 
 
-                int index=constants.item_name_deb.indexOf(item_name.get(position));
+                int index= constants.item_name_deb.indexOf(item_name.get(position));
 
                 int prev_value= Integer.parseInt(constants.item_quant_deb.get(index));
 

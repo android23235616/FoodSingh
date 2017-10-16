@@ -4,17 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-android:orientation="vertical"
+    android:orientation="vertical"
+    android:layout_marginBottom="100dp"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fsingh.pranshooverma.foodsingh.menu"
-    tools:showIn="@layout/app_bar_menu"
+
     android:baselineAligned="false">
     <TextView
         android:id="@+id/attack"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-       android:textStyle="bold"
+        android:textStyle="bold"
         android:background="#75E990"
         android:fontFamily="monospace"
         android:gravity="center"
@@ -41,7 +42,7 @@ android:orientation="vertical"
         />
 
     <LinearLayout
-    android:orientation="horizontal"
+        android:orientation="horizontal"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -83,33 +84,32 @@ android:orientation="vertical"
             android:layout_alignParentTop="true"
             />
     </LinearLayout>
-    <ScrollView android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
-    >
-</android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerView"
+                >
+            </android.support.v7.widget.RecyclerView>
 
 
-        <ImageView
+            <ImageView
 
-            android:scaleType="centerCrop"
-            android:src="@drawable/dummy_ad"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/advertisement2"
-            />
+                android:scaleType="centerCrop"
+                android:src="@drawable/dummy_ad"
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_height="50dp"
+                android:id="@+id/advertisement2"
+                />
 
         </LinearLayout>
-</ScrollView>
+
 
 </LinearLayout>

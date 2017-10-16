@@ -3,7 +3,6 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
             super(itemView);
 
             date_text=(TextView) itemView.findViewById(R.id.date);
-            order_qt=(TextView) itemView.findViewById(R.id.item_quantity);
+            order_qt=(TextView) itemView.findViewById(R.id.item_quantity_slide);
             amount_text=(TextView) itemView.findViewById(R.id.textView_amount);
             orders_text=(TextView) itemView.findViewById(R.id.textview_scroll_items);
             address_text=(TextView) itemView.findViewById(R.id.textview_scroll_address);

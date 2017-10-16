@@ -439,9 +439,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             Display(e.toString());
         }
         String address, city;
-        if(addresses.size()>0)
-         address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-         city = addresses.get(0).getLocality();
-        return city;
+        if(addresses.size()>0) {
+            address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            city = addresses.get(0).getLocality();
+            return city;
+        }
+
+        return "Location Not Found";
     }
 }

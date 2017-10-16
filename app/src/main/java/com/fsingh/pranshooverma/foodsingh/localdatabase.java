@@ -54,7 +54,6 @@ public class localdatabase {
 
     public static String city = null;
 
-   public static ArrayList<String> fav_list=new ArrayList<>();
 
-
+    public static List<Favourites> favouritesList=new ArrayList<>();
 }

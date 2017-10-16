@@ -5,6 +5,7 @@
     <color name="menu_text">#069655</color>
     <color name="colorAccent">#B71c1c</color>
     <color name = "background_color_new">#e8f4cb</color>
+    <color name = "nav_bar_color">#EAE19E</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
     <color name="red">#FF0000</color>
