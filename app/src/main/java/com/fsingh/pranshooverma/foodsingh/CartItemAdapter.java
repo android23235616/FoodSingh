@@ -117,6 +117,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     if(!localdatabase.cartList.contains(item)){
                         localdatabase.cartList.add(item);
                     }
+                    cart.calculateTotal();
                 }
 
             }
@@ -135,8 +136,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     if(quantity == 0){
                         localdatabase.cartList.remove(item);
                         cart.adapter.notifyDataSetChanged();
-                        cart.calculateTotal();
                     }
+                    cart.calculateTotal();
                 }
             }
         });
