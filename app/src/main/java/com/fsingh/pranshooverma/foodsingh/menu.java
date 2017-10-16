@@ -1,5 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,6 +53,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -379,6 +382,29 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    public void showDialog(Activity activity, String msg,int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        Glide.with(activity).load(pic).into(image);
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
     private void getPositionsForDots(int position){
 
         for (int i=0; i<dotPositions.length; i++){
@@ -466,9 +492,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
             attack.setText("Kitchen is Open.");
             attack.setBackgroundColor(Color.parseColor("#75E990"));
+            //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
         }
         else
         {
+            showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
             Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
             attack.setText("Kitchen is Closed.");
             attack.setBackgroundColor(Color.parseColor("#e55512"));

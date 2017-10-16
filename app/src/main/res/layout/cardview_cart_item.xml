@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:layout_marginBottom="3dp"
     android:layout_width="match_parent"
+    CardView:cardBackgroundColor="#f7f2e1"
     android:layout_height="100dp"
     CardView:cardElevation="4dp"
     android:id="@+id/cardView"
