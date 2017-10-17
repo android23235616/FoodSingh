@@ -23,4 +23,6 @@
     <string name="title_activity_place_order_activity">place_order_activity</string>
     <string name="title_activity_order_history">order_history</string>
     <string name="title_activity_details">details</string>
+    <string name="title_activity_menu_item_detail">menu_item_detail</string>
+    <string name="title_activity_menu_item_details">menu_item_details</string>
 </resources>

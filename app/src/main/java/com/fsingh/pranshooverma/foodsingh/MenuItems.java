@@ -1,12 +1,18 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Tanmay on 14-10-2017.
  */
 
-public class MenuItems {
+public class MenuItems implements Parcelable{
 
     private String Id, Name, Category, Price, Image;
+
     private int quantity = 0;
 
     MenuItems(String Id, String Name, String Category, String Price, String Image){
@@ -16,6 +22,27 @@ public class MenuItems {
         this.Price = Price;
         this.Image = Image;
     }
+
+    protected MenuItems(Parcel in) {
+        Id = in.readString();
+        Name = in.readString();
+        Category = in.readString();
+        Price = in.readString();
+        Image = in.readString();
+        quantity = in.readInt();
+    }
+
+    public static final Creator<MenuItems> CREATOR = new Creator<MenuItems>() {
+        @Override
+        public MenuItems createFromParcel(Parcel in) {
+            return new MenuItems(in);
+        }
+
+        @Override
+        public MenuItems[] newArray(int size) {
+            return new MenuItems[size];
+        }
+    };
 
     public int getQuantity() {
         return quantity;
@@ -43,5 +70,20 @@ public class MenuItems {
     public String getImage(){
 
         return Image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(Id);
+        parcel.writeString(Name);
+        parcel.writeString(Category);
+        parcel.writeString(Price);
+        parcel.writeString(Image);
+        parcel.writeInt(quantity);
     }
 }
