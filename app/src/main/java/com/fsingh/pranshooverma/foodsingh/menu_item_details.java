@@ -59,12 +59,18 @@ public class menu_item_details extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
-                //int quantiti=item.getQuantity();
-                ///quantiti++;
-                //quantity.setText(String.valueOf(quantiti));
-                Toast.makeText(menu_item_details.this, String.valueOf(localdatabase.cartList.contains(item)), Toast.LENGTH_SHORT).show();
-                //item.setQuantity(quantiti);
+                int quantiti=item.getQuantity();
+                quantiti=quantiti+1;
+                quantity.setText(String.valueOf(quantiti));
 
+                for(int i=0;i<localdatabase.cartList.size();i++)
+                {
+                    if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                    {
+                        Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                        item.setQuantity(quantiti);
+                    }
+                }
 
             }
         });

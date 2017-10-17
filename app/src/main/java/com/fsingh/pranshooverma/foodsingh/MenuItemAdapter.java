@@ -257,7 +257,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     b.putString("item_price",men.getPrice());
                     b.putParcelable("object",item);
                     b.putString("item_quantity",String.valueOf(men.getQuantity()));
-                    b.putInt("position",holder.getAdapterPosition());
+                    b.putInt("position",position);
                     s.putExtras(b);
                     mContext.startActivity(s);
 
