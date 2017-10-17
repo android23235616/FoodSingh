@@ -58,6 +58,7 @@ public class menu_item_details extends AppCompatActivity
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int check=0;
                 Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
 
                 int quantiti = item.getQuantity();
@@ -71,12 +72,14 @@ public class menu_item_details extends AppCompatActivity
                         Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
                         localdatabase.cartList.remove(i);
                         localdatabase.cartList.add(item);
-                    }
-                    else
-                    {
+                        check=1;
 
-                        localdatabase.cartList.add(item);
                     }
+
+                }
+                if(check!=1)
+                {
+                    localdatabase.cartList.add(item);
                 }
 
             }
