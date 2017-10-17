@@ -248,10 +248,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 mContext.startActivity(s);
             }*/
 
-                MenuItems item = menuItems.get(holder.getAdapterPosition());
+                MenuItems item = menuItems.get(position);
                 if(!holder.diprice.getText().toString().equals("NA")) {
                     Bundle b=new Bundle();
-                    MenuItems men=menuItems.get(holder.getAdapterPosition());
+                    MenuItems men=menuItems.get(position);
                     b.putString("item_name",men.getName());
                     b.putString("item_image",men.getImage());
                     b.putString("item_price",men.getPrice());
