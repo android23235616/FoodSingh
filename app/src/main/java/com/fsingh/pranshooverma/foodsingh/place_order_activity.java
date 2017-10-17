@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.SubMenu;
@@ -300,12 +301,15 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
     private void  Display(String s)
     {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Log.i("android232356116",s);
     }
 
     private void send_to_deb(final String addy, final String com) {
         progress.setMessage("Sending Order........");
         progress.setCancelable(false);
         progress.show();
+
+        Display(local_list.toString());
 
     //    Toast.makeText(this, addy+"\n"+String.valueOf(final_am)+"\n"+local_list+"\n"+mobile_number, Toast.LENGTH_SHORT).show();
         StringRequest str=new StringRequest(Request.Method.POST, constants.send_to_debian, new Response.Listener<String>() {

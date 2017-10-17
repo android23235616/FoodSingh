@@ -12,7 +12,13 @@
 
     <include layout="@layout/my_toolbar"/>
 
-    <RelativeLayout
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="180dp">
+    <LinearLayout
+        android:orientation="vertical"
         android:gravity="center"
         android:background="@color/cart_bg"
         android:layout_marginTop="10dp"
@@ -20,14 +26,21 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:id="@+id/r1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <TextView
 
             android:textColor="#000000"
             android:fontFamily="monospace"
             android:id="@+id/order_rev"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="20dp"
+
             android:text="Order Review"/>
 
         <TextView
@@ -36,14 +49,23 @@
             android:layout_marginLeft="40dp"
 
             android:fontFamily="monospace"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13dp"
-
+            android:layout_weight="1"
             android:id="@+id/repeatorder"
             android:layout_toRightOf="@id/order_rev"
-            android:text="REPEAT ORDER"
+            android:text=" REPEAT ORDER"
             />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
         <TextView
             android:padding="4dp"
@@ -51,21 +73,44 @@
             android:layout_marginLeft="5dp"
 
             android:fontFamily="monospace"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13dp"
+            android:layout_weight="1"
             android:id="@+id/order_number_dummy"
-            android:layout_below="@id/order_rev"
+
             android:text="Order No"
             />
 
+
+
+        <TextView
+            android:layout_marginLeft="60dp"
+
+            android:fontFamily="monospace"
+            android:id="@+id/price"
+            android:layout_toRightOf="@id/order_rev"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_below="@id/repeatorder"
+
+            android:text="Rs 240"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <TextView
             android:padding="4dp"
 
             android:layout_marginLeft="10dp"
 
             android:fontFamily="monospace"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:id="@+id/order_number"
@@ -74,34 +119,24 @@
             />
 
         <TextView
-            android:layout_marginLeft="60dp"
-
-            android:fontFamily="monospace"
-            android:id="@+id/price"
-            android:layout_toRightOf="@id/order_rev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_below="@id/repeatorder"
-
-            android:text="Rs 240"/>
-
-        <TextView
             android:padding="4dp"
 
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/order_rev"
             android:fontFamily="monospace"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:textSize="13dp"
             android:id="@+id/date"
             android:layout_below="@id/price"
             android:text="3rd October 2017"
             />
 
-    </RelativeLayout>
+        </LinearLayout>
 
+    </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
 
         android:background="@color/cart_bg"
@@ -123,6 +158,7 @@
             android:text=" Items"/>
 
       <LinearLayout
+
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
 
@@ -177,7 +213,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/tracks"
             android:id="@+id/trackimage"
-            android:src="@drawable/orderplaced"/>
+            android:src="@drawable/outfordelivery"/>
 
         <TextView
             android:layout_width="match_parent"
