@@ -152,6 +152,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
                     );
 
+                    localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
+
                     JSONArray Categories = mainObject.getJSONArray("categories");
                     for (int i=0; i<Categories.length(); i++){
                         String name,image,cuisine, time, combo;
