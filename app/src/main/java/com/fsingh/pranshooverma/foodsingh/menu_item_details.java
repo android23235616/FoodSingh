@@ -59,7 +59,8 @@ public class menu_item_details extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
-                int quantiti=item.getQuantity();
+
+                int quantiti = item.getQuantity();
                 quantiti=quantiti+1;
                 quantity.setText(String.valueOf(quantiti));
                 item.setQuantity(quantiti);
@@ -73,6 +74,7 @@ public class menu_item_details extends AppCompatActivity
                     }
                     else
                     {
+
                         localdatabase.cartList.add(item);
                     }
                 }
@@ -95,6 +97,7 @@ public class menu_item_details extends AppCompatActivity
         item=b.getParcelable("object");
         item_quantity=b.getString("item_quantity");
         position=b.getInt("position");
+
         if (item_image.equals("")){
             quantity.setText("0");
         }
