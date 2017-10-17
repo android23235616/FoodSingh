@@ -246,7 +246,7 @@ manipulatenavigationdrawer();
 
     private void Display(String s)
     {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         Log.i("android23235616",s);
     }
 

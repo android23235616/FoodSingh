@@ -1,7 +1,9 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -71,18 +73,18 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         String d=date.get(holder.getAdapterPosition());
-        String a=amount.get(holder.getAdapterPosition());
-        String o=orders.get(holder.getAdapterPosition());
-        String add=address.get(holder.getAdapterPosition());
+        final String a=amount.get(holder.getAdapterPosition());
+        final String o=orders.get(holder.getAdapterPosition());
+        final String add=address.get(holder.getAdapterPosition());
         String[] temp = d.split("-");
         Display(holder.address_text_.getContext(),temp.length+"");
-        String year = temp[0];
+        final String year = temp[0];
 
-        String month = months[Integer.parseInt(temp[1])-1];
-        String day = temp[2];
+        final String month = months[Integer.parseInt(temp[1])-1];
+        final String day = temp[2];
 
 
         holder.date_text.setText(month+" "+day.substring(0,2)+", "+year);
@@ -95,7 +97,12 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Display(view.getContext(),"Clicked");
+              FoodItem item = new FoodItem(id.get(holder.getAdapterPosition()),o,a,add,month+" "+day.substring(0,2)+", "+year);
+                Intent i = new Intent(holder.arrow.getContext(), Tracker.class);
+                Bundle b = new Bundle();
+                b.putParcelable("object",item);
+                i.putExtras(b);
+                holder.arrow.getContext().startActivity(i);
             }
         });
 
@@ -113,6 +120,6 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     }
 
     private void Display(Context c, String s){
-        Toast.makeText(c, s, Toast.LENGTH_LONG).show();
+        //Toast.makeText(c, s, Toast.LENGTH_LONG).show();
     }
 }
