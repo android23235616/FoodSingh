@@ -62,13 +62,18 @@ public class menu_item_details extends AppCompatActivity
                 int quantiti=item.getQuantity();
                 quantiti=quantiti+1;
                 quantity.setText(String.valueOf(quantiti));
-
+                item.setQuantity(quantiti);
                 for(int i=0;i<localdatabase.cartList.size();i++)
                 {
                     if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
                     {
                         Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
-                        item.setQuantity(quantiti);
+                        localdatabase.cartList.remove(i);
+                        localdatabase.cartList.add(item);
+                    }
+                    else
+                    {
+                        localdatabase.cartList.add(item);
                     }
                 }
 
