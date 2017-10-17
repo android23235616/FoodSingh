@@ -25,4 +25,8 @@
     <string name="title_activity_details">details</string>
     <string name="title_activity_menu_item_detail">menu_item_detail</string>
     <string name="title_activity_menu_item_details">menu_item_details</string>
+    <string name="title_activity_tracker">Tracker</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

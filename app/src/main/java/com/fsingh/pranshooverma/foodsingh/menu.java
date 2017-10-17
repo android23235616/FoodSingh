@@ -488,21 +488,19 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(swipeRefreshLayout.isRefreshing()){
                     swipeRefreshLayout.setRefreshing(false);
                 }
-
-        if(local.metaData.getservice().equals("true"))
-        {
-            Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
-            attack.setText("Kitchen is Open.");
-            attack.setBackgroundColor(Color.parseColor("#75E990"));
-            //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
-        }
-        else
-        {
-            showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
-            Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
-            attack.setText("Kitchen is Closed.");
-            attack.setBackgroundColor(Color.parseColor("#e55512"));
-        }
+if(local.metaData!=null) {
+    if (local.metaData.getservice().equals("true")) {
+        Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+        attack.setText("Kitchen is Open.");
+        attack.setBackgroundColor(Color.parseColor("#75E990"));
+        //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
+    } else {
+        showDialog(this, "Kitchen is Closed\nPlease come back from 6 to 10", R.drawable.store);
+        Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
+        attack.setText("Kitchen is Closed.");
+        attack.setBackgroundColor(Color.parseColor("#e55512"));
+    }
+}
     }
 
 

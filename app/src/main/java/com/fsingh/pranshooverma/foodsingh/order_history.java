@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.SubMenu;
@@ -61,7 +62,9 @@ boolean nav=true;
     List<String> date=new ArrayList<>();
     List<String> amount=new ArrayList<>();
     List<String> address=new ArrayList<>();
+    List<String> id = new ArrayList<>();
     List<String> orders=new ArrayList<>();
+
 
     order_history_Adapter mAdapter;
     NavigationView navigationView;
@@ -187,6 +190,7 @@ manipulatenavigationdrawer();
         StringRequest str= new StringRequest(Request.Method.POST,constants.order_history, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Display(response);
                 if(progress.isShowing())
                 {
                     progress.dismiss();
@@ -205,6 +209,7 @@ manipulatenavigationdrawer();
                         orders.add(or);
                         String ad=obj.getString("address");
                         address.add(ad);
+                        id.add("FS"+obj.getString("id"));
                     }
 
                 //    Display(amount.toString());
@@ -241,7 +246,8 @@ manipulatenavigationdrawer();
 
     private void Display(String s)
     {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Log.i("android23235616",s);
     }
 
     private void initialize() {
@@ -255,7 +261,7 @@ manipulatenavigationdrawer();
 
     private void send_to_adapter()
     {
-        mAdapter=new order_history_Adapter(this,date,amount,address,orders);
+        mAdapter=new order_history_Adapter(this,date,amount,address,orders,id);
         recylerview.setAdapter(mAdapter);
         recylerview.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recylerview.setItemAnimator(new DefaultItemAnimator());

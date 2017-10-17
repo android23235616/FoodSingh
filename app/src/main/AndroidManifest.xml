@@ -110,7 +110,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckoutActivity"></activity>
+        <activity android:name=".CheckoutActivity" />
         <activity android:name=".OrderPlacedActivity">
 
         </activity>
@@ -121,7 +121,10 @@
         <activity
             android:name=".menu_item_details"
             android:label="@string/title_activity_menu_item_details"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Tracker"
+            android:label="@string/title_activity_tracker" />
     </application>
 
 </manifest>

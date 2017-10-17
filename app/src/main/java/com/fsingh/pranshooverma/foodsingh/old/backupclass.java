@@ -1,9 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -19,9 +17,7 @@ import java.util.List;
  * Created by PRANSHOO VERMA on 15/09/2017.
  */
 
-public class order_history_Adapter extends RecyclerView.Adapter<order_history_Adapter.ViewHolder> {
-
-   private final String[] months  = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"};
+public class backupclass extends RecyclerView.Adapter<backupclass.ViewHolder> {
 
     Context mContext;
     List<String> date=new ArrayList<>();
@@ -29,13 +25,10 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     List<String> address=new ArrayList<>();
     int counter=0;
     List<String> orders=new ArrayList<>();
-    List<String> id = new ArrayList<>();
 
-
-    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders, List<String> id) {
+    public backupclass(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders) {
         this.mContext = mContext;
         this.date = date;
-        this.id = id;
         this.amount = amount;
         this.address = address;
         this.orders = orders;
@@ -73,36 +66,23 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         String d=date.get(holder.getAdapterPosition());
-        final String a=amount.get(holder.getAdapterPosition());
-        final String o=orders.get(holder.getAdapterPosition());
-        final String add=address.get(holder.getAdapterPosition());
-        String[] temp = d.split("-");
-        Display(holder.address_text_.getContext(),temp.length+"");
-        final String year = temp[0];
+        String a=amount.get(holder.getAdapterPosition());
+        String o=orders.get(holder.getAdapterPosition());
+        String add=address.get(holder.getAdapterPosition());
 
-        final String month = months[Integer.parseInt(temp[1])-1];
-        final String day = temp[2];
-
-
-        holder.date_text.setText(month+" "+day.substring(0,2)+", "+year);
-        holder.amount_text.setText(a);
+        holder.date_text.setText(d);
+        // holder.amount_text.setText(a);
         //holder.orders_text.setText(o);
         //holder.address_text.setText(add);
-       // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
-        holder.order_no.setText(id.get(holder.getAdapterPosition()));
+        // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              FoodItem item = new FoodItem(id.get(holder.getAdapterPosition()),o,a,add,month+" "+day.substring(0,2)+", "+year);
-                Intent i = new Intent(holder.arrow.getContext(), Tracker.class);
-                Bundle b = new Bundle();
-                b.putParcelable("object",item);
-                i.putExtras(b);
-                holder.arrow.getContext().startActivity(i);
+                Display(view.getContext(),"Clicked");
             }
         });
 
@@ -120,6 +100,6 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     }
 
     private void Display(Context c, String s){
-        //Toast.makeText(c, s, Toast.LENGTH_LONG).show();
+        Toast.makeText(c, s, Toast.LENGTH_LONG).show();
     }
 }
