@@ -59,7 +59,6 @@ public class menu_item_details extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 int check=0;
-                Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
                 int quantiti = item.getQuantity();
                 quantiti=quantiti+1;
                 quantity.setText(String.valueOf(quantiti));
@@ -86,7 +85,42 @@ public class menu_item_details extends AppCompatActivity
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(menu_item_details.this, "minus", Toast.LENGTH_SHORT).show();
+                if(item.getQuantity()!=0)
+                {
+                    int quantiti = item.getQuantity();
+                    quantiti=quantiti-1;
+                    quantity.setText(String.valueOf(quantiti));
+                    item.setQuantity(quantiti);
+                    if(quantiti==0)
+                    {
+                        for(int i=0;i<localdatabase.cartList.size();i++)
+                        {
+                            if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                            {
+                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                localdatabase.cartList.remove(i);
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        for(int i=0;i<localdatabase.cartList.size();i++)
+                        {
+                            if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                            {
+                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                localdatabase.cartList.remove(i);
+                                localdatabase.cartList.add(item);
+
+                            }
+
+                        }
+
+                    }
+
+                }
             }
         });
     }
@@ -154,6 +188,7 @@ public class menu_item_details extends AppCompatActivity
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
                 startActivity(ssd);
+                finish();
             }
         });
 
