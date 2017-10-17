@@ -47,12 +47,15 @@ public class Tracker extends AppCompatActivity {
         if(i!=null){
             item = i.getExtras().getParcelable("object");
            //processFoodNames(item.getItem());
-            test(item.getItem());
+            if(item!=null) {
+                  test(item.getItem());
+                //item.getItem();
+            }
         }else{
             Display("i is null");
         }
 
-        getResponse(constants.order_details);
+       // getResponse(constants.order_details);
 
 
     }
@@ -69,6 +72,7 @@ public class Tracker extends AppCompatActivity {
             if(m.find()) {
                 Display(foods[i]+" 2here");
                 String qt = m.group(0);
+
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
                 fooditems.append(name + "\n");
                 foodqt.append(qt + "\n");
@@ -82,17 +86,18 @@ public class Tracker extends AppCompatActivity {
 
     private void test(String foods1){
        // String foods1 = "DRAGON CHICKEN (B\\/L) x1, HUNAN CHICKEN (B\\/L) x1, Coke 750ml x1";
-
+        fooditems.append(" ");
         String[] foods = foods1.split(",");
 
         // Create a Pattern object
-        Pattern p1 = Pattern.compile("\\d+");
+        Pattern p1 = Pattern.compile("x\\d+");
         for (int i=0; i<foods.length; i++){
             Matcher m = p1.matcher(foods[i]);
             //foods[i].replace("(B\\/L)","k");
             if(m.find()) {
                 // Display(foods[i]+" 2here");
-                String qt = m.group(0);
+                String qt =m.group(0);
+                qt = qt.substring(1);
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
 
                 Display("name "+name+" qt "+qt+" "+i);
