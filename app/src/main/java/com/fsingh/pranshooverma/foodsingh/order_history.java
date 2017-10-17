@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.SubMenu;
@@ -187,6 +188,7 @@ manipulatenavigationdrawer();
         StringRequest str= new StringRequest(Request.Method.POST,constants.order_history, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Display(response);
                 if(progress.isShowing())
                 {
                     progress.dismiss();
@@ -242,6 +244,7 @@ manipulatenavigationdrawer();
     private void Display(String s)
     {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Log.i("android23235616",s);
     }
 
     private void initialize() {

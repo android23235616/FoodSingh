@@ -4,8 +4,9 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:background="#f7f7f7"
     android:layout_marginBottom="3dp"
-    android:layout_height="wrap_content">
+    android:layout_height="80dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -24,16 +25,16 @@
                 android:id="@+id/textView_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs. 190"
+                android:text=">"
 
                 android:padding="4dp"
                 android:textStyle="bold"
 
-                android:textColor="#2ECC71"
-                android:layout_marginRight="39dp"
-                android:background="@drawable/shaperating"
-                android:layout_marginTop="20dp"
-                android:textSize="15.5dp"
+
+                android:layout_marginRight="19dp"
+
+                android:layout_marginTop="10dp"
+                android:textSize="38.5dp"
 
                 android:layout_gravity="right"
                 />
@@ -46,19 +47,6 @@
                 android:layout_height="wrap_content">
 
 
-                <TextView
-                    android:textSize="10dp"
-                    android:text="0"
-                    android:id="@+id/item_quantity_slide"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="20dp"
-                    android:textStyle="bold"
-                    android:background="@drawable/textbackground"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    />
             </LinearLayout>
 
 
@@ -66,27 +54,28 @@
 
                 android:id="@+id/textview_scroll_items"
                 android:layout_width="180dp"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="15dp"
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:layout_marginTop="24dp"
                 android:textSize="12dp"
-                android:text="Egg Chicken Fried Rice"
+                android:fontFamily="monospace"
+                android:text="Order Number"
                 android:maxLines="1"
                 />
             <TextView
 
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:text="Rs. 190"
-                android:id="@+id/date"
+                android:text="FS647"
+                android:id="@+id/order_number"
                 android:padding="4dp"
-                android:textStyle="bold"
-              android:layout_marginLeft="138dp"
-                android:textColor="#96184FFF"
 
-                android:background="@drawable/shapeitem5"
-                android:layout_marginTop="60dp"
+              android:layout_marginLeft="15dp"
+
+
+
+                android:layout_marginTop="40dp"
                 android:textSize="15.5dp"
 
                 android:gravity="center"
@@ -100,16 +89,32 @@
             android:text="Rs. 190"
             android:padding="4dp"
             android:textStyle="bold"
-            android:id="@+id/textview_scroll_address"
-            android:textColor="@color/colorPrimary"
+            android:id="@+id/textview_scroll_price"
 
 
-            android:layout_marginTop="110dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="20dp"
             android:textSize="15.5dp"
 
-            android:gravity="center"
+            android:gravity="right"
+
+
             />
 
+
+        <TextView
+            android:layout_height="55dp"
+
+            android:text="3rd october 2017"
+            android:layout_margin="10dp"
+            android:id="@+id/date"
+            android:gravity="right|bottom"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="262dp"
+            ></TextView>
+
     </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by PRANSHOO VERMA on 15/09/2017.
  */
 
-public class order_history_Adapter extends RecyclerView.Adapter<order_history_Adapter.ViewHolder> {
+public class backupclass extends RecyclerView.Adapter<backupclass.ViewHolder> {
 
     Context mContext;
     List<String> date=new ArrayList<>();
@@ -26,7 +26,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     int counter=0;
     List<String> orders=new ArrayList<>();
 
-    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders) {
+    public backupclass(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders) {
         this.mContext = mContext;
         this.date = date;
         this.amount = amount;
@@ -74,10 +74,10 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
         String add=address.get(holder.getAdapterPosition());
 
         holder.date_text.setText(d);
-       // holder.amount_text.setText(a);
+        // holder.amount_text.setText(a);
         //holder.orders_text.setText(o);
         //holder.address_text.setText(add);
-       // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
+        // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
