@@ -60,7 +60,6 @@ public class menu_item_details extends AppCompatActivity
             public void onClick(View view) {
                 int check=0;
                 Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
-
                 int quantiti = item.getQuantity();
                 quantiti=quantiti+1;
                 quantity.setText(String.valueOf(quantiti));
