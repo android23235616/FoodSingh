@@ -19,16 +19,21 @@ import java.util.List;
 
 public class order_history_Adapter extends RecyclerView.Adapter<order_history_Adapter.ViewHolder> {
 
+   private final String[] months  = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"};
+
     Context mContext;
     List<String> date=new ArrayList<>();
     List<String> amount=new ArrayList<>();
     List<String> address=new ArrayList<>();
     int counter=0;
     List<String> orders=new ArrayList<>();
+    List<String> id = new ArrayList<>();
 
-    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders) {
+
+    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders, List<String> id) {
         this.mContext = mContext;
         this.date = date;
+        this.id = id;
         this.amount = amount;
         this.address = address;
         this.orders = orders;
@@ -72,12 +77,20 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
         String a=amount.get(holder.getAdapterPosition());
         String o=orders.get(holder.getAdapterPosition());
         String add=address.get(holder.getAdapterPosition());
+        String[] temp = d.split("-");
+        Display(holder.address_text_.getContext(),temp.length+"");
+        String year = temp[0];
 
-        holder.date_text.setText(d);
-       // holder.amount_text.setText(a);
+        String month = months[Integer.parseInt(temp[1])-1];
+        String day = temp[2];
+
+
+        holder.date_text.setText(month+" "+day.substring(0,2)+", "+year);
+        holder.amount_text.setText(a);
         //holder.orders_text.setText(o);
         //holder.address_text.setText(add);
        // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
+        holder.order_no.setText(id.get(holder.getAdapterPosition()));
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override

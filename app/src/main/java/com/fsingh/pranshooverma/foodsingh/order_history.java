@@ -62,7 +62,9 @@ boolean nav=true;
     List<String> date=new ArrayList<>();
     List<String> amount=new ArrayList<>();
     List<String> address=new ArrayList<>();
+    List<String> id = new ArrayList<>();
     List<String> orders=new ArrayList<>();
+
 
     order_history_Adapter mAdapter;
     NavigationView navigationView;
@@ -207,6 +209,7 @@ manipulatenavigationdrawer();
                         orders.add(or);
                         String ad=obj.getString("address");
                         address.add(ad);
+                        id.add("FS"+obj.getString("id"));
                     }
 
                 //    Display(amount.toString());
@@ -258,7 +261,7 @@ manipulatenavigationdrawer();
 
     private void send_to_adapter()
     {
-        mAdapter=new order_history_Adapter(this,date,amount,address,orders);
+        mAdapter=new order_history_Adapter(this,date,amount,address,orders,id);
         recylerview.setAdapter(mAdapter);
         recylerview.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
         recylerview.setItemAnimator(new DefaultItemAnimator());

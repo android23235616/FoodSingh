@@ -107,9 +107,10 @@
 
             android:text="3rd october 2017"
             android:layout_margin="10dp"
+            android:textSize="10dp"
             android:id="@+id/date"
             android:gravity="right|bottom"
-            android:layout_marginRight="100dp"
+
             android:layout_marginTop="10dp"
             android:layout_width="262dp"
             ></TextView>
