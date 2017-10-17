@@ -30,6 +30,7 @@
         android:fontFamily="monospace"
         android:layout_toRightOf="@+id/apply"
         android:textSize="12dp"
+        android:id="@+id/txt_coupon_code"
         android:text="FS001"
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
@@ -58,24 +59,29 @@
 
 <LinearLayout
     android:orientation="horizontal"
-    android:padding="5dp"
-    android:background="@drawable/card_addition_edittext"
     android:layout_width="wrap_content"
+    android:id="@+id/grp_cpn"
     android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
         android:textSize="10dp"
+        android:maxLength="16"
+        android:id="@+id/code"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:background="@drawable/card_addition_edittext"
         android:fontFamily="monospace"
         android:textColor="@color/grey"
-        android:text="Coupon Code"/>
+        android:hint="Coupon Code"/>
 
-    <EditText
-        android:layout_marginLeft="2dp"
+    <Button
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:hint="ENTER"
-        android:id="@+id/code"
+        android:layout_height="24dp"
+        android:text="ENTER"
+        android:clickable="true"
+        android:fontFamily="monospace"
+        android:id="@+id/enter"
         android:padding="3dp"
         android:textSize="8dp"
         android:background="@color/colorPrimary"/>
@@ -90,10 +96,9 @@
       android:layout_toRightOf="@+id/r2"
         android:background="@color/colorPrimary"
         android:layout_marginTop="5dp"
-
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -150,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="13dp"
                 android:text="N/A"
+                android:id="@+id/dis_amt"
                 android:textColor="@color/red"
                 android:fontFamily="monospace"/>
 

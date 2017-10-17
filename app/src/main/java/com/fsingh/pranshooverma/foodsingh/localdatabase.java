@@ -57,7 +57,12 @@ public class localdatabase {
     public static ArrayList<String> fav_list=new ArrayList<>();
 
     public static ArrayList<MenuItems> sidesList=new ArrayList<>();
-    public static int deliveryCharge=10;
+
+    public static int deliveryCharge = 10;
+
+    public static  int discount = 10;
+
+    public static String couponCode = "FSDAY";
 
 
 }

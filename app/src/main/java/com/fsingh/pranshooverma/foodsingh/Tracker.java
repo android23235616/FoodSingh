@@ -1,10 +1,13 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,10 +15,15 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
@@ -25,8 +33,9 @@ import java.util.regex.Pattern;
 
 public class Tracker extends AppCompatActivity {
 
-    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number;
+    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics;
     ImageView trackimage;
+    Typeface tf,tf1;
     Intent i;
     FoodItem item;
 
@@ -34,25 +43,62 @@ public class Tracker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orders);
+        tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
         order_no = setTextId(this.order_no,R.id.order_number);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
-        price = setTextId(this.price,R.id.order_rev);
+        repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
+        price = setTextId(this.price,R.id.price);
         date = setTextId(this.date,R.id.date);
         fooditems=setTextId(this.fooditems,R.id.foodname);
         foodqt = setTextId(this.foodqt,R.id.foodqt);
         driver_number = setTextId(this.driver_number,R.id.number_info);
+        driverinfo = setTextId(this.driver_number,R.id.info);
+        logistics = setTextId(this.driver_number,R.id.logisticinfo);
         trackimage = (ImageView)findViewById(R.id.trackimage);
+        items = (TextView)findViewById(R.id.items);
         i = getIntent();
+        order_no.setTypeface(tf);
+        repeat_order.setTypeface(tf);
+        items.setTypeface(tf1);
+        price.setTypeface(tf1);
+        date.setTypeface(tf);
+        fooditems.setTypeface(tf);
+        foodqt.setTypeface(tf);
+        driver_number.setTypeface(tf);
+        driverinfo.setTypeface(tf);
+        logistics.setTypeface(tf1);
 
         if(i!=null){
             item = i.getExtras().getParcelable("object");
            //processFoodNames(item.getItem());
-            test(item.getItem());
+            if(item!=null) {
+                  test(item.getItem());
+                   price.setText(item.getAmount());
+                date.setText(item.getDate());
+                order_no.setText(item.getId());
+
+                //item.getItem();
+            }
         }else{
             Display("i is null");
         }
 
         getResponse(constants.order_details);
+
+        repeat_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                i.putExtra("items",item.getItem());
+                i.putExtra("key",1);
+
+                i.putExtra("price",item.getAmount());
+                startActivity(i);
+
+            }
+        });
 
 
     }
@@ -69,6 +115,7 @@ public class Tracker extends AppCompatActivity {
             if(m.find()) {
                 Display(foods[i]+" 2here");
                 String qt = m.group(0);
+
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
                 fooditems.append(name + "\n");
                 foodqt.append(qt + "\n");
@@ -82,34 +129,35 @@ public class Tracker extends AppCompatActivity {
 
     private void test(String foods1){
        // String foods1 = "DRAGON CHICKEN (B\\/L) x1, HUNAN CHICKEN (B\\/L) x1, Coke 750ml x1";
-
+        fooditems.append(" ");
         String[] foods = foods1.split(",");
 
         // Create a Pattern object
-        Pattern p1 = Pattern.compile("\\d+");
+        Pattern p1 = Pattern.compile("x\\d+");
         for (int i=0; i<foods.length; i++){
             Matcher m = p1.matcher(foods[i]);
             //foods[i].replace("(B\\/L)","k");
             if(m.find()) {
                 // Display(foods[i]+" 2here");
-                String qt = m.group(0);
+                String qt =m.group(0);
+                qt = qt.substring(1);
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
 
-                Display("name "+name+" qt "+qt+" "+i);
+               // Display("name "+name+" qt "+qt+" "+i);
 
                 fooditems.append(name+"\n");
                 foodqt.append(qt+"\n");
             }else{
                 // Display(foods[i]+" 3here");
                 //Display(foods[i]);
-                Display("NOT FOUND AT "+i);
+               // Display("NOT FOUND AT "+i);
             }
         }
     }
 
     private void Display(String s){
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
-        Log.i("",s);
+        Log.i("android23235616",s);
 
     }
 
@@ -123,7 +171,23 @@ public class Tracker extends AppCompatActivity {
         StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Display(response);
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    String status = jsonObject.getString("status");
+                    if(status.equals("0")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
+                    }else if(status.equals("1")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.processing));
+                    }else if(status.equals("2")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.outfordelivery));
+                    }else if(status.equals("3")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.delivered));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Display(e.toString());
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -142,6 +206,9 @@ public class Tracker extends AppCompatActivity {
         };
 
         sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(sr);
 
 
     }

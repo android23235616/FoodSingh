@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.SubMenu;
@@ -32,6 +33,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -65,10 +67,16 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     public static CartItemAdapter adapter;
     ProgressDialog progress;
     static RelativeLayout bottomBar;
+    static EditText coupon;
+    static Button enterCoupon;
+    TextView tvCouponCode;
+    static TextView tvDisAmt;
 
     static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
 
     static int totalAmount;
+    static float discountAmount = 0;
+    static int discountPercent = 0;
 
 
     @Override
@@ -109,6 +117,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         //CODING CODING CODING
         initialize();
+        tvCouponCode.setText(localdatabase.couponCode);
         send_to_adapter();
 
         if (localdatabase.sidesList.size() == 0){
@@ -127,6 +136,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             //    Toast.makeText(cart.this,String.valueOf(sum), Toast.LENGTH_SHORT).show();
 
                 Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
+                aas.putExtra("key",0);
                 Bundle a=new Bundle();
                 a.putInt("total_amount", totalAmount);
                 aas.putExtras(a);
@@ -153,6 +163,21 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
         manipulatenavigationdrawer();
+
+        enterCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
+                    discountPercent = localdatabase.discount;
+                    calculateTotal();
+
+                    Toast.makeText(cart.this, "Congratulations. "+discountPercent+"% discount applied.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(cart.this, "Invalid coupon code. Please try again.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void getSides() {
@@ -215,6 +240,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     public static void calculateTotal(){
 
         totalAmount=0;
+        discountAmount = 0;
 
         if(localdatabase.cartList.size()>0) {
             checkout.setClickable(true);
@@ -225,6 +251,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             }
 
             totalAmount = totalAmount + localdatabase.deliveryCharge;
+            discountAmount = totalAmount*((float)discountPercent/100);
+            totalAmount = totalAmount - (int)discountAmount;
+
+            Log.d("DATA","discount -"+discountAmount);
+            Log.d("DATA","discount % "+discountPercent);
 
         }
         else {
@@ -235,6 +266,17 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
             tvTotalAmount.setText("₹" + totalAmount);
             tvTotalAmount2.setText("₹" + totalAmount);
+
+            if (discountAmount == 0 || totalAmount == 0){
+                tvDisAmt.setText("NA");
+            }
+            else {
+                tvDisAmt.setText("₹"+(int)discountAmount);
+                enterCoupon.setBackgroundResource(R.drawable.back_checkout_grey);
+                enterCoupon.setClickable(false);
+                coupon.setText("COUPON APPLIED");
+                coupon.setFocusable(false);
+            }
 
 
     }
@@ -288,6 +330,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         tvTotalAmount2 = (TextView) findViewById(R.id.total_amount_2);
         tvDeliveryCharge = (TextView)findViewById(R.id.delivery_charge);
         bottomBar = (RelativeLayout) findViewById(R.id.place_order);
+        coupon = (EditText) findViewById(R.id.code);
+        enterCoupon = (Button) findViewById(R.id.enter);
+        tvCouponCode = (TextView) findViewById(R.id.txt_coupon_code);
+        tvDisAmt = (TextView) findViewById(R.id.dis_amt);
 
 
         calculateTotal();

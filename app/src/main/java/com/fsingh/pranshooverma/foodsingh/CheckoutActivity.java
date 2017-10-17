@@ -38,6 +38,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private TextView tvTotalAmount;
     private int totalAmount;
     private ProgressDialog progress;
+    int check;
     private String items = "";
     SharedPreferences sp;
 
@@ -59,9 +60,22 @@ public class CheckoutActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent != null) {
-            Bundle aa = intent.getExtras();
-            totalAmount = aa.getInt("total_amount");
-            tvTotalAmount.setText("₹"+totalAmount);
+             check = intent.getIntExtra("key",0);
+            if(check==0){
+                Display("not here");
+            }else{
+                Display("here");
+            }
+            if(check==0) {
+                Bundle aa = intent.getExtras();
+                totalAmount = aa.getInt("total_amount");
+                tvTotalAmount.setText("₹" + totalAmount);
+            }else{
+                items = intent.getStringExtra("items");
+                totalAmount = Integer.parseInt(intent.getStringExtra("price"));
+                tvTotalAmount.setText("₹" + totalAmount);
+
+            }
         }
         else {
             finish();
@@ -142,21 +156,22 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
 
-
-        for (int i=0; i < localdatabase.cartList.size(); i++){
+    if(check!=1) {
+        for (int i = 0; i < localdatabase.cartList.size(); i++) {
             MenuItems item = localdatabase.cartList.get(i);
-            items += item.getName()+" x"+item.getQuantity();
-            if (i != localdatabase.cartList.size()-1){
-                items +=", ";
+            items += item.getName() + " x" + item.getQuantity();
+            if (i != localdatabase.cartList.size() - 1) {
+                items += ", ";
             }
         }
+    }
 
 
-        Log.d("DATA", "Address = "+address);
-        Log.d("DATA", "Comments = "+comments);
-        Log.d("DATA", "Mobile = "+mobile);
-        Log.d("DATA", "Items = "+items);
-        Log.d("DATA", "Total Amount = "+totalAmount);
+        Log.d("DATA23432", "Address = "+address);
+        Log.d("DATA23432", "Comments = "+comments);
+        Log.d("DATA23432", "Mobile = "+mobile);
+        Log.d("DATA23432", "Items = "+items);
+        Log.d("DATA23432", "Total Amount = "+totalAmount);
         progress = new ProgressDialog(this);
         progress.setMessage("Sending Order........");
         progress.setCancelable(false);
@@ -222,6 +237,10 @@ public class CheckoutActivity extends AppCompatActivity {
 
     }
 
+
+    private void Display(String s){
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
 
 
     void updateUI(){
