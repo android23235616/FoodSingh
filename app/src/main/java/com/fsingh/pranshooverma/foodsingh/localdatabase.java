@@ -64,5 +64,6 @@ public class localdatabase {
 
     public static String couponCode = "FSDAY";
 
+    public static List<UnavailableItems> unavailableItemsList = new ArrayList<>();
 
 }

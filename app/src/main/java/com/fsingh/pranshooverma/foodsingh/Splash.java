@@ -177,6 +177,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                             status = miniTempObject.getString("status");
                             MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status);
                             menuItemsList.add(menuItems);
+                            String available = miniTempObject.getString("status");
+
+                            if(available.equals("NA")){
+                                UnavailableItems ii = new UnavailableItems(name_,Integer.parseInt(price));
+                                localdatabase.unavailableItemsList.add(ii);
+                            }
                         }
                         MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time);
                         localdatabase.masterList.add(menuItemsObject);
