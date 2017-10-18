@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="240dp"
+    android:orientation="vertical" android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:background="#ded3b0"
@@ -12,22 +12,15 @@
         android:textSize="20dp"
         android:alpha="0.7"
 
-       android:id="@+id/cancel"
+        android:id="@+id/cancel"
         android:textStyle="bold"
         android:text="X"
         android:gravity="right"
         android:layout_marginRight="10dp"/>
 
-    
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
 
-        android:id="@+id/btn_dialog"
-        android:scaleType="fitCenter"
-        android:src="@drawable/store"
-        />
-    
+
+
     <TextView
         android:id="@+id/text_dialog"
         android:layout_width="match_parent"
@@ -36,5 +29,25 @@
         android:text="Kitchen is Closed\nCome back tommorrow"
         android:layout_height="wrap_content"
         />
-    
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Proceed"
+
+        android:gravity="center"
+
+        android:textColor="@color/text_color"
+
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+
+        android:layout_marginTop="20dp"
+        android:padding="3dp"
+        android:id="@+id/btn_dialog"
+        android:scaleType="fitCenter"
+        android:background="@drawable/buttonbackground"
+        />
+
 </LinearLayout>

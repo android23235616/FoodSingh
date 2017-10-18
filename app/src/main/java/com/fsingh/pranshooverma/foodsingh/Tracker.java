@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -42,7 +43,9 @@ public class Tracker extends AppCompatActivity {
     ImageView trackimage;
     Typeface tf,tf1;
     TextView toolbarText;
-    String itemsString="";
+    String itemsString="", itemnames = "";
+
+    boolean megacheck = false;
 
     Intent i;
     FoodItem item, newItem;
@@ -103,13 +106,19 @@ public class Tracker extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
-                i.putExtra("items",itemsString.substring(0,itemsString.length()-1));
-                i.putExtra("key",1);
+                if(!megacheck){
+                    Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                    i.putExtra("items",item.getItem());
+                    i.putExtra("key",1);
 
-                i.putExtra("price",newItem.getAmount());
-                Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
-                startActivity(i);
+                    i.putExtra("price",item.getAmount());
+                    Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
+                    startActivity(i);
+                }else{
+                    String temp = itemsString;
+                    temp.replace(",","\n");
+                    showDialog2(Tracker.this,"Sorry!Only the following items are available right now. \n\n"+temp+"\n");
+                }
 
             }
         });
@@ -117,11 +126,11 @@ public class Tracker extends AppCompatActivity {
 
     }
 
-    public void showDialog(Activity activity, String msg, int pic){
+    public void showDialog2(Context activity, String msg){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog);
+        dialog.setContentView(R.layout.dialog2);
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
@@ -129,13 +138,33 @@ public class Tracker extends AppCompatActivity {
 
         text.setTypeface(tf);
 
-        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
-        Glide.with(activity).load(pic).into(image);
+        TextView image = (TextView) dialog.findViewById(R.id.btn_dialog);
+       // Glide.with(activity).load(pic).into(image);
         TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                i.putExtra("items",itemsString);
+                i.putExtra("key",1);
+
+                i.putExtra("price", newItem.getAmount());
+                Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
+                startActivity(i);
             }
         });
 
@@ -202,12 +231,13 @@ public class Tracker extends AppCompatActivity {
                     uChecker = false;
 
                     if(localdatabase.unavailableItemsList.get(j).getName().equals(name.trim())){
-                        Display("Detected");
+                       // Display("Detected");
                         uChecker = true;
+                        megacheck= true;
                         String new_Amount = String.valueOf(
                                 Integer.parseInt(item.getAmount())-Integer.parseInt(qt.trim())*localdatabase.unavailableItemsList.get(j).getPrice());
                         newItem = new FoodItem(item.getId(),item.getItem(),new_Amount,item.getAddress(),item.getDate());
-                        Display(new_Amount);
+                      itemnames+=name+",";
 
                         break;
                     }else{
