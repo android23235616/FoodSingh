@@ -227,6 +227,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
                 combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
                 categories.clear();
+                categories.clear();
                 images.clear();
                 for(int i=0;i<localdatabase.masterList.size();i++)
                 {

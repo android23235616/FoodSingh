@@ -38,6 +38,7 @@ public class Tracker extends AppCompatActivity {
     static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics;
     ImageView trackimage;
     Typeface tf,tf1;
+    TextView toolbarText;
     Intent i;
     FoodItem item;
 
@@ -48,6 +49,9 @@ public class Tracker extends AppCompatActivity {
         setContentView(R.layout.orders);
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
+        toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(tf);
+        toolbarText.setText("Orders");
         order_no = setTextId(this.order_no,R.id.order_number);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
