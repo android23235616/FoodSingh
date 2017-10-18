@@ -33,7 +33,7 @@ import java.util.Map;
 
 
 public class verifying_otp extends AppCompatActivity {
-    Button verify;
+    Button verify,resend;
     EditText otp;
     String pass,mob,name,email;
     TextView t1, t2, t3;
@@ -54,6 +54,7 @@ public class verifying_otp extends AppCompatActivity {
             public void onClick(View view) {
                 String otp_input=otp.getText().toString();
                 if(checking_net_permission()){
+
                     verify_otp(mob,otp_input);
                 }
                 else {
@@ -72,7 +73,74 @@ public class verifying_otp extends AppCompatActivity {
                 }
 
             }
+
         });
+        resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checking_net_permission())
+                {
+                    resend_otp();
+                }
+                else
+                {
+                    setContentView(R.layout.no_internet);
+                    Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+                    TextView calm = (TextView)findViewById(R.id.calm);
+                    final TextView retry = (TextView)findViewById(R.id.menu);
+                    calm.setTypeface(tf);
+                    retry.setTypeface(tf);
+                    retry.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recreate();
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    private void resend_otp() {
+        if(progress.isShowing())
+        {
+            progress.dismiss();
+        }
+        progress.setMessage("Resending OTP");
+        progress.show();
+        String url="https://control.msg91.com/api/retryotp.php?authkey=112452AB1seNQy572e2e51&mobile="+mob+"&retrytype=voiceCall%20API";
+        StringRequest sd=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+
+                try {
+                    JSONObject a=new JSONObject(response);
+                    String status=a.getString("type");
+                    if(status.equals("success"))
+                    {
+                        Display("OTP sent successfully");
+                    }
+                    else {
+                        Display("There is some issue while resending OTP");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Display("Some error occured,may be due to server down or bad internet connection");
+            }
+        });
+        RequestQueue q=Volley.newRequestQueue(this);
+        q.add(sd);
     }
 
     private void verify_otp(final String mobile, String otp_user) {
@@ -208,6 +276,7 @@ public class verifying_otp extends AppCompatActivity {
 
     private void initialize() {
         verify=(Button)findViewById(R.id.verify);
+        resend=(Button) findViewById(R.id.resendotp);
         otp=(EditText) findViewById(R.id.otp);
         progress=new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -215,6 +284,7 @@ public class verifying_otp extends AppCompatActivity {
         t2 = (TextView)findViewById(R.id.Confirmation);
         t3 = (TextView)findViewById(R.id.textCode);
         setTypeface();
+
     }
 
     private void setTypeface(){
