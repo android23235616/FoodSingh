@@ -54,7 +54,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     ProgressDialog progress;
 
-    public static TextView cartitemcount, toolbarText;
+    public static TextView cartitemcount, toolbarText,text;
 
     RecyclerView recyclerView;
     List<String> dish_name=new ArrayList<>();
@@ -76,6 +76,9 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
+        text = (TextView)findViewById(R.id.text);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
+        text.setTypeface(tp);
         nav=true;
         /////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -243,6 +246,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     private void getting_category_from_previous_activity() {
         Bundle d=getIntent().getExtras();
         category=d.getString("category");
+        text.setText(category);
         position= d.getInt("position");
 
     //    Display(category);

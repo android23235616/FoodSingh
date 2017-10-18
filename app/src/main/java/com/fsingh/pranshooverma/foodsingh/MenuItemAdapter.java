@@ -85,6 +85,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_category_menu,parent,false);
+
         ViewHolder vh=new ViewHolder(v);
         return vh;
     }
@@ -100,37 +101,32 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
         */
+        final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
         store=mContext.getSharedPreferences("favourites",Context.MODE_PRIVATE);
         final SharedPreferences.Editor prefer=store.edit();
-        String ad=store.getString("fav_list","nothing");
+        final String ad=store.getString("fav_list","nothing");
            // Toast.makeText(mContext, ad, Toast.LENGTH_SHORT).show();
-        if(ad.equalsIgnoreCase("nothing")) {
-            //nothing
-        }
-        else
+       if(ad.equals("nothing"))
+       {
+
+       }
+       else
+       {
+    //       Toast.makeText(mContext, ad, Toast.LENGTH_SHORT).show();
+       }
+        if(ad.contains(menuItem.getName()))
         {
-            List<String> str=new ArrayList<>(Arrays.asList(ad));
 
-            localdatabase.fav_list= (ArrayList<String>) str;
-
-   //         Toast.makeText(mContext,String.valueOf(localdatabase.fav_list.size()), Toast.LENGTH_SHORT).show();
-
-        }
-
-
-      //  if(localdatabase.fav_list.contains(menuItems.get(holder.getAdapterPosition()).getName()))
-        if(localdatabase.fav_list.contains("CHICKEN LOLLIPOP"))
-        {
-            Toast.makeText(mContext, "yes", Toast.LENGTH_SHORT).show();
+      //      Toast.makeText(mContext, "yes", Toast.LENGTH_SHORT).show();
             holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
-        }else{
+        } else{
             holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
         }
 
 
 
 
-        final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
+
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
         final String status = menuItem.getStatus();
@@ -212,7 +208,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
                     int i=0;
                     MenuItems menu=menuItems.get(holder.getAdapterPosition());
-                    if(localdatabase.fav_list.contains(menu.getName()))
+                    if(ad.contains(menu.getName()))
                         {
                             localdatabase.fav_list.remove(menu.getName());
                             prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));
@@ -227,7 +223,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
                     int i=0;
                     MenuItems menu=menuItems.get(holder.getAdapterPosition());
-                    if(!(localdatabase.fav_list.contains(menu.getName())))
+                    if(!(ad.contains(menu.getName())))
                         {
                             localdatabase.fav_list.add(menu.getName());
                             prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));

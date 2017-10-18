@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,15 +38,20 @@ public class Tracker extends AppCompatActivity {
     static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics;
     ImageView trackimage;
     Typeface tf,tf1;
+    TextView toolbarText;
     Intent i;
     FoodItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RemoveTop();
         setContentView(R.layout.orders);
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
+        toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(tf);
+        toolbarText.setText("Orders");
         order_no = setTextId(this.order_no,R.id.order_number);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
@@ -101,6 +108,12 @@ public class Tracker extends AppCompatActivity {
         });
 
 
+    }
+
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     private void processFoodNames(String item) {

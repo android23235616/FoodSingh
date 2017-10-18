@@ -32,7 +32,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
     List<String> id = new ArrayList<>();
 
 
-    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders, List<String> id) {
+    public order_history_Adapter(Context mContext, List<String> date, List<String> amount, List<String> address, List<String> orders,List<String> id) {
         this.mContext = mContext;
         this.date = date;
         this.id = id;
@@ -40,6 +40,8 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
         this.address = address;
         this.orders = orders;
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
