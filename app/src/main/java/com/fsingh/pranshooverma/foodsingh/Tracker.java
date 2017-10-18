@@ -1,5 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -8,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,15 +41,23 @@ public class Tracker extends AppCompatActivity {
     static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics;
     ImageView trackimage;
     Typeface tf,tf1;
+    TextView toolbarText;
+    String itemsString="";
+
     Intent i;
-    FoodItem item;
+    FoodItem item, newItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RemoveTop();
+
         setContentView(R.layout.orders);
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
+        toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(tf);
+        toolbarText.setText("Orders");
         order_no = setTextId(this.order_no,R.id.order_number);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
         repeat_order = setTextId(this.repeat_order,R.id.repeatorder);
@@ -91,16 +104,48 @@ public class Tracker extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent i = new Intent(view.getContext(), CheckoutActivity.class);
-                i.putExtra("items",item.getItem());
+                i.putExtra("items",itemsString.substring(0,itemsString.length()-1));
                 i.putExtra("key",1);
 
-                i.putExtra("price",item.getAmount());
+                i.putExtra("price",newItem.getAmount());
+                Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
                 startActivity(i);
 
             }
         });
 
 
+    }
+
+    public void showDialog(Activity activity, String msg, int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        Glide.with(activity).load(pic).into(image);
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     private void processFoodNames(String item) {
@@ -129,8 +174,13 @@ public class Tracker extends AppCompatActivity {
 
     private void test(String foods1){
        // String foods1 = "DRAGON CHICKEN (B\\/L) x1, HUNAN CHICKEN (B\\/L) x1, Coke 750ml x1";
+
         fooditems.append(" ");
         String[] foods = foods1.split(",");
+
+        for(int i=0; i<localdatabase.unavailableItemsList.size(); i++){
+            Log.i("tracker2323",localdatabase.unavailableItemsList.get(i).getName());
+        }
 
         // Create a Pattern object
         Pattern p1 = Pattern.compile("x\\d+");
@@ -147,6 +197,30 @@ public class Tracker extends AppCompatActivity {
 
                 fooditems.append(name+"\n");
                 foodqt.append(qt+"\n");
+                boolean uChecker = false;
+                for(int j=0; j<localdatabase.unavailableItemsList.size(); j++){
+                    uChecker = false;
+
+                    if(localdatabase.unavailableItemsList.get(j).getName().equals(name.trim())){
+                        Display("Detected");
+                        uChecker = true;
+                        String new_Amount = String.valueOf(
+                                Integer.parseInt(item.getAmount())-Integer.parseInt(qt.trim())*localdatabase.unavailableItemsList.get(j).getPrice());
+                        newItem = new FoodItem(item.getId(),item.getItem(),new_Amount,item.getAddress(),item.getDate());
+                        Display(new_Amount);
+
+                        break;
+                    }else{
+                        uChecker = false;
+                       // Log.i("tracker2323",localdatabase.unavailableItemsList.get(i).getName()+",");
+                    }
+                }
+
+                if(!uChecker){
+                    itemsString += name + " x" + qt+", ";
+
+                }
+
             }else{
                 // Display(foods[i]+" 3here");
                 //Display(foods[i]);

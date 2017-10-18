@@ -11,16 +11,17 @@ import java.io.Serializable;
 
 public class MenuItems implements Parcelable{
 
-    private String Id, Name, Category, Price, Image;
+    private String Id, Name, Category, Price, Image, Status;
 
     private int quantity = 0;
 
-    MenuItems(String Id, String Name, String Category, String Price, String Image){
+    MenuItems(String Id, String Name, String Category, String Price, String Image, String Status){
         this.Id = Id;
         this.Name = Name;
         this.Category = Category;
         this.Price = Price;
         this.Image = Image;
+        this.Status = Status;
     }
 
     protected MenuItems(Parcel in) {
@@ -30,6 +31,7 @@ public class MenuItems implements Parcelable{
         Price = in.readString();
         Image = in.readString();
         quantity = in.readInt();
+
     }
 
     public static final Creator<MenuItems> CREATOR = new Creator<MenuItems>() {
@@ -70,6 +72,14 @@ public class MenuItems implements Parcelable{
     public String getImage(){
 
         return Image;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     @Override

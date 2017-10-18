@@ -10,7 +10,7 @@
     android:background="@color/background_color_new"
     android:weightSum="1">
 
-    <include layout="@layout/my_toolbar"/>
+    <include layout="@layout/my_toolbar2"/>
 
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -144,7 +144,7 @@
         android:padding="10dp"
 
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         android:id="@+id/r2"
         android:layout_weight="0.67">
         <TextView
@@ -170,9 +170,10 @@
               android:id="@+id/foodname"
               android:layout_marginTop="30dp"
               android:scaleY="1.2"
+              android:layout_marginBottom="19dp"
               android:layout_marginLeft="10dp"
 
-              android:text="\n"/>
+             android:text="\n"/>
 
           <TextView
               android:scaleY="1.2"
@@ -181,6 +182,7 @@
               android:fontFamily="monospace"
               android:id="@+id/foodqt"
               android:layout_marginTop="30dp"
+              android:layout_marginBottom="19dp"
               android:layout_marginLeft="120dp"
               android:text="\n"/>
 
@@ -213,7 +215,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/tracks"
             android:id="@+id/trackimage"
-            android:src="@drawable/outfordelivery"/>
+            android:src="@drawable/orderplaced"/>
 
         <TextView
             android:layout_width="match_parent"

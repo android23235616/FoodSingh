@@ -70,8 +70,9 @@ boolean nav=true;
     NavigationView navigationView;
 
     ProgressDialog progress;
-
+Typeface tf1;
     String number_for_history="1";
+    TextView toolbarText;
 
     SharedPreferences shared;
 
@@ -79,7 +80,10 @@ boolean nav=true;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
+        tf1 = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        toolbarText = (TextView)findViewById(R.id.toolbarText);
+        toolbarText.setTypeface(tf1);
+        toolbarText.setText("Order History");
     //////////////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -246,7 +250,7 @@ manipulatenavigationdrawer();
 
     private void Display(String s)
     {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         Log.i("android23235616",s);
     }
 

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,13 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView diname,diprice,item_quantity;
+        TextView diname,diprice,item_quantity, unavailable;
         ImageView pl,mi, image,fav;
         public ViewHolder(View itemView) {
             super(itemView);
             diname=(TextView) itemView.findViewById(R.id.dish_name_slide);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
+            unavailable=(TextView) itemView.findViewById(R.id.txt_unavailable);
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity_slide);
             pl=(ImageView) itemView.findViewById(R.id.plus_slide);
             mi=(ImageView) itemView.findViewById(R.id.minus_slide);
@@ -102,16 +104,19 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
-
+        final String status = menuItem.getStatus();
         holder.diname.setText(name);
         int qty = menuItem.getQuantity();
         holder.item_quantity.setText(""+qty);
         holder.diprice.setText("₹"+rupees);
-        if(rupees.equals("0")){
+        Log.d("sdsd",name+"="+status);
+        if(rupees.equals("0") || !status.equals("live")){
             holder.diprice.setText("NA");
+            holder.unavailable.setVisibility(View.VISIBLE);
            check = true;
         }else{
             check = false;
+            holder.unavailable.setVisibility(View.GONE);
         }
 
         String url = menuItem.getImage();
@@ -129,7 +134,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 MenuItems item = menuItems.get(holder.getAdapterPosition());
-                if(!holder.diprice.getText().toString().equals("NA")){
+                if(!holder.diprice.getText().toString().equals("NA") && status.equals("live")){
                     int quantity = item.getQuantity();
                     quantity++;
                     item.setQuantity(quantity);
@@ -140,6 +145,9 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
                     menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
                     menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                }
+                else {
+                    Toast.makeText(mContext, "Sorry, item not available.", Toast.LENGTH_SHORT).show();
                 }
 
             }

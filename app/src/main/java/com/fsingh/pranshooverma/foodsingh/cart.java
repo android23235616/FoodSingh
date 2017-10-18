@@ -202,8 +202,9 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                         String category = jo.getString("category");
                         String price = jo.getString("price");
                         String image = jo.getString("image");
-
-                        MenuItems item = new MenuItems(id, name, category, price, image);
+                        //String status = jo.getString("status");
+                        String status = "live";
+                        MenuItems item = new MenuItems(id, name, category, price, image, status);
                         localdatabase.sidesList.add(item);
 
                     }
