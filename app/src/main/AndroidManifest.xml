@@ -118,10 +118,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".menu_item_detail"
-            android:label="@string/title_activity_menu_item_detail"
-            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".menu_item_details"
             android:label="@string/title_activity_menu_item_details"

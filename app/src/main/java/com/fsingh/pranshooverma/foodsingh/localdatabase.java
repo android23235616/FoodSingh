@@ -54,9 +54,9 @@ public class localdatabase {
 
     public static String city = null;
 
-    public static ArrayList<String> fav_list=new ArrayList<>();
 
     public static ArrayList<MenuItems> sidesList=new ArrayList<>();
+
 
     public static int deliveryCharge = 10;
 

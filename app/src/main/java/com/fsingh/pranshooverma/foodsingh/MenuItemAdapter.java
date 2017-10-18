@@ -45,14 +45,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     SharedPreferences store;
 
 
-/*
-    public MenuItemAdapter(Context mContext, List<String> dish_name, List<String> dish_price) {
+    public MenuItemAdapter(Context mContext) {
         this.mContext=mContext;
-        this.dish_name=dish_name;
-        this.dish_price=dish_price;
+
     }
 
-*/
+
 
     public MenuItemAdapter(Context mContext, List<MenuItems> menuItems) {
         this.mContext = mContext;
@@ -101,31 +99,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
         */
+
         final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
-        store=mContext.getSharedPreferences("favourites",Context.MODE_PRIVATE);
-        final SharedPreferences.Editor prefer=store.edit();
-        final String ad=store.getString("fav_list","nothing");
-           // Toast.makeText(mContext, ad, Toast.LENGTH_SHORT).show();
-       if(ad.equals("nothing"))
-       {
-
-       }
-       else
-       {
-    //       Toast.makeText(mContext, ad, Toast.LENGTH_SHORT).show();
-       }
-        if(ad.contains(menuItem.getName()))
-        {
-
-      //      Toast.makeText(mContext, "yes", Toast.LENGTH_SHORT).show();
-            holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
-        } else{
-            holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
-        }
-
-
-
-
 
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
@@ -206,31 +181,11 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 {
 
                     holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
-                    int i=0;
-                    MenuItems menu=menuItems.get(holder.getAdapterPosition());
-                    if(ad.contains(menu.getName()))
-                        {
-                            localdatabase.fav_list.remove(menu.getName());
-                            prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));
-                            prefer.commit();
-                            Toast.makeText(mContext, "Removed from favourites", Toast.LENGTH_SHORT).show();
-                        }
-
 
                 }
                 else
                 {
                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
-                    int i=0;
-                    MenuItems menu=menuItems.get(holder.getAdapterPosition());
-                    if(!(ad.contains(menu.getName())))
-                        {
-                            localdatabase.fav_list.add(menu.getName());
-                            prefer.putString("fav_list", String.valueOf(localdatabase.fav_list));
-                            prefer.commit();
-                            Toast.makeText(mContext, "Added to Favourite", Toast.LENGTH_SHORT).show();
-                        }
-
 
                 }
 

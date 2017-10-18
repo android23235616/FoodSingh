@@ -524,8 +524,6 @@ if(local.metaData!=null) {
         recylerView.setAdapter(adapter);
         recylerView.setNestedScrollingEnabled(true);
 //        recylerView.addItemDecoration(itemDecoration);
-
-
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
 
