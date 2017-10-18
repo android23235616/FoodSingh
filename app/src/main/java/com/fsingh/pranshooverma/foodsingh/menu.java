@@ -392,6 +392,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
 
         ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
         Glide.with(activity).load(pic).into(image);
@@ -495,7 +498,7 @@ if(local.metaData!=null) {
         attack.setBackgroundColor(Color.parseColor("#75E990"));
         //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
     } else {
-        showDialog(this, "Kitchen is Closed\nPlease come back from 6 to 10", R.drawable.store);
+        showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
         Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Closed.");
         attack.setBackgroundColor(Color.parseColor("#e55512"));
