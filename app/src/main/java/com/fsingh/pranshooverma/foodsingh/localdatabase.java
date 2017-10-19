@@ -10,6 +10,8 @@ import java.util.List;
  * Created by Tanmay on 16-09-2016.
  */
 public class localdatabase {
+    public static boolean loctioncheck = false, dataloaded = false;
+
     public static final String url[] = {
             "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,
             "https://static.pexels.com/photos/5317/food-salad-restaurant-person-medium.jpg",

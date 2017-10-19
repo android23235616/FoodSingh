@@ -196,8 +196,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     e.printStackTrace();
                     Display(e.toString());
                 }finally {
-                    startActivity(new Intent(Splash.this, menu.class));
-                    finish();
+                   // localdatabase.dataloaded = true;
+                  // if(localdatabase.loctioncheck&&localdatabase.dataloaded){
+                       startActivity(new Intent(Splash.this, menu.class));
+                       finish();
+                   //}
                 }
 
             }
@@ -434,6 +437,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
         localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
+        localdatabase.loctioncheck = true;
+
     }
 
     private String getCity(double latitude, double longitude){
