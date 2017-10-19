@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -133,6 +135,64 @@ public class login_page extends AppCompatActivity {
         });
 
     }
+
+    private void sendRegistrationToServer(String url) {
+        //You can implement this method to store the token on your server
+        //Not required for current project
+//        Toast.makeText(this,token,Toast.LENGTH_LONG).show();
+
+        progress.setMessage("Checking Credentials");
+        progress.show();
+
+         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+
+        final String token = sharedPreferences.getString("token","token");
+
+        final String mobile = sharedPreferences.getString("mobile","");
+
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+
+                Log.d("fcmnotification",response);
+
+                Intent f=new Intent(getApplicationContext(),Splash.class);
+                startActivity(f);
+                finish();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("fcmnotification",error.toString());
+
+            }
+        }){
+            @Override
+
+            public Map getParams(){
+                Map<String,String> map = new HashMap<>();
+                map.put("mobile",mobile);
+                map.put("token",token);
+
+                Log.d("fcmnotification",map.toString());
+
+                return map;
+            }
+        };
+
+        RequestQueue v = Volley.newRequestQueue(this);
+        sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        v.add(sr);
+
+    }
+
 
     private void send_forgot_password(final String mobile_number) {
         if(progress.isShowing())
@@ -257,9 +317,8 @@ public class login_page extends AppCompatActivity {
                     //editor..setText(obj.getString("name"));
                     //email.setText(obj.getString("email"));
                     //old_password_check=obj.getString("password");
-                    Intent f=new Intent(getApplicationContext(),Splash.class);
-                    startActivity(f);
-                    finish();
+                    sendRegistrationToServer(constants.token_url);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -299,17 +358,13 @@ public class login_page extends AppCompatActivity {
     }
 
     private void check_login_details(final String numy, final String passy) {
-        progress.setMessage("Checking Credentials");
-        progress.show();
+
 
         StringRequest das=new StringRequest(Request.Method.POST, constants.login_check_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
+
 
                 try {
                     JSONObject obj=new JSONObject(response);

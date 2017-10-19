@@ -31,9 +31,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
-        h = new Handler();
 
-        sendNotification2(remoteMessage.getData());
+
+        sendNotification2(remoteMessage.getData(),remoteMessage);
         FirebaseRemoteConfig r1 = FirebaseRemoteConfig.getInstance();
         Log.i("chutia",r1.getString("hello"));
 
@@ -45,20 +45,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 
-    private void sendNotification2(Map<String,String> map){
-
+    private void sendNotification2(Map<String,String> map, RemoteMessage remote){
         final String title = map.get("title");
         String body = map.get("body");
-
-       h.post(new Runnable() {
-           @Override
-           public void run() {
-               Toast.makeText(FirebaseMessagingService.this,title+" here",Toast.LENGTH_LONG).show();
-           }
-       });
-        Log.i("chutia",title+" sdf");
-
-
 
         Context context = this;
 
@@ -78,7 +67,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                                     .bigText(body))
                     .setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
                     //.setLights(Color.WHITE, 500, 500)
-                    .setContentText(title);
+                    .setContentText(remote.getNotification().getBody());
         } else {
             //RemoteViews customNotificationView = new RemoteViews(getPackageName(),
                    // R.layout.notificationwindow);

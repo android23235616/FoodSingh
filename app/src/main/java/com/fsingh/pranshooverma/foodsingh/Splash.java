@@ -82,6 +82,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     boolean checker = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
