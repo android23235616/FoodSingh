@@ -398,7 +398,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         text.setTypeface(tf);
 
         ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
-        Glide.with(activity).load(pic).into(image);
+        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
         TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override

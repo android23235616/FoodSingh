@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,7 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.cast.CastRemoteDisplayApi;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +50,31 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
     private void sendNotification2(Map<String,String> map, RemoteMessage remote){
+        List<String> nn = new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        String json = sharedPreferences.getString("my","null");
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+
+        if(json.equals("null")){
+
+            nn.add(map.toString());
+            Gson gson = new Gson();
+            NotificationLists li = new NotificationLists(nn);
+            String tempJson = gson.toJson(li);
+            edit.putString("my",tempJson);
+            edit.apply();
+
+        }else{
+            Gson gson  = new Gson();
+            NotificationLists li = gson.fromJson(json,NotificationLists.class);
+            nn = li.getNotification();
+            nn.add(map.toString());
+            li = new NotificationLists(nn);
+            String tempJson = gson.toJson(li);
+            edit.putString("my",tempJson);
+            edit.apply();
+        }
+
         final String title = map.get("title");
         String body = map.get("body");
 
