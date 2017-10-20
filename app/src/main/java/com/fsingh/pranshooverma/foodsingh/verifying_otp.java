@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.load.engine.cache.DiskCacheAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ public class verifying_otp extends AppCompatActivity {
     String pass,mob,name,email;
     TextView t1, t2, t3;
     ProgressDialog progress;
+    String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,7 +160,20 @@ public class verifying_otp extends AppCompatActivity {
                         String status=a.getString("type");
                         if(status.equals("success"))
                         {
-                            save_to_database(mob,pass);
+                            if(key.equals("10012"))
+                            {
+                                save_to_database(mob,pass);
+                            }
+                            else
+                            {
+                                Display("Another activity will start from here");
+                                Intent intent=new Intent(getApplicationContext(),set_password.class);
+                                Bundle b=new Bundle();
+                                b.putString("mob",mob);
+                                intent.putExtras(b);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                         else {
                             Display("You have entered an Invalid input");
@@ -212,6 +227,7 @@ public class verifying_otp extends AppCompatActivity {
                         edit.putString("mobile",mob);
                         edit.apply();
 
+
                         Intent asd=new Intent(getApplicationContext(),Splash.class);
                         startActivity(asd);
                         finish();
@@ -261,11 +277,23 @@ public class verifying_otp extends AppCompatActivity {
     }
 
     private void getting_pass_mob() {
+
         Bundle as=getIntent().getExtras();
-        pass=as.getString("pass");
-        mob=as.getString("mob");
-        name=as.getString("name");
-        email=as.getString("email");
+
+        key=as.getString("key");
+        if(as.equals("10012"))
+        {
+            pass=as.getString("pass");
+            mob=as.getString("mob");
+            name=as.getString("name");
+            email=as.getString("email");
+
+        }
+        else
+        {
+            mob=as.getString("mob");
+            Toast.makeText(this, mob, Toast.LENGTH_SHORT).show();
+        }
 
     }
 

@@ -111,6 +111,7 @@ public class Signup_OTP extends AppCompatActivity {
                   a.putString("pass",pass);
                   a.putString("name",nam);
                   a.putString("email",ema);
+                  a.putString("key","10012");
                   as.putExtras(a);
                   startActivity(as);
                   finish();
