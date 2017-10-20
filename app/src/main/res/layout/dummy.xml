@@ -16,11 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:textStyle="bold"
-        android:background="#75E990"
+        android:background="#dac598"
         android:fontFamily="monospace"
         android:gravity="center"
         android:layout_marginTop="200dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/text_color"
         android:scrollbars="vertical"
         android:padding="3dp"
         android:text="Attack! On the Food."/>

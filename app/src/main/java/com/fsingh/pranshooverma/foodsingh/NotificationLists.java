@@ -10,15 +10,15 @@ import java.util.List;
  */
 
 public class NotificationLists {
-    private List<String> notification = new ArrayList<>();
+    private List<NotificationItem> notification = new ArrayList<>();
 
-    public NotificationLists(List<String> notificaation){
+    public NotificationLists(List<NotificationItem> notificaation){
 
         notification = notificaation;
 
     }
 
-    public List<String> getNotification(){
+    public List<NotificationItem> getNotification(){
         return notification;
     }
 

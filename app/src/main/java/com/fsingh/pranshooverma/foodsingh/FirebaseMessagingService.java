@@ -48,28 +48,47 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 
+    private NotificationItem getNotificationItem(Map<String,String> map){
+        String title=map.get("title");
+        String body = map.get("body");
+
+        String notificationType = map.get("notification");
+
+        String activity = map.get("activity");
+
+        String img = map.get("image");
+
+        String url = map.get("url");
+
+        return new NotificationItem(body,title,img,url,activity, notificationType);
+    }
+
 
     private void sendNotification2(Map<String,String> map, RemoteMessage remote){
-        List<String> nn = new ArrayList<>();
+
+
+
+        List<NotificationItem> nn = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString("my","null");
+        String json = sharedPreferences.getString(constants.foodsinghNotif,"null");
         SharedPreferences.Editor edit = sharedPreferences.edit();
 
         if(json.equals("null")){
 
-            nn.add(map.toString());
+            nn.add(getNotificationItem(map));
             Gson gson = new Gson();
             NotificationLists li = new NotificationLists(nn);
             String tempJson = gson.toJson(li);
-            edit.putString("my",tempJson);
+            edit.putString(constants.foodsinghNotif,tempJson);
             edit.apply();
 
         }else{
             Gson gson  = new Gson();
             NotificationLists li = gson.fromJson(json,NotificationLists.class);
             nn = li.getNotification();
-            nn.add(map.toString());
+            nn.add(getNotificationItem(map));
             li = new NotificationLists(nn);
+            OnLog(li.getNotification());
             String tempJson = gson.toJson(li);
             edit.putString("my",tempJson);
             edit.apply();
@@ -119,6 +138,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         mBuilder.setContentIntent(pendingIntent);
         mNotificationManager.notify(1000, mBuilder.build());
 
+    }
+
+    private void OnLog(List<NotificationItem> nn) {
+
+        for(int i=0; i<nn.size(); i++){
+            Log.i("please", nn.get(i).getBody());
+        }
     }
 
     private RemoteViews getComplexNotificationView() {
