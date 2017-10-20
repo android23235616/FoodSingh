@@ -34,6 +34,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:id="@+id/title1"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"
@@ -46,11 +47,12 @@
             <TextView
                 android:id="@+id/content1text"
                 android:layout_width="match_parent"
-
+                android:fontFamily="monospace"
                 android:layout_height="wrap_content"
                 android:text="ti--RVeLSSOgJe029M4p1Y1-oSoDmx5jp9BjQDffHb9wjCQaVtBVCxS"/>
 
 <TextView
+    android:fontFamily="monospace"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Know More"
@@ -86,6 +88,7 @@
        <TextView
            android:gravity="left"
            android:id="@+id/time1"
+           android:fontFamily="monospace"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_weight="1"
@@ -93,10 +96,11 @@
 
        <TextView
            android:layout_weight="1"
+           android:fontFamily="monospace"
            android:gravity="right"
            android:id="@+id/copycode"
            android:layout_width="match_parent"
-           android:fontFamily="monospace"
+
            android:textColor="@color/bg_login"
            android:layout_height="wrap_content"
            android:text="COPY CODE"/>
@@ -132,6 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:fontFamily="monospace"
                 android:id="@+id/title2"
 
                 android:gravity="left"
@@ -146,11 +151,13 @@
                     android:id="@+id/content2text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
                     android:text="ti--RVeLSSOgJe029M4p1Y1-oSoDmx5jp9BjQDffHb9wjCQaVtBVCxS"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
                     android:text="Know More"
                     android:id="@+id/knowmore2"
                     android:layout_below="@+id/content2text"
@@ -184,6 +191,7 @@
         <TextView
             android:gravity="left"
             android:id="@+id/time2"
+            android:fontFamily="monospace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

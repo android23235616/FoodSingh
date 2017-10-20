@@ -137,7 +137,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".NotificationActivity" />
+        <activity android:name=".NotificationActivity"
+            android:label=""
+            />
         <activity
             android:name=".set_password"
             android:label="@string/title_activity_set_password"

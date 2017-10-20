@@ -503,9 +503,9 @@ if(local.metaData!=null) {
         //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
     } else {
         showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
-        Toast.makeText(this, "Kitchen is close", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Closed.");
-        attack.setBackgroundColor(Color.parseColor("#50dac598"));
+        attack.setBackgroundColor(Color.parseColor("#dac598"));
     }
 }
     }
