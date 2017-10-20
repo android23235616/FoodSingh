@@ -75,6 +75,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     categoryAdapter adapter;
     localdatabase local;
     ImageButton next, back;
+
     boolean nav=true;
     TextView attack;
     pagerAdapter pageradater;
@@ -587,8 +588,9 @@ if(local.metaData!=null) {
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
 
-        actionView.setOnClickListener(new View.OnClickListener() {
+        cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
@@ -596,7 +598,29 @@ if(local.metaData!=null) {
             }
         });
 
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(menu.this, NotificationActivity.class));
+            }
+        });
+
+         localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
         return true;
+    }
+
+    private  void updateUI(int d){
+        if(localdatabase.notifmount!=null)
+        localdatabase.notifmount.setText(d+"");
     }
 
     @Override
@@ -605,12 +629,6 @@ if(local.metaData!=null) {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
-
-        if(id==R.id.notification){
-            startActivity(new Intent(this, NotificationActivity.class));
-        }
 
         return super.onOptionsItemSelected(item);
     }

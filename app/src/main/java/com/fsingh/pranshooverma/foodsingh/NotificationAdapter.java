@@ -117,9 +117,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
 
             if(item.getRead()){
-                holder.title1.setTypeface(null, Typeface.NORMAL);
+               // holder.title1.setTypeface(null, Typeface.NORMAL);
                 holder.body1.setTypeface(null, Typeface.NORMAL);
-                holder.title2.setTypeface(null, Typeface.NORMAL);
+                //holder.title2.setTypeface(null, Typeface.NORMAL);
                 holder.body2.setTypeface(null, Typeface.NORMAL);
 
             }else{
@@ -140,6 +140,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     notificationItems.remove(item);
                     notificationItems.add(holder.getAdapterPosition(),item);
                     save();
+                    decrement();
                 }
             });
         holder.knowmore1.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +150,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 notificationItems.remove(item);
                 notificationItems.add(holder.getAdapterPosition(),item);
                 save();
+                decrement();
             }
         });
 
@@ -187,6 +189,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         edit.apply();
     }
 
+
+    private void decrement(){
+        SharedPreferences sharedPreferences = c.getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        localdatabase.notifications = sharedPreferences.getInt(constants.notifAmount,0);
+        if(localdatabase.notifications!=0) {
+            localdatabase.notifications--;
+            if(localdatabase.notifications!=0) {
+              localdatabase.notifmount.setVisibility(View.VISIBLE);
+               localdatabase.notifmount.setText(localdatabase.notifications + "");
+            }else{
+             localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            }
+        }else{
+
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(constants.notifAmount,localdatabase.notifications);
+        editor.apply();
+
+    }
 
     @Override
     public int getItemCount() {

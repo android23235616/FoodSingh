@@ -42,6 +42,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
 
+        save();
+
         Map<String,String> map = remoteMessage.getData();
 
         Log.i("chutiaa","chutia");
@@ -179,6 +181,21 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         for(int i=0; i<nn.size(); i++){
             Log.i("please", nn.get(i).getBody()+","+nn.get(i).getNotificationType());
+        }
+    }
+
+    private void save(){
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        localdatabase.notifications = sharedPreferences.getInt(constants.notifAmount,0);
+        localdatabase.notifications++;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(constants.notifAmount,localdatabase.notifications);
+        editor.apply();
+        if(localdatabase.notifmount==null){
+            Log.i("nullchecker"," null");
+
+        }else{
+            Log.i("nullchecker","not null");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.location.Location;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class localdatabase {
     public static boolean loctioncheck = false, dataloaded = false;
-
+    public static TextView notifmount;
     public static final String url[] = {
             "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,
             "https://static.pexels.com/photos/5317/food-salad-restaurant-person-medium.jpg",
@@ -45,6 +46,8 @@ public class localdatabase {
     final static String file_path = "/fav.tom";
 
     public static Location deliveryLocation = null;
+
+    public static int notifications = 0;
 
     public static List<MasterMenuItems> masterList = new ArrayList<>();
 

@@ -74,6 +74,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     ProgressBar progressBar;
     Context ctx;
     boolean rec = false;
+
     TextView header;
 
     ProgressBar progressbar;
@@ -94,6 +95,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash);
        progressBar = (ProgressBar)findViewById(R.id.real_progressbar) ;
+        sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        localdatabase.notifications = sharedPreferences.getInt(constants.notifAmount,0);
         header = (TextView)findViewById(R.id.metadata);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         header.setTypeface(tf);
@@ -105,37 +108,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         // progressBar = ProgressDialog.show(this, "Loading","Please Wait");
         //progressBar.setCancelable(false);
-        sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+//        sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String name = sharedPreferences.getString("name", "User");
         String number = sharedPreferences.getString("mobile", "000");
 
 
-        //New_Details(name,number,constants.main_url);
-
-        /*if(checking_net_permission())
-        {
-
-        }
-        else
-        {
-            if(progressBar.isShowing())
-            {
-                progressBar.dismiss();
-            }
-            setContentView(R.layout.no_internet);
-            Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-            TextView calm = (TextView)findViewById(R.id.calm);
-            final TextView retry = (TextView)findViewById(R.id.menu);
-            calm.setTypeface(tf);
-            retry.setTypeface(tf);
-            retry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recreate();
-                }
-            });
-        }*/
 
     }
 

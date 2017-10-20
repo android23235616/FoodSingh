@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class NotificationActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
+   // static TextView localdatabase.no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +57,38 @@ public class NotificationActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
-        TextView cartitemcount1;
 
         MenuItem menuItem=menu.findItem(R.id.action_cart);
         View actionView= MenuItemCompat.getActionView(menuItem);
-        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+        TextView cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
 
-        actionView.setOnClickListener(new View.OnClickListener() {
+        cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
                 startActivity(ssd);
             }
         });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NotificationActivity.this, NotificationActivity.class));
+            }
+        });
+
+         localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
 
         return true;
     }

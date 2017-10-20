@@ -9,11 +9,13 @@
 
     <ImageView
 
+        android:layout_marginLeft="38dp"
+
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="center"
+        android:id="@+id/cartimage"
         android:scaleType="centerCrop"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/cart"/>
 
     <TextView
@@ -22,7 +24,9 @@
         android:layout_height="20dp"
 
 
-        android:layout_marginLeft="30dp"
+
+
+        android:layout_marginLeft="66dp"
 
         android:background="@drawable/badge_background"
         android:gravity="center"
@@ -30,5 +34,30 @@
         android:textColor="@android:color/white"
         android:text="0"
         android:textSize="10sp"/>
+
+    <ImageView
+
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="left"
+        android:id="@+id/notif"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/notification"/>
+
+    <TextView
+        android:id="@+id/notification_badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+
+
+        android:layout_marginLeft="20dp"
+
+        android:background="@drawable/badge_background"
+        android:gravity="center_horizontal|center_vertical"
+
+        android:textColor="@android:color/white"
+        android:text="*"
+        android:textSize="15sp"/>
 
 </FrameLayout>

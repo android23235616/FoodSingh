@@ -21,13 +21,14 @@ public class pagerAdapter extends PagerAdapter {
     LayoutInflater inflater;
     localdatabase database;
     ImageView imageView;
+    private boolean doNotifyDataSetChangedOnce = false;
 
     public pagerAdapter(localdatabase database){
         this.database = database;
     }
     @Override
     public int getCount() {
-        return database.BannerUrls.size();
+        return 6;
     }
 
     @Override

@@ -2,12 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item
-        android:id="@+id/notification"
-        android:icon="@drawable/notification"
-        android:title="Cart"
-        app:actionLayout="@layout/notification_menu_layout"
-        app:showAsAction="always"/>
+
 
     <item
         android:id="@+id/action_cart"
