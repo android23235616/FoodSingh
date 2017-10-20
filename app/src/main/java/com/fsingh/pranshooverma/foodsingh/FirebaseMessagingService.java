@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,11 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,19 +36,49 @@ import java.util.Map;
  */
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    Handler h;
+    Bitmap h;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
 
+        Map<String,String> map = remoteMessage.getData();
 
-        sendNotification2(remoteMessage.getData(),remoteMessage);
-        FirebaseRemoteConfig r1 = FirebaseRemoteConfig.getInstance();
-        Log.i("chutia",r1.getString("hello"));
+        Log.i("chutiaa","chutia");
+
+        String img = map.get("icon");
+
+        if(!img.equals("null")){
+            try {
+                h = getBitmapFromURL(img,remoteMessage);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("notificationException",e.toString());
+                sendNotification2(remoteMessage.getData(),remoteMessage,null);
+            }finally {
+               // sendNotification2(remoteMessage.getData(),remoteMessage,h);
+            }
+        }else{
+            sendNotification2(remoteMessage.getData(),remoteMessage,null);
+        }
 
 
+    }
 
+    public Bitmap getBitmapFromURL(String strURL, RemoteMessage remoteMessage) {
+        try {
+            URL url = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            sendNotification2(remoteMessage.getData(),remoteMessage,myBitmap);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -60,11 +96,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String url = map.get("url");
 
-        return new NotificationItem(body,title,img,url,activity, notificationType,time+"");
+        return new NotificationItem(body,title,img,url,activity, notificationType,time+"",false, map.get("coupon"));
     }
 
 
-    private void sendNotification2(Map<String,String> map, RemoteMessage remote){
+
+
+    private void sendNotification2(Map<String,String> map, RemoteMessage remote,Bitmap bitmap){
 
 
 
@@ -117,17 +155,14 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     //.setLights(Color.WHITE, 500, 500)
                     .setContentText(remote.getNotification().getBody());
         } else {
-            //RemoteViews customNotificationView = new RemoteViews(getPackageName(),
-                   // R.layout.notificationwindow);
 
-            //customNotificationView.setImageViewBitmap(R.id.notifimg, BitmapFactory.decodeResource(this.getResources(),R.drawable.background));
-           // customNotificationView.setTextViewText(R.id.notificationTitle, Util.notificationTitle);
-            //customNotificationView.setTextViewText(R.id.notificationContent, notificationMessage);
-
-          //  mBuilder.setContent(customNotificationView);
             mBuilder.setContentTitle(title);
             mBuilder.setContentText(body);
-            mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources(),R.drawable.background)).setBigContentTitle(title));
+            if(bitmap==null)
+                mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources(),R.drawable.background)).setBigContentTitle(title));
+            else{
+                mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).setBigContentTitle(title));
+            }
             mBuilder.setSmallIcon(R.drawable.logo7);
             mBuilder.setAutoCancel(true);
             mBuilder.setDefaults(Notification.DEFAULT_SOUND);

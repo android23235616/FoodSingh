@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -177,6 +178,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         pageradater = new pagerAdapter(local);
 
         pager.setAdapter(pageradater);
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -549,8 +551,6 @@ if(local.metaData!=null) {
     }
 
 
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //writing function for Categories
 
@@ -606,10 +606,11 @@ if(local.metaData!=null) {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        //    if (id == R.id.action_settings) {
-        //      return true;
-        // }
+
+
+        if(id==R.id.notification){
+            startActivity(new Intent(this, NotificationActivity.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }
