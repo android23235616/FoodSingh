@@ -7,7 +7,6 @@
     android:background="@drawable/background_another"
     android:gravity="center"
     android:orientation="vertical"
-
     tools:context="com.fsingh.pranshooverma.foodsingh.login_page">
 
 
@@ -56,8 +55,6 @@
         android:paddingRight="20dp" >
 
         <EditText
-
-
             android:id="@+id/mob"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

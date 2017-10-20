@@ -24,6 +24,7 @@ public class constants {
     public  static  String get_categories="http://mindwires.in/foodsingh_app/get_categories2.php";
     public static int min_order=-1;
     public static String get_menu_category_wise="http://mindwires.in/foodsingh_app/get_menu.php";
+    public static String update_password="http://mindwires.in/foodsingh_app/update_password.php";
     public static String send_to_debian="http://mindwires.in/foodsingh_app/place_order.php";
     public static String order_history="http://mindwires.in/foodsingh_app/get_order_history.php";
     public static String discount_coupon="http://mindwires.in/foodsingh_app/get_discount.php";

@@ -206,7 +206,9 @@ public class login_page extends AppCompatActivity {
             progress.setCancelable(false);
         }
 
-        StringRequest str=new StringRequest(Request.Method.POST, constants.forgot_password, new Response.Listener<String>() {
+        String Url="https://control.msg91.com/api/sendotp.php?authkey=112452AB1seNQy572e2e51&mobile="+mobile_number+"&message=Your%20OTP%20is%20%23%23OTP%23%23%20.%20It%20is%20Valid%20for%203%20minutes%20only.&sender=FoodSingh&otp_expiry=3";
+
+        StringRequest str=new StringRequest(Request.Method.GET,Url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -217,9 +219,16 @@ public class login_page extends AppCompatActivity {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
-                    String responseString = jsonObject.getString("message");
-                    if(responseString.equals("SUCCESS")){
+                    String responseString = jsonObject.getString("type");
+                    if(responseString.equalsIgnoreCase("SUCCESS")){
                         Display("Password sent! Check Your Registered Mobile");
+                        Bundle a =new Bundle();
+                        a.putString("mob",mobile_number);
+                        a.putString("key","1000");
+                        Intent b=new Intent(getApplicationContext(),verifying_otp.class);
+                        b.putExtras(a);
+                        startActivity(b);
+                        finish();
                     }else{
                         Display("Some Error Occured! Please check your number.");
                     }
@@ -240,14 +249,7 @@ public class login_page extends AppCompatActivity {
                 }
                 Display("Some Error Occured :"+error.toString());
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> maps=new HashMap<>();
-                maps.put("mobile",mobile_number);
-                return maps;
-            }
-        };
+        });
 
         RequestQueue re=Volley.newRequestQueue(this);
         re.add(str);
