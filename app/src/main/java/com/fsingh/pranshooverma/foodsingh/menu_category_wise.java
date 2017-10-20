@@ -39,6 +39,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 
 import org.json.JSONArray;
@@ -468,13 +469,34 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
     private void populateUI() {
+        MenuItemAdapter adapter = null;
 
-        List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
-        MenuItemAdapter adapter = new MenuItemAdapter(this, menuItems);
-        recyclerView.setAdapter(adapter);
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if(position!=-1) {
+            List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
+             adapter = new MenuItemAdapter(this, menuItems);
+        }else{
+
+            SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+            String tempJson = sharedPreferences.getString(constants.fav,"");
+            if(tempJson.equals("")){
+                Display("You Have No Favourites");
+            }else{
+                Gson gson = new Gson() ;
+                FavouritesList f = gson.fromJson(tempJson, FavouritesList.class);
+                List<MenuItems> menuItemses=f.getFavouriteList();
+                adapter = new MenuItemAdapter(this, menuItemses);
+
+            }
+
+        }
+        if(adapter!=null){
+            recyclerView.setAdapter(adapter);
+            //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,dpToPx(3),true));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        }
+
 
         //Toast.makeText(this, ""+Splash.masterMenuItems.size(), Toast.LENGTH_LONG).show();
         //Toast.makeText(this, ""+localdatabase.masterList.get(position).getMenuList(), Toast.LENGTH_LONG).show();

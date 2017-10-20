@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
@@ -34,9 +35,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     private Context mContext;
     public static List<MenuItems> menuItems = new ArrayList<>();
-    private List<String> dish_name=new ArrayList<>();
-    private List<String> dish_price=new ArrayList<>();
-    private List<String> NA = new ArrayList<>();
+
+    Gson gson = new Gson();
+
+    private List<MenuItems> FavItems = new ArrayList<>();
 
     boolean check=false;
 
@@ -46,7 +48,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
 
     public MenuItemAdapter(Context mContext) {
-        this.mContext=mContext;
+
 
     }
 
@@ -55,6 +57,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public MenuItemAdapter(Context mContext, List<MenuItems> menuItems) {
         this.mContext = mContext;
         this.menuItems = menuItems;
+        this.mContext=mContext;
+        this.gson = new Gson();
+        this.store = mContext.getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        String tempJson = store.getString(constants.fav,"");
+
+        if(!tempJson.equals("")){
+            FavouritesList f = gson.fromJson(tempJson,FavouritesList.class);
+            this.FavItems = f.getFavouriteList();
+        }
     }
 
 
@@ -85,36 +96,46 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_category_menu,parent,false);
 
         ViewHolder vh=new ViewHolder(v);
+
+
         return vh;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        plus=(ImageView) holder.itemView.findViewById(R.id.plus_slide);
-        minus=(ImageView) holder.itemView.findViewById(R.id.minus_slide);
-        fav=(ImageView) holder.itemView.findViewById(R.id.fav);
-        image=(ImageView) holder.itemView.findViewById(R.id.img_item_slide);
+
         /*
         String name=dish_name.get(position);
         String rupees=dish_price.get(position);
+
+
         */
 
+
+
         final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
+
+        if(Exists(menuItem)){
+            holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
+        }else{
+            holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_not_fav));
+
+        }
 
         String name = menuItem.getName();
         String rupees = menuItem.getPrice();
         final String status = menuItem.getStatus();
         holder.diname.setText(name);
         int qty = menuItem.getQuantity();
-        holder.item_quantity.setText(""+qty);
-        holder.diprice.setText("₹"+rupees);
-        Log.d("sdsd",name+"="+status);
-        if(rupees.equals("0") || !status.equals("live")){
+        holder.item_quantity.setText("" + qty);
+        holder.diprice.setText("₹" + rupees);
+        Log.d("sdsd", name + "=" + status);
+        if (rupees.equals("0") || !status.equals("live")) {
             holder.diprice.setText("NA");
             holder.unavailable.setVisibility(View.VISIBLE);
-           check = true;
-        }else{
+            check = true;
+        } else {
             check = false;
             holder.unavailable.setVisibility(View.GONE);
         }
@@ -123,46 +144,43 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         Glide.with(mContext).load(url).skipMemoryCache(true).thumbnail(0.05f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.image);
 
-        if(constants.item_name_deb.contains(name))
-        {
-            int index= constants.item_name_deb.indexOf(name);
-            int qa= Integer.parseInt(constants.item_quant_deb.get(index));
+        if (constants.item_name_deb.contains(name)) {
+            int index = constants.item_name_deb.indexOf(name);
+            int qa = Integer.parseInt(constants.item_quant_deb.get(index));
             holder.item_quantity.setText(String.valueOf(qa));
         }
 
-        plus.setOnClickListener(new View.OnClickListener() {
+        holder.pl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuItems item = menuItems.get(holder.getAdapterPosition());
-                if(!holder.diprice.getText().toString().equals("NA") && status.equals("live")){
+                if (!holder.diprice.getText().toString().equals("NA") && status.equals("live")) {
                     int quantity = item.getQuantity();
                     quantity++;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
-                    if(!localdatabase.cartList.contains(item)){
+                    if (!localdatabase.cartList.contains(item)) {
                         localdatabase.cartList.add(item);
                     }
 
                     menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
                     menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
-                }
-                else {
+                } else {
                     Toast.makeText(mContext, "Sorry, item not available.", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
-        minus.setOnClickListener(new View.OnClickListener() {
+        holder.mi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuItems item = menuItems.get(holder.getAdapterPosition());
-                if(!holder.diprice.getText().toString().equals("NA") && item.getQuantity()!=0){
+                if (!holder.diprice.getText().toString().equals("NA") && item.getQuantity() != 0) {
                     int quantity = item.getQuantity();
                     quantity--;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
-                    if(quantity == 0){
+                    if (quantity == 0) {
                         localdatabase.cartList.remove(item);
                     }
 
@@ -172,41 +190,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             }
         });
 
-
-
-        holder.fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if((holder.fav.getDrawable().getConstantState())==(holder.fav.getResources().getDrawable(R.drawable.ic_fav).getConstantState()))
-                {
-
-                    holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_not_fav));
-
-                }
-                else
-                {
-                   holder.fav.setImageDrawable(holder.fav.getResources().getDrawable(R.drawable.ic_fav));
-
-                }
-
-            }
-        });
-
-
-
-        image.setOnClickListener(new View.OnClickListener() {
+        holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent s = new Intent(mContext, menu_item_details.class);
-               /* MenuItems men=menuItems.get(holder.getAdapterPosition());
-                b.putString("item_name",men.getName());
-                b.putString("item_image",men.getImage());
-                b.putString("item_price",men.getPrice());
-                b.putString("item_quantity",String.valueOf(men.getQuantity()));
-                s.putExtras(b);
-                mContext.startActivity(s);
-            }*/
-
                 MenuItems item = menuItems.get(position);
                 if(!holder.diprice.getText().toString().equals("NA")) {
                     Bundle b=new Bundle();
@@ -225,100 +212,36 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             }
         });
 
-/*
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(holder.diprice.getText().toString().equals("NA")){
-
-                }else{
-
-                //adding to the list
-                constants.items_name.add(dish_name.get(position));
-                constants.items_price.add(dish_price.get(position));
-
-                //setting the value to the textView for having the quantity
-                int a=Integer.parseInt((String) holder.item_quantity.getText())+1;
-                holder.item_quantity.setText(String.valueOf(a));
-
-                //showing at the toolbar
-                menu_category_wise.cartitemcount.setText(String.valueOf(constants.items_name.size()));
-                menu.cartitemcount1.setText(String.valueOf(constants.items_name.size()));
-            //    Toast.makeText(mContext, "Added to cart", Toast.LENGTH_SHORT).show();
-
-
-                //making the quantity count
-                if(constants.item_name_deb.contains(dish_name.get(position)))
-                {
-
-                    int index= constants.item_name_deb.indexOf(dish_name.get(position));
-                    int prev_value= Integer.parseInt(constants.item_quant_deb.get(index));
-                    constants.item_quant_deb.set(index,String.valueOf(prev_value+1));
-              //      Toast.makeText(mContext, constants.item_name_deb.toString()+"\n"+constants.item_quant_deb, Toast.LENGTH_SHORT).show();
-
-                }
-                else
-                {
-                    //add that item to the arraylist
-                    constants.item_name_deb.add(dish_name.get(position));
-                    constants.item_quant_deb.add("1");
-          //          Toast.makeText(mContext, "added 1", Toast.LENGTH_SHORT).show();
-                }
-
-                }
+    holder.fav.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(Exists(menuItem)){
+                holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_not_fav));
+                FavItems.remove(menuItem);
+            }else{
+                holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
+                FavItems.add(menuItem);
             }
-        });
-
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(holder.diprice.getText().toString().equals("NA")){
-
-                }else{
-                int a=Integer.parseInt((String) holder.item_quantity.getText());
-                if(a!=0)
-                {
-                    a=a-1;
-                    holder.item_quantity.setText(String.valueOf(a));
-                }
-
-
-                if(constants.item_name_deb.contains(dish_name.get(position)))
-                {
-
-                    int index= constants.item_name_deb.indexOf(dish_name.get(position));
-                    int prev_value= Integer.parseInt(constants.item_quant_deb.get(index));
-
-                    if(prev_value==1)
-                    {
-                        constants.item_name_deb.remove(dish_name.get(position));
-                        constants.item_quant_deb.remove(index);
-                    }
-                    else {
-                        constants.item_quant_deb.set(index, String.valueOf(prev_value - 1));
-                    }
-          //          Toast.makeText(mContext, constants.item_name_deb.toString() + "\n" + constants.item_quant_deb, Toast.LENGTH_SHORT).show();
-
-                }
-
-
-                if(constants.items_name.contains(dish_name.get(position)))
-                {
-                    constants.items_name.remove(dish_name.get(position));
-                    constants.items_price.remove(dish_price.get(position));
-                    menu_category_wise.cartitemcount.setText(String.valueOf(constants.items_name.size()));
-                    menu.cartitemcount1.setText(String.valueOf(constants.items_name.size()));
-            //        Toast.makeText(mContext, "Removed from cart", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    //        Toast.makeText(mContext, "You dont have this item in cart", Toast.LENGTH_SHORT).show();
-                }        }
-            }
-        });
-        */
+            FavouritesList f = new FavouritesList(FavItems);
+            String tempJson = gson.toJson(f);
+            SharedPreferences.Editor edit = store.edit();
+            edit.putString(constants.fav,tempJson);
+            edit.apply();
+        }
+    });
     }
 
+
+    private boolean Exists(MenuItems item){
+        for(int i=0; i<FavItems.size(); i++){
+            if(FavItems.get(i).getId().equals(item.getId())){
+                return true;
+            }
+        }
+        return false;
+
+
+    }
 
 
     @Override

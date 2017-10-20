@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class MenuItems implements Parcelable{
 
     private String Id, Name, Category, Price, Image, Status;
-
+    //private boolean isFav  = false;
     private int quantity = 0;
 
     MenuItems(String Id, String Name, String Category, String Price, String Image, String Status){
@@ -22,6 +22,7 @@ public class MenuItems implements Parcelable{
         this.Price = Price;
         this.Image = Image;
         this.Status = Status;
+        //this.isFav = isFav;
     }
 
     protected MenuItems(Parcel in) {
@@ -77,6 +78,8 @@ public class MenuItems implements Parcelable{
     public String getStatus() {
         return Status;
     }
+
+
 
     public void setStatus(String status) {
         Status = status;

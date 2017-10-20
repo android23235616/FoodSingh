@@ -141,6 +141,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     notificationItems.add(holder.getAdapterPosition(),item);
                     save();
                     decrement();
+                    //webview
                 }
             });
         holder.knowmore1.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +152,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 notificationItems.add(holder.getAdapterPosition(),item);
                 save();
                 decrement();
+                //webview
             }
         });
 

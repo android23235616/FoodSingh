@@ -674,6 +674,19 @@ if(local.metaData!=null) {
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
 
+        }else if(id==R.id.notifications){
+            Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+
+        }else if(id==R.id.favNav){
+            Intent as=new Intent(this,menu_category_wise.class);
+            Bundle a=new Bundle();
+            a.putString("category","Favourites");
+            a.putInt("position", -1);
+            as.putExtras(a);
+            as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(as);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
