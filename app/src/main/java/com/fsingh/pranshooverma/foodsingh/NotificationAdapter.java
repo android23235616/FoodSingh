@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.Notification;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,31 +44,31 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         NotificationItem item = notificationItems.get(holder.getAdapterPosition());
         if(item.getNotificationType().equals("1")){
-            holder.l1.setVisibility(View.GONE);
-            holder.l11.setVisibility(View.GONE);
-            holder.l111.setVisibility(View.GONE);
-            holder.l2.setVisibility(View.VISIBLE);
-            holder.l22.setVisibility(View.VISIBLE);
-            holder.l222.setVisibility(View.VISIBLE);
+            holder.l2.setVisibility(View.GONE);
+            holder.l22.setVisibility(View.GONE);
+            holder.l222.setVisibility(View.GONE);
+            holder.l1.setVisibility(View.VISIBLE);
+            holder.l11.setVisibility(View.VISIBLE);
+            holder.l111.setVisibility(View.VISIBLE);
 
             holder.title1.setText(item.getTitle());
             holder.body1.setText(item.getBody());
-            Glide.with(holder.img1.getContext()).load(item.getImg()).into(holder.img1);
+            Glide.with(holder.img1.getContext()).load(item.getImg()).thumbnail(0.01f).into(holder.img1);
         }else if(item.getNotificationType().equals("2")){
-            if(item.getNotificationType().equals("1")){
-                holder.l2.setVisibility(View.GONE);
-                holder.l22.setVisibility(View.GONE);
-                holder.l222.setVisibility(View.GONE);
-                holder.l1.setVisibility(View.VISIBLE);
-                holder.l11.setVisibility(View.VISIBLE);
-                holder.l111.setVisibility(View.VISIBLE);
+
+                holder.l1.setVisibility(View.GONE);
+                holder.l11.setVisibility(View.GONE);
+                holder.l111.setVisibility(View.GONE);
+                holder.l2.setVisibility(View.VISIBLE);
+                holder.l22.setVisibility(View.VISIBLE);
+                holder.l222.setVisibility(View.VISIBLE);
 
                 holder.title2.setText(item.getTitle());
                 holder.body2.setText(item.getBody());
-                Glide.with(holder.img2.getContext()).load(item.getImg()).into(holder.img2);
+                Glide.with(holder.img2.getContext()).load(item.getImg()).thumbnail(0.01f).into(holder.img2);
             }
-        }
 
+        Log.i("imagenotif",item.getImg());
     }
 
 
@@ -90,7 +91,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             l11 = (LinearLayout)itemView.findViewById(R.id.l11);
             l111 = (LinearLayout)itemView.findViewById(R.id.l111);
             l22 = (LinearLayout)itemView.findViewById(R.id.l22);
-            l22 = (LinearLayout)itemView.findViewById(R.id.l222);
+            l222 = (LinearLayout)itemView.findViewById(R.id.l222);
             img1 = (ImageView)itemView.findViewById(R.id.image1);
             img2= (ImageView)itemView.findViewById(R.id.image2);
             title1 = (TextView) itemView.findViewById(R.id.title1);

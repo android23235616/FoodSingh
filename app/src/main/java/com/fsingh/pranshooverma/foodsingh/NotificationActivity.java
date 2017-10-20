@@ -24,7 +24,7 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         recyclerView = (RecyclerView)findViewById(R.id.notificationRecycler);
-
+        gson = new Gson();
         String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
 
         if(tempJson.equals("")){

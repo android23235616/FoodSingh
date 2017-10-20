@@ -56,7 +56,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String activity = map.get("activity");
 
-        String img = map.get("image");
+        String img = map.get("icon");
 
         String url = map.get("url");
 
@@ -90,7 +90,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             li = new NotificationLists(nn);
             OnLog(li.getNotification());
             String tempJson = gson.toJson(li);
-            edit.putString("my",tempJson);
+            edit.putString(constants.foodsinghNotif,tempJson);
             edit.apply();
         }
 
@@ -136,48 +136,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }//
 // build notification
         mBuilder.setContentIntent(pendingIntent);
-        mNotificationManager.notify(1000, mBuilder.build());
+        mNotificationManager.notify((int)System.currentTimeMillis()%1000, mBuilder.build());
 
     }
 
     private void OnLog(List<NotificationItem> nn) {
 
         for(int i=0; i<nn.size(); i++){
-            Log.i("please", nn.get(i).getBody());
+            Log.i("please", nn.get(i).getBody()+","+nn.get(i).getNotificationType());
         }
     }
 
-    private RemoteViews getComplexNotificationView() {
-        // Using RemoteViews to bind custom layouts into Notification
-        RemoteViews notificationView = new RemoteViews(
-                this.getPackageName(),
-                R.layout.notification_menu_layout
-        );
-        return notificationView;
-    }
-    private void Display(Map<String, String > map){
-        String m = map.get("image");
-        Log.i("notif2323",m);
-    }
-
-    private void SendNotification(RemoteMessage remoteMessage){
-        String notificationTitle = remoteMessage.getNotification().getTitle();
-        String notificationBody = remoteMessage.getNotification().getBody();
-        Map<String,String> map = remoteMessage.getData();
 
 
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this).setContent(getComplexNotificationView())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(notificationTitle+" chutia")
-                        .setContentText(notificationBody+" chutia");
-
-
-
-        int mNotificationId = (int)System.currentTimeMillis();
-        NotificationManager mNotifyMgr =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
-    }
 }
