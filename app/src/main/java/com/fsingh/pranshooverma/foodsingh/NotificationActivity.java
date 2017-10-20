@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class NotificationActivity extends AppCompatActivity {
 
     Gson gson;
@@ -27,6 +29,7 @@ public class NotificationActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
+    TextView clear;
    // static TextView localdatabase.no;
 
     @Override
@@ -36,6 +39,8 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        clear = (TextView)findViewById(R.id.text);
+
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         recyclerView = (RecyclerView)findViewById(R.id.notificationRecycler);
         gson = new Gson();
@@ -52,6 +57,20 @@ public class NotificationActivity extends AppCompatActivity {
             notificationAdapter.notifyDataSetChanged();
 
         }
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor edit = sharedPreferences.edit();
+                edit.putString(constants.foodsinghNotif,"");
+                edit.apply();
+                notificationAdapter = new NotificationAdapter(new ArrayList<NotificationItem>(),NotificationActivity.this);
+                recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
+                recyclerView.setAdapter(notificationAdapter);
+                recyclerView.setNestedScrollingEnabled(true);
+                notificationAdapter.notifyDataSetChanged();
+            }
+        });
 
 
     }

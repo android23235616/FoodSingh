@@ -13,9 +13,10 @@
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/text"
-        android:text="Notifications"
+        android:text="Clear All"
         android:textColor="@color/text_color"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_marginLeft="90dp"
         android:background="@drawable/buttonbackground"
