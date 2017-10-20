@@ -48,7 +48,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 
-    private NotificationItem getNotificationItem(Map<String,String> map){
+    private NotificationItem getNotificationItem(Map<String,String> map,long time){
         String title=map.get("title");
         String body = map.get("body");
 
@@ -60,7 +60,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String url = map.get("url");
 
-        return new NotificationItem(body,title,img,url,activity, notificationType);
+        return new NotificationItem(body,title,img,url,activity, notificationType,time+"");
     }
 
 
@@ -75,7 +75,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         if(json.equals("null")){
 
-            nn.add(getNotificationItem(map));
+            nn.add(getNotificationItem(map,remote.getSentTime()));
             Gson gson = new Gson();
             NotificationLists li = new NotificationLists(nn);
             String tempJson = gson.toJson(li);
@@ -86,7 +86,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Gson gson  = new Gson();
             NotificationLists li = gson.fromJson(json,NotificationLists.class);
             nn = li.getNotification();
-            nn.add(getNotificationItem(map));
+            nn.add(getNotificationItem(map,remote.getSentTime()));
             li = new NotificationLists(nn);
             OnLog(li.getNotification());
             String tempJson = gson.toJson(li);
@@ -99,7 +99,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Context context = this;
 
-        Intent intent= new Intent(this, Splash.class);
+        Intent intent= new Intent(this, NotificationActivity.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);

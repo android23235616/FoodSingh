@@ -8,12 +8,13 @@ import android.app.Notification;
 
 public class NotificationItem {
 
-    private String body,title, img, url, activity, notificationType;
+    private String body,title, img, url, activity, notificationType, time;
 
-    public NotificationItem(String body, String title, String img, String url, String activity, String notificationType){
+    public NotificationItem(String body, String title, String img, String url, String activity, String notificationType,String time){
 
         this.body = body;
         this.title = title;
+        this.time = time;
         this.img = img;
         this.url = url;
         this.activity = activity;
@@ -43,6 +44,10 @@ public class NotificationItem {
 
     public String getNotificationType(){
         return notificationType;
+    }
+
+    public String getTime(){
+        return time;
     }
 
 }

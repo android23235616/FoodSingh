@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Know More"
-                    android:id="@+id/knowmore"
+                    android:id="@+id/knowmore2"
                     android:layout_below="@+id/content2text"
                     android:textColor="@color/bg_login"
                     />
