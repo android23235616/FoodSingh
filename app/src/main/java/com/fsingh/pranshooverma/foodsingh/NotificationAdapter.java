@@ -4,8 +4,10 @@ import android.app.Notification;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -141,7 +143,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     notificationItems.add(holder.getAdapterPosition(),item);
                     save();
                     decrement();
-                    //webview
+
+                    String url=item.getUrl();
+                    Bundle a=new Bundle();
+                    a.putString("url",url);
+                    Intent intent=new Intent(c.getApplicationContext(),web_view.class);
+                    intent.putExtras(a);
+                    c.startActivity(intent);
                 }
             });
         holder.knowmore1.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +160,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 notificationItems.add(holder.getAdapterPosition(),item);
                 save();
                 decrement();
-                //webview
+                String url=item.getUrl();
+                Bundle a=new Bundle();
+                a.putString("url",url);
+                Intent intent=new Intent(c.getApplicationContext(),web_view.class);
+                intent.putExtras(a);
+                c.startActivity(intent);
             }
         });
 

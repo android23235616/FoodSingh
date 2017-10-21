@@ -143,6 +143,10 @@
         <activity
             android:name=".set_password"
             android:label="@string/title_activity_set_password"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".web_view"
+            android:label="@string/title_activity_web_view"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -31,4 +31,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_favourite_items">Favourite_items</string>
     <string name="title_activity_set_password">set_password</string>
+    <string name="title_activity_web_view">web_view</string>
 </resources>
