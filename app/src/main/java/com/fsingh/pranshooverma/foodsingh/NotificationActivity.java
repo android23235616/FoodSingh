@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class NotificationActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
+    android.support.design.widget.FloatingActionButton floatingActionButton;
     TextView clear;
    // static TextView localdatabase.no;
 
@@ -40,7 +42,7 @@ public class NotificationActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         clear = (TextView)findViewById(R.id.text);
-
+        floatingActionButton = (android.support.design.widget.FloatingActionButton)findViewById(R.id.new_clear);
 
 
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
@@ -55,9 +57,9 @@ public class NotificationActivity extends AppCompatActivity {
             notificationLists = gson.fromJson(tempJson,NotificationLists.class);
             notificationAdapter = new NotificationAdapter(notificationLists.getNotification(),this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setNestedScrollingEnabled(true);
+            recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(notificationAdapter);
-            recyclerView.setNestedScrollingEnabled(true);
+
             notificationAdapter.notifyDataSetChanged();
 
         }
@@ -65,6 +67,16 @@ public class NotificationActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                //edit.putInt(constants.notifAmount,0);
+            }
+        });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putString(constants.foodsinghNotif,"");
                 edit.putInt(constants.notifAmount,0);
@@ -72,7 +84,6 @@ public class NotificationActivity extends AppCompatActivity {
                 edit.apply();
                 recreate();
 
-                //edit.putInt(constants.notifAmount,0);
             }
         });
 
