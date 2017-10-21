@@ -55,34 +55,16 @@ TextView text_about;
 
         text_about.setText(localdatabase.aboutText);
 
-        Glide.with(about_us.this).load(localdatabase.aboutImage).skipMemoryCache(true).thumbnail(0.05f)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(img_about);
 
 
-        /*
         if(checking_net_permission())
         {
-            fetch_values();
+            Glide.with(about_us.this).load(localdatabase.aboutImage).skipMemoryCache(true).thumbnail(0.05f)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(img_about);
+
         }
-        */
 
-    }
 
-    private void fetch_values() {
-        String url="";
-        StringRequest str=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        RequestQueue sd= Volley.newRequestQueue(this);
-        sd.add(str);
     }
 
     private Boolean checking_net_permission() {

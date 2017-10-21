@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class verifying_otp extends AppCompatActivity {
     TextView t1, t2, t3;
     ProgressDialog progress;
     String key;
+    ImageView fork,smile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -281,8 +283,12 @@ public class verifying_otp extends AppCompatActivity {
         Bundle as=getIntent().getExtras();
 
         key=as.getString("key");
-        if(as.equals("10012"))
+        if(key.equals("10012"))
         {
+
+            fork.setVisibility(View.INVISIBLE);
+            t1.setText("Awesome, Thanks");
+
             pass=as.getString("pass");
             mob=as.getString("mob");
             name=as.getString("name");
@@ -291,6 +297,8 @@ public class verifying_otp extends AppCompatActivity {
         }
         else
         {
+            t1.setText("Reseting your Password");
+            smile.setVisibility(View.INVISIBLE);
             mob=as.getString("mob");
             Toast.makeText(this, mob, Toast.LENGTH_SHORT).show();
         }
@@ -310,18 +318,26 @@ public class verifying_otp extends AppCompatActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         t1 = (TextView)findViewById(R.id.welcome);
         t2 = (TextView)findViewById(R.id.Confirmation);
-        t3 = (TextView)findViewById(R.id.textCode);
+        //t3 = (TextView)findViewById(R.id.textCode);
         setTypeface();
-
+        fork=(ImageView)findViewById(R.id.fork);
+        smile=(ImageView)findViewById(R.id.imageView3);
+        fork.setVisibility(View.VISIBLE);
+        smile.setVisibility(View.VISIBLE);
     }
 
     private void setTypeface(){
-        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-        verify.setTypeface(t);
-        otp.setTypeface(t);
-        t1.setTypeface(t);
-        t2.setTypeface(t);
-        t3.setTypeface(t);
+//        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        Typeface ta=Typeface.createFromAsset(getAssets(),"fonts/FREESCPT.TTF");
+        t1.setTypeface(ta,ta.BOLD);
+
+        Typeface tb=Typeface.createFromAsset(getAssets(),"fonts/COPRGTL.TTF");
+        resend.setTypeface(tb);
+        verify.setTypeface(tb);
+        otp.setTypeface(tb);
+        t2.setTypeface(tb);
+
+        //t3.setTypeface(t);
 
     }
 }
