@@ -40,6 +40,8 @@ public class login_page extends AppCompatActivity {
     ProgressDialog progress;
     TextView forgot_password;
 
+    Typeface tf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,9 @@ public class login_page extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_page);
+
+
+        tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
 
         initialize();
 
@@ -260,10 +265,12 @@ public class login_page extends AppCompatActivity {
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         mobile.setTypeface(t);
         password.setTypeface(t);
-        login.setTypeface(t);
-        new_user.setTypeface(t);
+        login.setTypeface(tf);
+        new_user.setTypeface(tf);
+        Typeface freescpt = Typeface.createFromAsset(getAssets(), "fonts/FREESCPT.TTF");
         TextView loginpage = (TextView)findViewById(R.id.logintofoodsingh);
-        loginpage.setTypeface(t);
+        loginpage.setTypeface(freescpt);
+        forgot_password.setTypeface(tf);
 
     }
 

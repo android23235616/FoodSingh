@@ -144,6 +144,9 @@
         <activity android:name=".NotificationActivity" android:label=""></activity>
         <activity android:name=".about_us" android:label=""></activity>
         <activity android:name=".Support" android:label=""></activity>
+        <activity android:name=".set_password" android:label="">
+
+        </activity>
     </application>
 
 </manifest>
