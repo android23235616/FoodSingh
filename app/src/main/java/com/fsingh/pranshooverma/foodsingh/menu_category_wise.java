@@ -473,7 +473,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
         if(position!=-1) {
             List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
-             adapter = new MenuItemAdapter(this, menuItems);
+             adapter = new MenuItemAdapter(this, menuItems,position);
         }else{
 
             SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
@@ -484,7 +484,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
                 Gson gson = new Gson() ;
                 FavouritesList f = gson.fromJson(tempJson, FavouritesList.class);
                 List<MenuItems> menuItemses=f.getFavouriteList();
-                adapter = new MenuItemAdapter(this, menuItemses);
+                adapter = new MenuItemAdapter(this, menuItemses,position);
 
             }
 
