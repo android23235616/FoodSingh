@@ -712,7 +712,7 @@ if(local.metaData!=null) {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     @Override
