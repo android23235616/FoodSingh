@@ -123,6 +123,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".set_password" android:label="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".menu_item_details"
             android:theme="@style/AppTheme" android:label="" />
@@ -144,6 +151,9 @@
         <activity android:name=".NotificationActivity" android:label=""></activity>
         <activity android:name=".about_us" android:label=""></activity>
         <activity android:name=".Support" android:label=""></activity>
+        <activity android:name=".set_password" android:label="">
+
+        </activity>
     </application>
 
 </manifest>

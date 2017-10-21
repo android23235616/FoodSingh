@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,8 +11,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +42,14 @@ public class set_password extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_set_password);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -139,7 +150,20 @@ public class set_password extends AppCompatActivity {
         mob=g.getString("mob");
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
-    
+
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        enter_pass.setTypeface(t);
+        reenter_pass.setTypeface(t);
+
+        TextView txtSetPass = (TextView) findViewById(R.id.txt_set_pass);
+        Typeface freescpt = Typeface.createFromAsset(getAssets(), "fonts/FREESCPT.TTF");
+        txtSetPass.setTypeface(freescpt);
+
+        Typeface  tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
+        confirm.setTypeface(tf);
+
+
+
     }
 
 
