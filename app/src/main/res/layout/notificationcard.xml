@@ -20,6 +20,7 @@
 
         <ImageView
             android:layout_width="100dp"
+            android:background="@drawable/whatsapp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:id="@+id/image1"
@@ -123,6 +124,7 @@
             android:layout_height="150dp"
             android:id="@+id/image2"
             android:scaleType="centerCrop"
+            android:background="@drawable/whatsapp"
             android:src="@drawable/whatsapp"
             />
 
