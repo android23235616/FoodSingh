@@ -698,6 +698,11 @@ if(local.metaData!=null) {
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
         }
+        else if (id == R.id.Support) {
+            Intent a = new Intent(getApplicationContext(), Support.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
