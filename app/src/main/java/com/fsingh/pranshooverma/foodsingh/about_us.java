@@ -25,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class about_us extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,11 +52,19 @@ TextView text_about;
         //coding
 
         initialize();
+
+        text_about.setText(localdatabase.aboutText);
+
+        Glide.with(about_us.this).load(localdatabase.aboutImage).skipMemoryCache(true).thumbnail(0.05f)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(img_about);
+
+
+        /*
         if(checking_net_permission())
         {
             fetch_values();
         }
-
+        */
 
     }
 
@@ -83,10 +93,11 @@ TextView text_about;
     private void initialize() {
         text_about=(TextView) findViewById(R.id.text_about);
         img_about=(ImageView) findViewById(R.id.img_about);
-        progress=new ProgressDialog(this);
+      /*  progress=new ProgressDialog(this);
         progress.setMessage("Loading Data");
         progress.setCancelable(false);
         progress.show();
+        */
     }
 
     @Override

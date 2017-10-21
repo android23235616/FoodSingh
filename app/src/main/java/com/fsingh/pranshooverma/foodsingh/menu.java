@@ -693,6 +693,10 @@ if(local.metaData!=null) {
             as.putExtras(a);
             as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(as);
+        } else if (id == R.id.AboutUs) {
+            Intent a = new Intent(getApplicationContext(), about_us.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

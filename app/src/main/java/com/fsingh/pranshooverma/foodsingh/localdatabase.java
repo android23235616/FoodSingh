@@ -72,4 +72,8 @@ public class localdatabase {
 
     public static List<UnavailableItems> unavailableItemsList = new ArrayList<>();
 
+    public static String aboutText;
+
+    public static String aboutImage;
+
 }

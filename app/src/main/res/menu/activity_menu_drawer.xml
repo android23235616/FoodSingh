@@ -36,6 +36,11 @@
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="SignOut" />
 
+        <item
+            android:id="@+id/AboutUs"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="About Us" />
+
     </group>
 
 </menu>

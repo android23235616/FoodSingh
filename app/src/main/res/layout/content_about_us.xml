@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_margin="4dp"
+    android:background="@color/white"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fsingh.pranshooverma.foodsingh.about_us"
@@ -16,20 +18,36 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal" />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ABOUT US"
+        android:layout_marginStart="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:layout_below="@+id/img_about"
+        android:id="@+id/txt_about"
+        />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/img_about"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txt_about"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         >
     <TextView
         android:id="@+id/text_about"
-        android:textSize="20dp"
+        android:textSize="14dp"
+        android:fontFamily="monospace"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="" />
+        android:text="dkfjsdkjfksdbkjbfjksdbfbsdbfdsdfbdjsbfbds" />
     </ScrollView>
 
 </RelativeLayout>

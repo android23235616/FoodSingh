@@ -60,7 +60,7 @@
         <activity
             android:name=".menu"
             android:configChanges="orientation"
-            android:label=""
+            android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -137,21 +137,8 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".NotificationActivity"
-            android:label="" />
-        <activity
-            android:name=".set_password"
-            android:label="@string/title_activity_set_password"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".web_view"
-            android:label="@string/title_activity_web_view"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".about_us"
-            android:label="@string/title_activity_about_us"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".about_us"></activity>
     </application>
 
 </manifest>
