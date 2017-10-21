@@ -134,15 +134,18 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         holder.item_quantity.setText("" + qty);
         holder.diprice.setText("₹" + rupees);
         Log.d("sdsd", name + "=" + status);
-        if (rupees.equals("0") || !status.equals("live")) {
-            holder.diprice.setText("NA");
-            holder.unavailable.setVisibility(View.VISIBLE);
-            check = true;
-        } else {
-            check = false;
-            holder.unavailable.setVisibility(View.GONE);
-        }
-
+       // if((rupees!=null&&status!=null)&&menu_category_wise.position!=-1) {
+            if (rupees.equals("0") || !status.equals("live")) {
+                holder.diprice.setText("NA");
+                holder.unavailable.setVisibility(View.VISIBLE);
+                check = true;
+            } else {
+                check = false;
+                holder.unavailable.setVisibility(View.GONE);
+            }
+       // }else{
+        //        status.equals("");
+        //}
         String url = menuItem.getImage();
         Glide.with(mContext).load(url).skipMemoryCache(true).thumbnail(0.05f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.image);
