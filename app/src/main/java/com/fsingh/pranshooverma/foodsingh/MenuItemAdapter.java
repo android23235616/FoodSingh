@@ -216,6 +216,30 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     b.putBoolean("isfav", isfav);
                     b.putParcelable("mainobject", item);
                     b.putInt("mainposition",p);
+                    b.putInt("avail",0);
+                    s.putExtras(b);
+                    mContext.startActivity(s);
+
+                    ((Activity)mContext).finish();
+                }else {
+                    Bundle b=new Bundle();
+                    MenuItems men=menuItems.get(holder.getAdapterPosition());
+                    b.putString("item_name",men.getName());
+                    b.putString("item_image",men.getImage());
+                    b.putString("item_price",men.getPrice());
+                    b.putParcelable("object",item);
+                    b.putString("item_quantity",String.valueOf(men.getQuantity()));
+                    b.putInt("position",holder.getAdapterPosition());
+                    b.putInt("avail",1);
+                    boolean isfav = false;
+
+                    MenuItems i = menuItems.get(holder.getAdapterPosition());
+                    if(Exists(i)>-1){
+                        isfav = true;
+                    }
+                    b.putBoolean("isfav", isfav);
+                    b.putParcelable("mainobject", item);
+                    b.putInt("mainposition",p);
                     s.putExtras(b);
                     mContext.startActivity(s);
 

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +31,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +41,14 @@ public class menu_item_details extends AppCompatActivity
 
     ImageView plus,minus,item_image;
     int p;
-    TextView item_name,item_price,quantity,cartitemcount1;
+    TextView item_name,item_price,quantity,cartitemcount1,unav;
     String name,price,image,item_quantity;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     ImageView fav;
     Button addFav;
     MenuItems mainItem;
+    int isAvailable;
     boolean isFav = false;
     Gson gson;
 
@@ -56,6 +63,7 @@ public class menu_item_details extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RemoveTop();
         setContentView(R.layout.activity_menu_item_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,40 +83,52 @@ public class menu_item_details extends AppCompatActivity
         initialize();
         getting_intents();
 
+        if(isAvailable==1){
+
+
+        }else{
+            unav.setVisibility(View.INVISIBLE);
+        }
+
        refreshList();
 
         if(isFav) {
 
             fav.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_fav));
+            addFav.setText("REMOVE FROM FAVOURITES");
         }else{
             fav.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_not_fav));
+            addFav.setText("ADD TO FAVOURITES");
         }
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int check=0;
-                Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
-                int quantiti = item.getQuantity();
-                quantiti=quantiti+1;
-                quantity.setText(String.valueOf(quantiti));
-                item.setQuantity(quantiti);
-                for(int i=0;i<localdatabase.cartList.size();i++)
-                {
-                    if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
-                    {
-                        Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
-                        localdatabase.cartList.remove(i);
-                        localdatabase.cartList.add(item);
-                        check=1;
+              if(isAvailable!=1){
+                  int check=0;
+                  Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
+                  int quantiti = item.getQuantity();
+                  quantiti=quantiti+1;
+                  quantity.setText(String.valueOf(quantiti));
+                  item.setQuantity(quantiti);
+                  for(int i=0;i<localdatabase.cartList.size();i++)
+                  {
+                      if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                      {
+                          Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                          localdatabase.cartList.remove(i);
+                          localdatabase.cartList.add(item);
+                          check=1;
 
-                    }
+                      }
 
-                }
-                if(check!=1)
-                {
-                    localdatabase.cartList.add(item);
-                }
+                  }
+                  if(check!=1) {
+                      localdatabase.cartList.add(item);
+                  }
+
+                  cartitemcount1.setText(localdatabase.cartList.size()+"");
+              }
 
             }
         });
@@ -124,25 +144,34 @@ public class menu_item_details extends AppCompatActivity
 
             @Override
             public void onClick(View view) {
-                if(isFav){
-                    isFav = false;
+                if (isAvailable != 1) {
+                    if (isFav) {
+                        isFav = false;
 
-                    fav.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_not_fav));
-                    favList.remove(Exists(item))    ;
+                        fav.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_not_fav));
+                        addFav.setText("ADD TO FAVOURITES");
+                        favList.remove(Exists(item));
 
-                }else{
+                    } else {
                         isFav = true;
+                        addFav.setText("REMOVE FROM FAVOURITES");
                         fav.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_fav));
                         favList.add(mainItem);
 
-                }
+                    }
 
-                save();
+                    save();
+                }
             }
         });
     }
 
 
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
 
     private void refreshList(){
         myList = getMyList();
@@ -151,15 +180,17 @@ public class menu_item_details extends AppCompatActivity
 
     private void save() {
 
+        DisplayList(favList);
+
         FavouritesList temp = new FavouritesList(favList);
         String tempJson = gson.toJson(temp);
         editor.putString(constants.fav,tempJson);
         editor.apply();
-        refreshList();
+
     }
 
     private int Exists(MenuItems item){
-        refreshList();
+
         for(int i=0; i<favList.size(); i++){
             if(favList.get(i).getId().equals(item.getId())
                     &&favList.get(i).getName().equals(item.getName())
@@ -172,6 +203,12 @@ public class menu_item_details extends AppCompatActivity
 
     }
 
+    private void DisplayList(List<MenuItems> item){
+        for (int i=0; i<item.size(); i++){
+            Log.i("details Fav "+i, item.get(i).getName());
+        }
+    }
+
     private void getting_intents() {
         Bundle b=getIntent().getExtras();
         name=b.getString("item_name");
@@ -182,6 +219,7 @@ public class menu_item_details extends AppCompatActivity
         position=b.getInt("position");
         isFav = b.getBoolean("isfav");
         mainItem = b.getParcelable("mainobject");
+        isAvailable = b.getInt("avail");
         p = b.getInt("mainposition");
 
         if (item_image.equals("")){
@@ -206,11 +244,19 @@ public class menu_item_details extends AppCompatActivity
         item_name=(TextView) findViewById(R.id.item_name);
         item_image=(ImageView)findViewById(R.id.item_image);
         item_price=(TextView) findViewById(R.id.item_price);
+        TextView description = (TextView)findViewById(R.id.descrption);
         fav = (ImageView)findViewById(R.id.fav);
-
+        unav = (TextView)findViewById(R.id.txt_unavailable);
         addFav = (Button)findViewById(R.id.add_to_fav);
 
         sp = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
+        Typeface tf2 = Typeface.createFromAsset(getAssets(),"fonts/FREESCPT.TTF");
+        //Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
+        item_name.setTypeface(tf1,Typeface.BOLD);
+        item_price.setTypeface(tf1,Typeface.BOLD);
+        description.setTypeface(tf2);
+
         editor = sp.edit();
 
     }
@@ -245,14 +291,32 @@ public class menu_item_details extends AppCompatActivity
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
 
-        actionView.setOnClickListener(new View.OnClickListener() {
+        cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
                 startActivity(ssd);
             }
         });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(menu_item_details.this, NotificationActivity.class));
+            }
+        });
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
 
         return true;
     }
