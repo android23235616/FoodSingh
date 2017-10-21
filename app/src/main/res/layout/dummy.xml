@@ -12,14 +12,15 @@
 
     android:baselineAligned="false">
     <TextView
-        android:id="@+id/attack"
+        android:id="@+id/attack2"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:textStyle="bold"
         android:background="#dac598"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:layout_marginTop="200dp"
+        android:visibility="invisible"
+        android:layout_marginTop="180dp"
         android:textColor="@color/text_color"
         android:scrollbars="vertical"
         android:padding="3dp"

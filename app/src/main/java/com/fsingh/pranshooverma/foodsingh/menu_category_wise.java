@@ -66,7 +66,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
     String category=null;
-    int position;
+    static int position;
 
     SharedPreferences shared;
 

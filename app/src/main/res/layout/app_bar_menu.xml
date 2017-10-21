@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/background_color_new"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout = "@layout/my_toolbar"/>
+    <TextView
+        android:id="@+id/attack"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:textStyle="bold"
+        android:background="#dac598"
+        android:fontFamily="monospace"
+        android:gravity="center"
+
+        android:textColor="@color/text_color"
+        android:scrollbars="vertical"
+        android:padding="3dp"
+        android:text="Attack! On the Food."/>
+
 <android.support.v4.widget.NestedScrollView android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -43,7 +64,7 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar1"
 
                 app:layout_collapseMode="pin">
 
@@ -89,3 +110,4 @@
 
 </FrameLayout>
 </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

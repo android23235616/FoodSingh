@@ -110,10 +110,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         List<NotificationItem> nn = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString(constants.foodsinghNotif,"null");
+        String json = sharedPreferences.getString(constants.foodsinghNotif,"");
         SharedPreferences.Editor edit = sharedPreferences.edit();
 
-        if(json.equals("null")){
+        if(json.equals("")){
 
             nn.add(getNotificationItem(map,remote.getSentTime()));
             Gson gson = new Gson();

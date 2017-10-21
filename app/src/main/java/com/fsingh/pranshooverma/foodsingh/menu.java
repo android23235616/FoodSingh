@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MenuItemCompat;
@@ -675,9 +676,14 @@ if(local.metaData!=null) {
             startActivity(a);
 
         }else if(id==R.id.notifications){
-            Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(a);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(a);
+                }
+            },1000);
 
         }else if(id==R.id.favNav){
             Intent as=new Intent(this,menu_category_wise.class);

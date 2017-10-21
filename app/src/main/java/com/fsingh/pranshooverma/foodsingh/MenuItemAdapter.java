@@ -111,7 +111,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
 
         */
-
+        if(menu_category_wise.position==-1){
+            holder.fav.setVisibility(View.INVISIBLE);
+            holder.fav.setClickable(false);
+        }
 
 
         final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());

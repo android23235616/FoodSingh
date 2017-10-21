@@ -60,7 +60,7 @@
         <activity
             android:name=".menu"
             android:configChanges="orientation"
-            android:label="@string/title_activity_menu"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>

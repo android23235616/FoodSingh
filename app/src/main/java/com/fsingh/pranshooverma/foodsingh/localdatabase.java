@@ -13,6 +13,7 @@ import java.util.List;
 public class localdatabase {
     public static boolean loctioncheck = false, dataloaded = false;
     public static TextView notifmount;
+    public static int cache = 0;
     public static final String url[] = {
             "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,
             "https://static.pexels.com/photos/5317/food-salad-restaurant-person-medium.jpg",

@@ -41,6 +41,8 @@ public class NotificationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         clear = (TextView)findViewById(R.id.text);
 
+
+
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         recyclerView = (RecyclerView)findViewById(R.id.notificationRecycler);
         gson = new Gson();
@@ -48,10 +50,12 @@ public class NotificationActivity extends AppCompatActivity {
 
         if(tempJson.equals("")){
             Display("You Have No Notification");
+
         }else{
             notificationLists = gson.fromJson(tempJson,NotificationLists.class);
             notificationAdapter = new NotificationAdapter(notificationLists.getNotification(),this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setNestedScrollingEnabled(true);
             recyclerView.setAdapter(notificationAdapter);
             recyclerView.setNestedScrollingEnabled(true);
             notificationAdapter.notifyDataSetChanged();
@@ -63,12 +67,12 @@ public class NotificationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putString(constants.foodsinghNotif,"");
+                edit.putInt(constants.notifAmount,0);
+                localdatabase.notifications = 0;
                 edit.apply();
-                notificationAdapter = new NotificationAdapter(new ArrayList<NotificationItem>(),NotificationActivity.this);
-                recyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
-                recyclerView.setAdapter(notificationAdapter);
-                recyclerView.setNestedScrollingEnabled(true);
-                notificationAdapter.notifyDataSetChanged();
+                recreate();
+
+                //edit.putInt(constants.notifAmount,0);
             }
         });
 

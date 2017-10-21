@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.util.TypedValue;
@@ -42,8 +43,12 @@ public class pagerAdapter extends PagerAdapter {
         imageView = (ImageView)v.findViewById(R.id.view_pager_cover);
         Random rand = new Random();
 
-                Glide.with(parent.getContext()).load(database.BannerUrls.get(position%database.BannerUrls.size())).
-                    crossFade().into(imageView);
+               try{
+                   Glide.with(parent.getContext()).load(database.BannerUrls.get(position%database.BannerUrls.size())).
+                           crossFade().into(imageView);
+               }catch(Exception e){
+                imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.getResources(),R.drawable.logo7));
+               }
 
         Log.i("pager", "adapter has been called");
         parent.addView(v);

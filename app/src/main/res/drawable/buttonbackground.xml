@@ -14,7 +14,7 @@
         ></corners>
 
     <solid
-        android:color="@color/colorPrimary"
+        android:color="@color/text_color"
 
         ></solid>
 
