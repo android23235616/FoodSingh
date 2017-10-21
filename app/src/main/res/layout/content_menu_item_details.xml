@@ -4,12 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/toolbar_color"
+    android:background="@color/background_color_new"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fsingh.pranshooverma.foodsingh.menu_item_details"
-    tools:showIn="@layout/app_bar_menu_item_details">
+   >
 
-
+    <include layout="@layout/my_toolbar"
+        android:id="@+id/tt"/>
+<FrameLayout
+    android:layout_marginTop="10dp"
+    android:layout_below="@+id/tt"
+    android:id="@+id/f1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="match_parent"
@@ -19,12 +27,33 @@
         app:srcCompat="@drawable/foodsingh" />
 
     <TextView
-        android:id="@+id/item_name"
-        android:textSize="25dp"
         android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginLeft="190dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="monospace"
+        android:id="@+id/txt_unavailable"
+        android:text="Unavailable"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/buttonbackground"
+        android:layout_marginTop="130dp"
+        />
+
+</FrameLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/item_name"
+        android:textColor="@color/jhat"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/item_image"
+        android:maxEms="12"
+        android:layout_below="@+id/f1"
         android:text="TextView" />
 
 
@@ -34,7 +63,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_fav"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/item_image" />
+        android:layout_below="@+id/f1" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,10 +72,13 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/scrollView2">
     <TextView
-        android:id="@+id/textView6"
+        android:layout_marginTop="10dp"
+        android:id="@+id/descrption"
         android:layout_width="match_parent"
+
+        android:textColor="@color/text_color"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:textSize="30dp"
         android:text="This iubuscv bisdckbsdac b k sdbka k sib hdc" />
     </ScrollView>
 
@@ -56,8 +88,8 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:text="TextView"
-        android:layout_above="@+id/add_to_cart"
-        android:layout_alignStart="@+id/add_to_cart" />
+        android:layout_above="@+id/add_to_fav"
+        android:layout_alignStart="@+id/add_to_fav" />
 
 
 
@@ -93,7 +125,7 @@
         android:layout_toStartOf="@+id/item_quantity_slide" />
 
     <Button
-        android:id="@+id/add_to_cart"
+        android:id="@+id/add_to_fav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

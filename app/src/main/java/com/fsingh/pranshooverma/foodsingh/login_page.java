@@ -141,8 +141,6 @@ public class login_page extends AppCompatActivity {
         //Not required for current project
 //        Toast.makeText(this,token,Toast.LENGTH_LONG).show();
 
-        progress.setMessage("Checking Credentials");
-        progress.show();
 
          SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
 
@@ -301,10 +299,7 @@ public class login_page extends AppCompatActivity {
         StringRequest str=new StringRequest(Request.Method.POST, constants.get_details, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(progress.isShowing())
-                {
-                    progress.dismiss();
-                }
+
                // Display(response);
 
                 try {
