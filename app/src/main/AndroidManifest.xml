@@ -20,6 +20,7 @@
         <activity
             android:name=".Signup_OTP"
             android:configChanges="orientation"
+            android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,7 @@
         <activity
             android:name=".verifying_otp"
             android:configChanges="orientation"
+            android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +41,7 @@
         </activity>
         <activity
             android:name=".details"
+            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -49,6 +52,7 @@
         </activity>
         <activity
             android:name=".login_page"
+            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -60,8 +64,8 @@
         <activity
             android:name=".menu"
             android:configChanges="orientation"
-            android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
+            android:label=""
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,23 +76,24 @@
         <activity
             android:name=".menu_category_wise"
             android:configChanges="orientation"
-            android:label="@string/title_activity_menu_category_wise"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".cart"
             android:configChanges="orientation"
-            android:label="@string/title_activity_cart"
             android:screenOrientation="portrait"
+            android:label=""
             android:theme="@style/AppTheme" />
         <activity
             android:name=".place_order_activity"
             android:configChanges="orientation"
-            android:label="Place Order"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".FakeActivity"
+            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -100,18 +105,18 @@
         <activity
             android:name=".order_history"
             android:configChanges="orientation"
-            android:label="Order History"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Splash">
+        <activity android:name=".Splash" android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".OrderPlacedActivity">
+        <activity android:name=".CheckoutActivity" android:label="" />
+        <activity android:name=".OrderPlacedActivity" android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -120,25 +125,25 @@
         </activity>
         <activity
             android:name=".menu_item_details"
-            android:label="@string/title_activity_menu_item_details"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" android:label="" />
         <activity
             android:name=".Tracker"
-            android:label="@string/title_activity_tracker" />
+            android:label="" />
 
-        <service android:name=".FirebaseMessagingService">
+        <service android:name=".FirebaseMessagingService" android:label="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm">
+        <service android:name=".fcm" android:label="">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".about_us"></activity>
+        <activity android:name=".NotificationActivity" android:label=""></activity>
+        <activity android:name=".about_us" android:label=""></activity>
+        <activity android:name=".Support" android:label=""></activity>
     </application>
 
 </manifest>
