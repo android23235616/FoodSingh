@@ -168,6 +168,9 @@ public class Signup_OTP extends AppCompatActivity {
         password.setTypeface(t);
         password.setTypeface(t);
         TextView welcome = (TextView)findViewById(R.id.welcome);
-        welcome.setTypeface(t);
+
+        Typeface qw = Typeface.createFromAsset(getAssets(), "fonts/FREESCPT.TTF");
+        welcome.setTypeface(qw);
+
     }
 }

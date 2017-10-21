@@ -1,5 +1,6 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     private Context mContext;
     public static List<MenuItems> menuItems = new ArrayList<>();
+    MenuItems menuItem;
 
     Gson gson = new Gson();
 
@@ -42,24 +44,23 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     boolean check=false;
 
+    int p;
+
     ImageView plus,minus,fav,image;
 
     SharedPreferences store;
 
 
-    public MenuItemAdapter(Context mContext) {
-
-
-    }
 
 
 
-    public MenuItemAdapter(Context mContext, List<MenuItems> menuItems) {
+    public MenuItemAdapter(Context mContext, List<MenuItems> menuItems,int p) {
         this.mContext = mContext;
         this.menuItems = menuItems;
         this.mContext=mContext;
         this.gson = new Gson();
         this.store = mContext.getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        this.p = p;
         String tempJson = store.getString(constants.fav,"");
 
         if(!tempJson.equals("")){
@@ -68,6 +69,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         }
     }
 
+
+    private void refreshList(){
+
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -93,6 +98,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        DisplayList(FavItems);
         View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_category_menu,parent,false);
 
         ViewHolder vh=new ViewHolder(v);
@@ -105,21 +111,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
 
-        /*
-        String name=dish_name.get(position);
-        String rupees=dish_price.get(position);
-
-
-        */
         if(menu_category_wise.position==-1){
             holder.fav.setVisibility(View.INVISIBLE);
             holder.fav.setClickable(false);
         }
 
 
-        final MenuItems menuItem = menuItems.get(holder.getAdapterPosition());
+         menuItem = menuItems.get(holder.getAdapterPosition());
 
-        if(Exists(menuItem)){
+        if(Exists(menuItem)>-1){
             holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
         }else{
             holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_not_fav));
@@ -197,51 +197,101 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Intent s = new Intent(mContext, menu_item_details.class);
-                MenuItems item = menuItems.get(position);
+                MenuItems item = menuItems.get(holder.getAdapterPosition());
                 if(!holder.diprice.getText().toString().equals("NA")) {
                     Bundle b=new Bundle();
-                    MenuItems men=menuItems.get(position);
+                    MenuItems men=menuItems.get(holder.getAdapterPosition());
                     b.putString("item_name",men.getName());
                     b.putString("item_image",men.getImage());
                     b.putString("item_price",men.getPrice());
                     b.putParcelable("object",item);
                     b.putString("item_quantity",String.valueOf(men.getQuantity()));
-                    b.putInt("position",position);
+                    b.putInt("position",holder.getAdapterPosition());
+                    boolean isfav = false;
+
+                    MenuItems i = menuItems.get(holder.getAdapterPosition());
+                    if(Exists(i)>-1){
+                        isfav = true;
+                    }
+                    b.putBoolean("isfav", isfav);
+                    b.putParcelable("mainobject", item);
+                    b.putInt("mainposition",p);
+                    b.putInt("avail",0);
                     s.putExtras(b);
                     mContext.startActivity(s);
 
+                    ((Activity)mContext).finish();
+                }else {
+                    Bundle b=new Bundle();
+                    MenuItems men=menuItems.get(holder.getAdapterPosition());
+                    b.putString("item_name",men.getName());
+                    b.putString("item_image",men.getImage());
+                    b.putString("item_price",men.getPrice());
+                    b.putParcelable("object",item);
+                    b.putString("item_quantity",String.valueOf(men.getQuantity()));
+                    b.putInt("position",holder.getAdapterPosition());
+                    b.putInt("avail",1);
+                    boolean isfav = false;
+
+                    MenuItems i = menuItems.get(holder.getAdapterPosition());
+                    if(Exists(i)>-1){
+                        isfav = true;
+                    }
+                    b.putBoolean("isfav", isfav);
+                    b.putParcelable("mainobject", item);
+                    b.putInt("mainposition",p);
+                    s.putExtras(b);
+                    mContext.startActivity(s);
+
+                    ((Activity)mContext).finish();
                 }
-               mContext.startActivity(s);
+              // mContext.startActivity(s);
             }
         });
 
     holder.fav.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(Exists(menuItem)){
+            MenuItems item = menuItems.get(holder.getAdapterPosition());
+
+             if(Exists(item)>-1){
                 holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_not_fav));
-                FavItems.remove(menuItem);
+                FavItems.remove(Exists(item));
+                Log.i("favvvv","exists");
             }else{
+                Log.i("favvvv","called");
                 holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
-                FavItems.add(menuItem);
+                FavItems.add(item);
             }
+            DisplayList(FavItems);
             FavouritesList f = new FavouritesList(FavItems);
             String tempJson = gson.toJson(f);
             SharedPreferences.Editor edit = store.edit();
             edit.putString(constants.fav,tempJson);
             edit.apply();
+
         }
     });
     }
 
 
-    private boolean Exists(MenuItems item){
+    private void DisplayList(List<MenuItems> m){
+        for(int i=0; i<m.size(); i++){
+            Log.i("activityhere"+i, m.get(i).getName()+" , "+m.get(i).getId());
+        }
+    }
+
+
+    private int Exists(MenuItems item){
+        refreshList();
         for(int i=0; i<FavItems.size(); i++){
-            if(FavItems.get(i).getId().equals(item.getId())){
-                return true;
+            if(FavItems.get(i).getId().equals(item.getId())
+                    &&FavItems.get(i).getName().equals(item.getName())
+                    ){
+                return i;
             }
         }
-        return false;
+        return -1;
 
 
     }
