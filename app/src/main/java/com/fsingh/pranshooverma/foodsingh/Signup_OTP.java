@@ -48,9 +48,9 @@ public class Signup_OTP extends AppCompatActivity {
                 String pass=password.getText().toString();
                 String na=name.getText().toString();
                 String ema=email.getText().toString();
+                Boolean status=isEmailValid(ema);
 
-
-                if(mob.length()==10 & pass.length()>=4 & na.length()>1 & ema.length()>4 )
+                if(mob.length()==10 & pass.length()>=4 & na.length()>1 & status )
                 {
                     if(checking_net_permission())
                     {
@@ -76,7 +76,7 @@ public class Signup_OTP extends AppCompatActivity {
 
                 }
                 else {
-                    Display("Give your Mobile No. WITHOUT 91 OR 0 & password should contain minimum 4 characters");
+                    Display("Give your Mobile No. WITHOUT 91 OR 0 & password should contain minimum 4 characters,and Proper Email Address");
                 }
             }
         });
@@ -172,5 +172,8 @@ public class Signup_OTP extends AppCompatActivity {
         Typeface qw = Typeface.createFromAsset(getAssets(), "fonts/FREESCPT.TTF");
         welcome.setTypeface(qw);
 
+    }
+    boolean isEmailValid(CharSequence emai) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(emai).matches();
     }
 }

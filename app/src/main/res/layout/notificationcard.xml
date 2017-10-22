@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_marginBottom="7dp"
     android:padding="5dp"
-    android:background="@color/white" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -14,7 +14,6 @@
 
         android:layout_width="match_parent"
         android:id="@+id/l1"
-        
         android:layout_height="wrap_content">
 
 
@@ -24,6 +23,7 @@
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:id="@+id/image1"
+            android:alpha="0.8"
             android:src="@drawable/whatsapp"
             />
 
@@ -90,6 +90,7 @@
        <TextView
            android:gravity="left"
            android:id="@+id/time1"
+           android:textStyle="bold"
            android:fontFamily="monospace"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -124,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:id="@+id/image2"
+            android:alpha="0.8"
             android:scaleType="centerCrop"
             android:background="@drawable/whatsapp"
             android:src="@drawable/whatsapp"
@@ -195,6 +197,7 @@
             android:gravity="left"
             android:id="@+id/time2"
             android:fontFamily="monospace"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

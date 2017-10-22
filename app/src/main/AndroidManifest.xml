@@ -20,7 +20,6 @@
         <activity
             android:name=".Signup_OTP"
             android:configChanges="orientation"
-            android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +30,6 @@
         <activity
             android:name=".verifying_otp"
             android:configChanges="orientation"
-            android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +39,6 @@
         </activity>
         <activity
             android:name=".details"
-            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -52,7 +49,6 @@
         </activity>
         <activity
             android:name=".login_page"
-            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -65,7 +61,6 @@
             android:name=".menu"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:label=""
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,24 +71,20 @@
         <activity
             android:name=".menu_category_wise"
             android:configChanges="orientation"
-            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".cart"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:label=""
             android:theme="@style/AppTheme" />
         <activity
             android:name=".place_order_activity"
             android:configChanges="orientation"
-            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".FakeActivity"
-            android:label=""
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -105,7 +96,6 @@
         <activity
             android:name=".order_history"
             android:configChanges="orientation"
-            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity android:name=".Splash" android:label="">
@@ -115,15 +105,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckoutActivity" android:label="" />
-        <activity android:name=".OrderPlacedActivity" android:label="">
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".OrderPlacedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".set_password" android:label="">
+        <activity android:name=".set_password">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".web_view">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -131,21 +128,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".web_view" android:label="">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".menu_item_details"
-            android:theme="@style/AppTheme" android:label="" />
+            android:theme="@style/AppTheme"  />
         <activity
             android:name=".Tracker"
             android:label="" />
 
-        <service android:name=".FirebaseMessagingService" android:label="">
+        <service android:name=".FirebaseMessagingService" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -156,10 +146,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".NotificationActivity" android:label=""></activity>
-        <activity android:name=".about_us" android:label=""></activity>
-        <activity android:name=".Support" android:label=""></activity>
-
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".about_us"></activity>
+        <activity android:name=".Support"></activity>
     </application>
 
 </manifest>

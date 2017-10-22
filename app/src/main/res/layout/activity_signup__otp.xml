@@ -29,7 +29,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="110dp"
             android:id="@+id/welcome"
-            android:textStyle="normal"
+            android:textStyle="bold"
             android:fontFamily="serif"
             android:textColor="#ffffff"
             android:text="Sign Up"/>
@@ -41,9 +41,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:alpha="1"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        >
 
 
         <EditText
@@ -197,11 +197,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="2dp"
             android:alpha="0.9"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/feather"
             android:layout_marginEnd="41dp"
             android:layout_alignParentTop="true"
-            android:layout_alignEnd="@+id/password"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="16dp" />
 
         <!-- Link to Login Screen -->
 

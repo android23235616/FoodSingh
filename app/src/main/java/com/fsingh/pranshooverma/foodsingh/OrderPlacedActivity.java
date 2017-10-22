@@ -18,6 +18,8 @@ public class OrderPlacedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_placed);
+
+
         tvOrderID = (TextView) findViewById(R.id.order_id);
         tvOrderAmount = (TextView) findViewById(R.id.order_amount);
         btnHome = (Button) findViewById(R.id.btn_home);

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,9 +115,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
                     holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
-                    if(!localdatabase.cartList.contains(item)){
+                    /*if(!localdatabase.cartList.contains(item)){
                         localdatabase.cartList.add(item);
-                    }
+                    } */
                     cart.calculateTotal();
                 }
 
@@ -134,7 +135,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     holder.item_quantity.setText(String.valueOf(quantity));
                     holder.total_diprice.setText("₹"+Integer.parseInt(item.getPrice())*quantity);
                     if(quantity == 0){
-                        localdatabase.cartList.remove(item);
+                        //localdatabase.cartList.remove(item);
+                        int pos = checkCart(item);
+                        if(pos != -1){
+                            localdatabase.cartList.remove(pos);
+                        }
                         cart.adapter.notifyDataSetChanged();
                     }
                     cart.calculateTotal();
@@ -146,7 +151,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 item.setQuantity(0);
-                localdatabase.cartList.remove(item);
+                Toast.makeText(mContext, ""+item.getQuantity(), Toast.LENGTH_SHORT).show();
+                //localdatabase.cartList.remove(item);
+                int pos = checkCart(item);
+                if(pos != -1){
+                    localdatabase.cartList.remove(pos);
+                }
+                cart.sidesAdapter.notifyDataSetChanged();
                 cart.adapter.notifyDataSetChanged();
                 cart.calculateTotal();
             }
@@ -256,7 +267,19 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
     public int getItemCount() {
         return menuItems.size();
     }
+
+    private int checkCart(MenuItems item){
+        for(int i=0; i<localdatabase.cartList.size(); i++){
+            if(localdatabase.cartList.get(i).getId().equals(item.getId())
+                    && localdatabase.cartList.get(i).getName().equals(item.getName())
+                    ){
+                return i;
+            }
+        }
+        return -1;
+    }
 }
+
 
 
 ///adlasdjlakdjlaskdkj

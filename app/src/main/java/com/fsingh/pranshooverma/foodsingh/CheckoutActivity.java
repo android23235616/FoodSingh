@@ -3,6 +3,7 @@ package com.fsingh.pranshooverma.foodsingh;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,9 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
+        addBottomToolbar();
+
         etComments = (EditText) findViewById(R.id.et_comments);
         etLane1 = (EditText) findViewById(R.id.et_lane1);
         etLane2 = (EditText) findViewById(R.id.et_lane2);
@@ -268,4 +273,58 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
     }
+
+    void addBottomToolbar(){
+        TextView tvHome,tvOrders, tvSupport;
+        LinearLayout home, orders, support;
+
+        tvHome = (TextView) findViewById(R.id.txt_home);
+        tvOrders = (TextView) findViewById(R.id.txt_orders);
+        tvSupport = (TextView) findViewById(R.id.txt_support);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/COPRGTL.TTF");
+        tvHome.setTypeface(tf);
+        tvOrders.setTypeface(tf);
+        tvSupport.setTypeface(tf);
+
+        home = (LinearLayout) findViewById(R.id.btm_home);
+        orders = (LinearLayout) findViewById(R.id.btm_orders);
+        support = (LinearLayout) findViewById(R.id.btm_support);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CheckoutActivity.this, menu.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CheckoutActivity.this, order_history.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CheckoutActivity.this, Support.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+    }
+
 }

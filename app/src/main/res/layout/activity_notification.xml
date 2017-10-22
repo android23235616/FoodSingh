@@ -58,9 +58,9 @@ android:visibility="gone"
 </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_marginTop="510dp"
+        android:layout_marginTop="549dp"
         android:scaleType="center"
-        android:layout_marginLeft="300dp"
+        android:layout_marginLeft="310dp"
         android:id="@+id/new_clear"
         android:layout_width="40dp"
         app:srcCompat="@drawable/ic_clear_all_black_24dp"

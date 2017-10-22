@@ -59,7 +59,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     RecyclerView recycler,sides;
     RecyclerView.LayoutManager layout;
-    Sides_Adapter sidesAdapter;
+    public  static Sides_Adapter sidesAdapter;
     Toolbar toolbar;
     static Button checkout;
     SharedPreferences shared;
@@ -102,6 +102,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         ///////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -112,7 +113,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        addBottomToolbar();
         ////////////////////////////////////////////////////////////////
 
         //CODING CODING CODING
@@ -204,7 +205,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                         String image = jo.getString("image");
                         //String status = jo.getString("status");
                         String status = "live";
-                        MenuItems item = new MenuItems(id, name, category, price, image, status);
+                        String detail = "NA";
+                        MenuItems item = new MenuItems(id, name, category, price, image, status, detail);
                         localdatabase.sidesList.add(item);
 
                     }
@@ -495,6 +497,59 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void addBottomToolbar(){
+        TextView tvHome,tvOrders, tvSupport;
+        LinearLayout home, orders, support;
+
+        tvHome = (TextView) findViewById(R.id.txt_home);
+        tvOrders = (TextView) findViewById(R.id.txt_orders);
+        tvSupport = (TextView) findViewById(R.id.txt_support);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/COPRGTL.TTF");
+        tvHome.setTypeface(tf);
+        tvOrders.setTypeface(tf);
+        tvSupport.setTypeface(tf);
+
+        home = (LinearLayout) findViewById(R.id.btm_home);
+        orders = (LinearLayout) findViewById(R.id.btm_orders);
+        support = (LinearLayout) findViewById(R.id.btm_support);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(cart.this, menu.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(cart.this, order_history.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(cart.this, Support.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
     }
     //sefgdhtgfjygh
 

@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/grp_place_order"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:textColor="#ffffff"
         android:visibility="visible"
         android:background="@color/colorPrimary"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/grp_place_order"
         android:id="@+id/grp_comments"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -85,7 +85,7 @@
         android:id="@+id/txt_address"
         android:layout_below="@+id/grp_comments"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         />
 
     <LinearLayout
@@ -95,7 +95,7 @@
         android:layout_marginStart="16dp"
         android:id="@+id/grp_address_type"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         >
         <Button
             android:layout_width="match_parent"
@@ -223,7 +223,7 @@
         android:id="@+id/txt_payment"
         android:layout_below="@+id/grp_address"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         />
 
     <LinearLayout
@@ -233,7 +233,7 @@
         android:layout_marginStart="16dp"
         android:id="@+id/grp_payment_type"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         >
         <Button
             android:layout_width="match_parent"
@@ -258,6 +258,14 @@
             />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btm_toolbar"
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/bottom_toolbar"/>
+    </RelativeLayout>
 
 
 </RelativeLayout>
