@@ -90,7 +90,12 @@ public class NotificationActivity extends AppCompatActivity {
                 edit.putString(constants.foodsinghNotif,"");
                 edit.putInt(constants.notifAmount,0);
                 localdatabase.notifications = 0;
+                localdatabase.notifmount.setVisibility(View.INVISIBLE);
                 edit.apply();
+                Intent i = new Intent();
+                i.setAction(constants.broaadcastReceiverMenu);
+                i.putExtra("data",0);
+                sendBroadcast(i);
                 recreate();
 
             }
@@ -117,23 +122,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void UpdateUi(){
-       /* String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
 
-        if(tempJson.equals("")){
-            Display("You Have No Notification");
-
-        }else{
-            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
-            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
-            List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
-            Collections.reverse(shallowCopy);
-            notificationAdapter = new NotificationAdapter(shallowCopy,this);
-           // notificationAdapter = new NotificationAdapter(notificationLists.getNotification(),this);
-
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-            notificationAdapter.notifyDataSetChanged();*/
 
         recreate();
     }
@@ -145,6 +134,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);

@@ -197,6 +197,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
         Intent menu = new Intent();
         menu.setAction(constants.broaadcastReceiverMenu);
+        menu.putExtra("data",localdatabase.notifications);
         sendBroadcast(menu);
         Intent notification = new Intent();
         notification.setAction(constants.broadCastReceiverNotification);
