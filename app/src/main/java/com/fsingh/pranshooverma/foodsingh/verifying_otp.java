@@ -331,7 +331,7 @@ public class verifying_otp extends AppCompatActivity {
         Typeface ta=Typeface.createFromAsset(getAssets(),"fonts/FREESCPT.TTF");
         t1.setTypeface(ta,ta.BOLD);
 
-        Typeface tb=Typeface.createFromAsset(getAssets(),"fonts/COPRGTL.TTF");
+        Typeface tb=Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         resend.setTypeface(tb);
         verify.setTypeface(tb);
         otp.setTypeface(tb);
