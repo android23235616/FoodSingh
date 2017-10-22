@@ -93,7 +93,7 @@ public class NotificationActivity extends AppCompatActivity {
                 localdatabase.notifmount.setVisibility(View.INVISIBLE);
                 edit.apply();
                 Intent i = new Intent();
-                i.setAction(constants.broaadcastReceiverMenu);
+                i.setAction(constants.menu2BroadcastReceiver);
                 i.putExtra("data",0);
                 sendBroadcast(i);
                 recreate();

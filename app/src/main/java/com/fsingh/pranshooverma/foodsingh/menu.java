@@ -77,7 +77,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     List<String> categories=new ArrayList<>();
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
-    BroadcastReceiver broadcastReceiver, broadcastReceiver2;
+    BroadcastReceiver broadcastReceiver;
     localdatabase local;
     ImageButton next, back;
 
@@ -92,6 +92,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     AppBarLayout appBarLayout;
     public static int width;
     public static TextView cartitemcount1;
+    View actionView;
     boolean swipe = false;
     RecyclerView.ItemDecoration itemDecoration;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -291,16 +292,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount.setVisibility(View.INVISIBLE);
-                int number = intent.getIntExtra("data",0);
-                if(number==0){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
-                }else{
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(number+"");
-                }
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
-                Log.i("broadcastreceiver1", localdatabase.notifications+"");
+
+                        localdatabase.notifmount.setVisibility(View.VISIBLE);
+                        localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
 
             }
 
@@ -309,22 +312,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction(constants.menu2BroadcastReceiver);
-        broadcastReceiver2 = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount.setVisibility(View.INVISIBLE);
-                int number = intent.getIntExtra("data",0);
-                if(number==0){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
-                }else{
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(number+"");
-                }
-                Log.i("broadcastreceiver2", localdatabase.notifications+"");
-            }
-        };
+
         registerReceiver(broadcastReceiver,intentFilter);
-        registerReceiver(broadcastReceiver2,intentFilter2);
+        registerReceiver(broadcastReceiver,intentFilter2);
     }
 
 
@@ -583,7 +573,7 @@ if(local.metaData!=null) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
+         actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
@@ -755,9 +745,8 @@ if(local.metaData!=null) {
         super.onDestroy();
         if(broadcastReceiver!=null){
             unregisterReceiver(broadcastReceiver);
+            Log.i("getting unregistered","");
         }
-        if(broadcastReceiver2!=null){
-            unregisterReceiver(broadcastReceiver2);
-        }
+
     }
 }
