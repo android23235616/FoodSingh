@@ -123,23 +123,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       // navigationView.getBackground().setAlpha(122);
-
-        //manipulate navigation drawer
-
          manipulatenavigationdrawer();
-
-
-        ////////////////////////
-
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
             MenuItem mi = m.getItem(i);
-
-            //for aapplying a font to subMenu ...
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu!=null && subMenu.size() >0 ) {
                 for (int j=0; j <subMenu.size();j++) {
@@ -147,8 +136,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     applyFontToMenuItem(subMenuItem);
                 }
             }
-
-            //the method we have create in activity
             applyFontToMenuItem(mi);
         }
 
@@ -198,7 +185,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
             }
         });
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,7 +299,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     localdatabase.notifmount.setVisibility(View.VISIBLE);
                     localdatabase.notifmount.setText(number+"");
                 }
+
+                Log.i("broadcastreceiver1", localdatabase.notifications+"");
+
             }
+
+
         };
 
         IntentFilter intentFilter2 = new IntentFilter();
@@ -329,6 +320,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     localdatabase.notifmount.setVisibility(View.VISIBLE);
                     localdatabase.notifmount.setText(number+"");
                 }
+                Log.i("broadcastreceiver2", localdatabase.notifications+"");
             }
         };
         registerReceiver(broadcastReceiver,intentFilter);
