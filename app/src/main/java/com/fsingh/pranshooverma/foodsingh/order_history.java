@@ -31,6 +31,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +98,7 @@ Typeface tf1;
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        addBottomToolbar();
     /////////////////////////////////////////////////////////////////////////////////////////
         //coding coding coding
 
@@ -439,4 +441,58 @@ manipulatenavigationdrawer();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    void addBottomToolbar(){
+        TextView tvHome,tvOrders, tvSupport;
+        LinearLayout home, orders, support;
+
+        tvHome = (TextView) findViewById(R.id.txt_home);
+        tvOrders = (TextView) findViewById(R.id.txt_orders);
+        tvSupport = (TextView) findViewById(R.id.txt_support);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/COPRGTL.TTF");
+        tvHome.setTypeface(tf);
+        tvOrders.setTypeface(tf);
+        tvSupport.setTypeface(tf);
+
+        home = (LinearLayout) findViewById(R.id.btm_home);
+        orders = (LinearLayout) findViewById(R.id.btm_orders);
+        support = (LinearLayout) findViewById(R.id.btm_support);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(order_history.this, menu.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(order_history.this, order_history.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(order_history.this, Support.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+    }
+
 }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,8 @@ public class Tracker extends AppCompatActivity {
         RemoveTop();
 
         setContentView(R.layout.orders);
+
+        addBottomToolbar();
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
         toolbarText = (TextView)findViewById(R.id.toolbarText);
@@ -316,4 +319,58 @@ public class Tracker extends AppCompatActivity {
 
 
     }
+
+    void addBottomToolbar(){
+        TextView tvHome,tvOrders, tvSupport;
+        LinearLayout home, orders, support;
+
+        tvHome = (TextView) findViewById(R.id.txt_home);
+        tvOrders = (TextView) findViewById(R.id.txt_orders);
+        tvSupport = (TextView) findViewById(R.id.txt_support);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/COPRGTL.TTF");
+        tvHome.setTypeface(tf);
+        tvOrders.setTypeface(tf);
+        tvSupport.setTypeface(tf);
+
+        home = (LinearLayout) findViewById(R.id.btm_home);
+        orders = (LinearLayout) findViewById(R.id.btm_orders);
+        support = (LinearLayout) findViewById(R.id.btm_support);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Tracker.this, menu.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Tracker.this, order_history.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Tracker.this, Support.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+    }
+
 }
