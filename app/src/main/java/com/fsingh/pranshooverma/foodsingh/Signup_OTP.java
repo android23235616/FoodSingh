@@ -173,7 +173,7 @@ public class Signup_OTP extends AppCompatActivity {
         welcome.setTypeface(qw);
 
     }
-    boolean isEmailValid(CharSequence email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    boolean isEmailValid(CharSequence emai) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(emai).matches();
     }
 }
