@@ -97,36 +97,40 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
                    if(old_pa.equals(old_password_check))
                    {
-                       if(checking_net_permission())
-                       {
-                           String n=name.getText().toString();
-                           String e=email.getText().toString();
-                           String np=new_password.getText().toString();
-                           if((np.length()<4 & np.length()>0) || e.length()<=4 || n.length()<=1)
+                           if(checking_net_permission())
                            {
-                               Display("Kindly give proper details");
-                           }
-                            if(np.length()==0 & e.length()>=4 & n.length()>=1)
-                           {
-                               np=old_password_check;
-                               Display("Your password will be same");
-                            upudate_to_deb(n,e,np);
-                           }
-                           if(np.length()!=0 & np.length()>=4 & e.length()>=4 & n.length()>=1)
-                           {
-                               upudate_to_deb(n,e,np);
-                           }
+                               String n=name.getText().toString();
+                               String e=email.getText().toString();
+                               String np=new_password.getText().toString();
+                               if(isEmailValid(e)) {
+                                   if ((np.length() < 4 & np.length() > 0) || e.length() <= 4 || n.length() <= 1) {
+                                       Display("Kindly give proper details");
+                                   }
+                                   if (np.length() == 0 & e.length() >= 4 & n.length() >= 1) {
+                                       np = old_password_check;
+                                       Display("Your password will be same");
+                                       upudate_to_deb(n, e, np);
+                                   }
+                                   if (np.length() != 0 & np.length() >= 4 & e.length() >= 4 & n.length() >= 1) {
+                                       upudate_to_deb(n, e, np);
+                                   }
+                               }
+                               else {
+                                   Display("Please enter a valid email address");
+                               }
 
-                       }
-                       else
-                       {
-                           Display("You dont have Internet connection ,cant make changes");
-                       }
+                           }
+                           else
+                           {
+                               Display("You dont have Internet connection ,cant make changes");
+                           }
                    }
                    else
                    {
                        Display("Your Current Password is Incorrect");
                    }
+
+
 
             }
         });
@@ -510,5 +514,9 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    boolean isEmailValid(CharSequence emai) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(emai).matches();
     }
 }
