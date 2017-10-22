@@ -41,6 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         clear = (TextView)findViewById(R.id.text);
         floatingActionButton = (android.support.design.widget.FloatingActionButton)findViewById(R.id.new_clear);
 
