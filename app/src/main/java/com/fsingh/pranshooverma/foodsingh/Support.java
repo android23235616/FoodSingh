@@ -1,5 +1,6 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ public class Support extends AppCompatActivity {
     private WebView mWebView;
     private Random rand = new Random();
     private int value = rand.nextInt(10000);
+    ProgressDialog progress;
 
 
     @Override
@@ -30,12 +32,28 @@ public class Support extends AppCompatActivity {
         setContentView(R.layout.activity_support);
 
         mWebView = (WebView) findViewById(R.id.support_web);
+        progress=new ProgressDialog(this);
+        progress.setMessage("Loading...");
+        progress.setCancelable(false);
 
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        mWebView.setWebViewClient(new myWebClient());
+        mWebView.setWebViewClient(new myWebClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                progress.show();
+            }
+        });
 
 
      //   mWebView.loadUrl("axuip.foodsingh.com/login.php");
