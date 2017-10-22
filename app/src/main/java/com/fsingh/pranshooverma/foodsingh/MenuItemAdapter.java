@@ -156,14 +156,18 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         holder.pl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MenuItems item = menuItems.get(holder.getAdapterPosition());
+                MenuItems item = menuItems.get(position);
                 if (!holder.diprice.getText().toString().equals("NA") && status.equals("live")) {
                     int quantity = item.getQuantity();
                     quantity++;
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
-                    if (!localdatabase.cartList.contains(item)) {
+                    if (checkCart(item) == -1) {
                         localdatabase.cartList.add(item);
+                        Toast.makeText(mContext, "Not Found", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
                     }
 
                     menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
@@ -184,7 +188,11 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     item.setQuantity(quantity);
                     holder.item_quantity.setText(String.valueOf(quantity));
                     if (quantity == 0) {
-                        localdatabase.cartList.remove(item);
+                        //localdatabase.cartList.remove(item);
+                        int pos = checkCart(item);
+                        if(pos != -1){
+                            localdatabase.cartList.remove(pos);
+                        }
                     }
 
                     menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
@@ -294,6 +302,17 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         return -1;
 
 
+    }
+
+    private int checkCart(MenuItems item){
+        for(int i=0; i<localdatabase.cartList.size(); i++){
+            if(localdatabase.cartList.get(i).getId().equals(item.getId())
+                    && localdatabase.cartList.get(i).getName().equals(item.getName())
+                    ){
+                return i;
+            }
+        }
+        return -1;
     }
 
 

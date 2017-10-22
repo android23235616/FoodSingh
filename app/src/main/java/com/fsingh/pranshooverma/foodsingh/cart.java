@@ -59,7 +59,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     RecyclerView recycler,sides;
     RecyclerView.LayoutManager layout;
-    Sides_Adapter sidesAdapter;
+    public  static Sides_Adapter sidesAdapter;
     Toolbar toolbar;
     static Button checkout;
     SharedPreferences shared;
@@ -102,6 +102,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         ///////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -46,6 +46,8 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
+
         etComments = (EditText) findViewById(R.id.et_comments);
         etLane1 = (EditText) findViewById(R.id.et_lane1);
         etLane2 = (EditText) findViewById(R.id.et_lane2);

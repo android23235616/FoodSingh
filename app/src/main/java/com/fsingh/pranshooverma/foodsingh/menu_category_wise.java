@@ -472,7 +472,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         MenuItemAdapter adapter = null;
 
         if(position!=-1) {
-            List<MenuItems> menuItems = localdatabase.masterList.get(position).getMenuList();
+
+            List<MenuItems> menuItems = localdatabase.masterList.get(checkMaster(category)).getMenuList();
              adapter = new MenuItemAdapter(this, menuItems,position);
         }else{
 
@@ -501,6 +502,15 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         //Toast.makeText(this, ""+Splash.masterMenuItems.size(), Toast.LENGTH_LONG).show();
         //Toast.makeText(this, ""+localdatabase.masterList.get(position).getMenuList(), Toast.LENGTH_LONG).show();
 
+    }
+
+    private int checkMaster(String category){
+        for(int i=0; i<localdatabase.masterList.size(); i++){
+            if(localdatabase.masterList.get(i).getName().equals(category)){
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
