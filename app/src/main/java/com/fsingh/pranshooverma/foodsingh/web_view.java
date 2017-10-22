@@ -1,14 +1,23 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +42,9 @@ public class web_view extends AppCompatActivity
     String url;
     ProgressDialog progress;
     public static TextView cartitemcount1;
+    NavigationView navigationView;
+    View actionView;
+    BroadcastReceiver broadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +62,7 @@ public class web_view extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         //CODING
@@ -87,38 +99,89 @@ public class web_view extends AppCompatActivity
 
             browser.loadUrl(url);
         }
-
-    }
-
-
-
-    private void initialize() {
-        browser=(WebView)findViewById(R.id.webView);
-        Bundle b=getIntent().getExtras();
-        url=b.getString("url");
-        progress=new ProgressDialog(this);
-        progress.setCancelable(false);
-    }
-    private Boolean checking_net_permission() {
-        final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-        if(browser.canGoBack())
-        {
-            browser.goBack();
+        SetupBroadcastReceiver();
+        navigationView.setNavigationItemSelectedListener(this);
+        manipulatenavigationdrawer();
+        Menu m = navigationView.getMenu();
+        for (int i=0;i<m.size();i++) {
+            MenuItem mi = m.getItem(i);
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu!=null && subMenu.size() >0 ) {
+                for (int j=0; j <subMenu.size();j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+            applyFontToMenuItem(mi);
         }
     }
+
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+
+    }
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        TextView location = (TextView)v.findViewById(R.id.location);
+        location.setTypeface(tp);
+        location.setText(localdatabase.city);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
+    }
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+
+        };
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+
+        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver,intentFilter2);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,6 +223,37 @@ public class web_view extends AppCompatActivity
         return true;
     }
 
+
+
+    private void initialize() {
+        browser=(WebView)findViewById(R.id.webView);
+        Bundle b=getIntent().getExtras();
+        url=b.getString("url");
+        progress=new ProgressDialog(this);
+        progress.setCancelable(false);
+    }
+    private Boolean checking_net_permission() {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+        if(browser.canGoBack())
+        {
+            browser.goBack();
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -178,31 +272,104 @@ public class web_view extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        SharedPreferences shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.menu) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.cart) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent a=new Intent(getApplicationContext(),cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.orders) {
+            Intent a=new Intent(getApplicationContext(),order_history.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.SignOut) {
+
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(getApplicationContext(),login_page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+
 
         }
+        else if(id==R.id.details)
+        {
+            Intent a=new Intent(getApplicationContext(),details.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
+        }else if(id==R.id.notifications){
+            final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(a);
+                }
+            },1000);
+
+        }else if(id==R.id.favNav){
+            Intent as=new Intent(this,menu_category_wise.class);
+            Bundle a=new Bundle();
+            a.putString("category","Favourites");
+            a.putInt("position", -1);
+            as.putExtras(a);
+            as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(as);
+        } else if (id == R.id.AboutUs) {
+            Intent a = new Intent(getApplicationContext(), about_us.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if (id == R.id.Support) {
+            Intent a = new Intent(getApplicationContext(), Support.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if(id==R.id.share)
+        {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "FoodSingh");
+                String sAux = "\nLet me recommend you this application\n\n";
+                sAux = sAux + "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh&hl=en\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void RemoveTop(){
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null){
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
 }

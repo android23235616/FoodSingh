@@ -1,8 +1,10 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -15,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.SubMenu;
 import android.view.View;
@@ -60,7 +63,10 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     RecyclerView recyclerView;
     List<String> dish_name=new ArrayList<>();
     List<String> dish_price=new ArrayList<>();
+    View actionView;
+    BroadcastReceiver broadcastReceiver;
     boolean nav=true;
+    public static TextView cartitemcount1;
     NavigationView navigationView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -148,6 +154,41 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
         populateUI();
 
+        SetupBroadcastReceiver();
+    }
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+
+        };
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+
+        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver,intentFilter2);
     }
 
     private void manipulatenavigationdrawer() {
@@ -379,25 +420,45 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_category_wise, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+
         MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
-        cartitemcount=(TextView) actionView.findViewById(R.id.cart_badge);
+        actionView= MenuItemCompat.getActionView(menuItem);
+        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
-        cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
 
-        actionView.setOnClickListener(new View.OnClickListener() {
+        cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
                 startActivity(ssd);
-                finish();
+            }
+        });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(menu_category_wise.this, NotificationActivity.class));
             }
         });
 
 
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -511,6 +572,13 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             }
         }
         return -1;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null)
+            unregisterReceiver(broadcastReceiver);
     }
 
 }

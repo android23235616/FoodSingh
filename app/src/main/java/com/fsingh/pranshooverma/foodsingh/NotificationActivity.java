@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,7 +116,14 @@ public class NotificationActivity extends AppCompatActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                UpdateUi();
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdateUi();
+                    }
+                },1000);
+                Log.i("checkerbroadacast", "called");
 
             }
         };
@@ -124,7 +133,24 @@ public class NotificationActivity extends AppCompatActivity {
     private void UpdateUi(){
 
 
-        recreate();
+        //recreate();
+        String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
+
+        if(tempJson.equals("")){
+            Display("You Have No Notification");
+
+        }else{
+            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
+            List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
+            Collections.reverse(shallowCopy);
+            notificationAdapter = new NotificationAdapter(shallowCopy,this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setNestedScrollingEnabled(false);
+            recyclerView.setAdapter(notificationAdapter);
+
+            notificationAdapter.notifyDataSetChanged();
+
+        }
     }
 
     private void RemoveTop(){

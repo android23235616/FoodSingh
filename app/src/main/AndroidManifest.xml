@@ -129,18 +129,25 @@
         </activity>
 
         <activity
+            android:label=""
             android:name=".menu_item_details"
             android:theme="@style/AppTheme"  />
         <activity
             android:name=".Tracker"
             android:label="" />
 
-        <service android:name=".FirebaseMessagingService" >
+        <service android:name=".FirebaseMessagingService"
+            android:enabled="true"
+            android:stopWithTask="false"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm" android:label="">
+        <service android:name=".fcm" android:label=""
+            android:exported="true"
+            android:stopWithTask="false"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

@@ -32,6 +32,7 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     List<NotificationItem> notificationItems = new ArrayList<>();
     Context c;
+     NotificationItem item=null;
    // List<NotificationItem> notificationItemsUnread = new ArrayList<>();
 
     public NotificationAdapter(List<NotificationItem> mainList,Context c){
@@ -49,6 +50,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
@@ -86,7 +88,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final NotificationItem item = notificationItems.get(holder.getAdapterPosition());
+        item= notificationItems.get(holder.getAdapterPosition());
 
 
         if(item.getNotificationType().equals("1")){
@@ -138,11 +140,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.knowmore2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    item = notificationItems.get(holder.getAdapterPosition());
                    item.setRead(true);
                     notificationItems.remove(item);
                     notificationItems.add(holder.getAdapterPosition(),item);
                     save();
                     decrement();
+                    holder.body1.setTypeface(null, Typeface.NORMAL);
+                    //holder.title2.setTypeface(null, Typeface.NORMAL);
+                    holder.body2.setTypeface(null, Typeface.NORMAL);
 
                     String url=item.getUrl();
                     Bundle a=new Bundle();
@@ -160,6 +166,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 notificationItems.add(holder.getAdapterPosition(),item);
                 save();
                 decrement();
+                holder.body1.setTypeface(null, Typeface.NORMAL);
+                //holder.title2.setTypeface(null, Typeface.NORMAL);
+                holder.body2.setTypeface(null, Typeface.NORMAL);
                 String url=item.getUrl();
                 Bundle a=new Bundle();
                 a.putString("url",url);

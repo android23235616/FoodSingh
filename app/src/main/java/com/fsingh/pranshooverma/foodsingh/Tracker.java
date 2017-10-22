@@ -2,14 +2,19 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,8 +49,10 @@ public class Tracker extends AppCompatActivity {
     ImageView trackimage;
     Typeface tf,tf1;
     TextView toolbarText;
+    View actionView;
+    TextView cartitemcount1;
     String itemsString="", itemnames = "";
-
+    BroadcastReceiver broadcastReceiver;
     boolean megacheck = false;
 
     Intent i;
@@ -129,6 +136,48 @@ public class Tracker extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem menuItem=menu.findItem(R.id.action_cart);
+        actionView= MenuItemCompat.getActionView(menuItem);
+        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ssd=new Intent(getApplicationContext(),cart.class);
+                startActivity(ssd);
+            }
+        });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Tracker.this, NotificationActivity.class));
+            }
+        });
+
+
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
+        return true;
+    }
     public void showDialog2(Context activity, String msg){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -268,6 +317,40 @@ public class Tracker extends AppCompatActivity {
 
     }
 
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+
+        };
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+
+        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver,intentFilter2);
+    }
     private TextView setTextId(TextView t, int id){
         t = (TextView)findViewById(id);
         return t;
@@ -371,6 +454,14 @@ public class Tracker extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null){
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
 }

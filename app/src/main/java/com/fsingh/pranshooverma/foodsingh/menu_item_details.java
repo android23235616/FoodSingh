@@ -1,16 +1,22 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -49,12 +55,17 @@ public class menu_item_details extends AppCompatActivity
     Button addFav;
     MenuItems mainItem;
     int isAvailable;
+    BroadcastReceiver broadcastReceiver;
     boolean isFav = false;
     Gson gson;
 
     FavouritesList myList;
 
     List<MenuItems> favList = new ArrayList<>();
+    NavigationView navigationView;
+
+
+    View actionView;
 
     MenuItems item;
     int position;
@@ -76,7 +87,7 @@ public class menu_item_details extends AppCompatActivity
 
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -164,7 +175,91 @@ public class menu_item_details extends AppCompatActivity
                 }
             }
         });
+
+        SetupBroadcastReceiver();
+        navigationView.setNavigationItemSelectedListener(this);
+        manipulatenavigationdrawer();
+        Menu m = navigationView.getMenu();
+        for (int i=0;i<m.size();i++) {
+            MenuItem mi = m.getItem(i);
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu!=null && subMenu.size() >0 ) {
+                for (int j=0; j <subMenu.size();j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+            applyFontToMenuItem(mi);
+        }
     }
+
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+
+    }
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        TextView location = (TextView)v.findViewById(R.id.location);
+        location.setTypeface(tp);
+        location.setText(localdatabase.city);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
+    }
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+
+        };
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+
+        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver,intentFilter2);
+    }
+
 
 
     private void RemoveTop(){
@@ -244,6 +339,7 @@ public class menu_item_details extends AppCompatActivity
         item_name=(TextView) findViewById(R.id.item_name);
         item_image=(ImageView)findViewById(R.id.item_image);
         item_price=(TextView) findViewById(R.id.item_price);
+
         TextView description = (TextView)findViewById(R.id.descrption);
         fav = (ImageView)findViewById(R.id.fav);
         unav = (TextView)findViewById(R.id.txt_unavailable);
@@ -255,6 +351,7 @@ public class menu_item_details extends AppCompatActivity
         //Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
         item_name.setTypeface(tf1,Typeface.BOLD);
         item_price.setTypeface(tf1,Typeface.BOLD);
+
         description.setTypeface(tf2);
 
         editor = sp.edit();
@@ -287,7 +384,7 @@ public class menu_item_details extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
+        actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
@@ -309,6 +406,8 @@ public class menu_item_details extends AppCompatActivity
                 startActivity(new Intent(menu_item_details.this, NotificationActivity.class));
             }
         });
+
+
 
         localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
@@ -338,27 +437,92 @@ public class menu_item_details extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        SharedPreferences shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.menu) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.cart) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent a=new Intent(getApplicationContext(),cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.orders) {
+            Intent a=new Intent(getApplicationContext(),order_history.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.SignOut) {
+
+            shared.edit().remove("address").apply();
+            shared.edit().remove("password").apply();
+            shared.edit().remove("mobile").apply();
+
+            this.finish();
+            Intent intent=new Intent(getApplicationContext(),login_page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+
 
         }
+        else if(id==R.id.details)
+        {
+            Intent a=new Intent(getApplicationContext(),details.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
+        }else if(id==R.id.notifications){
+            final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(a);
+                }
+            },1000);
+
+        }else if(id==R.id.favNav){
+            Intent as=new Intent(this,menu_category_wise.class);
+            Bundle a=new Bundle();
+            a.putString("category","Favourites");
+            a.putInt("position", -1);
+            as.putExtras(a);
+            as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(as);
+        } else if (id == R.id.AboutUs) {
+            Intent a = new Intent(getApplicationContext(), about_us.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if (id == R.id.Support) {
+            Intent a = new Intent(getApplicationContext(), Support.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if(id==R.id.share)
+        {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "FoodSingh");
+                String sAux = "\nLet me recommend you this application\n\n";
+                sAux = sAux + "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh&hl=en\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     private void Display(String s){
         Toast.makeText(this,s, Toast.LENGTH_LONG).show();
@@ -376,5 +540,12 @@ public class menu_item_details extends AppCompatActivity
             return f;
         }
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null)
+        unregisterReceiver(broadcastReceiver);
     }
 }

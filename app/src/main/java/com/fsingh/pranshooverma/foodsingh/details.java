@@ -1,12 +1,15 @@
 package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -14,6 +17,7 @@ import android.support.v4.print.PrintHelper;
 import android.support.v4.view.MenuItemCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Display;
 import android.view.SubMenu;
 import android.view.View;
@@ -54,6 +58,8 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     private  EditText name,email,old_password,new_password;
     private ProgressDialog progress;
     String old_password_check,mobile_old;
+    BroadcastReceiver broadcastReceiver;
+    View actionView;
     NavigationView navigationView;
     SharedPreferences shared;
     public static TextView cartitemcount1;
@@ -153,6 +159,82 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
         }
         manipulatenavigationdrawer();
+        SetupBroadcastReceiver();
+    }
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+
+        };
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+
+        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver,intentFilter2);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem menuItem=menu.findItem(R.id.action_cart);
+        View actionView= MenuItemCompat.getActionView(menuItem);
+        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ssd=new Intent(getApplicationContext(),cart.class);
+                startActivity(ssd);
+            }
+        });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(details.this, NotificationActivity.class));
+            }
+        });
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
+        return true;
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -415,46 +497,6 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-
-        MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
-        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
-
-        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
-        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
-
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ssd=new Intent(getApplicationContext(),cart.class);
-                startActivity(ssd);
-            }
-        });
-
-        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
-
-        notif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(details.this, NotificationActivity.class));
-            }
-        });
-
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
-        if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
-        }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
-        }
-
-        return true;
-    }
-
 
 
     @Override
@@ -472,27 +514,26 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        SharedPreferences shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
+        // Handle navigation view item clicks here.Fmani
         int id = item.getItemId();
 
         if (id == R.id.menu) {
             // Handle the camera action
-            Intent a=new Intent(getApplicationContext(),menu.class);
-            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(a);
-
         } else if (id == R.id.cart) {
+
             Intent a=new Intent(getApplicationContext(),cart.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
+
 
         } else if (id == R.id.orders) {
             Intent a=new Intent(getApplicationContext(),order_history.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
+
 
         } else if (id == R.id.SignOut) {
 
@@ -506,15 +547,61 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
             startActivity(intent);
             finish();
 
+
         }
         else if(id==R.id.details)
         {
+            Intent a=new Intent(getApplicationContext(),details.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
+        }else if(id==R.id.notifications){
+            final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(a);
+                }
+            },1000);
+
+        }else if(id==R.id.favNav){
+            Intent as=new Intent(this,menu_category_wise.class);
+            Bundle a=new Bundle();
+            a.putString("category","Favourites");
+            a.putInt("position", -1);
+            as.putExtras(a);
+            as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(as);
+        } else if (id == R.id.AboutUs) {
+            Intent a = new Intent(getApplicationContext(), about_us.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if (id == R.id.Support) {
+            Intent a = new Intent(getApplicationContext(), Support.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if(id==R.id.share)
+        {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "FoodSingh");
+                String sAux = "\nLet me recommend you this application\n\n";
+                sAux = sAux + "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh&hl=en\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     boolean isEmailValid(CharSequence emai) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(emai).matches();
