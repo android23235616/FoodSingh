@@ -105,8 +105,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
         if (checking_net_permission()) {
             if (category != null) {
-                //receive_menu_for_category(category);
-
+              //  receive_menu_for_category(category);
             } else {
                 Display("Something went wrong");
             }
