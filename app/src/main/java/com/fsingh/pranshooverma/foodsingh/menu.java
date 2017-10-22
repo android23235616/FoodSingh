@@ -152,10 +152,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             applyFontToMenuItem(mi);
         }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//CODING  CODING CODING CODING
-        //here the coding part is:
         nav=true;
         attack = (TextView)findViewById(R.id.attack);
         initialize();
