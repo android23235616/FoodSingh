@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_another"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.fsingh.pranshooverma.foodsingh.verifying_otp">
@@ -64,9 +63,9 @@
             android:fontFamily="serif"
             android:textColor="#ffffff"
             android:text="Awesome, Thanks"
-            android:layout_marginBottom="73dp"
-            android:layout_above="@+id/otp"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginBottom="57dp"
+        android:layout_above="@+id/otp"
+        android:layout_centerHorizontal="true" />
 
 
 
@@ -103,13 +102,15 @@
         android:id="@+id/Confirmation"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:padding="5dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:textColor="#ffffff"
         android:alpha="0.8"
+        android:textSize="14dp"
         android:fontFamily="serif"
         android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:text="We have sent the OTP to your registered\n mobile number to reset your password."
+        android:text="We have sent the OTP to your registered\n \n mobile number to reset your password."
         android:layout_alignTop="@+id/verify"
         android:layout_marginTop="57dp" />
 

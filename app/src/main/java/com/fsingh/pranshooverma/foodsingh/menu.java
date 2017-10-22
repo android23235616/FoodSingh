@@ -110,7 +110,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-//FOR NAVIGATION DRAWER
+//FOR NAVIGATION DRAWERo
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

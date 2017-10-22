@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.print.PrintHelper;
+import android.support.v4.view.MenuItemCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.Display;
@@ -24,6 +25,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -53,13 +56,21 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     String old_password_check,mobile_old;
     NavigationView navigationView;
     SharedPreferences shared;
+    public static TextView cartitemcount1;
+    TextView tvName, tvEmail, tvMobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
 
 
@@ -86,36 +97,40 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
                    if(old_pa.equals(old_password_check))
                    {
-                       if(checking_net_permission())
-                       {
-                           String n=name.getText().toString();
-                           String e=email.getText().toString();
-                           String np=new_password.getText().toString();
-                           if((np.length()<4 & np.length()>0) || e.length()<=4 || n.length()<=1)
+                           if(checking_net_permission())
                            {
-                               Display("Kindly give proper details");
-                           }
-                            if(np.length()==0 & e.length()>=4 & n.length()>=1)
-                           {
-                               np=old_password_check;
-                               Display("Your password will be same");
-                            upudate_to_deb(n,e,np);
-                           }
-                           if(np.length()!=0 & np.length()>=4 & e.length()>=4 & n.length()>=1)
-                           {
-                               upudate_to_deb(n,e,np);
-                           }
+                               String n=name.getText().toString();
+                               String e=email.getText().toString();
+                               String np=new_password.getText().toString();
+                               if(isEmailValid(e)) {
+                                   if ((np.length() < 4 & np.length() > 0) || e.length() <= 4 || n.length() <= 1) {
+                                       Display("Kindly give proper details");
+                                   }
+                                   if (np.length() == 0 & e.length() >= 4 & n.length() >= 1) {
+                                       np = old_password_check;
+                                       Display("Your password will be same");
+                                       upudate_to_deb(n, e, np);
+                                   }
+                                   if (np.length() != 0 & np.length() >= 4 & e.length() >= 4 & n.length() >= 1) {
+                                       upudate_to_deb(n, e, np);
+                                   }
+                               }
+                               else {
+                                   Display("Please enter a valid email address");
+                               }
 
-                       }
-                       else
-                       {
-                           Display("You dont have Internet connection ,cant make changes");
-                       }
+                           }
+                           else
+                           {
+                               Display("You dont have Internet connection ,cant make changes");
+                           }
                    }
                    else
                    {
                        Display("Your Current Password is Incorrect");
                    }
+
+
 
             }
         });
@@ -292,9 +307,17 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                 try {
                     JSONArray array=new JSONArray(response);
                     JSONObject obj=array.getJSONObject(0);
-                    name.setText(obj.getString("name"));
-                    email.setText(obj.getString("email"));
+                    tvName.setText(""+obj.getString("name"));
+                    tvEmail.setText(""+obj.getString("email"));
+                    tvMobile.setText(""+shared.getString("mobile", "NA"));
                     old_password_check=obj.getString("password");
+
+                    Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+                    tvName.setTypeface(tf);
+                    tvMobile.setTypeface(tf);
+                    tvEmail.setTypeface(tf);
+                    button_save_change.setTypeface(tf);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -333,6 +356,10 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         old_password =(EditText)findViewById(R.id.text_cur_pass);
         new_password =(EditText)findViewById(R.id.text_new_pass);
         button_save_change=(Button)findViewById(R.id.button_save_change);
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvEmail = (TextView)findViewById(R.id.tv_email);
+        tvMobile = (TextView) findViewById(R.id.tv_mobile);
+
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
@@ -387,12 +414,48 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.details, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem menuItem=menu.findItem(R.id.action_cart);
+        View actionView= MenuItemCompat.getActionView(menuItem);
+        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ssd=new Intent(getApplicationContext(),cart.class);
+                startActivity(ssd);
+            }
+        });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(details.this, NotificationActivity.class));
+            }
+        });
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -451,5 +514,9 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    boolean isEmailValid(CharSequence emai) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(emai).matches();
     }
 }
