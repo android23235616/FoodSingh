@@ -10,9 +10,9 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/logo7"
-        android:label="@string/app_name"
+        android:label="FoodSingh"
         android:largeHeap="true"
         android:roundIcon="@drawable/logo7"
         android:supportsRtl="true"

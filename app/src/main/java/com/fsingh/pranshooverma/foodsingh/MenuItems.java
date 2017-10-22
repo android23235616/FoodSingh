@@ -10,24 +10,9 @@ import java.io.Serializable;
  */
 
 public class MenuItems implements Parcelable{
-    @Override
-    public boolean equals(Object obj) {
-        //return super.equals(obj);
-        boolean same = false;
-        if(obj!=null&&obj instanceof MenuItems){
-            MenuItems i = (MenuItems)obj;
 
-            if(i.getName()==this.Name&&i.getId()==this.Category&&i.getCategory()==this.Category){
-                same = true;
-            }
-        }
-        return same;
-    }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+
 
     private String Id, Name, Category, Price, Image, Status;
     //private boolean isFav  = false;

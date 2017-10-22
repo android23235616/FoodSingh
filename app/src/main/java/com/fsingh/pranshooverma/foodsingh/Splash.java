@@ -2,6 +2,7 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.*;
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,17 +17,20 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -104,14 +108,24 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         // Glide.with(this).load(R.drawable.signin).into(AnimationTarget);
         //Display("Loading! Please Wait");
 
-        Initiate_Meta_Data();
 
-        // progressBar = ProgressDialog.show(this, "Loading","Please Wait");
-        //progressBar.setCancelable(false);
-//        sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+
         editor = sharedPreferences.edit();
-        String name = sharedPreferences.getString("name", "User");
-        String number = sharedPreferences.getString("mobile", "000");
+
+
+        /*if (!checkPermission()) {
+            // requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+
+            LocationPermission = false;
+        }else{
+            LocationPermission = true;
+           if(!isLocationEnabled(this)){
+                GoToLocations();
+           }else{
+               Initiate_Meta_Data();
+           }
+        }*/
 
 
 
@@ -211,8 +225,31 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+        }else{
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+
+
+    }
+
     private boolean checkPermission() {
-        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED));
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED));
     }
 
     @Override
@@ -355,23 +392,66 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         if (rec) {
             recreate();
         }*/
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 0 && grantResults.length > 0) {
-            for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    Display("Permission Denied");
-                    LocationPermission = false;
-                } else {
-                    LocationPermission = true;
-                    New_Details("","",constants.main_url);
+
+
+        if (grantResults.length > 0) {
+            if(grantResults[1]!=PackageManager.PERMISSION_GRANTED){
+                Display("Permission Denied");
+                finish();
+            }else{
+                if(!isLocationEnabled(this)){
+                    GoToLocations();
                 }
             }
+        }
+
+    }
+
+    public void showDialog2(Context activity, String msg){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog2);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        TextView image = (TextView) dialog.findViewById(R.id.btn_dialog);
+        // Glide.with(activity).load(pic).into(image);
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
 
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        dialog.show();
+
+    }
+    private void GoToLocations(){
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            showDialog2(this,"You Need To Enable\n Your loction to use this Application.");
+
+        }else{
+            Initiate_Meta_Data();
         }
     }
 
@@ -392,10 +472,23 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+
+                LocationPermission = false;
+
                 Display("Permission Denied");
+
                 return;
+            }else {
+                LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, Splash.this);
+                LocationPermission = true;
+                if(!isLocationEnabled(this)){
+                    GoToLocations();
+                }else{
+                    Initiate_Meta_Data();
+                }
             }
-            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, Splash.this);
 
     }
     }
