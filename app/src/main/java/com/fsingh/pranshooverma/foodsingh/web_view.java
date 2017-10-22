@@ -60,7 +60,7 @@ public class web_view extends AppCompatActivity
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon)
                 {
-                    progress.setMessage("Loading");
+                    progress.setMessage("Loading Page");
                     progress.show();
                 }
 
@@ -86,6 +86,7 @@ public class web_view extends AppCompatActivity
         Bundle b=getIntent().getExtras();
         url=b.getString("url");
         progress=new ProgressDialog(this);
+        progress.setCancelable(false);
     }
     private Boolean checking_net_permission() {
         final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));

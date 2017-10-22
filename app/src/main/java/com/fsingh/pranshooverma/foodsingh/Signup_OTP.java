@@ -161,12 +161,15 @@ public class Signup_OTP extends AppCompatActivity {
     }
 
     private void setTypeface(){
-        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/gadugi.ttf");
         signup.setTypeface(t);
         loginme.setTypeface(t);
         mobnumber.setTypeface(t);
         password.setTypeface(t);
         password.setTypeface(t);
+        name.setTypeface(t);
+        email.setTypeface(t);
+
         TextView welcome = (TextView)findViewById(R.id.welcome);
 
         Typeface qw = Typeface.createFromAsset(getAssets(), "fonts/FREESCPT.TTF");
