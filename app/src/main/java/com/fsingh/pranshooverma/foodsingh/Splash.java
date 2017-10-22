@@ -446,6 +446,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onClick(View view) {
 
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+
             }
         });
 
