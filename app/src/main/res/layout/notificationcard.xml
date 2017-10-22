@@ -20,6 +20,7 @@
 
         <ImageView
             android:layout_width="100dp"
+            android:background="@drawable/whatsapp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:id="@+id/image1"
@@ -71,9 +72,10 @@
         android:layout_height="1dp"
         android:id="@+id/l111"
         android:orientation="horizontal"
+
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#000000"></LinearLayout>
+        android:background="#50000000"></LinearLayout>
     
    <LinearLayout
        android:id="@+id/l11"
@@ -123,6 +125,7 @@
             android:layout_height="150dp"
             android:id="@+id/image2"
             android:scaleType="centerCrop"
+            android:background="@drawable/whatsapp"
             android:src="@drawable/whatsapp"
             />
 
@@ -176,7 +179,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#000000"></LinearLayout>
+        android:background="#50000000"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/l22"

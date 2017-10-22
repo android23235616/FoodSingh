@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <android.support.v4.widget.NestedScrollView android:layout_height="match_parent"
 android:layout_width="match_parent"
     android:background="#16000000"
@@ -19,7 +23,7 @@ android:layout_width="match_parent"
     <FrameLayout
 
 android:layout_marginBottom="6dp"
-
+android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -32,7 +36,7 @@ android:layout_marginBottom="6dp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginLeft="90dp"
-            android:background="@drawable/buttonbackground"
+
             android:layout_marginRight="90dp"
             android:layout_height="wrap_content"
             android:padding="6dp"
@@ -52,3 +56,13 @@ android:layout_marginBottom="6dp"
 
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_marginTop="510dp"
+        android:scaleType="center"
+        android:layout_marginLeft="300dp"
+        android:id="@+id/new_clear"
+        android:layout_width="40dp"
+        app:srcCompat="@drawable/ic_clear_all_black_24dp"
+        android:layout_height="40dp" />
+</FrameLayout>

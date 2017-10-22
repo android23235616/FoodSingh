@@ -378,9 +378,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         recylerView.setFocusable(false);
         layoutmanager=new LinearLayoutManager(this);
         recylerView.setLayoutManager(layoutmanager);
-        recylerView.setNestedScrollingEnabled(true);
+        recylerView.setNestedScrollingEnabled(false);
         recylerView.setItemAnimator(new DefaultItemAnimator());
-        recylerView.setNestedScrollingEnabled(true);
+
         setTypeface();
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
@@ -527,7 +527,7 @@ if(local.metaData!=null) {
     {
         adapter=new categoryAdapter(this,categories,images);
         recylerView.setAdapter(adapter);
-        recylerView.setNestedScrollingEnabled(true);
+        recylerView.setNestedScrollingEnabled(false);
 //        recylerView.addItemDecoration(itemDecoration);
         recylerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -713,7 +713,7 @@ if(local.metaData!=null) {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
+        //recreate();
     }
 
     @Override
