@@ -109,7 +109,7 @@
         android:fontFamily="serif"
         android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:text="WE HAVE SENT THE CONFIRMATION CODE TO YOUR MOBILE NUMBER"
+        android:text="We have sent the OTP to your registered\n mobile number to reset your password."
         android:layout_alignTop="@+id/verify"
         android:layout_marginTop="57dp" />
 
@@ -135,9 +135,10 @@
         android:layout_marginLeft="70dp"
         android:background="@null"
         android:text="Resend Code"
+        android:textAllCaps="false"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_color"
         android:layout_below="@+id/verify"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp" />
