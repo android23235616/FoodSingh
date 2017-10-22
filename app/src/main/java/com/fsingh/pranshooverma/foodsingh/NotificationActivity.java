@@ -1,7 +1,9 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +24,16 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
 
     Gson gson;
     NotificationLists notificationLists;
     SharedPreferences sharedPreferences;
+
+    BroadcastReceiver broadcastReceiver;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
     android.support.design.widget.FloatingActionButton floatingActionButton;
@@ -56,7 +62,9 @@ public class NotificationActivity extends AppCompatActivity {
 
         }else{
             notificationLists = gson.fromJson(tempJson,NotificationLists.class);
-            notificationAdapter = new NotificationAdapter(notificationLists.getNotification(),this);
+            List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
+            Collections.reverse(shallowCopy);
+            notificationAdapter = new NotificationAdapter(shallowCopy,this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(notificationAdapter);
@@ -89,6 +97,45 @@ public class NotificationActivity extends AppCompatActivity {
         });
 
 
+        setUpReceiver();
+
+    }
+
+    private void setUpReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(constants.broadCastReceiverNotification);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                UpdateUi();
+
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void UpdateUi(){
+       /* String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
+
+        if(tempJson.equals("")){
+            Display("You Have No Notification");
+
+        }else{
+            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
+            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
+            List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
+            Collections.reverse(shallowCopy);
+            notificationAdapter = new NotificationAdapter(shallowCopy,this);
+           // notificationAdapter = new NotificationAdapter(notificationLists.getNotification(),this);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+            notificationAdapter.notifyDataSetChanged();*/
+
+        recreate();
     }
 
     private void RemoveTop(){
@@ -119,12 +166,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
 
-        notif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NotificationActivity.this, NotificationActivity.class));
-            }
-        });
+
 
          localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
@@ -138,6 +180,12 @@ public class NotificationActivity extends AppCompatActivity {
     }
     private void Display(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
 }

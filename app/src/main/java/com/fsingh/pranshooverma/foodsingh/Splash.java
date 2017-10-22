@@ -82,8 +82,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     TextView header;
 
     ProgressBar progressbar;
+    private boolean dataLoaded = false;
     GoogleApiClient apiClient;
-    private boolean LocationChecked = false, LocationPermission;
+    boolean redundent = false;
+    private boolean LocationChecked = false, LocationPermission = false;
     boolean checker = false;
 
 
@@ -139,6 +141,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onResponse(String response) {
 
+                dataLoaded = true;
+
                 try {
                     JSONObject mainObject = new JSONObject(response);
                     localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
@@ -192,11 +196,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     e.printStackTrace();
                     Display(e.toString());
                 }finally {
-                   // localdatabase.dataloaded = true;
-                  // if(localdatabase.loctioncheck&&localdatabase.dataloaded){
-                       startActivity(new Intent(Splash.this, menu.class));
-                       finish();
-                   //}
+
+                    if(LocationChecked&&dataLoaded) {
+                        if(!redundent) {
+                            redundent = true;
+
+                            startActivity(new Intent(Splash.this, menu.class));
+                            finish();
+                        }
+                    }
+
                 }
 
             }
@@ -272,90 +281,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         apiClient.disconnect();
     }
 
-    private void uploadDetails(String name, final String number) {
-
-        StringRequest str = new StringRequest(Request.Method.POST, constants.set_version, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-              //  if (progressBar.isShowing()) {
-                //    progressBar.cancel();
-                //}
-                try {
-
-                    //Display(response);
-
-                    JSONObject object = new JSONObject(response);
-                    String result = object.getString("message");
-                    String version = object.getString("version");
-                    editor.putString("version", version);
-                    editor.apply();
-                    if (version.equals("NEW")) {
-                        if (result.equals("SUCCESS")) {
-
-                            startActivity(new Intent(Splash.this, menu.class));
-                            finish();
-
-                        } else {
-                            Display("Data Transfer Failed! Please check Network connection and try again.");
-                            finish();
-                        }
-                    } else {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(Splash.this);
-                        dialog.setTitle("Announcement");
-                        dialog.setCancelable(false);
-                        dialog.setMessage("You are using an older version of this app. To continue using this app, Please update");
-                        dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                rec = true;
-                                String url = "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh";
-                                Intent i11 = new Intent(Intent.ACTION_VIEW);
-                                i11.setData(Uri.parse(url));
-                                startActivity(i11);
-                            }
-                        });
-
-                        dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                            }
-                        });
-                        dialog.show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Display(e.toString());
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Display(error.toString());
-              //  if (progressBar.isShowing()) {
-                //    progressBar.dismiss();
-                //}
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                map.put("mobile", number);
-                map.put("version", getAppVersion());
-                return map;
-
-            }
-        };
-
-
-
-        RequestQueue request = Volley.newRequestQueue(this);
-        request.add(str);
-
-        str.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    }
 
     private Boolean checking_net_permission() {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -387,18 +312,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     public void onResume() {
         super.onResume();
-      /*  if (checker) {
-            if (progressBar != null) {
-                if (!progressBar.isShowing()) {
-                    progressBar = ProgressDialog.show(Splash.this, "Loading.", "Please Wait!");
-                }
-            }
-        }
-
-        if (rec) {
-            recreate();
-        }*/
-    }
+       }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -475,13 +389,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         if (apiClient != null) {
             LocationRequest locationRequest = LocationRequest.create().setInterval(2000).setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
 
@@ -518,11 +426,21 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     @Override
     public void onLocationChanged(Location location) {
-        LocationChecked = true;
+
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
         localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
-        localdatabase.loctioncheck = true;
+
+
+        LocationChecked = true;
+        if(LocationChecked&&dataLoaded) {
+            if(!redundent) {
+                redundent = true;
+                startActivity(new Intent(Splash.this, menu.class));
+                finish();
+            }
+        }
+
 
     }
 

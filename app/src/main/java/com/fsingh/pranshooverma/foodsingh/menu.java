@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -74,6 +76,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     List<String> categories=new ArrayList<>();
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
+    BroadcastReceiver broadcastReceiver;
     localdatabase local;
     ImageButton next, back;
 
@@ -290,6 +293,26 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+
+    SetupBroadcastReceiver();
+    }
+
+    private void SetupBroadcastReceiver() {
+
+        IntentFilter intentFilter = new IntentFilter();
+
+        intentFilter.addAction(constants.broaadcastReceiverMenu);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                localdatabase.notifmount.setText(localdatabase.notifications+"");
+
+
+            }
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
     }
 
 
@@ -300,30 +323,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
-    private void action(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(menu.this);
-        dialog.setTitle("Announcement");
-        dialog.setCancelable(false);
-        dialog.setMessage("You are using an older version of this app. To continue using this app, Please update");
-        dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //rec = true;
-                String url = "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh";
-                Intent i11 = new Intent(Intent.ACTION_VIEW);
-                i11.setData(Uri.parse(url));
-                startActivity(i11);
-            }
-        });
 
-        dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
-        dialog.show();
-    }
 
     private String versionStatus(){
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
@@ -748,5 +748,14 @@ if(local.metaData!=null) {
     protected void onPause() {
         super.onPause();
         appBarLayout.removeOnOffsetChangedListener(this);
+    }
+
+    @Override
+
+    protected void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null){
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 }
