@@ -2,11 +2,13 @@ package com.fsingh.pranshooverma.foodsingh;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,17 +32,22 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+
 public class about_us extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 TextView text_about;
     ImageView img_about;
     ProgressDialog progress;
+    public static TextView cartitemcount1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RemoveTop();
         setContentView(R.layout.activity_about_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -95,7 +104,40 @@ TextView text_about;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.about_us, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem menuItem=menu.findItem(R.id.action_cart);
+        View actionView= MenuItemCompat.getActionView(menuItem);
+        cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ssd=new Intent(getApplicationContext(),cart.class);
+                startActivity(ssd);
+            }
+        });
+
+        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(about_us.this, NotificationActivity.class));
+            }
+        });
+
+        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        if(localdatabase.notifications==0){
+            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+        }else {
+            localdatabase.notifmount.setVisibility(View.VISIBLE);
+            localdatabase.notifmount.setText(localdatabase.notifications+"");
+        }
+
         return true;
     }
 
@@ -137,5 +179,11 @@ TextView text_about;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void RemoveTop(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }
