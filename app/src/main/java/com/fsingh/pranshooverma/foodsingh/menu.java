@@ -83,6 +83,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
+    int counter_button=0;
+    int counter_button2=0;
+    int counter_button3=0;
     boolean nav=true;
     TextView attack;
     pagerAdapter pageradater;
@@ -169,7 +172,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
         local = new localdatabase();
         pageradater = new pagerAdapter(local);
-
         pager.setAdapter(pageradater);
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +219,23 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         cuisine_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
+                counter_button++;
+
+                if(counter_button%2==0)
+                {
+                    //ununselected
+                    Toast.makeText(menu.this, "unselected", Toast.LENGTH_SHORT).show();
+                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                }
+                else
+                {
+                    //selected
+                    Toast.makeText(menu.this, "selected", Toast.LENGTH_SHORT).show();
+                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
+
+
+                }
+           //     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
                 time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
                 combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
                 categories.clear();
@@ -239,8 +257,21 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                counter_button2++;
+                if(counter_button2%2==0)
+                {
+                    //unelected
+                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+
+                }
+                else
+                {
+                    //selected
+                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time));
+
+                }
                 cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
-                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time));
                 combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
                 categories.clear();
                 images.clear();
@@ -260,9 +291,22 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
               //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+                counter_button3++;
+                if(counter_button3%2==0)
+                {
+                    //unselected
+                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+
+                }
+                else
+                {
+                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo_));
+
+                    //selected
+                }
+
                 cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
                 time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
-                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo_));
 
                 categories.clear();
                 images.clear();
