@@ -106,8 +106,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void sendNotification2(Map<String,String> map, RemoteMessage remote,Bitmap bitmap){
 
-
-
         List<NotificationItem> nn = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
         String json = sharedPreferences.getString(constants.foodsinghNotif,"");
@@ -197,6 +195,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }else{
             Log.i("nullchecker","not null");
         }
+        Intent menu = new Intent();
+        menu.setAction(constants.broaadcastReceiverMenu);
+        sendBroadcast(menu);
+        Intent notification = new Intent();
+        notification.setAction(constants.broadCastReceiverNotification);
+        sendBroadcast(notification);
+
     }
 
 
