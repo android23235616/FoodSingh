@@ -113,7 +113,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         editor = sharedPreferences.edit();
 
 
-        /*if (!checkPermission()) {
+        if (!checkPermission()) {
             // requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
 
@@ -125,7 +125,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
            }else{
                Initiate_Meta_Data();
            }
-        }*/
+        }
 
 
 
@@ -249,7 +249,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     private boolean checkPermission() {
-        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED));
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        //return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED));
     }
 
     @Override
@@ -257,7 +258,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         super.onStart();
         apiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).
                 addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
-        apiClient.connect();
+
+        if(checkPermission()){
+            apiClient.connect();
+        }
+
     }
 
     @Override
@@ -403,6 +408,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 Display("Permission Denied");
                 finish();
             }else{
+                apiClient.connect();
                 if(!isLocationEnabled(this)){
                     GoToLocations();
                 }
@@ -479,8 +485,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
                 Display("Permission Denied");
 
-                return;
+
             }else {
+
                 LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, Splash.this);
                 LocationPermission = true;
                 if(!isLocationEnabled(this)){
