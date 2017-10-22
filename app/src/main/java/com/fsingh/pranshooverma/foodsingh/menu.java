@@ -33,6 +33,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.SubMenu;
 import android.view.View;
@@ -76,9 +77,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     List<String> categories=new ArrayList<>();
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
-    BroadcastReceiver broadcastReceiver;
+    BroadcastReceiver broadcastReceiver, broadcastReceiver2;
     localdatabase local;
     ImageButton next, back;
+
+
 
     boolean nav=true;
     TextView attack;
@@ -306,16 +309,35 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                int number = intent.getIntExtra("data",0);
+                if(number==0){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }else{
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(number+"");
+                }
+            }
+        };
 
-                localdatabase.notifmount.setText(localdatabase.notifications+"");
-
-
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+        broadcastReceiver2 = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                int number = intent.getIntExtra("data",0);
+                if(number==0){
+                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                }else{
+                    localdatabase.notifmount.setVisibility(View.VISIBLE);
+                    localdatabase.notifmount.setText(number+"");
+                }
             }
         };
         registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver2,intentFilter2);
     }
-
-
 
 
     private void RemoveTop(){
@@ -553,19 +575,6 @@ if(local.metaData!=null) {
 
     }
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //writing function for Categories
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    //For navigation drawer,by android studio...
-
-
-
     @Override
     public void onBackPressed() {
         if(nav){
@@ -608,6 +617,8 @@ if(local.metaData!=null) {
                 startActivity(new Intent(menu.this, NotificationActivity.class));
             }
         });
+
+
 
          localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
@@ -756,6 +767,9 @@ if(local.metaData!=null) {
         super.onDestroy();
         if(broadcastReceiver!=null){
             unregisterReceiver(broadcastReceiver);
+        }
+        if(broadcastReceiver2!=null){
+            unregisterReceiver(broadcastReceiver2);
         }
     }
 }
