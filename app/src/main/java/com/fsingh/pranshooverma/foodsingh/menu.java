@@ -489,14 +489,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
     }
 
-
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
-
     private void initialize() {
         ad1  = (ImageView)findViewById(R.id.advertisement1);
         ad2 = (ImageView)findViewById(R.id.advertisement2);
