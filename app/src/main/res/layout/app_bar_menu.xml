@@ -113,6 +113,16 @@
 
 
     <include layout="@layout/dummy"/>
+    <ImageView
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/dummy_ad"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:id="@+id/advertisement2"
+        />
 
 </FrameLayout>
 </android.support.v4.widget.NestedScrollView>

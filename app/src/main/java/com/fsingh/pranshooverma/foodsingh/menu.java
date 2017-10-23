@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -60,11 +62,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -81,7 +88,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     localdatabase local;
     ImageButton next, back;
 
-
+    ImageView ad1, ad2;
 
     int counter_button=0;
     int counter_button2=0;
@@ -324,7 +331,21 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
 
-    SetupBroadcastReceiver();
+        SetupBroadcastReceiver();
+
+        if(localdatabase.couponClassList.size()>0){
+            LoadBitmaps();
+        }
+
+    }
+
+    private void LoadBitmaps(){
+        LoadBitmap1 b1 = new LoadBitmap1(0);
+       // if(localdatabase.couponClassList.size()>0)
+        b1.execute(localdatabase.couponClassList.get(0).getUrl());
+        LoadBitmap1 b2 = new LoadBitmap1(1);
+
+        b2.execute(localdatabase.couponClassList.get(1).getUrl());
     }
 
     private void SetupBroadcastReceiver() {
@@ -407,6 +428,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void initialize() {
+        ad1  = (ImageView)findViewById(R.id.advertisement1);
+        ad2 = (ImageView)findViewById(R.id.advertisement2);
         pager = (ViewPager) findViewById(R.id.view_pager);
         pager.addOnPageChangeListener(this);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
@@ -433,6 +456,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         combo_btn=(ImageButton) findViewById(R.id.combo);
 
     }
+
+
 
     public void showDialog(Activity activity, String msg,int pic){
         final Dialog dialog = new Dialog(activity);
@@ -793,4 +818,52 @@ if(local.metaData!=null) {
         }
 
     }
+
+    private class LoadBitmap1 extends AsyncTask<String, Void, Bitmap>{
+    private int img;
+        public LoadBitmap1(int bitmap){
+
+            this.img = bitmap;
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if(bitmap==null)
+                return;
+        if(img==0) {
+            ad1.setImageBitmap(bitmap);
+            ad1.setVisibility(View.VISIBLE);
+        }else{
+            ad2.setImageBitmap(bitmap);
+            ad2.setVisibility(View.VISIBLE);
+        }
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+
+            return getBitmapFromURL(strings[0]);
+        }
+        public Bitmap getBitmapFromURL(String strURL) {
+            try {
+                URL url = new URL(strURL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+    }
+
+
 }

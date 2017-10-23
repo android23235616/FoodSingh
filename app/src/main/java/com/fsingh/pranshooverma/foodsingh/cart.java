@@ -1,5 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -45,6 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -64,6 +68,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView recycler,sides;
     RecyclerView.LayoutManager layout;
     public  static Sides_Adapter sidesAdapter;
+    ProgressDialog couponDilog;
     Toolbar toolbar;
     static Button checkout;
     SharedPreferences shared;
@@ -173,9 +178,13 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         manipulatenavigationdrawer();
 
         enterCoupon.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
+                couponDilog = new ProgressDialog(v.getContext());
+                couponDilog.setMessage("Validating your coupon.");
+                getDiscount(constants.coupon_url);
+               /* if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
                     discountPercent = localdatabase.discount;
                     calculateTotal();
 
@@ -183,10 +192,77 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 else {
                     Toast.makeText(cart.this, "Invalid coupon code. Please try again.", Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
         });
         SetupBroadcastReceiver();
+    }
+
+    private void getDiscount(String url){
+
+        final SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if(!couponDilog.isShowing()){
+                    couponDilog.dismiss();
+                }
+
+               if(localdatabase.cartList.size()>0){
+
+
+                   try {
+                       JSONObject obj = new JSONObject(response);
+                       String discount= obj.getString("discount");
+                       String result = obj.getString("result");
+
+                       if(result.equals("false")){
+                           showDialog(cart.this, "Sorry, but you have entered an\ninvalid coupon.", R.drawable.ic_error_outline_black_24dp);
+                       }else if(result.equals("redeemed")){
+                           showDialog(cart.this, "You Have Already applied the coupon.", R.drawable.ic_error_outline_black_24dp);
+                       }else{
+                           localdatabase.discount = Integer.parseInt(discount);
+
+                           discountPercent = localdatabase.discount;
+                           calculateTotal();
+
+                           showDialog(cart.this, "Congratulations. "+discountPercent+"% discount applied.", R.drawable.ic_check_black_24dp);
+                       }
+                   } catch (JSONException e) {
+                       if(!couponDilog.isShowing()){
+                           couponDilog.dismiss();
+                       }
+                       e.printStackTrace();
+                      showDialog(cart.this, e.toString(), R.drawable.ic_error_outline_black_24dp);
+                   }
+
+               }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(!couponDilog.isShowing()){
+                    couponDilog.dismiss();
+                }
+                showDialog(cart.this, error.toString(), R.drawable.ic_error_outline_black_24dp);
+            }
+        }){
+            @Override
+            public Map getParams(){
+                Map<String, String> map = new HashMap<>();
+                map.put("mobile",sharedPreferences.getString("mobile",""));
+                map.put("coupon",coupon.getText().toString());
+                return map;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(sr);
+
     }
 
     private void SetupBroadcastReceiver() {
@@ -223,6 +299,31 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         registerReceiver(broadcastReceiver,intentFilter2);
     }
 
+    public void showDialog(Activity activity, String msg, int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -352,8 +453,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             }
             else {
                 tvDisAmt.setText("₹"+(int)discountAmount);
-                enterCoupon.setBackgroundResource(R.drawable.back_checkout_grey);
-                enterCoupon.setClickable(false);
+                //enterCoupon.setBackgroundResource(R.drawable.back_checkout_grey);
+                //enterCoupon.setClickable(false);
                 coupon.setText("COUPON APPLIED");
                 coupon.setFocusable(false);
             }

@@ -133,7 +133,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
-    private void New_Details(String name, String number, String main_url) {
+    private void New_Details(String name, String number, final String main_url) {
 
         RequestQueue request = Volley.newRequestQueue(Splash.this);
 
@@ -192,6 +192,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     for(int i=0; i<BannerImages.length(); i++){
                         localdatabase.BannerUrls.add(BannerImages.getJSONObject(i).getString("url"));
                     }
+
+                    JSONArray getAdImages = mainObject.getJSONArray("ad_bars");
+
+                    for(int i=0; i<getAdImages.length(); i++){
+                        JSONObject tempJson =getAdImages.getJSONObject(i);
+                        CouponClass temp = new CouponClass(tempJson.getString("id"),tempJson.getString("coupon"),tempJson.getString("image"));
+                        localdatabase.couponClassList.add(temp);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Display(e.toString());

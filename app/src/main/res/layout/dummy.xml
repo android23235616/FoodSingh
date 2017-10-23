@@ -29,6 +29,7 @@
     <ImageView
         android:scaleType="centerCrop"
         android:src="@drawable/dummy_ad"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/advertisement1"
@@ -103,15 +104,6 @@
             </android.support.v7.widget.RecyclerView>
 
 
-            <ImageView
-
-                android:scaleType="centerCrop"
-                android:src="@drawable/dummy_ad"
-                android:layout_width="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_height="50dp"
-                android:id="@+id/advertisement2"
-                />
 
         </LinearLayout>
 

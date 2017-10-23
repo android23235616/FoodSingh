@@ -25,6 +25,7 @@ public class constants {
     public static String order_details = "http://mindwires.in/foodsingh_app/get_order_details.php";
     public static String login_details_url="http://mindwires.in/foodsingh_app/logini_save_and_check.php";
     public static String login_check_url="http://mindwires.in/foodsingh_app/login.php";
+    public static String coupon_url="http://mindwires.in/foodsingh_app/check_coupon.php";
     public  static  String get_categories="http://mindwires.in/foodsingh_app/get_categories2.php";
     public static int min_order=-1;
     public static String get_menu_category_wise="http://mindwires.in/foodsingh_app/get_menu.php";
