@@ -1,5 +1,4 @@
 package com.fsingh.pranshooverma.foodsingh;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Notification;
@@ -54,20 +53,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.google.firebase.messaging.RemoteMessage;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -84,6 +70,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     List<String> categories=new ArrayList<>();
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
+    TextView drinks;
     BroadcastReceiver broadcastReceiver;
     localdatabase local;
     ImageButton next, back;
@@ -93,6 +80,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     int counter_button=0;
     int counter_button2=0;
     int counter_button3=0;
+    int counter_button4=0;
     boolean nav=true;
     TextView attack;
     pagerAdapter pageradater;
@@ -108,7 +96,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
 
-    ImageButton cuisine_btn,time_btn,combo_btn;
+    TextView cuisine_btn;
+    TextView time_btn;
+    TextView combo_btn;
 
      int c=0;
     @Override
@@ -235,11 +225,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 counter_button++;
                 counter_button2=0;
                 counter_button3=0;
+                counter_button4=0;
 
                 if((counter_button)%2==0)
                 {
                     //ununselected
-                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                    cuisine_btn.setBackgroundResource(R.drawable.sort_back_gray);
                     categories.clear();
                     images.clear();
                     send_to_adapter();
@@ -249,9 +240,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 else
                 {
                     //selected
-                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
-                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
-                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+                    cuisine_btn.setBackgroundResource(R.drawable.sort_back_green);
+                    drinks.setBackgroundResource(R.drawable.sort_back_gray);
+                    combo_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    time_btn.setBackgroundResource(R.drawable.sort_back_gray);
+
 
                     categories.clear();
                     images.clear();
@@ -288,11 +281,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
                 counter_button2++;
                 counter_button=0;
+                counter_button4=0;
                 counter_button3=0;
                 if((counter_button2)%2==0)
                 {
                     //unelected
-                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                    time_btn.setBackgroundResource(R.drawable.sort_back_gray);
                     categories.clear();
                     images.clear();
                     send_to_adapter();
@@ -302,9 +296,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 else
                 {
                     //selected
-                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time));
-                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
-                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+                    cuisine_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    drinks.setBackgroundResource(R.drawable.sort_back_gray);
+                    combo_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    time_btn.setBackgroundResource(R.drawable.sort_back_green);
+
 
                     categories.clear();
                     images.clear();
@@ -333,17 +329,19 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
             }
         });
-        combo_btn.setOnClickListener(new View.OnClickListener() {
+
+        drinks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
-                counter_button3++;
+                //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+                counter_button4++;
                 counter_button=0;
                 counter_button2=0;
-                if((counter_button3)%2==0)
+                counter_button3=0;
+                if((counter_button4)%2==0)
                 {
                     //unselected
-                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+                    drinks.setBackgroundResource(R.drawable.sort_back_gray);
                     categories.clear();
                     images.clear();
                     send_to_adapter();
@@ -351,10 +349,67 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 else
                 {
-                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo_));
-                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
-                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                    cuisine_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    drinks.setBackgroundResource(R.drawable.sort_back_green);
+                    combo_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    time_btn.setBackgroundResource(R.drawable.sort_back_gray);
 
+
+                    categories.clear();
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
+
+                    for(int i=0;i<localdatabase.masterList.size();i++)
+                    {
+                        MasterMenuItems a=localdatabase.masterList.get(i);
+                        if(a.getDrinks().equals("1"))
+                        {
+                            if(categories.contains(a.getName()) & images.contains(a.getImage()))
+                            {
+
+                            }
+                            else
+                            {
+                                categories.add(a.getName());
+                                images.add(a.getImage());
+
+                            }}
+                    }
+                    send_to_adapter();
+
+
+                }
+
+            }
+        });
+
+        combo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
+                counter_button4=0;
+                counter_button=0;
+                counter_button2=0;
+                counter_button3++;
+                if((counter_button3)%2==0)
+                {
+                    //unselected
+                    combo_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
+                    getting_categories();
+                }
+                else
+                {
+                    cuisine_btn.setBackgroundResource(R.drawable.sort_back_gray);
+                    drinks.setBackgroundResource(R.drawable.sort_back_gray);
+                    combo_btn.setBackgroundResource(R.drawable.sort_back_green);
+                    time_btn.setBackgroundResource(R.drawable.sort_back_gray);
+
+
+                    categories.clear();
                     categories.clear();
                     images.clear();
                     send_to_adapter();
@@ -413,14 +468,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
-    private void LoadBitmaps(){
-        LoadBitmap1 b1 = new LoadBitmap1(0);
-       // if(localdatabase.couponClassList.size()>0)
-        b1.execute(localdatabase.couponClassList.get(0).getUrl());
-        LoadBitmap1 b2 = new LoadBitmap1(1);
-
-        b2.execute(localdatabase.couponClassList.get(1).getUrl());
-    }
 
     private void SetupBroadcastReceiver() {
 
@@ -509,6 +556,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         pager = (ViewPager) findViewById(R.id.view_pager);
         pager.addOnPageChangeListener(this);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
+        drinks = (TextView) findViewById(R.id.drinks);
+        if(localdatabase.drinks.equals("false")){
+            drinks.setVisibility(View.GONE);
+        }
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
@@ -527,9 +578,14 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         setTypeface();
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
-        cuisine_btn=(ImageButton) findViewById(R.id.cuisine);
-        time_btn=(ImageButton) findViewById(R.id.time);
-        combo_btn=(ImageButton) findViewById(R.id.combo);
+        cuisine_btn=(TextView) findViewById(R.id.cuisine);
+        time_btn=(TextView) findViewById(R.id.time);
+        combo_btn=(TextView) findViewById(R.id.combo);
+
+        cuisine_btn.setText(localdatabase.superCategoriesList.get(0).getName());
+        time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
+        combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
+        drinks.setText(localdatabase.superCategoriesList.get(3).getName());
 
     }
 
@@ -675,7 +731,7 @@ if(local.metaData!=null) {
         }
         Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Closed.");
-        attack.setBackgroundColor(Color.parseColor("#dac598"));
+        attack.setBackgroundColor(Color.parseColor("#56FF0000"));
     }
 }
     }
@@ -974,6 +1030,12 @@ if(local.metaData!=null) {
             clipboard.setPrimaryClip(clip);
         }
 
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        
     }
 
 

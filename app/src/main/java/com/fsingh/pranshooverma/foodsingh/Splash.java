@@ -76,6 +76,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ProgressBar progressBar;
+    Dialog dialog;
     Context ctx;
     boolean rec = false;
 
@@ -157,6 +158,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     localdatabase.aboutText = mainObject.getString("about_text");
                     localdatabase.aboutImage = mainObject.getString("about_image");
                     localdatabase.delivery = mainObject.getString("location");
+                    localdatabase.drinks = mainObject.getString("drinks");
+                    localdatabase.share_text =mainObject.getString("share_text");
+                    localdatabase.share_url = mainObject.getString("share_url");
 
                     JSONArray Categories = mainObject.getJSONArray("categories");
                     for (int i=0; i<Categories.length(); i++){
@@ -190,7 +194,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                 localdatabase.unavailableItemsList.add(ii);
                             }
                         }
-                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time);
+                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"));
+                        Log.i("checking details", tempObject.getString("drinks"));
                         localdatabase.masterList.add(menuItemsObject);
                     }
                     JSONArray BannerImages = mainObject.getJSONArray("home_images");
@@ -207,12 +212,13 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         localdatabase.couponClassList.add(temp);
                     }
 
+                    JSONArray superCategories = mainObject.getJSONArray("super_categories");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Display(e.toString());
-                    Log.i("mainresponse",e.toString());
-                }finally {
+                    for(int i=0; i<superCategories.length(); i++){
+                        SuperCategories su = new SuperCategories(superCategories.getJSONObject(i).getString("id"),
+                                superCategories.getJSONObject(i).getString("name"));
+                        localdatabase.superCategoriesList.add(su);
+                    }
 
                     if(LocationChecked&&dataLoaded) {
                         if(!redundent) {
@@ -222,6 +228,14 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                             finish();
                         }
                     }
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Display(e.toString());
+                    Log.i("mainresponse",e.toString());
+                }finally {
 
                 }
 
@@ -331,6 +345,15 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     public void onResume() {
         super.onResume();
+        if(!isLocationEnabled(this)){
+            GoToLocations();
+
+        }else{
+            if(dialog!=null){
+                dialog.dismiss();
+
+            }
+        }
        }
 
     @Override
@@ -352,7 +375,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     public void showDialog2(Context activity, String msg){
-        final Dialog dialog = new Dialog(activity);
+         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog2);
@@ -464,6 +487,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
 
     }
+
+
 
     private String getCity(double latitude, double longitude){
         Geocoder geocoder;

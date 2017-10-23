@@ -98,29 +98,34 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Splash" android:label="">
+        <activity android:name=".Splash" android:label=""
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".OrderPlacedActivity">
+        <activity android:name=".CheckoutActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".OrderPlacedActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".set_password">
+        <activity android:name=".set_password"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".web_view">
+        <activity android:name=".web_view"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -130,13 +135,16 @@
 
         <activity
             android:label=""
+            android:screenOrientation="portrait"
             android:name=".menu_item_details"
             android:theme="@style/AppTheme"  />
         <activity
+            android:screenOrientation="portrait"
             android:name=".Tracker"
             android:label="" />
 
         <service android:name=".FirebaseMessagingService"
+
             android:enabled="true"
             android:stopWithTask="false"
             android:exported="true">

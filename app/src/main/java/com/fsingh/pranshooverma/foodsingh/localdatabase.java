@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class localdatabase {
 
+    public static String drinks = "false";
+    public static List<SuperCategories> superCategoriesList = new ArrayList<>();
+    public static String share_text, share_url;
     public static String lane;
     public static TextView notifmount;
     public static String delivery = "";

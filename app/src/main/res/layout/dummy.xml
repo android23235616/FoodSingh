@@ -53,41 +53,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <ImageButton
+        <TextView
+            android:text="Cuine"
+
             android:layout_margin="5dp"
             android:layout_height="30dp"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
+            android:gravity="center"
             android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
             android:src="@drawable/cuisine_"
             android:id="@+id/cuisine"
             android:scaleType="centerCrop"
-            android:background="@color/background_color_new"
+            android:background="@drawable/sort_back_gray"
 
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             />
-        <ImageButton
-            android:background="@color/background_color_new"
+        <TextView
+            android:background="@drawable/sort_back_gray"
             android:layout_margin="5dp"
 
             android:layout_weight="1"
 
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
+            android:fontFamily="monospace"
+            android:textSize="15dp"
             android:id="@+id/time"
             android:scaleType="centerCrop"
-
+            android:textColor="@color/white"
+            android:text="Ti"
+            android:gravity="center"
             android:src="@drawable/time_"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/cuisine" />
-        <ImageButton
+        <TextView
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:src="@drawable/combo"
-            android:background="@color/background_color_new"
-            android:layout_width="130dp"
+            android:background="@drawable/sort_back_gray"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:scaleType="centerCrop"
+            android:text="mbo"
+            android:gravity="center"
+
+            android:textSize="15dp"
+            android:fontFamily="monospace"
             android:id="@+id/combo"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@+id/time"
+            android:layout_alignParentTop="true"
+            />
+        <TextView
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:src="@drawable/combo"
+            android:background="@drawable/sort_back_gray"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:textSize="15dp"
+            android:scaleType="centerCrop"
+            android:text="Drinks"
+
+            android:gravity="center"
+            android:id="@+id/drinks"
+            android:textColor="@color/white"
             android:layout_toEndOf="@+id/time"
             android:layout_alignParentTop="true"
             />
