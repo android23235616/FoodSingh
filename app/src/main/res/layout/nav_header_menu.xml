@@ -1,4 +1,4 @@
-<RelativeLayout
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="0dp"
     android:background="@color/nav_bar_color"
     android:layout_height="270dp"
@@ -19,7 +19,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-
         android:src="@drawable/roundlogo"
         android:foregroundGravity="center"
         android:layout_height="120dp"
@@ -61,8 +60,8 @@
         android:layout_height="wrap_content"
         android:alpha="0.6"
         android:layout_weight="0.15"
-        android:layout_marginLeft="80dp"
-        android:src="@drawable/ic_my_location_black_24dp"/>
+        android:layout_marginLeft="50dp"
+        app:srcCompat="@drawable/ic_my_location_black_24dp"/>
     <TextView
         android:layout_marginTop="15dp"
         android:layout_width="100dp"
@@ -82,7 +81,6 @@
         android:text="Location"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:alpha="0.6"

@@ -97,7 +97,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
         getting_setting_details();
 
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/gadugi.ttf");
         TextView tvDetails, tvProfile, tvName, tvEmail,tvPassword, tvOld, tvNew;
         tvDetails = (TextView) findViewById(R.id.txt_details);
         tvDetails.setTypeface(tf);
@@ -427,10 +427,12 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                     tvMobile.setText(""+shared.getString("mobile", "NA"));
                     old_password_check=obj.getString("password");
 
-                    Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+                    Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/gadugi.ttf");
                     tvName.setTypeface(tf);
                     tvMobile.setTypeface(tf);
                     tvEmail.setTypeface(tf);
+                    name.setTypeface(tf);
+                    email.setTypeface(tf);
                     button_save_change.setTypeface(tf);
 
                 } catch (JSONException e) {

@@ -292,7 +292,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void Display(String s){
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void SetupBroadcastReceiver() {
