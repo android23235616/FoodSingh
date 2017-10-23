@@ -21,9 +21,9 @@
         android:padding="3dp"
         android:text="Attack! On the Food."/>
 
-<android.support.v4.widget.NestedScrollView android:layout_height="wrap_content"
+<android.support.v4.widget.NestedScrollView android:layout_height="match_parent"
     android:layout_width="wrap_content"
-
+    android:layout_weight="1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 <FrameLayout android:layout_width="match_parent"
@@ -121,9 +121,20 @@
         android:layout_gravity="bottom"
         android:layout_height="50dp"
         android:visibility="gone"
-        android:id="@+id/advertisement2"
+        android:id="@+id/advertisement1"
         />
 
+
+    <ImageView
+
+        android:scaleType="fitXY"
+        android:src="@drawable/dummy_ad"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/advertisement2"
+        />
 </FrameLayout>
 </android.support.v4.widget.NestedScrollView>
+
 </LinearLayout>

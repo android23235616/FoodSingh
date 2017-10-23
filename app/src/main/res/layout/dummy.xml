@@ -53,7 +53,7 @@
             android:layout_height="30dp"
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/cuisine"
+            android:src="@drawable/cuisine_"
             android:id="@+id/cuisine"
             android:scaleType="centerCrop"
             android:background="@color/background_color_new"

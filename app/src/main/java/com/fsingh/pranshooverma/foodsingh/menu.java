@@ -109,6 +109,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     SharedPreferences shared;
 
     ImageButton cuisine_btn,time_btn,combo_btn;
+
+     int c=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -136,7 +138,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ///////////////////////////////////////////////////////////////////////////////////////
          manipulatenavigationdrawer();
+
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
             MenuItem mi = m.getItem(i);
@@ -151,6 +156,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
 
         nav=true;
+
         attack = (TextView)findViewById(R.id.attack);
         initialize();
 
@@ -160,6 +166,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(checking_net_permission())
         {
             getting_categories();
+            Display("trigerring");
+
         }
         else {
             nav=false;
@@ -217,7 +225,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 recylerView.removeItemDecoration(itemDecoration);
                 categories.clear();
                 images.clear();
-
                 getting_categories();
 
             }
@@ -231,33 +238,49 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 if(counter_button%2==0)
                 {
                     //ununselected
-                    Toast.makeText(menu.this, "unselected", Toast.LENGTH_SHORT).show();
                     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
+                    getting_categories();
+
                 }
                 else
                 {
                     //selected
-                    Toast.makeText(menu.this, "selected", Toast.LENGTH_SHORT).show();
                     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
+                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+
+                    categories.clear();
+                    images.clear();
+
+                    send_to_adapter();
+
+                    for(int i=0;i<localdatabase.masterList.size();i++)
+                    {
+                        MasterMenuItems a=localdatabase.masterList.get(i);
+                        if(a.getCuisine().equals("1"))
+                        {
+                            if(categories.contains(a.getName()) & images.contains(a.getImage()))
+                            {
+
+                            }
+                            else
+                            {
+                                categories.add(a.getName());
+                                images.add(a.getImage());
+
+                            }
+
+                        }
+                    }
+                    Toast.makeText(menu.this, String.valueOf((localdatabase.masterList.size())), Toast.LENGTH_SHORT).show();
+                    send_to_adapter();
 
 
                 }
            //     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
-                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
-                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
-                categories.clear();
-                categories.clear();
-                images.clear();
-                for(int i=0;i<localdatabase.masterList.size();i++)
-                {
-                    MasterMenuItems a=localdatabase.masterList.get(i);
-                    if(a.getCuisine().equals("1"))
-                    {
-                        categories.add(a.getName());
-                        images.add(a.getImage());
-                    }
-                }
-                send_to_adapter();
 
             }
         });
@@ -270,28 +293,44 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 {
                     //unelected
                     time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
+                    getting_categories();
 
                 }
                 else
                 {
                     //selected
                     time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time));
+                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                    combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
+
+                    categories.clear();
+                    images.clear();
+
+                    send_to_adapter();
+                    for(int i=0;i<localdatabase.masterList.size();i++)
+                    {
+                        MasterMenuItems a=localdatabase.masterList.get(i);
+                        if(a.getTime().equals("1"))
+                        {
+                            if(categories.contains(a.getName()) & images.contains(a.getImage()))
+                            {
+
+                            }
+                            else
+                            {
+                                categories.add(a.getName());
+                                images.add(a.getImage());
+
+                            }
+                        }
+                    }
+                    send_to_adapter();
+
 
                 }
-                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
-                combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
-                categories.clear();
-                images.clear();
-                for(int i=0;i<localdatabase.masterList.size();i++)
-                {
-                    MasterMenuItems a=localdatabase.masterList.get(i);
-                    if(a.getTime().equals("1"))
-                    {
-                        categories.add(a.getName());
-                        images.add(a.getImage());
-                    }
-                }
-                send_to_adapter();
             }
         });
         combo_btn.setOnClickListener(new View.OnClickListener() {
@@ -303,30 +342,42 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 {
                     //unselected
                     combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
-
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
+                    getting_categories();
                 }
                 else
                 {
                     combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo_));
+                    cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
+                    time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
 
-                    //selected
-                }
+                    categories.clear();
+                    images.clear();
+                    send_to_adapter();
 
-                cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
-                time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
-
-                categories.clear();
-                images.clear();
-                for(int i=0;i<localdatabase.masterList.size();i++)
-                {
-                    MasterMenuItems a=localdatabase.masterList.get(i);
-                    if(a.getCombo().equals("1"))
+                    for(int i=0;i<localdatabase.masterList.size();i++)
                     {
-                        categories.add(a.getName());
-                        images.add(a.getImage());
+                        MasterMenuItems a=localdatabase.masterList.get(i);
+                        if(a.getCombo().equals("1"))
+                        {
+                            if(categories.contains(a.getName()) & images.contains(a.getImage()))
+                            {
+
+                            }
+                            else
+                            {
+                                categories.add(a.getName());
+                                images.add(a.getImage());
+
+                            }}
                     }
+                    send_to_adapter();
+
+
                 }
-                send_to_adapter();
+
             }
         });
 
@@ -525,7 +576,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_categories() {
-        getting_service_status();
+        if(c==0)
+        {
+            getting_service_status();
+            c=1;
+        }
+
         if (!swipeRefreshLayout.isRefreshing())
         {
             progress.setMessage("Fetching Data.....");
@@ -541,14 +597,25 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     swipeRefreshLayout.setRefreshing(false);
                 }
         int i;
+        categories.clear();
+        images.clear();
         for (i = 0; i < localdatabase.masterList.size(); i++) {
             MasterMenuItems a=localdatabase.masterList.get(i);
             String name=a.getName();
             String img=a.getImage();
-            categories.add(name);
-            images.add(img);
-            send_to_adapter();
+            if((categories.contains(a.getName())) & (images.contains(a.getImage())))
+            {
+                //nothing should be added
+            }
+            else
+            {
+                categories.add(name);
+                images.add(img);
+
+            }
         }
+        send_to_adapter();
+
     }
 
     private void getting_service_status() {
@@ -595,6 +662,7 @@ if(local.metaData!=null) {
     private void send_to_adapter()
     {
         adapter=new categoryAdapter(this,categories,images);
+        adapter.notifyDataSetChanged();
         recylerView.setAdapter(adapter);
         recylerView.setNestedScrollingEnabled(false);
 //        recylerView.addItemDecoration(itemDecoration);
