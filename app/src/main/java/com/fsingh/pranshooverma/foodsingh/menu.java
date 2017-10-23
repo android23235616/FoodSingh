@@ -619,6 +619,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void getting_service_status() {
+
+        if(localdatabase.delivery.equals("NA")){
+            showDialog(this, "Sorry, Currently\nnot available in this location.",R.drawable.locationdialog);
+        }
+
         if(progress.isShowing())
         {
             progress.dismiss();
@@ -640,7 +645,9 @@ if(local.metaData!=null) {
         attack.setBackgroundColor(Color.parseColor("#7ee591"));
         //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
     } else {
-        showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+        if(!localdatabase.delivery.equals("NA")) {
+            showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+        }
         Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Closed.");
         attack.setBackgroundColor(Color.parseColor("#dac598"));
