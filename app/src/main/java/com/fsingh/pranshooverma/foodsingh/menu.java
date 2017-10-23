@@ -277,9 +277,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     send_to_adapter();
 
 
-                }
-           //     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
-
+                }//     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine));
             }
         });
         time_btn.setOnClickListener(new View.OnClickListener() {
@@ -500,6 +498,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private void initialize() {
         ad1  = (ImageView)findViewById(R.id.advertisement1);
         ad2 = (ImageView)findViewById(R.id.advertisement2);
+        Glide.with(this).load(localdatabase.couponClassList.get(0).getUrl()).into(ad1);
+        Glide.with(this).load(localdatabase.couponClassList.get(1).getUrl()).into(ad2);
         pager = (ViewPager) findViewById(R.id.view_pager);
         pager.addOnPageChangeListener(this);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
