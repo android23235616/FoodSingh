@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,12 +15,18 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
+        android:background="#EAE19E"
+        app:itemTextColor="@color/grey"
+        app:itemTextAppearance="@style/NavDrawerTextStyle"
+        app:itemIconTint="@color/grey"
+
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_about_us"
-        app:menu="@menu/activity_about_us_drawer" />
+        app:headerLayout="@layout/nav_header_menu"
+        app:menu="@menu/activity_menu_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
+
 

@@ -15,7 +15,6 @@
         android:background="#dac598"
         android:fontFamily="monospace"
         android:gravity="center"
-
         android:textColor="@color/text_color"
         android:scrollbars="vertical"
         android:padding="3dp"

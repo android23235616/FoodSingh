@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,6 +44,7 @@ public class about_us extends AppCompatActivity
 TextView text_about;
     ImageView img_about;
     ProgressDialog progress;
+    NavigationView navigationView;
     public static TextView cartitemcount1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ TextView text_about;
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     ///////////////////////////////////////////////////////////////////////////////////////
         //coding
@@ -76,7 +81,60 @@ TextView text_about;
         }
 
 
+        Menu m = navigationView.getMenu();
+        for (int i = 0; i < m.size(); i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+
+        }
+        manipulatenavigationdrawer();
+
     }
+
+
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+
+    }
+
+    private void manipulatenavigationdrawer() {
+        View v = navigationView.getHeaderView(0);
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
+        TextView t = (TextView) v.findViewById(R.id.welcome);
+        t.setTypeface(tp);
+        TextView location = (TextView)v.findViewById(R.id.location);
+        location.setTypeface(tp);
+        location.setText(localdatabase.city);
+        ImageView back = (ImageView)v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawers();
+            }
+        });
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","_");
+        if(!name.equals("_")){
+            t.setText("Hello, "+name);
+        }
+    }
+
 
     private Boolean checking_net_permission() {
         final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
@@ -165,13 +223,13 @@ TextView text_about;
         int id = item.getItemId();
 
         if (id == R.id.menu) {
-            // Handle the camera action
-        } else if (id == R.id.cart) {
-
-            Intent a=new Intent(getApplicationContext(),cart.class);
+            Intent a=new Intent(getApplicationContext(),menu.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
-
+        } else if (id == R.id.cart) {
+            Intent a = new Intent(getApplicationContext(), cart.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
 
         } else if (id == R.id.orders) {
             Intent a=new Intent(getApplicationContext(),order_history.class);
@@ -218,9 +276,7 @@ TextView text_about;
             as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(as);
         } else if (id == R.id.AboutUs) {
-            Intent a = new Intent(getApplicationContext(), about_us.class);
-            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(a);
+
         }
         else if (id == R.id.Support) {
             Intent a = new Intent(getApplicationContext(), Support.class);
@@ -245,6 +301,7 @@ TextView text_about;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     private void RemoveTop(){
         requestWindowFeature(Window.FEATURE_NO_TITLE);

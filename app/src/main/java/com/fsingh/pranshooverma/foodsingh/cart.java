@@ -121,10 +121,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        progress = new ProgressDialog(this);
+
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        progress = new ProgressDialog(this);
         addBottomToolbar();
         ////////////////////////////////////////////////////////////////
 
