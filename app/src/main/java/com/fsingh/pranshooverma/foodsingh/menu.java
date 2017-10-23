@@ -466,7 +466,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+
+
     }
+
 
 
     private void SetupBroadcastReceiver() {
@@ -558,7 +561,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         drinks = (TextView) findViewById(R.id.drinks);
         if(localdatabase.drinks.equals("false")){
-            drinks.setVisibility(View.INVISIBLE);
+            drinks.setVisibility(View.GONE);
             drinks.setClickable(false);
         }
         progress=new ProgressDialog(this);
@@ -789,7 +792,9 @@ if(local.metaData!=null) {
                 super.onBackPressed();
             }
         }else{
-            finish();
+            int pid=android.os.Process.myPid();
+            android.os.Process.killProcess(pid);
+            finishAffinity();
         }
     }
 
@@ -1038,6 +1043,7 @@ if(local.metaData!=null) {
         super.onStart();
 
     }
+
 
 
 }
