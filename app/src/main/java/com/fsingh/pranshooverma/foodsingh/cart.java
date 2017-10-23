@@ -444,8 +444,9 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             }
 
             totalAmount = totalAmount + localdatabase.deliveryCharge;
-            discountAmount = totalAmount*((float)discountPercent/100);
-            totalAmount = totalAmount - (int)discountAmount;
+            localdatabase.amount = totalAmount;
+            discountAmount = localdatabase.amount*((float)discountPercent/100);
+            totalAmount = localdatabase.amount - (int)discountAmount;
 
             Log.d("DATA","discount -"+discountAmount);
             Log.d("DATA","discount % "+discountPercent);
@@ -467,8 +468,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 tvDisAmt.setText("₹"+(int)discountAmount);
                 //enterCoupon.setBackgroundResource(R.drawable.back_checkout_grey);
                 //enterCoupon.setClickable(false);
-                coupon.setText("COUPON APPLIED");
-                coupon.setFocusable(false);
+                //coupon.setText("COUPON APPLIED");
+                //coupon.setFocusable(false);
             }
 
 

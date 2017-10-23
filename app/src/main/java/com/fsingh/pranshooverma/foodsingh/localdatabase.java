@@ -80,4 +80,6 @@ public class localdatabase {
 
     public static String aboutImage;
 
+    public static int amount = 0;
+
 }
