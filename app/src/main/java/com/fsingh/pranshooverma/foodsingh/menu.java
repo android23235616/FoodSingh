@@ -166,7 +166,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(checking_net_permission())
         {
             getting_categories();
-            Display("trigerring");
 
         }
         else {
@@ -275,7 +274,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
                         }
                     }
-                    Toast.makeText(menu.this, String.valueOf((localdatabase.masterList.size())), Toast.LENGTH_SHORT).show();
                     send_to_adapter();
 
 
@@ -387,6 +385,27 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         if(localdatabase.couponClassList.size()>0){
             LoadBitmaps();
         }
+
+        ad1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String h= String.valueOf(localdatabase.couponClassList.get(0).getCouponCode());
+           //     Toast.makeText(menu.this, h, Toast.LENGTH_SHORT).show();
+                setClipboard(getApplicationContext(),h);
+                Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        ad2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String h= String.valueOf(localdatabase.couponClassList.get(1).getCouponCode());
+            //    Toast.makeText(menu.this, h, Toast.LENGTH_SHORT).show();
+                setClipboard(getApplicationContext(),h);
+                Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -937,6 +956,17 @@ if(local.metaData!=null) {
             }
         }
 
+
+    }
+    private void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
 
     }
 
