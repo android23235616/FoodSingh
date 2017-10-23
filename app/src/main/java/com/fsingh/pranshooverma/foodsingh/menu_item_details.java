@@ -147,7 +147,52 @@ public class menu_item_details extends AppCompatActivity
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(menu_item_details.this, "minus", Toast.LENGTH_SHORT).show();
+
+                if(isAvailable!=1){
+
+                 //   Toast.makeText(menu_item_details.this, "minus", Toast.LENGTH_SHORT).show();
+                    int quantiti = item.getQuantity();
+                    quantiti=quantiti-1;
+                    if(quantiti==0)
+                    {
+                     //cart se hat jayega
+                        quantity.setText(String.valueOf(quantiti));
+                        item.setQuantity(quantiti);
+                        for(int i=0;i<localdatabase.cartList.size();i++)
+                        {
+                            if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                            {
+                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                localdatabase.cartList.remove(localdatabase.cartList.get(i).getName());
+                                break;
+                            }
+
+                        }
+                    }
+                    else if(quantiti>0)
+                    {
+                        quantity.setText(String.valueOf(quantiti));
+                        item.setQuantity(quantiti);
+                        for(int i=0;i<localdatabase.cartList.size();i++)
+                        {
+                            if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
+                            {
+                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                localdatabase.cartList.remove(i);
+                                localdatabase.cartList.add(item);
+                                break;
+                            }
+
+                        }
+                        cartitemcount1.setText(localdatabase.cartList.size()+"");
+                    }
+                    else
+                    {
+                        Toast.makeText(menu_item_details.this, "Item is not present", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
             }
         });
 
@@ -318,7 +363,7 @@ public class menu_item_details extends AppCompatActivity
         isAvailable = b.getInt("avail");
         p = b.getInt("mainposition");
 
-        if (item_image.equals("")){
+        if (item_quantity.equals("")){
             quantity.setText("0");
         }
         else
@@ -370,13 +415,13 @@ public class menu_item_details extends AppCompatActivity
 
         }
 
-        Intent as=new Intent(this,menu_category_wise.class);
+       /* Intent as=new Intent(this,menu_category_wise.class);
         Bundle a=new Bundle();
         a.putString("category",item.getCategory());
         a.putInt("position", p);
         as.putExtras(a);
         startActivity(as);
-        finish();
+        finish();*/
     }
 
     @Override
@@ -396,6 +441,7 @@ public class menu_item_details extends AppCompatActivity
             public void onClick(View view) {
                 Intent ssd=new Intent(getApplicationContext(),cart.class);
                 startActivity(ssd);
+                finish();
             }
         });
 

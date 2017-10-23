@@ -232,7 +232,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     s.putExtras(b);
                     mContext.startActivity(s);
 
-                    ((Activity)mContext).finish();
+                   // ((Activity)mContext).finish();
                 }else {
                     Bundle b=new Bundle();
                     MenuItems men=menuItems.get(holder.getAdapterPosition());
