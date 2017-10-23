@@ -460,7 +460,9 @@ manipulatenavigationdrawer();
         int id = item.getItemId();
 
         if (id == R.id.menu) {
-            // Handle the camera action
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
         } else if (id == R.id.cart) {
 
             Intent a=new Intent(getApplicationContext(),cart.class);
@@ -469,10 +471,6 @@ manipulatenavigationdrawer();
 
 
         } else if (id == R.id.orders) {
-            Intent a=new Intent(getApplicationContext(),order_history.class);
-            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(a);
-
 
         } else if (id == R.id.SignOut) {
 
