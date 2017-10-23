@@ -233,8 +233,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
                 counter_button++;
+                counter_button2=0;
+                counter_button3=0;
 
-                if(counter_button%2==0)
+                if((counter_button)%2==0)
                 {
                     //ununselected
                     cuisine_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.cuisine_));
@@ -285,7 +287,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
 
                 counter_button2++;
-                if(counter_button2%2==0)
+                counter_button=0;
+                counter_button3=0;
+                if((counter_button2)%2==0)
                 {
                     //unelected
                     time_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.time_));
@@ -334,7 +338,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
               //  cuisine_btn.setBackgroundResource(R.drawable.menu_button);
                 counter_button3++;
-                if(counter_button3%2==0)
+                counter_button=0;
+                counter_button2=0;
+                if((counter_button3)%2==0)
                 {
                     //unselected
                     combo_btn.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.combo));
