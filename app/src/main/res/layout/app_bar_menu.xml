@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/background_color_new"
+    android:background="@color/background_color_new_"
     android:orientation="vertical"
 
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -29,7 +29,7 @@
 <FrameLayout android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:pp="http://schemas.android.com/tools"
-    android:background="@color/background_color_new"
+    android:background="@color/background_color_new_"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     xmlns:android="http://schemas.android.com/apk/res/android">

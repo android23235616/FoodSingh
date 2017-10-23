@@ -143,7 +143,6 @@ public class Tracker extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
 

@@ -442,6 +442,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
 
 
+
         LocationChecked = true;
         if(LocationChecked&&dataLoaded) {
             if(!redundent) {
@@ -469,6 +470,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         if(addresses.size()>0) {
             address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             city = addresses.get(0).getLocality();
+            Log.i("addressmine",addresses.get(0).getAdminArea()+", "+addresses.get(0).getFeatureName()+" , "+addresses.get(0).getLocality()+", "+address);
+            localdatabase.lane = address;
             return city;
         }
 

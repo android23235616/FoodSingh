@@ -11,7 +11,8 @@ import java.util.List;
  * Created by Tanmay on 16-09-2016.
  */
 public class localdatabase {
-    public static boolean loctioncheck = false, dataloaded = false;
+
+    public static String lane;
     public static TextView notifmount;
     public static int cache = 0;
     public static List<CouponClass> couponClassList = new ArrayList<>();

@@ -137,6 +137,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             getSides();
         }
 
+        if (localdatabase.metaData.getservice().equals("true")) {
+            checkout.setClickable(false);
+        }
+
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
