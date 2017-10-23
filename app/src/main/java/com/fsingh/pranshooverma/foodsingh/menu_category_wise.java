@@ -153,9 +153,14 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
         }
 
-        populateUI();
 
         SetupBroadcastReceiver();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        populateUI();
     }
 
     private void SetupBroadcastReceiver() {
@@ -534,7 +539,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
 
-    private void populateUI() {
+    public void populateUI() {
         MenuItemAdapter adapter = null;
 
         if(position!=-1) {

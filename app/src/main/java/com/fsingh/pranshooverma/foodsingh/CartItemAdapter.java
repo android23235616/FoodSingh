@@ -120,6 +120,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                     } */
                     cart.calculateTotal();
                     cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu_category_wise.updateCartIcon();
                     menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 }
 
@@ -143,6 +144,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                             localdatabase.cartList.remove(pos);
                             cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                             menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                            menu_category_wise.updateCartIcon();
                         }
                         cart.adapter.notifyDataSetChanged();
                     }
@@ -164,6 +166,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                 }
                 cart.sidesAdapter.notifyDataSetChanged();
                 cart.adapter.notifyDataSetChanged();
+                menu_category_wise.updateCartIcon();
                 cart.calculateTotal();
                 cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
