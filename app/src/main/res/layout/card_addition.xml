@@ -1,57 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:padding="10dp"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
     android:layout_marginTop="10dp"
     android:id="@+id/r1"
     android:background="@color/white">
 
-<RelativeLayout
-
-    android:id="@+id/r2"
-    android:padding="10dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/card_addition_edittext"
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
-        android:text="Apply"
-        android:id="@+id/apply"
-        android:fontFamily="monospace"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:layout_toRightOf="@+id/apply"
-        android:textSize="12dp"
-        android:id="@+id/txt_coupon_code"
-        android:text="FS001"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/bg_login"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
-        android:text="To Get Today's Off"
-        android:layout_below="@+id/apply"
-
-        android:id="@+id/faltuText"
-        android:fontFamily="monospace"/>
-
-</RelativeLayout>
 
     <RelativeLayout
         android:layout_toRightOf="@+id/r2"
-        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/r3"
@@ -59,31 +17,31 @@
 
 <LinearLayout
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:id="@+id/grp_cpn"
-    android:layout_height="wrap_content">
+    android:layout_height="40dp">
     <EditText
-        android:layout_width="100dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:textSize="10dp"
+        android:textSize="12dp"
         android:maxLength="16"
         android:id="@+id/code"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:background="@drawable/card_addition_edittext"
         android:fontFamily="monospace"
         android:textColor="@color/grey"
         android:hint="Coupon Code"/>
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="ENTER"
         android:clickable="true"
         android:fontFamily="monospace"
         android:id="@+id/enter"
         android:padding="3dp"
-        android:textSize="8dp"
+        android:textSize="12dp"
         android:background="@color/colorPrimary"/>
 
 </LinearLayout>
@@ -91,14 +49,15 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/l2"
+        android:id="@+id/grp_available_options"
         android:layout_below="@+id/r3"
       android:layout_toRightOf="@+id/r2"
         android:background="@color/colorPrimary"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -107,8 +66,8 @@
             android:textSize="10dp"
             android:textStyle="bold"
             android:paddingLeft="1dp"
-            android:gravity="right"
-
+            android:layout_gravity="center"
+            
             android:layout_marginLeft="5dp"
             android:text="Available Options"
             android:fontFamily="monospace"/>
@@ -116,24 +75,22 @@
         <TextView
             android:textSize="15dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="1dp"
-            android:text=">"
+            android:text=" >"
+            android:layout_gravity="center"
             android:textStyle="bold"
             android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             />
 
     </LinearLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/l1"
-        android:layout_below="@+id/l2"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/r2"
+        android:layout_below="@+id/grp_available_options"
+        android:gravity="end"
+        
         android:orientation="vertical">
 
         <LinearLayout

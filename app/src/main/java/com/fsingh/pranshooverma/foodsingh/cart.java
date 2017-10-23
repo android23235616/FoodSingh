@@ -81,7 +81,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     static RelativeLayout bottomBar;
     static EditText coupon;
     static Button enterCoupon;
-    TextView tvCouponCode;
+    //TextView tvCouponCode;
     static TextView tvDisAmt;
 
     static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
@@ -89,7 +89,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     static int totalAmount;
     static float discountAmount = 0;
     static int discountPercent = 0;
-
+    LinearLayout availableOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +130,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         //CODING CODING CODING
         initialize();
-        tvCouponCode.setText(localdatabase.couponCode);
+//        tvCouponCode.setText(localdatabase.couponCode);
         send_to_adapter();
 
         if (localdatabase.sidesList.size() == 0){
@@ -199,6 +199,14 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 }*/
             }
         });
+
+        availableOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(cart.this, NotificationActivity.class));
+            }
+        });
+
         SetupBroadcastReceiver();
     }
 
@@ -517,9 +525,9 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         bottomBar = (RelativeLayout) findViewById(R.id.place_order);
         coupon = (EditText) findViewById(R.id.code);
         enterCoupon = (Button) findViewById(R.id.enter);
-        tvCouponCode = (TextView) findViewById(R.id.txt_coupon_code);
+        //tvCouponCode = (TextView) findViewById(R.id.txt_coupon_code);
         tvDisAmt = (TextView) findViewById(R.id.dis_amt);
-
+        availableOptions = (LinearLayout) findViewById(R.id.grp_available_options);
 
         calculateTotal();
     }

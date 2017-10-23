@@ -114,7 +114,7 @@ public class NotificationActivity extends AppCompatActivity {
                 if(localdatabase.masterList.size()>0){
                     startActivity(new Intent(NotificationActivity.this, menu.class));
                 }
-                else if(localdatabase.masterList.size() == 0 && localdatabase.deliveryLocation.equals("NA")){
+                else if(localdatabase.masterList.size() == 0 && localdatabase.delivery.equals("NA")){
                     startActivity(new Intent(NotificationActivity.this, menu.class));
                 }
                 else {
@@ -192,8 +192,12 @@ public class NotificationActivity extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ssd=new Intent(getApplicationContext(),cart.class);
-                startActivity(ssd);
+                if(localdatabase.masterList.size()>0){
+                    startActivity(new Intent(NotificationActivity.this, cart.class));
+                }
+                else {
+                    startActivity(new Intent(NotificationActivity.this, Splash.class));
+                }
             }
         });
 

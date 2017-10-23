@@ -383,7 +383,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         SetupBroadcastReceiver();
 
         if(localdatabase.couponClassList.size()>0){
-            LoadBitmaps();
+          //  LoadBitmaps();
         }
 
         ad1.setOnClickListener(new View.OnClickListener() {
