@@ -110,7 +110,16 @@ public class NotificationActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
+                if(localdatabase.masterList.size()>0){
+                    startActivity(new Intent(NotificationActivity.this, menu.class));
+                }
+                else if(localdatabase.masterList.size() == 0 && localdatabase.deliveryLocation.equals("NA")){
+                    startActivity(new Intent(NotificationActivity.this, menu.class));
+                }
+                else {
+                    startActivity(new Intent(NotificationActivity.this, Splash.class));
+                }
             }
         });
 
