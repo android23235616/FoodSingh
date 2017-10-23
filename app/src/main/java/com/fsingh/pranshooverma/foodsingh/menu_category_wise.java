@@ -86,7 +86,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
         text = (TextView)findViewById(R.id.text);
-        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
+        Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/gadugi.ttf");
         text.setTypeface(tp);
         nav=true;
         /////////////////////////////////////////////////////////////////////////////////////////////
