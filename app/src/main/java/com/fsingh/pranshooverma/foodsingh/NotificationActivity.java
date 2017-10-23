@@ -34,12 +34,12 @@ public class NotificationActivity extends AppCompatActivity {
     Gson gson;
     NotificationLists notificationLists;
     SharedPreferences sharedPreferences;
-
+    public static int read=0;
     BroadcastReceiver broadcastReceiver;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
     android.support.design.widget.FloatingActionButton floatingActionButton;
-    TextView clear,notifamount;
+    static TextView clear,notifamount;
    // static TextView localdatabase.no;
 
     @Override
@@ -172,6 +172,10 @@ public class NotificationActivity extends AppCompatActivity {
             notificationAdapter.notifyDataSetChanged();
 
         }
+
+        int diff = notificationLists.getNotification().size()-localdatabase.cache;
+
+
 
         notifamount.setText(notificationLists.getNotification().size()+"");
     }

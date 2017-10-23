@@ -29,7 +29,7 @@
     <ImageView
         android:scaleType="centerCrop"
         android:src="@drawable/dummy_ad"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/advertisement1"
