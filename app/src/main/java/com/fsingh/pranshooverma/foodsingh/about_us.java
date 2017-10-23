@@ -64,13 +64,13 @@ TextView text_about;
 
         initialize();
 
-        text_about.setText(localdatabase.aboutText);
+        text_about.setText(localdatabase.about_text);
 
 
 
         if(checking_net_permission())
         {
-            Glide.with(about_us.this).load(localdatabase.aboutImage).skipMemoryCache(true).thumbnail(0.05f)
+            Glide.with(about_us.this).load(localdatabase.about_img).skipMemoryCache(true).thumbnail(0.05f)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(img_about);
 
         }

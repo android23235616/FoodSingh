@@ -14,7 +14,9 @@ public class localdatabase {
 
     public static String lane;
     public static TextView notifmount;
+    public static String delivery = "";
     public static int cache = 0;
+    public static String about_text, about_img;
     public static List<CouponClass> couponClassList = new ArrayList<>();
     public static final String url[] = {
             "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,

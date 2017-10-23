@@ -125,7 +125,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
            if(!isLocationEnabled(this)){
                 GoToLocations();
            }else{
-               Initiate_Meta_Data();
+             //  Initiate_Meta_Data();
            }
         }
 
@@ -141,17 +141,22 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onResponse(String response) {
 
+            Log.i("mainresponse", response);
+
                 dataLoaded = true;
 
                 try {
                     JSONObject mainObject = new JSONObject(response);
-                    localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
+                    localdatabase.about_text =mainObject.getString("about_text");
+                    localdatabase.about_img = mainObject.getString("about_image");
+                            localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
                     );
 
                     localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
                     localdatabase.aboutText = mainObject.getString("about_text");
                     localdatabase.aboutImage = mainObject.getString("about_image");
+                    localdatabase.delivery = mainObject.getString("location");
 
                     JSONArray Categories = mainObject.getJSONArray("categories");
                     for (int i=0; i<Categories.length(); i++){
@@ -174,7 +179,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                             price = miniTempObject.getString("price");
                             image_ = miniTempObject.getString("image");
                             status = miniTempObject.getString("status");
-                            detail = miniTempObject.getString("detail");
+                            //detail = miniTempObject.getString("detail");
+                            detail = "";
                             MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
                             menuItemsList.add(menuItems);
                             String available = miniTempObject.getString("status");
@@ -205,6 +211,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 } catch (Exception e) {
                     e.printStackTrace();
                     Display(e.toString());
+                    Log.i("mainresponse",e.toString());
                 }finally {
 
                     if(LocationChecked&&dataLoaded) {
@@ -223,6 +230,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onErrorResponse(VolleyError error) {
                 Display(error.toString());
+                Log.i("mainresponse", error.toString());
+
             }
         });
 
@@ -240,7 +249,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             LocationPermission = false;
         } else {
             LocationPermission = true;
-            New_Details("","",constants.main_url);
+            New_Details("","",constants.main_url+"?latitude="+localdatabase.deliveryLocation.getLatitude()+"&longitude="+localdatabase.deliveryLocation.getLongitude());
         }
 
     }
@@ -385,7 +394,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             showDialog2(this,"You Need To Enable\n Your loction to use this Application.");
 
         }else{
-            Initiate_Meta_Data();
+           // Initiate_Meta_Data();
         }
     }
 
@@ -415,7 +424,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 if(!isLocationEnabled(this)){
                     GoToLocations();
                 }else{
-                    Initiate_Meta_Data();
+                   // Initiate_Meta_Data();
                 }
             }
 
@@ -444,13 +453,14 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
 
         LocationChecked = true;
-        if(LocationChecked&&dataLoaded) {
+        /*if(LocationChecked&&dataLoaded) {
             if(!redundent) {
                 redundent = true;
                 startActivity(new Intent(Splash.this, menu.class));
                 finish();
             }
-        }
+        }*/
+        Initiate_Meta_Data();
 
 
     }
