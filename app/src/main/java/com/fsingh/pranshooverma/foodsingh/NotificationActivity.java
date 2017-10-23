@@ -116,16 +116,21 @@ public class NotificationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
                 if(localdatabase.masterList.size()>0){
-                    startActivity(new Intent(NotificationActivity.this, menu.class));
-                    finish();
+                    Intent a=new Intent(NotificationActivity.this,menu.class);
+                            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   startActivity(a);
                 }
                 else if(localdatabase.masterList.size() == 0 && localdatabase.delivery.equals("NA")){
-                    startActivity(new Intent(NotificationActivity.this, menu.class));
-                    finish();
+                    Intent a=new Intent(NotificationActivity.this,menu.class);
+                    a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(a);
+
                 }
                 else {
-                    startActivity(new Intent(NotificationActivity.this, Splash.class));
-                    finish();
+                    Intent a=new Intent(NotificationActivity.this,Splash.class);
+                    a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(a);
+
                 }
             }
         });
@@ -216,7 +221,6 @@ public class NotificationActivity extends AppCompatActivity {
         });
 
         ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
-
 
 
         notifamount = (TextView)actionView.findViewById(R.id.notification_badge);

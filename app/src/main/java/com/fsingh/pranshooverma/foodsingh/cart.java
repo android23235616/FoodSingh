@@ -762,7 +762,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View v) {
                 Intent intent = new Intent(cart.this, menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -773,7 +773,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View v) {
                 Intent intent = new Intent(cart.this, order_history.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              //  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -785,7 +785,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View v) {
                 Intent intent = new Intent(cart.this, Support.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
