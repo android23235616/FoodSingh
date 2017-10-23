@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 public class Tracker extends AppCompatActivity {
 
-    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics;
+    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics,issue;
     ImageView trackimage;
     Typeface tf,tf1;
     TextView toolbarText;
@@ -69,6 +69,7 @@ public class Tracker extends AppCompatActivity {
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
         toolbarText = (TextView)findViewById(R.id.toolbarText);
+        issue = (TextView)findViewById(R.id.issue);
         toolbarText.setTypeface(tf);
         toolbarText.setText("Orders");
         order_no = setTextId(this.order_no,R.id.order_number);
@@ -133,6 +134,15 @@ public class Tracker extends AppCompatActivity {
             }
         });
 
+
+        issue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), Support.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
 
     }
 
