@@ -106,6 +106,14 @@ public class NotificationActivity extends AppCompatActivity {
 
         setUpReceiver();
 
+        ImageView back = (ImageView) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void setUpReceiver() {
