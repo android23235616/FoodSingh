@@ -47,7 +47,7 @@ public class menu_item_details extends AppCompatActivity
 
     ImageView plus,minus,item_image;
     int p;
-    TextView item_name,item_price,quantity,cartitemcount1,unav;
+    TextView item_name,item_price,quantity,cartitemcount1,unav,notifamout;
     String name,price,image,item_quantity;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -75,6 +75,7 @@ public class menu_item_details extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RemoveTop();
+        
         setContentView(R.layout.activity_menu_item_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -235,17 +236,17 @@ public class menu_item_details extends AppCompatActivity
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+               // notifamout = (TextView)actionView.findViewById(R.id.notification_badge);
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamout.setVisibility(View.VISIBLE);
+                    notifamout.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamout.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -409,12 +410,12 @@ public class menu_item_details extends AppCompatActivity
 
 
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamout = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifamout.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamout.setVisibility(View.VISIBLE);
+            notifamout.setText(localdatabase.notifications+"");
         }
 
         return true;

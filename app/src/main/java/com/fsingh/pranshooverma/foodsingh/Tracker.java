@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 public class Tracker extends AppCompatActivity {
 
-    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics,issue;
+    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics,issue,notifamount;
     ImageView trackimage;
     Typeface tf,tf1;
     TextView toolbarText;
@@ -64,6 +64,7 @@ public class Tracker extends AppCompatActivity {
         RemoveTop();
 
         setContentView(R.layout.orders);
+        
 
         addBottomToolbar();
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
@@ -143,6 +144,8 @@ public class Tracker extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        
+        SetupBroadcastReceiver();
     }
 
 
@@ -177,12 +180,12 @@ public class Tracker extends AppCompatActivity {
 
 
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifamount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamount.setVisibility(View.VISIBLE);
+            notifamount.setText(localdatabase.notifications+"");
         }
 
         return true;
@@ -238,29 +241,7 @@ public class Tracker extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    private void processFoodNames(String item) {
-        fooditems.append(" ");
-        //Display(item);
-        String[] foods = item.split(",");
-        Pattern p1 = Pattern.compile("\\d+");
-        for (int i=0; i<foods.length; i++){
-            foods[i].replace("(B\\/L)","k");
-            Display(foods[i]+" 1here");
-            Matcher m = p1.matcher(foods[i]);
-            if(m.find()) {
-                Display(foods[i]+" 2here");
-                String qt = m.group(0);
-
-                String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
-                fooditems.append(name + "\n");
-                foodqt.append(qt + "\n");
-            }else{
-                Display(foods[i]+" 3here");
-                Display(foods[i]);
-            }
-
-        }
-    }
+ 
 
     private void test(String foods1){
        // String foods1 = "DRAGON CHICKEN (B\\/L) x1, HUNAN CHICKEN (B\\/L) x1, Coke 750ml x1";
@@ -336,17 +317,17 @@ public class Tracker extends AppCompatActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+                notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamount.setVisibility(View.VISIBLE);
+                    notifamount.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamount.setVisibility(View.INVISIBLE);
                 }
 
             }

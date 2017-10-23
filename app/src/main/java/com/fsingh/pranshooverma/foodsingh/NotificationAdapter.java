@@ -33,7 +33,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     List<NotificationItem> notificationItems = new ArrayList<>();
     Context c;
      NotificationItem item=null;
-   // List<NotificationItem> notificationItemsUnread = new ArrayList<>();
+
 
     public NotificationAdapter(List<NotificationItem> mainList,Context c){
         this.notificationItems = mainList;
@@ -42,6 +42,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        localdatabase.cache=0;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notificationcard, parent,false);
 
         return new ViewHolder(v);
@@ -125,6 +126,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 holder.body1.setTypeface(null, Typeface.NORMAL);
                 //holder.title2.setTypeface(null, Typeface.NORMAL);
                 holder.body2.setTypeface(null, Typeface.NORMAL);
+
+               localdatabase.cache++;
 
             }else{
 

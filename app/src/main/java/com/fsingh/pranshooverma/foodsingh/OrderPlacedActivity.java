@@ -11,6 +11,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
 
     TextView tvOrderID, tvOrderAmount;
     Button btnHome,  btnTrack;
+    FoodItem itemss;
 
 
 
@@ -26,6 +27,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
         btnTrack = (Button) findViewById(R.id.btn_track);
 
         Intent intent = getIntent();
+        itemss = intent.getExtras().getParcelable("object");
         String orderId = intent.getStringExtra("id");
         String orderAmount = intent.getStringExtra("amount");
         tvOrderID.setText("FS"+orderId);
@@ -39,6 +41,18 @@ public class OrderPlacedActivity extends AppCompatActivity {
             }
         });
 
+
+        btnTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), Tracker.class);
+                Bundle b = new Bundle();
+                b.putParcelable("object",itemss);
+                i.putExtras(b);
+                startActivity(i);
+                finish();
+            }
+        });
 
     }
 

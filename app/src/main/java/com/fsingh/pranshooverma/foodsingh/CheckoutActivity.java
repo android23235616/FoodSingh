@@ -45,6 +45,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private Button btnPlaceOrder, btnHome, btnWork, btnCash, btnOnline;
     private String statusAddress = "HOME", statusPayment = "CASH";
     private TextView tvTotalAmount;
+    FoodItem getItems;
     private int totalAmount;
     public static TextView cartitemcount1;
     BroadcastReceiver broadcastReceiver;
@@ -289,6 +290,10 @@ public class CheckoutActivity extends AppCompatActivity {
                         intent.putExtra("amount", ""+totalAmount);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        FoodItem myItem = new FoodItem(id,items,totalAmount+"",address,"Just Now");
+                        Bundle b = new Bundle();
+                        b.putParcelable("object",myItem);
+                        intent.putExtras(b);
                         startActivity(intent);
                         finish();
                     }else{
@@ -382,6 +387,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 Intent intent = new Intent(CheckoutActivity.this, menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(intent);
                 finish();
             }

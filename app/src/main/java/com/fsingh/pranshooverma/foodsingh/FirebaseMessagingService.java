@@ -46,7 +46,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Map<String,String> map = remoteMessage.getData();
 
-        Log.i("chutiaa","chutia");
+
 
         String img = map.get("icon");
 
@@ -196,12 +196,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             Log.i("nullchecker","not null");
         }
         Intent menu = new Intent();
+
         menu.setAction(constants.broaadcastReceiverMenu);
-        menu.putExtra("data",localdatabase.notifications);
         sendBroadcast(menu);
         Intent notification = new Intent();
         notification.setAction(constants.broadCastReceiverNotification);
         sendBroadcast(notification);
+
+        Intent cart = new Intent();
+        cart.setAction(constants.broaadcastReceiverMenu2);
+        sendBroadcast(cart);
+
+
 
     }
 

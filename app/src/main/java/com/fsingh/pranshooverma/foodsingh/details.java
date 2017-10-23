@@ -62,7 +62,8 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     View actionView;
     NavigationView navigationView;
     SharedPreferences shared;
-    public static TextView cartitemcount1;
+    public static TextView cartitemcount1,notifamount;
+    
     TextView tvName, tvEmail, tvMobile;
 
     @Override
@@ -72,6 +73,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
 
         setContentView(R.layout.activity_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -171,17 +173,17 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamount.setVisibility(View.VISIBLE);
+                    notifamount.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamount.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -226,12 +228,12 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
             }
         });
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+           notifamount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamount.setVisibility(View.VISIBLE);
+           notifamount.setText(localdatabase.notifications+"");
         }
 
         return true;
@@ -245,6 +247,12 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
     }
 
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);

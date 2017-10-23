@@ -58,7 +58,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     ProgressDialog progress;
 
-    public static TextView cartitemcount, toolbarText,text;
+    public static TextView cartitemcount, toolbarText,text,notifamount;
 
     RecyclerView recyclerView;
     List<String> dish_name=new ArrayList<>();
@@ -78,6 +78,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -166,17 +167,17 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamount.setVisibility(View.VISIBLE);
+                    notifamount.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamount.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -448,12 +449,12 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifamount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamount.setVisibility(View.VISIBLE);
+            notifamount.setText(localdatabase.notifications+"");
         }
 
         return true;
