@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -494,9 +495,11 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             startActivity(a);
 
         } else if (id == R.id.cart) {
+
             Intent a=new Intent(getApplicationContext(),cart.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
+
 
         } else if (id == R.id.orders) {
             Intent a=new Intent(getApplicationContext(),order_history.class);
@@ -504,9 +507,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             startActivity(a);
 
 
-
         } else if (id == R.id.SignOut) {
-
 
             shared.edit().remove("address").apply();
             shared.edit().remove("password").apply();
@@ -518,18 +519,61 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             startActivity(intent);
             finish();
 
+
         }
         else if(id==R.id.details)
         {
             Intent a=new Intent(getApplicationContext(),details.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
-        }
 
+        }else if(id==R.id.notifications){
+            final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(a);
+                }
+            },1000);
+
+        }else if(id==R.id.favNav){
+            Intent as=new Intent(this,menu_category_wise.class);
+            Bundle a=new Bundle();
+            a.putString("category","Favourites");
+            a.putInt("position", -1);
+            as.putExtras(a);
+            as.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(as);
+        } else if (id == R.id.AboutUs) {
+            Intent a = new Intent(getApplicationContext(), about_us.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if (id == R.id.Support) {
+            Intent a = new Intent(getApplicationContext(), Support.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
+        }
+        else if(id==R.id.share)
+        {
+            try {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "FoodSingh");
+                String sAux = "\nLet me recommend you this application\n\n";
+                sAux = sAux + "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh&hl=en\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public static void updateCartIcon(){
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
