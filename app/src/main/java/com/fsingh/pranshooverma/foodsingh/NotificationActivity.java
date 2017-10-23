@@ -117,12 +117,15 @@ public class NotificationActivity extends AppCompatActivity {
                 //Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
                 if(localdatabase.masterList.size()>0){
                     startActivity(new Intent(NotificationActivity.this, menu.class));
+                    finish();
                 }
                 else if(localdatabase.masterList.size() == 0 && localdatabase.delivery.equals("NA")){
                     startActivity(new Intent(NotificationActivity.this, menu.class));
+                    finish();
                 }
                 else {
                     startActivity(new Intent(NotificationActivity.this, Splash.class));
+                    finish();
                 }
             }
         });
@@ -207,6 +210,7 @@ public class NotificationActivity extends AppCompatActivity {
                 }
                 else {
                     startActivity(new Intent(NotificationActivity.this, Splash.class));
+                    finish();
                 }
             }
         });
