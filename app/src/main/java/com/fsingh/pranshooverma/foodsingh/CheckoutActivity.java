@@ -386,10 +386,7 @@ public class CheckoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CheckoutActivity.this, menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -398,9 +395,7 @@ public class CheckoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CheckoutActivity.this, order_history.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -410,9 +405,7 @@ public class CheckoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CheckoutActivity.this, Support.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
 
