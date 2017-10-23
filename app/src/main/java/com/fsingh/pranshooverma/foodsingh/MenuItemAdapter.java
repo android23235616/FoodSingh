@@ -173,7 +173,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
                     }
 
-                    menu_category_wise.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu_category_wise.updateCartIcon();
                     menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 } else {
                     Toast.makeText(mContext, "Sorry, item not available.", Toast.LENGTH_SHORT).show();
@@ -195,11 +195,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         int pos = checkCart(item);
                         if(pos != -1){
                             localdatabase.cartList.remove(pos);
+                            menu_category_wise.updateCartIcon();
+                            menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                         }
                     }
 
-                    menu_category_wise.cartitemcount.setText(String.valueOf(localdatabase.cartList.size()));
-                    menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+
                 }
             }
         });

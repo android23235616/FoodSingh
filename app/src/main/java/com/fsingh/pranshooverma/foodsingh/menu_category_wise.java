@@ -526,6 +526,10 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         return true;
     }
 
+    public static void updateCartIcon(){
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+    }
+
 
 
 
