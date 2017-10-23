@@ -158,12 +158,20 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
             //    Toast.makeText(cart.this,String.valueOf(sum), Toast.LENGTH_SHORT).show();
 
-                Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
-                aas.putExtra("key",0);
-                Bundle a=new Bundle();
-                a.putInt("total_amount", totalAmount);
-                aas.putExtras(a);
-                startActivity(aas);
+                if(localdatabase.amount==0)
+                {
+                    Display("Sorry No item in cart, you cant proceed");
+                }
+                else
+                {
+                    Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
+                    aas.putExtra("key",0);
+                    Bundle a=new Bundle();
+                    a.putInt("total_amount", totalAmount);
+                    aas.putExtras(a);
+                    startActivity(aas);
+                }
+
 
             }
         });
