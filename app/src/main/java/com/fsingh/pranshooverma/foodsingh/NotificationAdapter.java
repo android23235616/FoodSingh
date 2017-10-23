@@ -33,7 +33,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     List<NotificationItem> notificationItems = new ArrayList<>();
     Context c;
      NotificationItem item=null;
-
+    static int i=0;
 
     public NotificationAdapter(List<NotificationItem> mainList,Context c){
         this.notificationItems = mainList;
@@ -129,8 +129,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                localdatabase.cache++;
 
+
+
+
             }else{
 
+                i++;
 
                 holder.title1.setTypeface(null, Typeface.BOLD);
                 holder.body1.setTypeface(null, Typeface.BOLD);
@@ -138,11 +142,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 holder.body2.setTypeface(null, Typeface.BOLD);
 
 
+
             }
 
             holder.knowmore2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    i--;
+
+                    if(i==0){
+
+                    }else{
+
+                    }
+
                     item = notificationItems.get(holder.getAdapterPosition());
                    item.setRead(true);
                     notificationItems.remove(item);
@@ -164,9 +177,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.knowmore1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                i--;
+
+
                 item.setRead(true);
                 notificationItems.remove(item);
                 notificationItems.add(holder.getAdapterPosition(),item);
+
+
                 save();
                 decrement();
                 holder.body1.setTypeface(null, Typeface.NORMAL);

@@ -53,6 +53,7 @@ public class Tracker extends AppCompatActivity {
     TextView cartitemcount1;
     String itemsString="", itemnames = "";
     BroadcastReceiver broadcastReceiver;
+    String drivern, driverm;
     boolean megacheck = false;
 
     Intent i;

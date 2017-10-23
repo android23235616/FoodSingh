@@ -49,6 +49,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putParcelable("object",itemss);
                 i.putExtras(b);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 finish();
             }
