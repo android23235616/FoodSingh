@@ -39,13 +39,14 @@ public class NotificationActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
     android.support.design.widget.FloatingActionButton floatingActionButton;
-    TextView clear;
+    TextView clear,notifamount;
    // static TextView localdatabase.no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RemoveTop();
+       
         setContentView(R.layout.activity_notification);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,12 +93,15 @@ public class NotificationActivity extends AppCompatActivity {
                 edit.putString(constants.foodsinghNotif,"");
                 edit.putInt(constants.notifAmount,0);
                 localdatabase.notifications = 0;
-                localdatabase.notifmount.setVisibility(View.INVISIBLE);
+               notifamount.setVisibility(View.INVISIBLE);
                 edit.apply();
                 Intent i = new Intent();
                 i.setAction(constants.menu2BroadcastReceiver);
-                i.putExtra("data",0);
+
                 sendBroadcast(i);
+                Intent q1 = new Intent();
+                q1.setAction(constants.broadCastReceiverNotification2);
+                sendBroadcast(q1);
                 recreate();
 
             }
@@ -168,6 +172,8 @@ public class NotificationActivity extends AppCompatActivity {
             notificationAdapter.notifyDataSetChanged();
 
         }
+
+        notifamount.setText(notificationLists.getNotification().size()+"");
     }
 
     private void RemoveTop(){
@@ -201,12 +207,12 @@ public class NotificationActivity extends AppCompatActivity {
 
 
 
-         localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+           notifamount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+           notifamount.setVisibility(View.VISIBLE);
+           notifamount.setText(localdatabase.notifications+"");
         }
 
         return true;

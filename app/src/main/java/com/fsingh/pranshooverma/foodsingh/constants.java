@@ -12,9 +12,12 @@ import java.util.List;
 public class constants {
     public static final String menu2BroadcastReceiver = "jhffjfjfjf";
 
-    public static final String broadCastReceiverNotification = "askdkjAKDSHKASD";
-    public static final String notifAmount = "jhsdjds";
     public static final String broaadcastReceiverMenu = "com.exaample.menu";
+    public static final String broadCastReceiverNotification = "askdkjAKDSHKASD";
+    public static final String broaadcastReceiverMenu2 = "com.exaamalsdhlasdkhjaple.menu";
+    public static final String broadCastReceiverNotification2 = "askdahsdlasdkjAKDSHKASD";
+    public static final String notifAmount = "jhsdjds";
+
     public static final String fav = "akjsdy0012";
     public static final String foodsinghNotif = "asdasdasd";
     private static final String api_key = "AAAAeTtmoZw:APA91bGuRszKxQmOydJil94AdIycgoAGMXFz-IASW0U8wea-PYS7eZCwsUuOLWAULQ6d6OwUhk6CtsvpwCcrGTnOVERQbb0v6gM4awUBBLtySimtAPG_Li8RA0zw-U2uaOupMN8quG-K";

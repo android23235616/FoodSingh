@@ -76,6 +76,7 @@ TextView text_about;
         }
 
 
+
     }
 
     private Boolean checking_net_permission() {

@@ -433,9 +433,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                         localdatabase.notifmount.setText(localdatabase.notifications+"");
 
 
-                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
+                    Log.i("broadcastreceiver1menu", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
                 }
 
             }
@@ -682,7 +683,7 @@ if(local.metaData!=null) {
 
     private void Display(String s)
     {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void send_to_adapter()

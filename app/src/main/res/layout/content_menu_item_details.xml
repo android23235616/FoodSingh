@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="220dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/foodsingh" />
@@ -37,7 +37,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@drawable/buttonbackground"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="190dp"
         />
 
 </FrameLayout>
@@ -130,6 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:text="Add to Favourites"
         android:background="#F39C12"

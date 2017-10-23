@@ -32,7 +32,7 @@ public class Support extends AppCompatActivity {
     private WebView mWebView;
     private Random rand = new Random();
     private int value = rand.nextInt(10000);
-    public static TextView cartitemcount1;
+    public static TextView cartitemcount1,notifamounts;
     BroadcastReceiver broadcastReceiver;
     View actionView;
     ProgressDialog progress;
@@ -83,17 +83,17 @@ public class Support extends AppCompatActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+              //  notifamounts = (TextView)actionView.findViewById(R.id.notification_badge);
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamounts.setVisibility(View.VISIBLE);
+                    notifamounts.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamounts.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -138,12 +138,12 @@ public class Support extends AppCompatActivity {
             }
         });
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamounts = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifamounts.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamounts.setVisibility(View.VISIBLE);
+            notifamounts.setText(localdatabase.notifications+"");
         }
 
         return true;

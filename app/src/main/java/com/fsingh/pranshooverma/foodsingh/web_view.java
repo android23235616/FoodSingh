@@ -41,7 +41,7 @@ public class web_view extends AppCompatActivity
     WebView  browser;
     String url;
     ProgressDialog progress;
-    public static TextView cartitemcount1;
+    public static TextView cartitemcount1,notifamount;
     NavigationView navigationView;
     View actionView;
     BroadcastReceiver broadcastReceiver;
@@ -125,6 +125,7 @@ public class web_view extends AppCompatActivity
 
     }
 
+    
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
@@ -157,17 +158,17 @@ public class web_view extends AppCompatActivity
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+               // notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                    notifamount.setVisibility(View.VISIBLE);
+                    notifamount.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                    notifamount.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -212,12 +213,12 @@ public class web_view extends AppCompatActivity
             }
         });
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifamount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifamount.setVisibility(View.VISIBLE);
+            notifamount.setText(localdatabase.notifications+"");
         }
 
         return true;

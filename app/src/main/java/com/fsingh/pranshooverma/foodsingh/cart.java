@@ -72,11 +72,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     Toolbar toolbar;
     static Button checkout;
     SharedPreferences shared;
+
     NavigationView navigationView;
     public static CartItemAdapter adapter;
     ProgressDialog progress;
     View actionView;
-    public static TextView cartitemcount1;
+    public static TextView cartitemcount1,notifmount;
     BroadcastReceiver broadcastReceiver;
     static RelativeLayout bottomBar;
     static EditText coupon;
@@ -137,8 +138,13 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             getSides();
         }
 
-        if (localdatabase.metaData.getservice().equals("true")) {
-            checkout.setClickable(false);
+        if(localdatabase.metaData!=null) {
+
+            if (localdatabase.metaData.getservice().equals("true")) {
+                checkout.setClickable(false);
+            }
+        }else{
+            Display("Sorry, Some Problem occured. Please start the app again.");
         }
 
         checkout.setOnClickListener(new View.OnClickListener() {
@@ -269,35 +275,39 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+    private void Display(String s){
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
+
     private void SetupBroadcastReceiver() {
 
         IntentFilter intentFilter = new IntentFilter();
 
-        intentFilter.addAction(constants.broaadcastReceiverMenu);
+        intentFilter.addAction(constants.broaadcastReceiverMenu2);
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
-                if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
+
+                    if (intent.getAction().equals(constants.broaadcastReceiverMenu2)) {
 
 
-                    localdatabase.notifmount.setVisibility(View.VISIBLE);
-                    localdatabase.notifmount.setText(localdatabase.notifications+"");
+                       notifmount.setVisibility(View.VISIBLE);
+                       notifmount.setText(localdatabase.notifications + "");
 
 
-                    Log.i("broadcastreceiver1", localdatabase.notifications+"");
-                }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
-                    localdatabase.notifmount.setVisibility(View.INVISIBLE);
+                        Log.i("broadcastreceiver1", localdatabase.notifications + "");
+                    } else if (intent.getAction().equals(constants.broadCastReceiverNotification2)) {
+                       notifmount.setVisibility(View.INVISIBLE);
+                    }
+
                 }
-
-            }
 
 
         };
 
         IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter2.addAction(constants.menu2BroadcastReceiver);
+        intentFilter2.addAction(constants.broadCastReceiverNotification2);
 
         registerReceiver(broadcastReceiver,intentFilter);
         registerReceiver(broadcastReceiver,intentFilter2);
@@ -350,12 +360,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
-        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
-            localdatabase.notifmount.setVisibility(View.INVISIBLE);
+            notifmount.setVisibility(View.INVISIBLE);
         }else {
-            localdatabase.notifmount.setVisibility(View.VISIBLE);
-            localdatabase.notifmount.setText(localdatabase.notifications+"");
+            notifmount.setVisibility(View.VISIBLE);
+            notifmount.setText(localdatabase.notifications+"");
         }
 
         return true;
@@ -472,6 +482,13 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(broadcastReceiver!=null)
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void manipulatenavigationdrawer() {
