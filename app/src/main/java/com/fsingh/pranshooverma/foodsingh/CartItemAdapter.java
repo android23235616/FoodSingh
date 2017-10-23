@@ -166,7 +166,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                 }
                 cart.sidesAdapter.notifyDataSetChanged();
                 cart.adapter.notifyDataSetChanged();
-                menu_category_wise.updateCartIcon();
+                if(menu_category_wise.cartitemcount1 != null) {
+                    menu_category_wise.updateCartIcon();
+                }
                 cart.calculateTotal();
                 cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
