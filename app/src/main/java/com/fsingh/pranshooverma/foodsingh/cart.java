@@ -202,6 +202,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 couponDilog = new ProgressDialog(v.getContext());
                 couponDilog.setMessage("Validating your coupon.");
                 getDiscount(constants.coupon_url);
+
                /* if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
                     discountPercent = localdatabase.discount;
                     calculateTotal();
@@ -226,11 +227,24 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void getDiscount(String url){
 
+        if(progress.isShowing())
+        {
+            progress.dismiss();
+        }
+        progress.setMessage("Validating Coupon Code..");
+        progress.setCancelable(false);
+        progress.show();
+
         final SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
 
         StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
 
                 if(!couponDilog.isShowing()){
                     couponDilog.dismiss();
@@ -270,6 +284,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+
                 if(!couponDilog.isShowing()){
                     couponDilog.dismiss();
                 }
