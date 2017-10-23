@@ -1,7 +1,7 @@
 <RelativeLayout
     android:layout_marginTop="0dp"
     android:background="@color/nav_bar_color"
-    android:layout_height="250dp"
+    android:layout_height="270dp"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -45,6 +45,7 @@
     android:background="@color/red"/>
 
     <LinearLayout
+        android:id="@+id/l1"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/welcome"
         android:layout_width="match_parent"
@@ -80,4 +81,11 @@
         android:textColor="@color/red"
         android:text="Location"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.6"
+        android:layout_below="@+id/l1"
+        android:background="@color/red"/>
 </RelativeLayout>

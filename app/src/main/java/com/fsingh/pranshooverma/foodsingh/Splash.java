@@ -9,7 +9,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Network;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.NoCache;
 import com.fsingh.pranshooverma.foodsingh.BuildConfig;
 
 import android.content.pm.PackageManager;
@@ -75,7 +81,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    RequestQueue req;
     ProgressBar progressBar;
+    StringRequest sr;
     Dialog dialog;
     int i=0;
     Context ctx;
@@ -98,6 +106,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         checker = false;
         rec = false;
         ctx = this;
+       // req = Volley.newRequestQueue(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -137,11 +146,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     private void New_Details(String name, String number, final String main_url) {
         i++;
-        AppController.getInstance().getRequestQueue().getCache().clear();
+       // AppController.getInstance().getRequestQueue().getCache().clear();
 
-        RequestQueue request = AppController.getInstance().getRequestQueue();
+       // RequestQueue request = AppController.getInstance().getRequestQueue();
+        Cache cache = new DiskBasedCache(getCacheDir(),0);
+        Network network = new BasicNetwork(new HurlStack());
 
-        StringRequest st = new StringRequest(Request.Method.GET, main_url, new Response.Listener<String>() {
+        req = new RequestQueue(cache,network);
+        req.start();
+
+        sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -219,7 +233,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
                     for(int i=0; i<superCategories.length(); i++){
                         SuperCategories su = new SuperCategories(superCategories.getJSONObject(i).getString("id"),
-                                superCategories.getJSONObject(i).getString("name"));
+                               superCategories.getJSONObject(i).getString("name"));
                         localdatabase.superCategoriesList.add(su);
                         Log.i("super_categories",localdatabase.superCategoriesList.get(i).getName());
                     }
@@ -249,11 +263,29 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 Log.i("mainresponse", error.toString());
 
             }
-        });
+        }){
+            @Override
+            public Map getParams(){
+                Map<String,String> map = new HashMap<>();
+                map.put("latitude",localdatabase.deliveryLocation.getLatitude()+"");
+                map.put("longitude",localdatabase.deliveryLocation.getLongitude()+"");
+                return map;
+            }
+        };
 
-        request.add(st);
+        sr.setShouldCache(false);
+       // RequestQueue queue = new RequestQueue(new NoCache(),new BasicNetwork(new HurlStack()));
 
-        st.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+       // request.add(st);
+
+        //request.add(st);
+
+      req.add(sr);
+
+
+
     }
 
     private void Initiate_Meta_Data() {
@@ -265,7 +297,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             LocationPermission = false;
         } else {
             LocationPermission = true;
-            New_Details("","",constants.main_url+"?latitude="+localdatabase.deliveryLocation.getLatitude()+"&longitude="+localdatabase.deliveryLocation.getLongitude());
+            New_Details("","",constants.main_url);
         }
 
     }
@@ -308,13 +340,21 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             apiClient.connect();
         }
 
+        Log.i("called now", "called now");
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
         apiClient.disconnect();
+        if(req!=null){
+            req.cancelAll(sr);
+            Log.i("23235616","called on stop");
+        }
+
     }
+
 
 
     private Boolean checking_net_permission() {
@@ -336,12 +376,22 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     @Override
     public void onPause() {
         super.onPause();
-       /* if (progressBar != null)
-            if (progressBar.isShowing()) {
-                progressBar.cancel();
-                checker = true;
-            }*/
+        if(req!=null){
+            req.cancelAll(sr);
+            Log.i("23235616","called on stop");
+        }
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(req!=null){
+            req.cancelAll(sr);
+            Log.i("23235616","called on stop");
+        }
+    }
+
+
 
     @Override
 
@@ -474,9 +524,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
         localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
-
-
-
         LocationChecked = true;
         /*if(LocationChecked&&dataLoaded) {
             if(!redundent) {
