@@ -661,12 +661,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         int id = item.getItemId();
 
         if (id == R.id.menu) {
-            // Handle the camera action
-        } else if (id == R.id.cart) {
-
-            Intent a=new Intent(getApplicationContext(),cart.class);
+            Intent a=new Intent(getApplicationContext(),menu.class);
             a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(a);
+        } else if (id == R.id.cart) {
 
 
         } else if (id == R.id.orders) {
