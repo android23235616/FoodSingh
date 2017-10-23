@@ -453,6 +453,7 @@ manipulatenavigationdrawer();
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         SharedPreferences shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
@@ -562,7 +563,7 @@ manipulatenavigationdrawer();
             public void onClick(View v) {
                 Intent intent = new Intent(order_history.this, menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -573,7 +574,7 @@ manipulatenavigationdrawer();
             public void onClick(View v) {
                 Intent intent = new Intent(order_history.this, order_history.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -585,7 +586,7 @@ manipulatenavigationdrawer();
             public void onClick(View v) {
                 Intent intent = new Intent(order_history.this, Support.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
