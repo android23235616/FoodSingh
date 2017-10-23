@@ -51,7 +51,11 @@
             android:name=".login_page"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".menu"
@@ -149,13 +153,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".NotificationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".NotificationActivity"></activity>
         <activity android:name=".about_us"></activity>
         <activity android:name=".Support"></activity>
     </application>
