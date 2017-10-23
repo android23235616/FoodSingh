@@ -484,6 +484,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
+            name.replace(" ","\n");
             t.setText("Hello, "+name);
         }
     }
