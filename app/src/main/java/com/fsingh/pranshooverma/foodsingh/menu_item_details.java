@@ -142,6 +142,10 @@ public class menu_item_details extends AppCompatActivity
                   cartitemcount1.setText(localdatabase.cartList.size()+"");
               }
 
+                if(menu_category_wise.cartitemcount1!=null){
+                    menu_category_wise.updateCartIcon();
+                }
+
             }
         });
         minus.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +196,9 @@ public class menu_item_details extends AppCompatActivity
                     }
 
 
+                }
+                if(menu_category_wise.cartitemcount1!=null){
+                    menu_category_wise.updateCartIcon();
                 }
             }
         });
@@ -373,7 +380,7 @@ public class menu_item_details extends AppCompatActivity
 
         Glide.with(getApplicationContext()).load(image).skipMemoryCache(true).thumbnail(0.05f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(item_image);
-        item_price.setText(price);
+        item_price.setText("₹"+price);
         item_name.setText(name);
 
     }
@@ -394,9 +401,9 @@ public class menu_item_details extends AppCompatActivity
         sp = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
         Typeface tf2 = Typeface.createFromAsset(getAssets(),"fonts/FREESCPT.TTF");
-        //Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/gadugib.ttf");
         item_name.setTypeface(tf1,Typeface.BOLD);
-        item_price.setTypeface(tf1,Typeface.BOLD);
+        item_price.setTypeface(tf,Typeface.BOLD);
 
         description.setTypeface(tf2);
 
