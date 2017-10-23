@@ -8,6 +8,7 @@
     CardView:cardBackgroundColor="#f7f2e1"
     android:layout_height="100dp"
     CardView:cardElevation="4dp"
+    android:layout_margin="2dp"
     android:id="@+id/cardView"
     card_view:cardCornerRadius="8dp"
     >
@@ -128,7 +129,7 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="65dp"

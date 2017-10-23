@@ -126,6 +126,8 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
                     }
                     cart.adapter.notifyDataSetChanged();
                     cart.calculateTotal();
+                    cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 }
 
             }
@@ -149,6 +151,8 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
                     }
                     cart.adapter.notifyDataSetChanged();
                     cart.calculateTotal();
+                    cart.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+                    menu.cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
                 }
             }
         });
