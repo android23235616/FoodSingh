@@ -97,6 +97,29 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
         getting_setting_details();
 
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        TextView tvDetails, tvProfile, tvName, tvEmail,tvPassword, tvOld, tvNew;
+        tvDetails = (TextView) findViewById(R.id.txt_details);
+        tvDetails.setTypeface(tf);
+
+        tvProfile = (TextView) findViewById(R.id.txt_profile);
+        tvProfile.setTypeface(tf);
+
+        tvName = (TextView) findViewById(R.id.txt_name);
+        tvName.setTypeface(tf);
+
+        tvEmail = (TextView) findViewById(R.id.txt_email);
+        tvEmail.setTypeface(tf);
+
+        tvOld = (TextView) findViewById(R.id.txt_old);
+        tvOld.setTypeface(tf);
+
+        tvNew = (TextView) findViewById(R.id.txt_new);
+        tvNew.setTypeface(tf);
+
+        tvPassword = (TextView) findViewById(R.id.txt_password);
+        tvPassword.setTypeface(tf);
+
 
         button_save_change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,7 +421,9 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                     JSONArray array=new JSONArray(response);
                     JSONObject obj=array.getJSONObject(0);
                     tvName.setText(""+obj.getString("name"));
+                    name.setText(""+obj.getString("name"));
                     tvEmail.setText(""+obj.getString("email"));
+                    email.setText(""+obj.getString("email"));
                     tvMobile.setText(""+shared.getString("mobile", "NA"));
                     old_password_check=obj.getString("password");
 

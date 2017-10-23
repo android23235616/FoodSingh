@@ -27,10 +27,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PROFILE DETAILS"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:fontFamily="monospace"
-            android:layout_margin="16dp"
+            android:text="Profile Details"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/txt_details"
             android:paddingStart="8dp"
             />
         <TextView
@@ -91,10 +95,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="EDIT PROFILE"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:fontFamily="monospace"
+            android:text="Edit Profile"
+            android:textSize="22sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:id="@+id/txt_profile"
+            android:textStyle="bold"
             android:layout_margin="16dp"
             />
         <LinearLayout
@@ -107,8 +115,9 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:text="NAME"
+                android:text="Name"
                 android:gravity="center"
+                android:id="@+id/txt_name"
                 android:background="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="monospace"
@@ -138,8 +147,9 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="EMAIL"
+            android:text="Email"
             android:gravity="center"
+            android:id="@+id/txt_email"
             android:background="@color/colorPrimary"
             android:layout_gravity="center_vertical"
             android:fontFamily="monospace"
@@ -172,10 +182,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CHANGE PASSWORD"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:fontFamily="monospace"
+            android:text="Change Password"
+            android:textSize="22sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:id="@+id/txt_password"
+            android:textStyle="bold"
             android:layout_margin="16dp"
             />
 
@@ -189,7 +203,8 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:text="OLD"
+                android:text="Old"
+                android:id="@+id/txt_old"
                 android:gravity="center"
                 android:background="@color/colorPrimary"
                 android:layout_gravity="center_vertical"
@@ -220,8 +235,9 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="NEW"
+            android:text="New"
             android:gravity="center"
+            android:id="@+id/txt_new"
             android:background="@color/colorPrimary"
             android:layout_gravity="center_vertical"
             android:fontFamily="monospace"

@@ -490,10 +490,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString("name","_");
         if(!name.equals("_")){
+            name.replace(" ","\n");
             t.setText("Hello, "+name);
         }
     }
-
 
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
@@ -501,7 +501,6 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
     }
-
     private void initialize() {
         ad1  = (ImageView)findViewById(R.id.advertisement1);
         ad2 = (ImageView)findViewById(R.id.advertisement2);
