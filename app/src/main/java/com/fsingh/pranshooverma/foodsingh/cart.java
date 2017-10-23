@@ -796,11 +796,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+
             }
         });
 
 
     }
-    //sefgdhtgfjygh
+
 
 }

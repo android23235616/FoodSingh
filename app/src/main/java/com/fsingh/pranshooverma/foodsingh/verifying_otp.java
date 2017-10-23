@@ -168,7 +168,6 @@ public class verifying_otp extends AppCompatActivity {
                             }
                             else
                             {
-                                Display("Another activity will start from here");
                                 Intent intent=new Intent(getApplicationContext(),set_password.class);
                                 Bundle b=new Bundle();
                                 b.putString("mob",mob);
@@ -288,6 +287,7 @@ public class verifying_otp extends AppCompatActivity {
 
             fork.setVisibility(View.INVISIBLE);
             t1.setText("Awesome, Thanks");
+            t2.setText("We have sent the confirmation code to your mobile number");
 
             pass=as.getString("pass");
             mob=as.getString("mob");
@@ -298,9 +298,10 @@ public class verifying_otp extends AppCompatActivity {
         else
         {
             t1.setText("Reseting your Password");
+            t2.setText("We have sent the otp to your registered mobile number to reset your password");
             smile.setVisibility(View.INVISIBLE);
             mob=as.getString("mob");
-            Toast.makeText(this, mob, Toast.LENGTH_SHORT).show();
+      //      Toast.makeText(this, mob, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -335,7 +336,9 @@ public class verifying_otp extends AppCompatActivity {
         resend.setTypeface(tb);
         verify.setTypeface(tb);
         otp.setTypeface(tb);
-        t2.setTypeface(tb);
+
+        Typeface tc=Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
+        t2.setTypeface(tc);
 
         //t3.setTypeface(t);
 
