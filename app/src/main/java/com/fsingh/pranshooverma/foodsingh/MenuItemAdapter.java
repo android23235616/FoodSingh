@@ -176,10 +176,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     holder.item_quantity.setText(String.valueOf(quantity));
                     if (checkCart(item) == -1) {
                         localdatabase.cartList.add(item);
-                        Toast.makeText(mContext, "Not Found", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "Not Found", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "found", Toast.LENGTH_SHORT).show();
                     }
 
                     menu_category_wise.updateCartIcon();

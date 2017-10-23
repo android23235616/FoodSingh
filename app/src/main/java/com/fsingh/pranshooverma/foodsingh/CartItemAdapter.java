@@ -157,7 +157,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 item.setQuantity(0);
-                Toast.makeText(mContext, ""+item.getQuantity(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, ""+item.getQuantity(), Toast.LENGTH_SHORT).show();
                 //localdatabase.cartList.remove(item);
                 int pos = checkCart(item);
                 if(pos != -1){

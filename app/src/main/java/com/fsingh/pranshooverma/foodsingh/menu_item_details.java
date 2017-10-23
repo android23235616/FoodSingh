@@ -118,7 +118,7 @@ public class menu_item_details extends AppCompatActivity
             public void onClick(View view) {
               if(isAvailable!=1){
                   int check=0;
-                  Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(menu_item_details.this, "plus", Toast.LENGTH_SHORT).show();
                   int quantiti = item.getQuantity();
                   quantiti=quantiti+1;
                   quantity.setText(String.valueOf(quantiti));
@@ -127,7 +127,7 @@ public class menu_item_details extends AppCompatActivity
                   {
                       if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
                       {
-                          Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                          //Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
                           localdatabase.cartList.remove(i);
                           localdatabase.cartList.add(item);
                           check=1;
@@ -166,7 +166,7 @@ public class menu_item_details extends AppCompatActivity
                         {
                             if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
                             {
-                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
                                 localdatabase.cartList.remove(localdatabase.cartList.get(i).getName());
                                 break;
                             }
@@ -181,7 +181,7 @@ public class menu_item_details extends AppCompatActivity
                         {
                             if(name.equalsIgnoreCase(localdatabase.cartList.get(i).getName()))
                             {
-                                Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(menu_item_details.this, "Got it", Toast.LENGTH_SHORT).show();
                                 localdatabase.cartList.remove(i);
                                 localdatabase.cartList.add(item);
                                 break;
