@@ -115,7 +115,7 @@ public class Support extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
+        actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
@@ -138,6 +138,8 @@ public class Support extends AppCompatActivity {
             }
         });
 
+
+
         localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
         if(localdatabase.notifications==0){
             localdatabase.notifmount.setVisibility(View.INVISIBLE);
@@ -148,6 +150,7 @@ public class Support extends AppCompatActivity {
 
         return true;
     }
+
 
     public class myWebClient extends WebViewClient
     {
