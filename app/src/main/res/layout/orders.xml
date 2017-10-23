@@ -2,8 +2,10 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/my_toolbar2" android:id="@+id/top"/>
 <android.support.v4.widget.NestedScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_below="@+id/top"
     android:background="@color/background_color_new"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -13,10 +15,6 @@
     android:background="@color/background_color_new"
     android:weightSum="1"
     >
-
-    <include layout="@layout/my_toolbar2"/>
-
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
 

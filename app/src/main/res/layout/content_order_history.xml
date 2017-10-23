@@ -10,7 +10,7 @@
     tools:context="com.fsingh.pranshooverma.foodsingh.order_history"
     >
 
-    <include layout="@layout/my_toolbar2" android:id="@+id/toolbar_top"/>
+
 
     <android.support.v7.widget.RecyclerView
 
