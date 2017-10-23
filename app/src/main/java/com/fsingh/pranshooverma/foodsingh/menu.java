@@ -558,7 +558,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         drinks = (TextView) findViewById(R.id.drinks);
         if(localdatabase.drinks.equals("false")){
-            drinks.setVisibility(View.GONE);
+            drinks.setVisibility(View.INVISIBLE);
+            drinks.setClickable(false);
         }
         progress=new ProgressDialog(this);
         progress.setCancelable(false);
@@ -1035,7 +1036,7 @@ if(local.metaData!=null) {
     @Override
     public void onStart(){
         super.onStart();
-        
+
     }
 
 

@@ -77,6 +77,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     SharedPreferences.Editor editor;
     ProgressBar progressBar;
     Dialog dialog;
+    int i=0;
     Context ctx;
     boolean rec = false;
 
@@ -135,14 +136,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     private void New_Details(String name, String number, final String main_url) {
+        i++;
+        AppController.getInstance().getRequestQueue().getCache().clear();
 
-        RequestQueue request = Volley.newRequestQueue(Splash.this);
+        RequestQueue request = AppController.getInstance().getRequestQueue();
 
         StringRequest st = new StringRequest(Request.Method.GET, main_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-            Log.i("mainresponse", response);
+            Log.i("mainresponse"+i, response);
 
                 dataLoaded = true;
 
@@ -218,6 +221,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         SuperCategories su = new SuperCategories(superCategories.getJSONObject(i).getString("id"),
                                 superCategories.getJSONObject(i).getString("name"));
                         localdatabase.superCategoriesList.add(su);
+                        Log.i("super_categories",localdatabase.superCategoriesList.get(i).getName());
                     }
 
                     if(LocationChecked&&dataLoaded) {
@@ -228,8 +232,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                             finish();
                         }
                     }
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -483,6 +485,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 finish();
             }
         }*/
+        if(i==0)
         Initiate_Meta_Data();
 
 

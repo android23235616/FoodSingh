@@ -12,6 +12,7 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/logo7"
+        android:name=".AppController"
         android:label="FoodSingh"
         android:largeHeap="true"
         android:roundIcon="@drawable/logo7"
