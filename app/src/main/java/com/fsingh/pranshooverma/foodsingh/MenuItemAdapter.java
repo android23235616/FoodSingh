@@ -131,7 +131,14 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         final String status = menuItem.getStatus();
         holder.diname.setText(name);
         int qty = menuItem.getQuantity();
-        holder.item_quantity.setText("" + qty);
+        if(checkCart(menuItem) == -1){
+            holder.item_quantity.setText("" + qty);}
+        else {
+            int pos = checkCart(menuItem);
+            int cart_qty = localdatabase.cartList.get(pos).getQuantity();
+            menuItem.setQuantity(cart_qty);
+            holder.item_quantity.setText(""+cart_qty);
+        }
         holder.diprice.setText("₹" + rupees);
         Log.d("sdsd", name + "=" + status);
        // if((rupees!=null&&status!=null)&&menu_category_wise.position!=-1) {
