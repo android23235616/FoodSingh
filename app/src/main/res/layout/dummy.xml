@@ -43,15 +43,20 @@
         android:textColor="@color/grey"
         />
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:scrollbars="none"
+        >
     <LinearLayout
         android:orientation="horizontal"
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <ImageButton
             android:layout_margin="5dp"
             android:layout_height="30dp"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_weight="1"
             android:src="@drawable/cuisine_"
             android:id="@+id/cuisine"
@@ -66,7 +71,7 @@
 
             android:layout_weight="1"
 
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="30dp"
             android:id="@+id/time"
             android:scaleType="centerCrop"
@@ -75,20 +80,19 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/cuisine" />
         <ImageButton
-
             android:layout_margin="5dp"
             android:layout_weight="1"
-         android:src="@drawable/combo"
+            android:src="@drawable/combo"
             android:background="@color/background_color_new"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="30dp"
             android:scaleType="centerCrop"
             android:id="@+id/combo"
-
             android:layout_toEndOf="@+id/time"
             android:layout_alignParentTop="true"
             />
     </LinearLayout>
+    </HorizontalScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"

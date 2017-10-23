@@ -180,7 +180,7 @@ public class NotificationActivity extends AppCompatActivity {
 
 
 
-        notifamount.setText(notificationLists.getNotification().size()+"");
+
     }
 
     private void RemoveTop(){
@@ -220,6 +220,7 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount.setVisibility(View.INVISIBLE);
         if(localdatabase.notifications==0){
            notifamount.setVisibility(View.INVISIBLE);
         }else {
