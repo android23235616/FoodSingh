@@ -174,6 +174,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 try {
                     JSONObject mainObject = new JSONObject(response);
                     localdatabase.about_text =mainObject.getString("about_text");
+                    localdatabase.cartCoupon = mainObject.getString("cart_ad");
                     localdatabase.about_img = mainObject.getString("about_image");
                     localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
