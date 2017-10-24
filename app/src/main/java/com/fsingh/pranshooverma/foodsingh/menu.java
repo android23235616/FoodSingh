@@ -1117,7 +1117,6 @@ if(local.metaData!=null) {
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
             clipboard.setPrimaryClip(clip);
         }
-
     }
 
     @Override
