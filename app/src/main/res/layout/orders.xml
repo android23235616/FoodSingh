@@ -15,10 +15,7 @@
     android:background="@color/background_color_new"
     android:weightSum="1"
     >
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
 
-        android:layout_height="180dp">
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center"
@@ -138,7 +135,7 @@
         </LinearLayout>
 
     </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+
     <RelativeLayout
 
         android:background="@color/cart_bg"
@@ -212,6 +209,7 @@
 
 
         <ImageView
+
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:scaleType="fitCenter"

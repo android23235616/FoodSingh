@@ -304,15 +304,13 @@ public class Tracker extends AppCompatActivity {
                 }
 
             }else{
-                // Display(foods[i]+" 3here");
-                //Display(foods[i]);
-               // Display("NOT FOUND AT "+i);
+
             }
         }
     }
 
     private void Display(String s){
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, s, Toast.LENGTH_LONG).show();
         Log.i("android23235616",s);
 
     }
@@ -367,23 +365,35 @@ public class Tracker extends AppCompatActivity {
                     String status = jsonObject.getString("status");
                     TextView name = (TextView) findViewById(R.id.info);
                     TextView mob = (TextView) findViewById(R.id.number_info);
+
                     drivern = jsonObject.getString("delivery_boy");
                     driverm = jsonObject.getString("delivery_boy_mobile");
                     if(status.equals("0")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
                         name.setText("NOT AVAILABLE");
                         mob.setText("NOT AVAILABLE");
+                        driver_number.setText("NOT AVAILABLE");
+                        driverinfo.setText("NOT AVAILABLE");
 
                     }else if(status.equals("1")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.processing));
                         name.setText("NOT AVAILABLE");
                         mob.setText("NOT AVAILABLE");
+                        driver_number.setText("NOT AVAILABLE");
+                        driverinfo.setText("NOT AVAILABLE");
                     }else if(status.equals("2")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.outfordelivery));
                         name.setText(drivern);
                         mob.setText(driverm);
+                        driver_number.setText(driverm);
+                        driverinfo.setText(drivern);
                     }else if(status.equals("3")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.delivered));
+                        name.setText("NOT AVAILABLE");
+                        mob.setText("NOT AVAILABLE");
+
+                    }else if(status.equals("NA")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
                         name.setText("NOT AVAILABLE");
                         mob.setText("NOT AVAILABLE");
                     }
