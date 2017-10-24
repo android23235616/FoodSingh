@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -89,15 +90,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             unavailable=(TextView) itemView.findViewById(R.id.txt_unavailable);
             item_quantity=(TextView) itemView.findViewById(R.id.item_quantity_slide);
             Typeface tp = Typeface.createFromAsset(mContext.getAssets(), "fonts/gadugi.ttf");
-            diprice.setTypeface(tp);
+            diprice.setTypeface(tp, Typeface.BOLD);
             pl=(ImageView) itemView.findViewById(R.id.plus_slide);
             mi=(ImageView) itemView.findViewById(R.id.minus_slide);
             fav=(ImageView) itemView.findViewById(R.id.fav);
             image=(ImageView) itemView.findViewById(R.id.img_item_slide);
-            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/gadugi.ttf");
-            diname.setTypeface(t);
-            diprice.setTypeface(t);
-            item_quantity.setTypeface(t);
+            Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/gadugib.ttf");
+            diname.setTypeface(t,Typeface.BOLD);
+            diprice.setTypeface(t,Typeface.BOLD);
+            item_quantity.setTypeface(t,Typeface.BOLD);
 
         }
     }
