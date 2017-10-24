@@ -104,16 +104,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/dummy"/>
-    <ImageView
 
-        android:scaleType="centerCrop"
-        android:src="@drawable/dummy_ad"
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_height="50dp"
-
-        android:id="@+id/advertisement1"
-        />
 
 
     <ImageView
@@ -121,6 +112,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/dummy_ad"
         android:layout_gravity="bottom"
+       android:layout_marginBottom="26dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/advertisement2"

@@ -69,8 +69,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -144,16 +146,15 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
+
+
+
     private void New_Details(String name, String number, final String main_url) {
         i++;
-       // AppController.getInstance().getRequestQueue().getCache().clear();
 
-       // RequestQueue request = AppController.getInstance().getRequestQueue();
-        Cache cache = new DiskBasedCache(getCacheDir(),0);
-        Network network = new BasicNetwork(new HurlStack());
 
-        req = new RequestQueue(cache,network);
-        req.start();
+        Calendar calendar = Calendar.getInstance();
+        RequestQueue re = Volley.newRequestQueue(this);
 
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
@@ -249,8 +250,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Display(e.toString());
+                    Display("Please start the app again");
                     Log.i("mainresponse",e.toString());
+                   // finish();
                 }finally {
 
                 }
@@ -261,6 +263,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             public void onErrorResponse(VolleyError error) {
                 Display(error.toString());
                 Log.i("mainresponse", error.toString());
+                Display("Please start the app again");
+                Log.i("mainresponse",error.toString());
+                //finish();
 
             }
         }){
@@ -278,14 +283,15 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-       // request.add(st);
+        re.add(sr);
 
-        //request.add(st);
+    }
 
-      req.add(sr);
+    public static long getMinutesDifference(long timeStart,long timeStop){
+        long diff = timeStop - timeStart;
+        long diffMinutes = diff / (60 * 1000);
 
-
-
+        return  diffMinutes;
     }
 
     private void Initiate_Meta_Data() {
@@ -389,6 +395,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             req.cancelAll(sr);
             Log.i("23235616","called on stop");
         }
+
     }
 
 
