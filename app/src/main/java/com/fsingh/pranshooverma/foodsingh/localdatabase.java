@@ -88,4 +88,8 @@ public class localdatabase {
 
     public static String kitchenClosedText = "";
 
+    public static String lane2 = "";
+
+    public static String sublocality = "";
+
 }

@@ -615,6 +615,21 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             city = addresses.get(0).getLocality();
             Log.i("addressmine",addresses.get(0).getAdminArea()+", "+addresses.get(0).getFeatureName()+" , "+addresses.get(0).getLocality()+", "+address);
             localdatabase.lane = address;
+            localdatabase.sublocality = addresses.get(0).getSubLocality();
+
+            int comma = 0;
+            for (int i =0; comma != 2; i++ ){
+                if(address.charAt(i) == ','){
+                    comma++;
+                }
+                if(comma == 2){
+                    break;
+                }
+                localdatabase.lane2 += address.charAt(i);
+            }
+            Log.i("addressmine",addresses.get(0).getSubLocality());
+            Log.i("addressmine",localdatabase.lane2);
+
             return city;
         }
 

@@ -168,7 +168,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
                 if(localdatabase.amount==0)
                 {
-                    Display("Sorry No item in cart, you cant proceed");
+                    Display("Sorry, no item in your cart, you cant proceed");
+                }
+                else if(localdatabase.metaData.getservice().equals("false")){
+                    showDialog(cart.this, localdatabase.kitchenClosedText, R.drawable.store);
                 }
                 else
                 {
@@ -862,6 +865,32 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
+
+    }
+
+    public void showDialog(Activity activity, String msg,int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
 
     }
 

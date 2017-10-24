@@ -352,7 +352,8 @@ public class CheckoutActivity extends AppCompatActivity {
         etLane1.setText(sp.getString(statusAddress+"_lane1",""));
         etLane2.setText(sp.getString(statusAddress+"_lane2",""));
         //etLocality.setText(sp.getString(statusAddress+"_locality",""));
-        etLocality.setText(localdatabase.lane);
+        etLocality.setText(localdatabase.sublocality);
+        etLane2.setText(localdatabase.lane2);
 
         if(statusPayment.equals("CASH")){
             btnCash.setBackgroundResource(R.drawable.card_addition_edittext);
