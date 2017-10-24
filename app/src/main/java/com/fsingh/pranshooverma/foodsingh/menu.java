@@ -638,7 +638,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
         combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
         drinks.setText(localdatabase.superCategoriesList.get(3).getName());
-        pager.setScrollDurationFactor(3);
+        pager.setScrollDurationFactor(3.5);
         pager.setCurrentItem(pageritem);
         getPositionsForDots(pageritem);
 
@@ -654,11 +654,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 pager.setCurrentItem(pageritem);
                 getPositionsForDots(pageritem);
-                handler.postDelayed(runnable,2000);
+                handler.postDelayed(runnable,3000);
             }
         };
 
-    handler.postDelayed(runnable,1000);
+    handler.postDelayed(runnable,3000);
 
     }
 
