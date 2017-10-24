@@ -1,5 +1,7 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -162,6 +165,32 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     protected void onStart() {
         super.onStart();
         populateUI();
+    }
+
+    public void showDialog(Activity activity, String msg, int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(activity.getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        image.setImageBitmap(BitmapFactory.decodeResource(activity.getResources(),pic));
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 
     private void SetupBroadcastReceiver() {
@@ -595,7 +624,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
             String tempJson = sharedPreferences.getString(constants.fav,"");
             if(tempJson.equals("")){
-                Display("You Have No Favourites");
+                showDialog(this,"You have no Favourites. You need to eat more!", R.drawable.ic_not_fav);
             }else{
                 Gson gson = new Gson() ;
                 FavouritesList f = gson.fromJson(tempJson, FavouritesList.class);

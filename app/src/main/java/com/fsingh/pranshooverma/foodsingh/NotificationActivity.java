@@ -1,10 +1,14 @@
 package com.fsingh.pranshooverma.foodsingh;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +65,9 @@ public class NotificationActivity extends AppCompatActivity {
         String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
 
         if(tempJson.equals("")){
-            Display("You Have No Notification");
+            if(read==0) {
+                showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
+            }
 
         }else{
             notificationLists = gson.fromJson(tempJson,NotificationLists.class);
@@ -166,7 +172,9 @@ public class NotificationActivity extends AppCompatActivity {
         String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
 
         if(tempJson.equals("")){
-            Display("You Have No Notification");
+            if(read==0) {
+                showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
+            }
 
         }else{
             notificationLists = gson.fromJson(tempJson,NotificationLists.class);
@@ -229,6 +237,7 @@ public class NotificationActivity extends AppCompatActivity {
            notifamount.setVisibility(View.INVISIBLE);
         }else {
            notifamount.setVisibility(View.VISIBLE);
+           notifamount.setVisibility(View.VISIBLE);
            notifamount.setText(localdatabase.notifications+"");
         }
 
@@ -242,6 +251,32 @@ public class NotificationActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    public void showDialog(Activity activity, String msg, int pic){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
+        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 
 }
