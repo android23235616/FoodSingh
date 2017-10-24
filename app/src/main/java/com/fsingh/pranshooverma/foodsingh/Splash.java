@@ -175,9 +175,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     JSONObject mainObject = new JSONObject(response);
                     localdatabase.about_text =mainObject.getString("about_text");
                     localdatabase.about_img = mainObject.getString("about_image");
-                            localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
+                    localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
                     );
+
+
 
                     localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
                     localdatabase.aboutText = mainObject.getString("about_text");
@@ -187,6 +189,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     localdatabase.share_text =mainObject.getString("share_text");
                     localdatabase.share_url = mainObject.getString("share_url");
                     localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
+
+                    if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
+                        showDialog2(Splash.this,"Please go to app store and download the latest version.");
+                        return;
+                    }
 
                     JSONArray Categories = mainObject.getJSONArray("categories");
                     for (int i=0; i<Categories.length(); i++){
@@ -469,8 +476,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
+                if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
+                    String url = localdatabase.share_url;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                    finish();
+                }else{
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
 
             }
         });

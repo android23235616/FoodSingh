@@ -45,7 +45,8 @@ import java.util.regex.Pattern;
 
 public class Tracker extends AppCompatActivity {
 
-    static TextView order_no, repeat_order,price,date,fooditems,foodqt,driverinfo,driver_number, items,logistics,issue,notifamount;
+    static TextView order_no, repeat_order,price,date,
+            fooditems,foodqt,driverinfo,driver_number, items,logistics,issue,notifamount;
     ImageView trackimage;
     Typeface tf,tf1;
     TextView toolbarText;
@@ -63,10 +64,7 @@ public class Tracker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RemoveTop();
-
         setContentView(R.layout.orders);
-        
-
         addBottomToolbar();
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");
@@ -89,6 +87,9 @@ public class Tracker extends AppCompatActivity {
         i = getIntent();
         order_no.setTypeface(tf);
         repeat_order.setTypeface(tf);
+        if(localdatabase.delivery.equals("NA")||localdatabase.metaData.getservice().equals("false")){
+            repeat_order.setClickable(false);
+        }
         items.setTypeface(tf1);
         price.setTypeface(tf1);
         date.setTypeface(tf);
@@ -254,9 +255,11 @@ public class Tracker extends AppCompatActivity {
             Log.i("tracker2323",localdatabase.unavailableItemsList.get(i).getName());
         }
 
-        // Create a Pattern object
-        Pattern p1 = Pattern.compile("x\\d+");
+
+        Pattern p1 = Pattern.compile("-\\d+");
         for (int i=0; i<foods.length; i++){
+            Log.i("trackerfood",foods[i]);
+            foods[i].replace("\n"," ");
             Matcher m = p1.matcher(foods[i]);
             //foods[i].replace("(B\\/L)","k");
             if(m.find()) {
@@ -264,9 +267,6 @@ public class Tracker extends AppCompatActivity {
                 String qt =m.group(0);
                 qt = qt.substring(1);
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
-
-               // Display("name "+name+" qt "+qt+" "+i);
-
                 fooditems.append(name+"\n");
                 foodqt.append(qt+"\n");
                 boolean uChecker = false;
@@ -290,8 +290,7 @@ public class Tracker extends AppCompatActivity {
                 }
 
                 if(!uChecker){
-                    itemsString += name + " x" + qt+", ";
-
+                    itemsString += name + "-" + qt+", ";
                 }
 
             }else{

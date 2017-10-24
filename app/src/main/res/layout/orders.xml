@@ -160,33 +160,33 @@
             android:text=" Items"/>
 
       <LinearLayout
-
+        android:layout_margin="10dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
 
-          android:orientation="horizontal">
+          android:orientation="horizontal"
+          android:weightSum="2">
           <TextView
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:fontFamily="monospace"
-              android:id="@+id/foodname"
-              android:layout_marginTop="30dp"
-              android:scaleY="1.2"
-              android:layout_marginBottom="19dp"
-              android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
 
-             android:text="\n"/>
+              android:id="@+id/foodname"
+
+             android:text="\n" />
 
           <TextView
-              android:scaleY="1.2"
-              android:layout_width="wrap_content"
+
+              android:layout_width="match_parent"
+                android:gravity="right"
               android:layout_height="wrap_content"
+              android:layout_weight="1.5"
               android:fontFamily="monospace"
               android:id="@+id/foodqt"
-              android:layout_marginTop="30dp"
-              android:layout_marginBottom="19dp"
-              android:layout_marginLeft="120dp"
-              android:text="\n"/>
+
+              android:text="\n"
+               />
 
       </LinearLayout>
 
