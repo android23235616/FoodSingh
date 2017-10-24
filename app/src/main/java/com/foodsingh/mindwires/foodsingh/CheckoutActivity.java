@@ -77,9 +77,9 @@ public class CheckoutActivity extends AppCompatActivity {
         if(intent != null) {
              check = intent.getIntExtra("key",0);
             if(check==0){
-                Display("not here");
+                //Display("not here");
             }else{
-                Display("here");
+                //Display("here");
             }
             if(check==0) {
                 Bundle aa = intent.getExtras();
@@ -310,7 +310,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 {
                     progress.dismiss();
                 }
-                Toast.makeText(CheckoutActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CheckoutActivity.this, "Something went wrong. Please try again", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
