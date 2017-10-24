@@ -17,6 +17,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,6 +69,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     RequestQueue req;
+    Thread t;
     ProgressBar progressBar;
     StringRequest sr;
     Dialog dialog;
@@ -142,114 +144,21 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(final String response) {
 
-            Log.i("mainresponse"+i, response);
+            final Handler h = new Handler();
 
-                dataLoaded = true;
-
-                try {
-                    JSONObject mainObject = new JSONObject(response);
-                    localdatabase.about_text =mainObject.getString("about_text");
-                    localdatabase.cartCoupon = mainObject.getString("cart_ad");
-                    localdatabase.about_img = mainObject.getString("about_image");
-                    localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
-                    ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
-                    );
-
-
-
-                    localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
-                    localdatabase.aboutText = mainObject.getString("about_text");
-                    localdatabase.aboutImage = mainObject.getString("about_image");
-                    localdatabase.delivery = mainObject.getString("location");
-                    localdatabase.drinks = mainObject.getString("drinks");
-                    localdatabase.share_text =mainObject.getString("share_text");
-                    localdatabase.share_url = mainObject.getString("share_url");
-                    localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
-                    localdatabase.kitchenClosedText = mainObject.getString("kitchen_closed_text");
-
-                    if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
-                        showDialog2(Splash.this,"Please go to app store and download the latest version.");
-                        return;
+                t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startThread(response,h);
                     }
+                });
 
-                    JSONArray Categories = mainObject.getJSONArray("categories");
-                    for (int i=0; i<Categories.length(); i++){
-                        String name,image,cuisine, time, combo;
-                        List<MenuItems> menuItemsList = new ArrayList<>();
-                        JSONObject tempObject = Categories.getJSONObject(i);
-                        name = tempObject.getString("name");
-                        image = tempObject.getString("image");
-                        cuisine = tempObject.getString("cuisine");
-                        time = tempObject.getString("time");
-                        combo = tempObject.getString("combo");
-                        JSONArray miniMenu = tempObject.getJSONArray("menu");
 
-                        for(int j=0; j<miniMenu.length(); j++){
-                            String id, name_, category, price, image_, status, detail;
-                            JSONObject miniTempObject = miniMenu.getJSONObject(j);
-                            id = miniTempObject.getString("id");
-                            name_ = miniTempObject.getString("name");
-                            category = miniTempObject.getString("category");
-                            price = miniTempObject.getString("price");
-                            image_ = miniTempObject.getString("image");
-                            status = miniTempObject.getString("status");
-                            detail = miniTempObject.getString("detail");
-                            //detail = "";
-                            MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
-                            menuItemsList.add(menuItems);
-                            String available = miniTempObject.getString("status");
+                Log.i("mainresponse" + i, response);
 
-                            if(available.equals("NA")){
-                                UnavailableItems ii = new UnavailableItems(name_,Integer.parseInt(price));
-                                localdatabase.unavailableItemsList.add(ii);
-                            }
-                        }
-                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"), tempObject.getString("detail"));
-                        Log.i("checking details", tempObject.getString("drinks"));
-                        localdatabase.masterList.add(menuItemsObject);
-                    }
-                    JSONArray BannerImages = mainObject.getJSONArray("home_images");
-
-                    for(int i=0; i<BannerImages.length(); i++){
-                        localdatabase.BannerUrls.add(BannerImages.getJSONObject(i).getString("url"));
-                    }
-
-                    JSONArray getAdImages = mainObject.getJSONArray("ad_bars");
-
-                    for(int i=0; i<getAdImages.length(); i++){
-                        JSONObject tempJson =getAdImages.getJSONObject(i);
-                        CouponClass temp = new CouponClass(tempJson.getString("id"),tempJson.getString("coupon"),tempJson.getString("image"));
-                        localdatabase.couponClassList.add(temp);
-                    }
-
-                    JSONArray superCategories = mainObject.getJSONArray("super_categories");
-
-                    for(int i=0; i<superCategories.length(); i++){
-                        SuperCategories su = new SuperCategories(superCategories.getJSONObject(i).getString("id"),
-                               superCategories.getJSONObject(i).getString("name"));
-                        localdatabase.superCategoriesList.add(su);
-                        Log.i("super_categories",localdatabase.superCategoriesList.get(i).getName());
-                    }
-
-                    if(LocationChecked&&dataLoaded) {
-                        if(!redundent) {
-                            redundent = true;
-
-                            startActivity(new Intent(Splash.this, menu.class));
-                            finish();
-                        }
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Display("Please start the app again");
-                    Log.i("mainresponse",e.toString());
-                   // finish();
-                }finally {
-
-                }
+                t.start();
 
             }
         }, new Response.ErrorListener() {
@@ -280,6 +189,122 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         re.add(sr);
 
     }
+
+    private void startThread(String response,Handler h){
+        dataLoaded = true;
+
+        try {
+            JSONObject mainObject = new JSONObject(response);
+            localdatabase.about_text =mainObject.getString("about_text");
+            localdatabase.cartCoupon = mainObject.getString("cart_ad");
+            localdatabase.about_img = mainObject.getString("about_image");
+            localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
+                    ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
+            );
+
+
+
+            localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
+            localdatabase.aboutText = mainObject.getString("about_text");
+            localdatabase.aboutImage = mainObject.getString("about_image");
+            localdatabase.delivery = mainObject.getString("location");
+            localdatabase.drinks = mainObject.getString("drinks");
+            localdatabase.share_text =mainObject.getString("share_text");
+            localdatabase.share_url = mainObject.getString("share_url");
+            localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
+            localdatabase.kitchenClosedText = mainObject.getString("kitchen_closed_text");
+
+            if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
+                showDialog2(Splash.this,"Please go to app store and download the latest version.");
+                return;
+            }
+
+            JSONArray Categories = mainObject.getJSONArray("categories");
+            for (int i=0; i<Categories.length(); i++){
+                String name,image,cuisine, time, combo;
+                List<MenuItems> menuItemsList = new ArrayList<>();
+                JSONObject tempObject = Categories.getJSONObject(i);
+                name = tempObject.getString("name");
+                image = tempObject.getString("image");
+                cuisine = tempObject.getString("cuisine");
+                time = tempObject.getString("time");
+                combo = tempObject.getString("combo");
+                JSONArray miniMenu = tempObject.getJSONArray("menu");
+
+                for(int j=0; j<miniMenu.length(); j++){
+                    String id, name_, category, price, image_, status, detail;
+                    JSONObject miniTempObject = miniMenu.getJSONObject(j);
+                    id = miniTempObject.getString("id");
+                    name_ = miniTempObject.getString("name");
+                    category = miniTempObject.getString("category");
+                    price = miniTempObject.getString("price");
+                    image_ = miniTempObject.getString("image");
+                    status = miniTempObject.getString("status");
+                    detail = miniTempObject.getString("detail");
+                    //detail = "";
+                    MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
+                    menuItemsList.add(menuItems);
+                    String available = miniTempObject.getString("status");
+
+                    if(available.equals("NA")){
+                        UnavailableItems ii = new UnavailableItems(name_,Integer.parseInt(price));
+                        localdatabase.unavailableItemsList.add(ii);
+                    }
+                }
+                MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"), tempObject.getString("detail"));
+                Log.i("checking details", tempObject.getString("drinks"));
+                localdatabase.masterList.add(menuItemsObject);
+            }
+            JSONArray BannerImages = mainObject.getJSONArray("home_images");
+
+            for(int i=0; i<BannerImages.length(); i++){
+                localdatabase.BannerUrls.add(BannerImages.getJSONObject(i).getString("url"));
+            }
+
+            JSONArray getAdImages = mainObject.getJSONArray("ad_bars");
+
+            for(int i=0; i<getAdImages.length(); i++){
+                JSONObject tempJson =getAdImages.getJSONObject(i);
+                CouponClass temp = new CouponClass(tempJson.getString("id"),tempJson.getString("coupon"),tempJson.getString("image"));
+                localdatabase.couponClassList.add(temp);
+            }
+
+            JSONArray superCategories = mainObject.getJSONArray("super_categories");
+
+            for(int i=0; i<superCategories.length(); i++){
+                SuperCategories su = new SuperCategories(superCategories.getJSONObject(i).getString("id"),
+                        superCategories.getJSONObject(i).getString("name"));
+                localdatabase.superCategoriesList.add(su);
+                Log.i("super_categories",localdatabase.superCategoriesList.get(i).getName());
+            }
+
+            if(LocationChecked&&dataLoaded) {
+                if(!redundent) {
+                    redundent = true;
+
+                   h.postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           startActivity(new Intent(Splash.this, menu.class));
+                           finish();
+                       }
+                   },500);
+
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Display("Please start the app again");
+            Log.i("mainresponse",e.toString());
+            // finish();
+        }finally {
+
+        }
+
+    }
+
 
     public static long getMinutesDifference(long timeStart,long timeStop){
         long diff = timeStop - timeStart;
@@ -576,15 +601,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         localdatabase.deliveryLocation = location;
         localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
         LocationChecked = true;
-        /*if(LocationChecked&&dataLoaded) {
-            if(!redundent) {
-                redundent = true;
-                startActivity(new Intent(Splash.this, menu.class));
-                finish();
-            }
-        }*/
-        if(i==0)
-        Initiate_Meta_Data();
+
+        if(i==0) {
+
+            Initiate_Meta_Data();
+
+        }
 
 
     }

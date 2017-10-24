@@ -100,10 +100,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        DisplayList(FavItems);
+     //   DisplayList(FavItems);
         View v= LayoutInflater.from(mContext).inflate(R.layout.cardview_category_menu,parent,false);
 
         ViewHolder vh=new ViewHolder(v);
+
+        DisplayList(menuItems);
 
 
         return vh;
@@ -117,6 +119,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             holder.fav.setVisibility(View.VISIBLE);
             holder.fav.setClickable(true);
         }
+
+
 
 
          menuItem = menuItems.get(holder.getAdapterPosition());
@@ -236,7 +240,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!menu_category_wise.text.getText().equals("Favourites")) {
+             //   if(!menu_category_wise.text.getText().equals("Favourites")) {
                     Intent s = new Intent(mContext, menu_item_details.class);
                     MenuItems item = menuItems.get(holder.getAdapterPosition());
                     if (!holder.diprice.getText().toString().equals("NA")) {
@@ -248,7 +252,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         b.putString("desc", men.getDetail());
                         b.putParcelable("object", item);
                         b.putString("id", men.getId());
-                        b.putString("status", men.getStatus());
+                        b.putString("status", status);
                         b.putString("category", men.getCategory());
                         b.putString("item_quantity", String.valueOf(men.getQuantity()));
                         b.putInt("position", holder.getAdapterPosition());
@@ -290,7 +294,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
                         ((Activity) mContext).finish();
                     }
-                }
+
               // mContext.startActivity(s);
             }
         });
@@ -309,7 +313,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
                 FavItems.add(item);
             }
-            DisplayList(FavItems);
+           // DisplayList(FavItems);
             FavouritesList f = new FavouritesList(FavItems);
             String tempJson = gson.toJson(f);
             SharedPreferences.Editor edit = store.edit();
@@ -323,7 +327,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
     private void DisplayList(List<MenuItems> m){
         for(int i=0; i<m.size(); i++){
-            Log.i("activityhere"+i, m.get(i).getName()+" , "+m.get(i).getId());
+            Log.i("activityhere"+i, m.get(i).getName()+" , "+m.get(i).getId()+" , "+m.get(i).getStatus());
         }
     }
 

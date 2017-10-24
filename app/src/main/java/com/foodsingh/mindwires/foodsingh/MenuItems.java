@@ -13,7 +13,7 @@ public class MenuItems implements Parcelable{
 
 
     private String Id, Name, Category, Price, Image, Status, Detail;
-    //private boolean isFav  = false;
+
     private int quantity = 0;
 
     MenuItems(String Id, String Name, String Category, String Price, String Image, String Status, String Detail){
@@ -24,7 +24,6 @@ public class MenuItems implements Parcelable{
         this.Image = Image;
         this.Status = Status;
         this.Detail = Detail;
-        //this.isFav = isFav;
     }
 
     protected MenuItems(Parcel in) {
@@ -34,7 +33,8 @@ public class MenuItems implements Parcelable{
         Price = in.readString();
         Image = in.readString();
         quantity = in.readInt();
-
+        Detail = in.readString();
+        Status = in.readString();
     }
 
     public String getDetail() {
@@ -104,5 +104,7 @@ public class MenuItems implements Parcelable{
         parcel.writeString(Price);
         parcel.writeString(Image);
         parcel.writeInt(quantity);
+        parcel.writeString(Detail);
+        parcel.writeString(Status);
     }
 }
