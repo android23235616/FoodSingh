@@ -106,5 +106,6 @@ android:orientation="vertical"
         android:id="@+id/advertisement2"
         />
 
+
 </LinearLayout>
 

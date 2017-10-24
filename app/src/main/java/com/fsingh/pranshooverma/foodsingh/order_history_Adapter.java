@@ -22,7 +22,7 @@ import java.util.List;
 
 public class order_history_Adapter extends RecyclerView.Adapter<order_history_Adapter.ViewHolder> {
 
-   private final String[] months  = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"};
+   private final String[] months  = {"January", "February", "March", "April", "May", "June", "July", "August", "September","October", "November", "December"};
 
     Context mContext;
     List<String> date=new ArrayList<>();
@@ -85,7 +85,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
         final String o=orders.get(holder.getAdapterPosition());
         final String add=address.get(holder.getAdapterPosition());
         String[] temp = d.split("-");
-        Display(holder.address_text_.getContext(),temp.length+"");
+
         final String year = temp[0];
 
         final String month = months[Integer.parseInt(temp[1])-1];

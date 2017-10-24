@@ -346,8 +346,8 @@ public class web_view extends AppCompatActivity
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_SUBJECT, "FoodSingh");
-                String sAux = "\nLet me recommend you this application\n\n";
-                sAux = sAux + "https://play.google.com/store/apps/details?id=com.fsingh.pranshooverma.foodsingh&hl=en\n\n";
+                String sAux = "\n"+localdatabase.share_text+"\n\n";
+                sAux = sAux + localdatabase.share_url+"\n\n";
                 i.putExtra(Intent.EXTRA_TEXT, sAux);
                 startActivity(Intent.createChooser(i, "choose one"));
             } catch(Exception e) {
