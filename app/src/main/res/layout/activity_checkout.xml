@@ -141,6 +141,7 @@
                 android:layout_height="match_parent"
                 android:text="1st LANE"
                 android:gravity="center"
+                android:textSize="12sp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:background="@color/colorPrimary"
@@ -170,6 +171,7 @@
                 android:gravity="center"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textSize="12sp"
                 android:background="@color/colorPrimary"
                 />
 
@@ -197,6 +199,7 @@
                 android:gravity="center"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textSize="12sp"
                 android:background="@color/colorPrimary"
                 />
 
