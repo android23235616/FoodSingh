@@ -250,7 +250,7 @@ public class CheckoutActivity extends AppCompatActivity {
     if(check!=1) {
         for (int i = 0; i < localdatabase.cartList.size(); i++) {
             MenuItems item = localdatabase.cartList.get(i);
-            items += item.getName() + " x" + item.getQuantity();
+            items += item.getName() + "-" + item.getQuantity();
             if (i != localdatabase.cartList.size() - 1) {
                 items += ", ";
             }
@@ -264,7 +264,7 @@ public class CheckoutActivity extends AppCompatActivity {
         Log.d("DATA23432", "Items = "+items);
         Log.d("DATA23432", "Total Amount = "+totalAmount);
         progress = new ProgressDialog(this);
-        progress.setMessage("Sending Order........");
+        progress.setMessage("Sending Order...");
         progress.setCancelable(false);
         progress.show();
 

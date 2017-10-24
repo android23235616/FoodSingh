@@ -513,8 +513,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             checkout.setClickable(false);
             checkout.setBackgroundResource(R.drawable.back_checkout_grey);
         }
-
-            tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
+            if(localdatabase.deliveryCharge == 0) {
+                tvDeliveryCharge.setText("FREE");
+            }
+            else {
+                tvDeliveryCharge.setText("₹" + localdatabase.deliveryCharge);
+            }
             tvTotalAmount.setText("₹" + totalAmount);
             tvTotalAmount2.setText("₹" + totalAmount);
 
