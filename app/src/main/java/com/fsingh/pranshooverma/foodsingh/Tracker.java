@@ -356,14 +356,26 @@ public class Tracker extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     String status = jsonObject.getString("status");
+                    TextView name = (TextView) findViewById(R.id.info);
+                    TextView mob = (TextView) findViewById(R.id.number_info);
+                    drivern = jsonObject.getString("delivery_boy");
+                    driverm = jsonObject.getString("delivery_boy_mobile");
                     if(status.equals("0")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
+                        name.setText("NA");
+                        mob.setText("NA");
                     }else if(status.equals("1")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.processing));
+                        name.setText("NA");
+                        mob.setText("NA");
                     }else if(status.equals("2")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.outfordelivery));
+                        name.setText(drivern);
+                        mob.setText(driverm);
                     }else if(status.equals("3")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.delivered));
+                        name.setText("NA");
+                        mob.setText("NA");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
