@@ -59,6 +59,7 @@ public class Tracker extends AppCompatActivity {
 
     Intent i;
     FoodItem item, newItem;
+    ImageView img_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class Tracker extends AppCompatActivity {
         logistics = setTextId(this.driver_number,R.id.logisticinfo);
         trackimage = (ImageView)findViewById(R.id.trackimage);
         items = (TextView)findViewById(R.id.items);
+        img_back=(ImageView) findViewById(R.id.back);
         i = getIntent();
         order_no.setTypeface(tf);
         repeat_order.setTypeface(tf);
@@ -137,6 +139,14 @@ public class Tracker extends AppCompatActivity {
             }
         });
 
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a=new Intent(getApplicationContext(),order_history.class);
+                a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(a);
+            }
+        });
 
         issue.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -86,4 +86,6 @@ public class localdatabase {
 
     public static int amount = 0;
 
+    public static String kitchenClosedText = "";
+
 }

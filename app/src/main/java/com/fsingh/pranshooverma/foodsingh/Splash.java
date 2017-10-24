@@ -189,6 +189,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     localdatabase.share_text =mainObject.getString("share_text");
                     localdatabase.share_url = mainObject.getString("share_url");
                     localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
+                    localdatabase.kitchenClosedText = mainObject.getString("kitchen_closed_text");
 
                     if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
                         showDialog2(Splash.this,"Please go to app store and download the latest version.");
