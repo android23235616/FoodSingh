@@ -12,7 +12,6 @@
     <include layout="@layout/my_toolbar"
         android:id="@+id/tt"/>
 <FrameLayout
-    android:layout_marginTop="10dp"
     android:layout_below="@+id/tt"
     android:id="@+id/f1"
     android:layout_width="match_parent"
@@ -46,7 +45,8 @@
         android:layout_marginTop="10dp"
         android:id="@+id/item_name"
         android:textColor="@color/jhat"
-        android:textSize="20dp"
+        android:textSize="30dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginLeft="5dp"
         android:layout_width="310dp"
         android:textStyle="bold"
@@ -81,7 +81,7 @@
         android:layout_marginEnd="16dp"
         android:textColor="@color/text_color"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="20sp"
         android:text="This iubuscv bisdckbsdac b k sdbka k sib hdc" />
     </ScrollView>
 

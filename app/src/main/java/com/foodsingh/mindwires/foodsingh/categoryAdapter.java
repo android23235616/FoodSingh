@@ -46,15 +46,18 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         ImageView img;
-        TextView txt;
+        TextView txt, detail;
         CardView cardView;
         public ViewHolder(View itemView) {
             super(itemView);
             img=(ImageView) itemView.findViewById(R.id.img);
             txt=(TextView) itemView.findViewById(R.id.text_char_name);
+            detail=(TextView) itemView.findViewById(R.id.detail);
             cardView=(CardView) itemView.findViewById(R.id.card_view);
             Typeface t = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/Alisandra Demo.ttf");
             txt.setTypeface(t);
+            Typeface tf = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/MTCORSVA.TTF");
+            detail.setTypeface(tf);
 
         }
 
@@ -74,6 +77,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
 
         String name=categories.get(position);
 
+        holder.detail.setText(localdatabase.masterList.get(position).getDetail());
         name = name.toLowerCase();
 
         String new_name = name.charAt(0)+"";

@@ -9,11 +9,11 @@ import java.util.List;
 
 public class MasterMenuItems {
 
-    private String name, image, cuisine, time , combo,drinks;
+    private String name, image, cuisine, time , combo,drinks, detail;
 
     private List<MenuItems> menuList = new ArrayList<>();
 
-    MasterMenuItems(String name, String image, String cuisine, String Combo, List<MenuItems> menuList,String time, String drinks){
+    MasterMenuItems(String name, String image, String cuisine, String Combo, List<MenuItems> menuList,String time, String drinks, String detail){
         this.name = name;
         this.image = image;
         this.cuisine = cuisine;
@@ -21,6 +21,7 @@ public class MasterMenuItems {
         this.menuList = menuList;
         this.time = time;
         this.drinks = drinks;
+        this.detail = detail;
     }
 
     public String getName(){
@@ -31,6 +32,10 @@ public class MasterMenuItems {
         return image;
 
 
+    }
+
+    public String getDetail() {
+        return detail;
     }
 
     public String getCuisine(){

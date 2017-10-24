@@ -13,10 +13,10 @@
         android:textStyle="bold"
         android:background="#dac598"
         android:fontFamily="monospace"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:textColor="@color/white"
         android:scrollbars="vertical"
-        android:padding="3dp"
+        android:paddingStart="16dp"
         android:text="Attack! On the Food."/>
 
 <android.support.v4.widget.NestedScrollView android:layout_height="match_parent"

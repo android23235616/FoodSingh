@@ -206,7 +206,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                 localdatabase.unavailableItemsList.add(ii);
                             }
                         }
-                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"));
+                        MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"), tempObject.getString("detail"));
                         Log.i("checking details", tempObject.getString("drinks"));
                         localdatabase.masterList.add(menuItemsObject);
                     }

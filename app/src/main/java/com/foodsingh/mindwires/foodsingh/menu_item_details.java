@@ -43,7 +43,7 @@ public class menu_item_details extends AppCompatActivity
     ImageView plus,minus,item_image;
     int p;
     TextView item_name,item_price,quantity,cartitemcount1,unav,notifamout;
-    String name,price,image,item_quantity,des;
+    String name,price,image,item_quantity,des,id, status, category;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     TextView description;
@@ -359,16 +359,28 @@ public class menu_item_details extends AppCompatActivity
         name=b.getString("item_name");
         price=b.getString("item_price");
         image=b.getString("item_image");
-        item=b.getParcelable("object");
+        //item=b.getParcelable("object");
         des = b.getString("desc");
         description.setText(des);
-        item=b.getParcelable("object");
+        //item=b.getParcelable("object");
         item_quantity=b.getString("item_quantity");
+        id = b.getString("id");
+        status = b.getString("status");
+        category = b.getString("category");
         position=b.getInt("position");
         isFav = b.getBoolean("isfav");
         mainItem = b.getParcelable("mainobject");
         isAvailable = b.getInt("avail");
         p = b.getInt("mainposition");
+
+        if(!status.equals("live")){
+            unav.setVisibility(View.VISIBLE);
+        }
+        else {
+            unav.setVisibility(View.INVISIBLE);
+        }
+
+        item = new MenuItems(id, name, category, price, image, status, des);
 
         if (item_quantity.equals("")){
             quantity.setText("0");
@@ -394,18 +406,22 @@ public class menu_item_details extends AppCompatActivity
         item_price=(TextView) findViewById(R.id.item_price);
 
         description = (TextView)findViewById(R.id.descrption);
+        Typeface tf11 = Typeface.createFromAsset(getAssets(), "fonts/MTCORSVA.TTF");
+        description.setTypeface(tf11);
         fav = (ImageView)findViewById(R.id.fav);
         unav = (TextView)findViewById(R.id.txt_unavailable);
+        Typeface tf111 = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
+        unav.setTypeface(tf111, Typeface.BOLD);
         addFav = (Button)findViewById(R.id.add_to_fav);
 
         sp = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/vijaya.ttf");
         Typeface tf2 = Typeface.createFromAsset(getAssets(),"fonts/tahoma.ttf");
         Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/tahoma.ttf");
-        item_name.setTypeface(tf1,Typeface.BOLD);
+        Typeface t = Typeface.createFromAsset(getAssets(), "fonts/Alisandra Demo.ttf");
+        item_name.setTypeface(t);
         item_price.setTypeface(tf,Typeface.BOLD);
 
-        description.setTypeface(tf2);
 
 
         editor = sp.edit();
