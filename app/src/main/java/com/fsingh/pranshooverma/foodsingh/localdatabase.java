@@ -16,6 +16,7 @@ public class localdatabase {
     public static List<SuperCategories> superCategoriesList = new ArrayList<>();
     public static String share_text, share_url;
     public static String lane;
+    public static int kitchen  = 0;
     public static TextView notifmount;
     public static String delivery = "";
     public static int cache = 0;

@@ -9,6 +9,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,13 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         this.mContext=mContext;
         this.categories=categories;
         this.images_data=images;
+
+        if(categories.size()==0&&images.size()==0){
+            Log.i("mydisplay","no list");
+            menu.noitem.setVisibility(View.VISIBLE);
+        }else{
+            menu.noitem.setVisibility(View.INVISIBLE);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder

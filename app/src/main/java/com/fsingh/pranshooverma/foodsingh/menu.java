@@ -70,10 +70,14 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     RecyclerView recylerView;
     RecyclerView.LayoutManager layoutmanager;
     List<String> categories=new ArrayList<>();
+
+    public static TextView noitem;
+
     List<String> images=new ArrayList<>();
     categoryAdapter adapter;
     TextView drinks;
     BroadcastReceiver broadcastReceiver;
+
     localdatabase local;
     ImageButton next, back;
 
@@ -114,6 +118,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         RemoveTop();
 
         setContentView(R.layout.activity_menu);
+
+        noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
 
 
@@ -790,15 +796,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
 if(local.metaData!=null) {
     if (local.metaData.getservice().equals("true")) {
-        Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Open.");
         attack.setBackgroundColor(Color.parseColor("#7ee591"));
         //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
     } else {
         if(!localdatabase.delivery.equals("NA")) {
-            showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+           if(localdatabase.kitchen==0){
+               showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+               localdatabase.kitchen++;
+           }
         }
-        Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
         attack.setText("Kitchen is Closed.");
         attack.setBackgroundColor(Color.parseColor("#56FF0000"));
     }
@@ -871,7 +880,7 @@ if(local.metaData!=null) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem menuItem=menu.findItem(R.id.action_cart);
-         actionView= MenuItemCompat.getActionView(menuItem);
+        actionView= MenuItemCompat.getActionView(menuItem);
         cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
