@@ -437,7 +437,7 @@ public class Tracker extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Tracker.this, menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+         //       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -448,7 +448,7 @@ public class Tracker extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Tracker.this, order_history.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+           //     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -460,7 +460,7 @@ public class Tracker extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Tracker.this, Support.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
