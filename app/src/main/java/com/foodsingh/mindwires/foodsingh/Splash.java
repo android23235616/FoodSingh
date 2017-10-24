@@ -255,7 +255,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Display(error.toString());
+                //Display(error.toString());
                 Log.i("mainresponse", error.toString());
                 Display("Please start the app again");
                 Log.i("mainresponse",error.toString());
@@ -600,7 +600,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
         } catch (IOException e) {
             e.printStackTrace();
-            Display(e.toString());
+            //Display(e.toString());
         }
         String address, city;
         if(addresses.size()>0) {
