@@ -196,6 +196,8 @@ public class place_order_activity extends AppCompatActivity implements Navigatio
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
         TextView location = (TextView)v.findViewById(R.id.location);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
+        location.setTypeface(tf);
         location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

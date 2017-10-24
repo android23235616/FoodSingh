@@ -233,7 +233,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         TextView t = (TextView) v.findViewById(R.id.welcome);
         t.setTypeface(tp);
         TextView location = (TextView)v.findViewById(R.id.location);
-        location.setTypeface(tp);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
+        location.setTypeface(tf);
         location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
