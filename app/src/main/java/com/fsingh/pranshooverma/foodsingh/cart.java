@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -70,6 +71,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     public  static Sides_Adapter sidesAdapter;
     ProgressDialog couponDilog;
     Toolbar toolbar;
+    Dialog dialog;
     static Button checkout;
     SharedPreferences shared;
 
@@ -265,23 +267,23 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                        String result = obj.getString("result");
 
                        if(result.equals("false")){
-                           showDialog(cart.this, "Sorry, but you have entered an\ninvalid coupon.", R.drawable.ic_error_outline_black_24dp);
+                           showDialog2(cart.this, "Sorry, but you have entered an\ninvalid coupon.");
                        }else if(result.equals("redeemed")){
-                           showDialog(cart.this, "You Have Already applied the coupon.", R.drawable.ic_error_outline_black_24dp);
+                           showDialog2(cart.this, "You Have Already applied the coupon.");
                        }else{
                            localdatabase.discount = Integer.parseInt(discount);
 
                            discountPercent = localdatabase.discount;
                            calculateTotal();
 
-                           showDialog(cart.this, "Congratulations. "+discountPercent+"% discount applied.", R.drawable.ic_check_black_24dp);
+                           showDialog2(cart.this, "Congratulations. "+discountPercent+"% discount applied.");
                        }
                    } catch (JSONException e) {
                        if(!couponDilog.isShowing()){
                            couponDilog.dismiss();
                        }
                        e.printStackTrace();
-                      showDialog(cart.this, e.toString(), R.drawable.ic_error_outline_black_24dp);
+                      showDialog2(cart.this, e.toString());
                    }
 
                }
@@ -299,7 +301,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 if(!couponDilog.isShowing()){
                     couponDilog.dismiss();
                 }
-                showDialog(cart.this, error.toString(), R.drawable.ic_error_outline_black_24dp);
+                showDialog2(cart.this, error.toString());
             }
         }){
             @Override
@@ -355,11 +357,11 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         registerReceiver(broadcastReceiver,intentFilter2);
     }
 
-    public void showDialog(Activity activity, String msg, int pic){
-        final Dialog dialog = new Dialog(activity);
+    public void showDialog2(Context activity, String msg){
+        dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog);
+        dialog.setContentView(R.layout.dialog2);
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
@@ -367,13 +369,24 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         text.setTypeface(tf);
 
-        ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
-        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
+        TextView image = (TextView) dialog.findViewById(R.id.btn_dialog);
+        // Glide.with(activity).load(pic).into(image);
         TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+
+
+        image.setText("Done");
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
             }
         });
 
