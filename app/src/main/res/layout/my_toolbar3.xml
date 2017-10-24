@@ -44,7 +44,6 @@
         android:layout_height="40dp"
         android:id="@+id/back"
         app:srcCompat="@drawable/back_arrow"
-
         />
 </FrameLayout>
 

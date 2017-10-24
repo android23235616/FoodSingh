@@ -182,7 +182,7 @@
             android:fontFamily="monospace"/>
 
         <TextView
-            android:layout_marginLeft="160dp"
+            android:layout_marginLeft="150dp"
             android:alpha="0.5"
             android:id="@+id/total_amount"
             android:layout_width="wrap_content"

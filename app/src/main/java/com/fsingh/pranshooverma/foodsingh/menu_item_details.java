@@ -403,9 +403,9 @@ public class menu_item_details extends AppCompatActivity
         addFav = (Button)findViewById(R.id.add_to_fav);
 
         sp = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
-        Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/Alisandra Demo.ttf");
-        Typeface tf2 = Typeface.createFromAsset(getAssets(),"fonts/FREESCPT.TTF");
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/gadugib.ttf");
+        Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/vijaya.ttf");
+        Typeface tf2 = Typeface.createFromAsset(getAssets(),"fonts/tamoha.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/tamoha.ttf");
         item_name.setTypeface(tf1,Typeface.BOLD);
         item_price.setTypeface(tf,Typeface.BOLD);
 

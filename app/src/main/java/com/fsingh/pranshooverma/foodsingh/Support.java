@@ -36,7 +36,7 @@ public class Support extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver;
     View actionView;
     ProgressDialog progress;
-
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class Support extends AppCompatActivity {
         setContentView(R.layout.activity_support);
 
         mWebView = (WebView) findViewById(R.id.support_web);
+        back=(ImageView)findViewById(R.id.back);
         progress=new ProgressDialog(this);
         progress.setMessage("Loading...");
         progress.setCancelable(false);
@@ -72,6 +73,15 @@ public class Support extends AppCompatActivity {
 
        mWebView.loadUrl("http://foodsingh.com/support");
         SetupBroadcastReceiver();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a=new Intent(getApplicationContext(),menu.class);
+                a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(a);
+            }
+        });
     }
 
     private void SetupBroadcastReceiver() {
