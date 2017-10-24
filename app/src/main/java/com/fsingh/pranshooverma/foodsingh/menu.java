@@ -82,18 +82,21 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     int counter_button=0;
     int counter_button2=0;
     int counter_button3=0;
+    int pageritem = 0;
     int counter_button4=0;
     boolean nav=true;
     TextView attack;
     pagerAdapter pageradater;
     NavigationView navigationView;
-    ViewPager pager;
+    ViewPagerCustomDuration pager;
     static int[] dotPositions = {R.id.view_pager_1, R.id.view_pager_2,R.id.view_pager_3,R.id.view_pager_4,R.id.view_pager_5,R.id.view_pager_6};
     AppBarLayout appBarLayout;
     public static int width;
     public static TextView cartitemcount1;
     View actionView;
     boolean swipe = false;
+    Handler handler;
+    Runnable runnable;
     RecyclerView.ItemDecoration itemDecoration;
     SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences shared;
@@ -150,6 +153,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         nav=true;
 
         attack = (TextView)findViewById(R.id.attack);
+        handler = new Handler();
         initialize();
 
         next = (ImageButton) findViewById(R.id.right_arrow);
@@ -470,9 +474,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
 
+        infiniteViewPager();
+
 
     }
 
+    private void infiniteViewPager() {
+    }
 
 
     private void SetupBroadcastReceiver() {
@@ -590,7 +598,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         ad2 = (ImageView)findViewById(R.id.advertisement2);
         Glide.with(this).load(localdatabase.couponClassList.get(0).getUrl()).into(ad1);
         Glide.with(this).load(localdatabase.couponClassList.get(1).getUrl()).into(ad2);
-        pager = (ViewPager) findViewById(R.id.view_pager);
+        pager = (ViewPagerCustomDuration) findViewById(R.id.view_pager);
         pager.addOnPageChangeListener(this);
         appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
         drinks = (TextView) findViewById(R.id.drinks);
@@ -624,6 +632,27 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
         combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
         drinks.setText(localdatabase.superCategoriesList.get(3).getName());
+        pager.setScrollDurationFactor(3);
+        pager.setCurrentItem(pageritem);
+        getPositionsForDots(pageritem);
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                pageritem++;
+                if(pageritem==5){
+                    local = new localdatabase();
+                    pageradater = new pagerAdapter(local);
+                    pager.setAdapter(pageradater);
+                    pageritem=0;
+                }
+                pager.setCurrentItem(pageritem);
+                getPositionsForDots(pageritem);
+                handler.postDelayed(runnable,2000);
+            }
+        };
+
+    handler.postDelayed(runnable,1000);
 
     }
 
@@ -784,7 +813,8 @@ if(local.metaData!=null) {
 
     private void Display(String s)
     {
-        //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Log.i("view pager", s);
     }
 
     private void send_to_adapter()
@@ -799,6 +829,7 @@ if(local.metaData!=null) {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Display(position+" page selected1");
 
         getPositionsForDots(position%dotPositions.length);
        // Display("Called at "+position);
@@ -808,6 +839,7 @@ if(local.metaData!=null) {
     @Override
     public void onPageSelected(int position) {
 //       Display("Page selected at "+position);
+        Display(position+" page selected");
         getPositionsForDots(position%dotPositions.length);
     }
 
