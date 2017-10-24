@@ -624,11 +624,14 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
             SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
             String tempJson = sharedPreferences.getString(constants.fav,"");
             if(tempJson.equals("")){
-                showDialog(this,"You have no Favourites. You need to eat more!", R.drawable.ic_not_fav);
+                showDialog(this,"You have no Favourites. You need to eat more!", R.drawable.ic_fav);
             }else{
                 Gson gson = new Gson() ;
                 FavouritesList f = gson.fromJson(tempJson, FavouritesList.class);
                 List<MenuItems> menuItemses=f.getFavouriteList();
+                if(menuItemses.size()<=0){
+                    showDialog(this,"You have no Favourites. You need to eat more!", R.drawable.ic_fav);
+                }
                 adapter = new MenuItemAdapter(this, menuItemses,position);
 
             }
