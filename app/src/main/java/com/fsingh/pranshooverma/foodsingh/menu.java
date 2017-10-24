@@ -803,7 +803,8 @@ if(local.metaData!=null) {
     } else {
         if(!localdatabase.delivery.equals("NA")) {
            if(localdatabase.kitchen==0){
-               showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+               //showDialog(this, "Kitchen is Closed\nPlease come back from 6 pm to 10 pm", R.drawable.store);
+               showDialog(this, localdatabase.kitchenClosedText, R.drawable.store);
                localdatabase.kitchen++;
            }
         }

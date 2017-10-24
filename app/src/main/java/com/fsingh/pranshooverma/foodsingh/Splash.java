@@ -187,6 +187,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     localdatabase.share_text =mainObject.getString("share_text");
                     localdatabase.share_url = mainObject.getString("share_url");
                     localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
+                    localdatabase.kitchenClosedText = mainObject.getString("kitchen_closed_text");
 
                     JSONArray Categories = mainObject.getJSONArray("categories");
                     for (int i=0; i<Categories.length(); i++){
