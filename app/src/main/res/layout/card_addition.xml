@@ -7,10 +7,24 @@
     android:id="@+id/r1"
     android:background="@color/white">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/img_rev"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/dummy_ad"
+            android:id="@+id/img_temp"
+            />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_toRightOf="@+id/r2"
         android:layout_width="wrap_content"
+        android:layout_below="@+id/img_rev"
         android:layout_height="wrap_content"
         android:id="@+id/r3"
         >
@@ -106,12 +120,12 @@
                 android:fontFamily="monospace"/>
 
             <TextView
-                android:layout_marginLeft="20dp"
                 android:alpha="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13dp"
                 android:text="N/A"
+                android:layout_marginLeft="210dp"
                 android:id="@+id/dis_amt"
                 android:textColor="@color/red"
                 android:fontFamily="monospace"/>
@@ -132,7 +146,7 @@
                 android:fontFamily="monospace"/>
 
             <TextView
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="210dp"
                 android:alpha="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,7 +182,7 @@
             android:fontFamily="monospace"/>
 
         <TextView
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="160dp"
             android:alpha="0.5"
             android:id="@+id/total_amount"
             android:layout_width="wrap_content"

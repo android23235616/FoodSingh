@@ -92,6 +92,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     static int discountPercent = 0;
     LinearLayout availableOptions;
 
+
+    //this part is to be added and removed according to the meta deta,
+    RelativeLayout img_temp_relative;
+    ImageView img_temp;
+/////////////////////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -565,6 +571,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         recycler.setNestedScrollingEnabled(true);
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
 
+
         tvTotalAmount = (TextView) findViewById(R.id.total_amount);
         tvTotalAmount2 = (TextView) findViewById(R.id.total_amount_2);
         tvDeliveryCharge = (TextView)findViewById(R.id.delivery_charge);
@@ -574,8 +581,26 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         //tvCouponCode = (TextView) findViewById(R.id.txt_coupon_code);
         tvDisAmt = (TextView) findViewById(R.id.dis_amt);
         availableOptions = (LinearLayout) findViewById(R.id.grp_available_options);
-
         calculateTotal();
+
+
+        //intialization has been done here for these both
+        img_temp_relative=(RelativeLayout)findViewById(R.id.img_rev);
+        img_temp=(ImageView)findViewById(R.id.img_temp);
+        //setting the image between th views in CART
+        Boolean status=true;
+        if(status)
+         {
+             img_temp_relative.setVisibility(View.VISIBLE);
+             //now set the image in the imageview here.
+
+         }
+         else
+        {
+            img_temp_relative.setVisibility(View.GONE);
+        }
+        //////////////////////////////////////////////////////////
+
     }
 
     private void send_to_adapter()
