@@ -14,7 +14,7 @@
     android:orientation="vertical"
     android:background="@color/white"
 
-    tools:context="com.fsingh.pranshooverma.foodsingh.Signup_OTP">
+    tools:context="com.foodsingh.mindwires.foodsingh.Signup_OTP">
 
     <LinearLayout
         android:layout_width="match_parent"

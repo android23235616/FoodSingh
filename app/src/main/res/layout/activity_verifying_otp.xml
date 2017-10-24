@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.fsingh.pranshooverma.foodsingh.verifying_otp">
+    tools:context="com.foodsingh.mindwires.foodsingh.verifying_otp">
 
 
     <FrameLayout

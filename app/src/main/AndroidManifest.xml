@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fsingh.pranshooverma.foodsingh">
+    package="com.foodsingh.mindwires.foodsingh">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Signup_OTP"
+            android:name="com.foodsingh.mindwires.foodsingh.Signup_OTP"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".verifying_otp"
+            android:name="com.foodsingh.mindwires.foodsingh.verifying_otp"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".details"
+            android:name="com.foodsingh.mindwires.foodsingh.details"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login_page"
+            android:name="com.foodsingh.mindwires.foodsingh.login_page"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".menu"
+            android:name="com.foodsingh.mindwires.foodsingh.menu"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -71,22 +71,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".menu_category_wise"
+            android:name="com.foodsingh.mindwires.foodsingh.menu_category_wise"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".cart"
+            android:name="com.foodsingh.mindwires.foodsingh.cart"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".place_order_activity"
+            android:name="com.foodsingh.mindwires.foodsingh.place_order_activity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".FakeActivity"
+            android:name="com.foodsingh.mindwires.foodsingh.FakeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -96,11 +96,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".order_history"
+            android:name="com.foodsingh.mindwires.foodsingh.order_history"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Splash" android:label=""
+        <activity android:name="com.foodsingh.mindwires.foodsingh.Splash" android:label=""
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -108,9 +108,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckoutActivity"
+        <activity android:name="com.foodsingh.mindwires.foodsingh.CheckoutActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".OrderPlacedActivity"
+        <activity android:name="com.foodsingh.mindwires.foodsingh.OrderPlacedActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -118,7 +118,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".set_password"
+        <activity android:name="com.foodsingh.mindwires.foodsingh.set_password"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -126,7 +126,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".web_view"
+        <activity android:name="com.foodsingh.mindwires.foodsingh.web_view"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -138,14 +138,14 @@
         <activity
             android:label=""
             android:screenOrientation="portrait"
-            android:name=".menu_item_details"
+            android:name="com.foodsingh.mindwires.foodsingh.menu_item_details"
             android:theme="@style/AppTheme"  />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Tracker"
+            android:name="com.foodsingh.mindwires.foodsingh.Tracker"
             android:label="" />
 
-        <service android:name=".FirebaseMessagingService"
+        <service android:name="com.foodsingh.mindwires.foodsingh.FirebaseMessagingService"
 
             android:enabled="true"
             android:stopWithTask="false"
@@ -154,7 +154,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm" android:label=""
+        <service android:name="com.foodsingh.mindwires.foodsingh.fcm" android:label=""
             android:exported="true"
             android:stopWithTask="false"
             android:enabled="true">
@@ -163,9 +163,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".about_us"></activity>
-        <activity android:name=".Support"></activity>
+        <activity android:name="com.foodsingh.mindwires.foodsingh.NotificationActivity"></activity>
+        <activity android:name="com.foodsingh.mindwires.foodsingh.about_us"></activity>
+        <activity android:name="com.foodsingh.mindwires.foodsingh.Support"></activity>
     </application>
 
 </manifest>

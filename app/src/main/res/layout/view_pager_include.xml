@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.fsingh.pranshooverma.foodsingh.ViewPagerCustomDuration
+    <com.foodsingh.mindwires.foodsingh.ViewPagerCustomDuration
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_collapseMode="pin"
         android:background="@drawable/whatsapp"

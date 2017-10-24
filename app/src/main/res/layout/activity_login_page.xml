@@ -7,7 +7,7 @@
     android:background="@drawable/background_another"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.fsingh.pranshooverma.foodsingh.login_page">
+    tools:context="com.foodsingh.mindwires.foodsingh.login_page">
 
 
 

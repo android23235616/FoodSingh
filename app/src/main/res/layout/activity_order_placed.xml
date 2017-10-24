@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eaeaea"
-    tools:context="com.fsingh.pranshooverma.foodsingh.OrderPlacedActivity">
+    tools:context="com.foodsingh.mindwires.foodsingh.OrderPlacedActivity">
 
 
     <RelativeLayout
