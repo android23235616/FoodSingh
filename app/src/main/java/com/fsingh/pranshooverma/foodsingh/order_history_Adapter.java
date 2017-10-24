@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,8 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView date_text,amount_text,orders_text_,address_text_,order_no,arrow;
+        TextView date_text,amount_text,orders_text_,address_text_,order_no;
+        FrameLayout arrow;
 
         public ViewHolder(View itemView)
         {
@@ -53,7 +55,8 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
 
             date_text=(TextView) itemView.findViewById(R.id.date);
             order_no=(TextView) itemView.findViewById(R.id.order_number);
-            arrow=(TextView) itemView.findViewById(R.id.textView_amount);
+       //     arrow=(TextView) itemView.findViewById(R.id.textView_amount);
+            arrow=(FrameLayout) itemView.findViewById(R.id.frame_click);
             orders_text_=(TextView) itemView.findViewById(R.id.textview_scroll_items);
             address_text_=(TextView) itemView.findViewById(R.id.textview_scroll_price);
             amount_text=(TextView) itemView.findViewById(R.id.textview_scroll_price);
@@ -91,6 +94,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
 
         holder.date_text.setText(month+" "+day.substring(0,2)+", "+year);
         holder.amount_text.setText(a);
+
         //holder.orders_text.setText(o);
         //holder.address_text.setText(add);
        // holder.order_qt.setText((holder.getAdapterPosition()+1)+"");
