@@ -56,6 +56,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -608,11 +609,34 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         img_temp_relative=(RelativeLayout)findViewById(R.id.img_rev);
         img_temp=(ImageView)findViewById(R.id.img_temp);
         //setting the image between th views in CART
+
         Boolean status=true;
+
+        if(localdatabase.cartCoupon.equalsIgnoreCase("true"))
+        {
+            status=true;
+        }
+        else
+        {
+            status=false;
+        }
+
         if(status)
          {
              img_temp_relative.setVisibility(View.VISIBLE);
              //now set the image in the imageview here.
+             String urk=localdatabase.couponClassList.get(2).getUrl();
+             Glide.with(this).load(urk).into(img_temp);
+             img_temp.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     String cc=localdatabase.couponClassList.get(2).getCouponCode();
+
+                     //receive the text from localdatabase
+                     setClipboard(getApplicationContext(),cc);
+                     Display("Coupon copied to ClipBoard");
+                 }
+             });
 
          }
          else
@@ -894,5 +918,14 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
-
+    private void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
+    }
 }
