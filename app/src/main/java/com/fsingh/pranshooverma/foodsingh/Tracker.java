@@ -362,20 +362,21 @@ public class Tracker extends AppCompatActivity {
                     driverm = jsonObject.getString("delivery_boy_mobile");
                     if(status.equals("0")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
-                        name.setText("NA");
-                        mob.setText("NA");
+                        name.setText("NOT AVAILABLE");
+                        mob.setText("NOT AVAILABLE");
+
                     }else if(status.equals("1")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.processing));
-                        name.setText("NA");
-                        mob.setText("NA");
+                        name.setText("NOT AVAILABLE");
+                        mob.setText("NOT AVAILABLE");
                     }else if(status.equals("2")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.outfordelivery));
                         name.setText(drivern);
                         mob.setText(driverm);
                     }else if(status.equals("3")){
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.delivered));
-                        name.setText("NA");
-                        mob.setText("NA");
+                        name.setText("NOT AVAILABLE");
+                        mob.setText("NOT AVAILABLE");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
