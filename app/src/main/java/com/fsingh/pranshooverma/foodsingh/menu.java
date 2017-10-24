@@ -646,7 +646,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void run() {
                 pageritem++;
-                if(pageritem==5){
+                if(pageritem==6){
                     local = new localdatabase();
                     pageradater = new pagerAdapter(local);
                     pager.setAdapter(pageradater);
@@ -654,11 +654,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 pager.setCurrentItem(pageritem);
                 getPositionsForDots(pageritem);
-                handler.postDelayed(runnable,3000);
+                handler.postDelayed(runnable,2500);
             }
         };
 
-    handler.postDelayed(runnable,3000);
+    handler.postDelayed(runnable,2500);
 
     }
 
