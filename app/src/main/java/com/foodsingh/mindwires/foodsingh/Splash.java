@@ -526,7 +526,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     public void onConnected(@Nullable Bundle bundle) {
         showLog("Connected Api Client");
         if (apiClient != null) {
-            LocationRequest locationRequest = LocationRequest.create().setInterval(20000).setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            LocationRequest locationRequest = LocationRequest.create().setInterval(200000).setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
 
@@ -595,15 +595,20 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(final Location location) {
 
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
-        localdatabase.city=getCity(location.getLatitude(),location.getLongitude());
+
+
+     //  localdatabase.city  = getCity(location.getLatitude(),location.getLongitude());
+
+
+
         LocationChecked = true;
 
         if(i==0) {
-
+            AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
             Initiate_Meta_Data();
 
         }
@@ -626,7 +631,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         }
         String address, city;
         if(addresses.size()>0) {
-            address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            address = addresses.get(0).getAddressLine(0)+" , , "; // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             city = addresses.get(0).getLocality();
             Log.i("addressmine",addresses.get(0).getAdminArea()+", "+addresses.get(0).getFeatureName()+" , "+addresses.get(0).getLocality()+", "+address);
             localdatabase.lane = address;
@@ -642,8 +647,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 }
                 localdatabase.lane2 += address.charAt(i);
             }
-            Log.i("addressmine",addresses.get(0).getSubLocality());
-            Log.i("addressmine",localdatabase.lane2);
+
 
             return city;
         }

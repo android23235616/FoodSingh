@@ -7,20 +7,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/logo7"
-
         android:label="FoodSingh"
         android:largeHeap="true"
         android:roundIcon="@drawable/logo7"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.Signup_OTP"
+            android:name=".Signup_OTP"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -30,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.verifying_otp"
+            android:name=".verifying_otp"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.details"
+            android:name=".details"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.login_page"
+            android:name=".login_page"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -60,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.menu"
+            android:name=".menu"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -71,22 +70,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.menu_category_wise"
+            android:name=".menu_category_wise"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.cart"
+            android:name=".cart"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.place_order_activity"
+            android:name=".place_order_activity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.FakeActivity"
+            android:name=".FakeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -96,76 +95,87 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.foodsingh.mindwires.foodsingh.order_history"
+            android:name=".order_history"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.foodsingh.mindwires.foodsingh.Splash" android:label=""
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.CheckoutActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.OrderPlacedActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.set_password"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.web_view"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
         <activity
+            android:name=".Splash"
+            android:label=""
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CheckoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderPlacedActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".set_password"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".web_view"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".menu_item_details"
             android:label=""
             android:screenOrientation="portrait"
-            android:name="com.foodsingh.mindwires.foodsingh.menu_item_details"
-            android:theme="@style/AppTheme"  />
+            android:theme="@style/AppTheme" />
         <activity
-            android:screenOrientation="portrait"
-            android:name="com.foodsingh.mindwires.foodsingh.Tracker"
-            android:label="" />
+            android:name=".Tracker"
+            android:label=""
+            android:screenOrientation="portrait" />
 
-        <service android:name="com.foodsingh.mindwires.foodsingh.FirebaseMessagingService"
-
+        <service
+            android:name=".FirebaseMessagingService"
             android:enabled="true"
-            android:stopWithTask="false"
-            android:exported="true">
+            android:exported="true"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.foodsingh.mindwires.foodsingh.fcm" android:label=""
+        <service
+            android:name=".fcm"
+            android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false"
-            android:enabled="true">
+            android:label=""
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="com.foodsingh.mindwires.foodsingh.NotificationActivity"></activity>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.about_us"></activity>
-        <activity android:name="com.foodsingh.mindwires.foodsingh.Support"></activity>
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".about_us" />
+        <activity android:name=".Support" />
+
+        <service
+            android:name=".AddressFetchingService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

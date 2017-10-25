@@ -55,10 +55,15 @@ import java.util.Random;
 
 public class menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener, AppBarLayout.OnOffsetChangedListener {
 
+
+
     ProgressDialog progress;
     RecyclerView recylerView;
     RecyclerView.LayoutManager layoutmanager;
     List<String> categories=new ArrayList<>();
+
+    Thread t;
+
 
     public static TextView noitem;
 
@@ -477,7 +482,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private void infiniteViewPager() {
     }
 
-
+    Runnable run;
     private void SetupBroadcastReceiver() {
 
         IntentFilter intentFilter = new IntentFilter();
@@ -528,11 +533,15 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     private void manipulatenavigationdrawer() {
+      //  final Handler h = new Handler();
+
         View v = navigationView.getHeaderView(0);
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
         TextView t = (TextView) v.findViewById(R.id.welcome);
+
         t.setTypeface(tp);
-        TextView location = (TextView)v.findViewById(R.id.location);
+        final TextView location = (TextView)v.findViewById(R.id.location);
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
         location.setText(localdatabase.city);
