@@ -240,7 +240,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     image_ = miniTempObject.getString("image");
                     status = miniTempObject.getString("status");
                     detail = miniTempObject.getString("detail");
-                    //detail = "";
+                    detail = "";
                     MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
                     menuItemsList.add(menuItems);
                     String available = miniTempObject.getString("status");
