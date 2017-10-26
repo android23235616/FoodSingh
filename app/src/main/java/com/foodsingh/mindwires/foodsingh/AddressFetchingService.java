@@ -91,6 +91,9 @@ public class AddressFetchingService extends IntentService {
         double longitude = Double.parseDouble(param2);
 
         localdatabase.city = getCity(latitude,longitude);
+        Intent i = new Intent();
+        i.setAction(constants.menugetcitybroadcast);
+        sendBroadcast(i);
 
         Log.i("servicecity",localdatabase.city);
     }

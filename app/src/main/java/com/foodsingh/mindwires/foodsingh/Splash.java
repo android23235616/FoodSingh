@@ -240,7 +240,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     image_ = miniTempObject.getString("image");
                     status = miniTempObject.getString("status");
                     detail = miniTempObject.getString("detail");
-                    detail = "";
+                   // detail = "";
                     MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
                     menuItemsList.add(menuItems);
                     String available = miniTempObject.getString("status");
@@ -304,13 +304,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
-
-    public static long getMinutesDifference(long timeStart,long timeStop){
-        long diff = timeStop - timeStart;
-        long diffMinutes = diff / (60 * 1000);
-
-        return  diffMinutes;
-    }
 
     private void Initiate_Meta_Data() {
 
@@ -608,7 +601,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         LocationChecked = true;
 
         if(i==0) {
-            AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
+          //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
             Initiate_Meta_Data();
 
         }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class constants {
     public static final String menu2BroadcastReceiver = "jhffjfjfjf";
-
+    public static final String menugetcitybroadcast = "lklklklklklk";
     public static final String broaadcastReceiverMenu = "com.exaample.menu";
     public static final String broadCastReceiverNotification = "askdkjAKDSHKASD";
     public static final String broaadcastReceiverMenu2 = "com.exaamalsdhlasdkhjaple.menu";

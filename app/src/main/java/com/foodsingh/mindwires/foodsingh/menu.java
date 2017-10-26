@@ -86,6 +86,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     TextView attack;
     pagerAdapter pageradater;
     NavigationView navigationView;
+    TextView location;
     ViewPagerCustomDuration pager;
     static int[] dotPositions = {R.id.view_pager_1, R.id.view_pager_2,R.id.view_pager_3,R.id.view_pager_4,R.id.view_pager_5,R.id.view_pager_6};
     AppBarLayout appBarLayout;
@@ -504,6 +505,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
                     Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
+                }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
+                    location.setText(localdatabase.city);
+                    Log.i("broadcastreceiver1menu3", localdatabase.city+"");
                 }
 
             }
@@ -514,8 +518,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction(constants.menu2BroadcastReceiver);
 
+        IntentFilter intentFilter3 = new IntentFilter();
+        intentFilter3.addAction(constants.menugetcitybroadcast);
+
         registerReceiver(broadcastReceiver,intentFilter);
         registerReceiver(broadcastReceiver,intentFilter2);
+        registerReceiver(broadcastReceiver,intentFilter3);
     }
 
 
@@ -540,11 +548,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         TextView t = (TextView) v.findViewById(R.id.welcome);
 
         t.setTypeface(tp);
-        final TextView location = (TextView)v.findViewById(R.id.location);
+       location = (TextView)v.findViewById(R.id.location);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
-        location.setText(localdatabase.city);
+     //  location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1038,6 +1046,7 @@ if(local.metaData!=null) {
     protected void onResume() {
         super.onResume();
         appBarLayout.addOnOffsetChangedListener(this);
+        AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
     }
 
     @Override
