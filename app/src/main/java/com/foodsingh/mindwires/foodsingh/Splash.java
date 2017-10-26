@@ -72,6 +72,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     Thread t;
     ProgressBar progressBar;
     StringRequest sr;
+    Handler h;
     Dialog dialog;
     int i=0;
     Context ctx;
@@ -95,6 +96,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         rec = false;
         ctx = this;
        // req = Volley.newRequestQueue(this);
+        h = new Handler();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -201,9 +203,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
             );
-
-
-
             localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
             localdatabase.aboutText = mainObject.getString("about_text");
             localdatabase.aboutImage = mainObject.getString("about_image");
@@ -387,8 +386,14 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
-    private void Display(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    private void Display(final String s) {
+
+       h.post(new Runnable() {
+           @Override
+           public void run() {
+               Toast.makeText(Splash.this,s,Toast.LENGTH_LONG).show();
+           }
+       });
     }
 
     private String getAppVersion() {
@@ -599,12 +604,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
-
-
      //  localdatabase.city  = getCity(location.getLatitude(),location.getLongitude());
-
-
-
         LocationChecked = true;
 
         if(i==0) {
