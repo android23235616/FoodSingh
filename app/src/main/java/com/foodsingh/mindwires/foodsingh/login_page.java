@@ -70,10 +70,19 @@ public class login_page extends AppCompatActivity {
                 String num=mobile.getText().toString();
                 String pass=password.getText().toString();
 
+
+
                 if(checking_net_permission())
                 {
                     if(num.length()==10 & pass.length()>=4)
+
                     {
+                        if(!progress.isShowing()){
+                            progress.setMessage("Fetching Details. Please Wait");
+                            progress.setCancelable(false);
+                            login.setClickable(false);
+                            progress.show();
+                        }
                         num="91"+num;
                         check_login_details(num,pass);
                     }
@@ -272,6 +281,11 @@ public class login_page extends AppCompatActivity {
     }
 
     private void getting_setting_details() {
+        if(!progress.isShowing()){
+            progress.setMessage("Fetching Details. Please Wait.");
+            progress.setCancelable(false);
+            progress.show();
+        }
         if(checking_net_permission())
         {
             SharedPreferences pref=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
@@ -292,21 +306,15 @@ public class login_page extends AppCompatActivity {
     }
 
     private void get_data_deb(final String mobile) {
-        if(progress.isShowing())
-        {
-            progress.dismiss();
-        }
-        else
-        {
-            progress.setMessage("Getting your details from server.....");
-            progress.show();
-        }
 
         StringRequest str=new StringRequest(Request.Method.POST, constants.get_details, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                // Display(response);
+                if(progress.isShowing()){
+                    progress.dismiss();
+                }
 
                 try {
                     JSONArray array=new JSONArray(response);
@@ -363,10 +371,13 @@ public class login_page extends AppCompatActivity {
     private void check_login_details(final String numy, final String passy) {
 
 
+
         StringRequest das=new StringRequest(Request.Method.POST, constants.login_check_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                if(progress.isShowing()){
+                    progress.dismiss();
+                }
 
 
                 try {
@@ -387,8 +398,12 @@ public class login_page extends AppCompatActivity {
                     {
                         Display("Wrong credentials ,please try again");
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if(progress.isShowing()){
+                        progress.dismiss();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

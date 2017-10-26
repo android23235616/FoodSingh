@@ -175,11 +175,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     holder.unavailable.setVisibility(View.GONE);
                 }
 
-       // }else{
-        //        status.equals("");
-        //}
         String url = menuItem.getImage();
-        Glide.with(mContext).load(url).skipMemoryCache(true).thumbnail(0.05f)
+        Glide.with(mContext).load(url.trim()).skipMemoryCache(true).thumbnail(0.01f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT).into(holder.image);
 
         if (constants.item_name_deb.contains(name)) {
