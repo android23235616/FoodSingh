@@ -146,7 +146,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             holder.item_quantity.setText(""+cart_qty);
         }
         holder.diprice.setText("₹" + rupees);
-        Log.d("sdsd", name + "=" + status);
+        Log.d("sdsd", name + ": r_price =" + menuItem.getR_price());
        // if((rupees!=null&&status!=null)&&menu_category_wise.position!=-1) {
             //Log.d("land","rupee: "+rupees+"   Status: "+status+"ID: "+menuItem.getId());
                 if(status == null){

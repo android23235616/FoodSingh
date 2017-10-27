@@ -45,7 +45,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private String statusAddress = "HOME", statusPayment = "CASH";
     private TextView tvTotalAmount;
     FoodItem getItems;
-    private int totalAmount;
+    private int totalAmount, totalRAmount, discount;
     public static TextView cartitemcount1;
     BroadcastReceiver broadcastReceiver;
     View actionView;
@@ -84,6 +84,8 @@ public class CheckoutActivity extends AppCompatActivity {
             if(check==0) {
                 Bundle aa = intent.getExtras();
                 totalAmount = aa.getInt("total_amount");
+                totalRAmount = aa.getInt("total_r_amount");
+                discount = aa.getInt("discount");
                 tvTotalAmount.setText("₹" + totalAmount);
             }else{
                 items = intent.getStringExtra("items");
@@ -321,6 +323,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 maps.put("mobile",mobile);
                 maps.put("address",address);
                 maps.put("comments",comments);
+                maps.put("kitchen_price",String.valueOf(totalRAmount));
+                maps.put("discount",String.valueOf(discount));
                 return maps;
             }
         };

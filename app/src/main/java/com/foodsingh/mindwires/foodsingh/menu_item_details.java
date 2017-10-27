@@ -380,7 +380,7 @@ public class menu_item_details extends AppCompatActivity
             unav.setVisibility(View.INVISIBLE);
         }
 
-        item = new MenuItems(id, name, category, price, image, status, des);
+        item = new MenuItems(id, name, category, price, image, status, des, mainItem.getR_price());
 
         if (item_quantity.equals("")){
             quantity.setText("0");

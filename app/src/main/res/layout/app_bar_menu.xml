@@ -17,6 +17,7 @@
         android:textColor="@color/white"
         android:scrollbars="vertical"
         android:paddingStart="16dp"
+        android:textSize="15sp"
         android:text="Attack! On the Food."/>
 
 <android.support.v4.widget.NestedScrollView android:layout_height="match_parent"

@@ -231,7 +231,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 JSONArray miniMenu = tempObject.getJSONArray("menu");
 
                 for(int j=0; j<miniMenu.length(); j++){
-                    String id, name_, category, price, image_, status, detail;
+                    String id, name_, category, price, image_, status, detail, r_price;
                     JSONObject miniTempObject = miniMenu.getJSONObject(j);
                     id = miniTempObject.getString("id");
                     name_ = miniTempObject.getString("name");
@@ -240,8 +240,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     image_ = miniTempObject.getString("image");
                     status = miniTempObject.getString("status");
                     detail = miniTempObject.getString("detail");
+                    r_price = miniTempObject.getString("r_price");
                    // detail = "";
-                    MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail);
+                    MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail, r_price);
                     menuItemsList.add(menuItems);
                     String available = miniTempObject.getString("status");
 

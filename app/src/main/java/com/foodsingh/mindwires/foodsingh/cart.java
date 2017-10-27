@@ -84,8 +84,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
 
-    static int totalAmount;
-    static float discountAmount = 0;
+    static int totalAmount, totalRAmount;
+    static int discountAmount = 0;
     static int discountPercent = 0;
     LinearLayout availableOptions;
 
@@ -167,6 +167,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 else if(localdatabase.metaData.getservice().equals("false")){
                     showDialog(cart.this, localdatabase.kitchenClosedText, R.drawable.store);
+                }else if(totalAmount < Integer.parseInt(localdatabase.metaData.getMin_Order())){
+                    showDialog2(cart.this, "Sorry, minimum order amount is ₹"+localdatabase.metaData.getMin_Order());
                 }
                 else
                 {
@@ -174,6 +176,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                     aas.putExtra("key",0);
                     Bundle a=new Bundle();
                     a.putInt("total_amount", totalAmount);
+                    a.putInt("total_r_amount", totalRAmount);
+                    a.putInt("discount", discountAmount);
                     aas.putExtras(a);
                     startActivity(aas);
                 }
@@ -451,7 +455,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                         //String status = jo.getString("status");
                         String status = "live";
                         String detail = "NA";
-                        MenuItems item = new MenuItems(id, name, category, price, image, status, detail);
+                        MenuItems item = new MenuItems(id, name, category, price, image, status, detail, price);
                         localdatabase.sidesList.add(item);
 
                     }
@@ -488,6 +492,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     public static void calculateTotal(){
 
         totalAmount=0;
+        totalRAmount = 0;
         discountAmount = 0;
 
         if(localdatabase.cartList.size()>0) {
@@ -496,15 +501,18 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             for (int i = 0; i < localdatabase.cartList.size(); i++) {
                 MenuItems item = localdatabase.cartList.get(i);
                 totalAmount += item.getQuantity() * Integer.parseInt(item.getPrice());
+                totalRAmount += item.getQuantity() * Integer.parseInt(item.getR_price());
             }
 
             totalAmount = totalAmount + localdatabase.deliveryCharge;
             localdatabase.amount = totalAmount;
-            discountAmount = localdatabase.amount*((float)discountPercent/100);
-            totalAmount = localdatabase.amount - (int)discountAmount;
+            discountAmount =(int)(localdatabase.amount*((float)discountPercent/100));
+            totalAmount = localdatabase.amount - discountAmount;
 
-            Log.d("DATA","discount -"+discountAmount);
-            Log.d("DATA","discount % "+discountPercent);
+            Log.d("sdsd","discount -"+discountAmount);
+            Log.d("sdsd","discount % "+discountPercent);
+            Log.d("sdsd","totalRAmount :"+totalRAmount);
+            Log.d("sdsd","totalAmount :"+totalAmount);
 
         }
         else {

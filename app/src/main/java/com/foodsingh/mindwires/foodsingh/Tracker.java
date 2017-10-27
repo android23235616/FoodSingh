@@ -52,6 +52,8 @@ public class Tracker extends AppCompatActivity {
     String drivern, driverm;
     boolean megacheck = false;
 
+    String status;
+
     Intent i;
     FoodItem item, newItem;
     ImageView img_back;
@@ -104,7 +106,7 @@ public class Tracker extends AppCompatActivity {
                    price.setText(item.getAmount());
                 date.setText(item.getDate());
                 order_no.setText(item.getId());
-
+                trackimage.setImageResource(R.drawable.orderplaced);
                 //item.getItem();
             }
         }else{
@@ -357,7 +359,7 @@ public class Tracker extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    String status = jsonObject.getString("status");
+                    status = jsonObject.getString("status");
                     TextView name = (TextView) findViewById(R.id.info);
                     TextView mob = (TextView) findViewById(R.id.number_info);
 
@@ -388,6 +390,11 @@ public class Tracker extends AppCompatActivity {
                         mob.setText("NOT AVAILABLE");
 
                     }else if(status.equals("NA")){
+                        trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
+                        name.setText("NOT AVAILABLE");
+                        mob.setText("NOT AVAILABLE");
+                    }
+                    else {
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
                         name.setText("NOT AVAILABLE");
                         mob.setText("NOT AVAILABLE");
