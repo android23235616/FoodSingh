@@ -148,6 +148,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
             public void onResponse(final String response) {
+                Log.i("mainresponse" + i, response);
 
             /*final Handler h = new Handler();
 
@@ -157,9 +158,6 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         startThread(response,h);
                     }
                 });
-
-
-                Log.i("mainresponse" + i, response);
 
                 t.start();
 
@@ -204,7 +202,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             localdatabase.about_text =mainObject.getString("about_text");
             localdatabase.cartCoupon = mainObject.getString("cart_ad");
             localdatabase.about_img = mainObject.getString("about_image");
-            localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version")
+            localdatabase.metaData = new MetaData(mainObject.getString("discount"), mainObject.getString("latest_version_new")
                     ,mainObject.getString("service"),mainObject.getString("min_order"),mainObject.getString("msg_api")
             );
             localdatabase.discount = Integer.parseInt(mainObject.getString("discount"));
@@ -216,6 +214,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             localdatabase.share_url = mainObject.getString("share_url");
             localdatabase.deliveryCharge = Integer.parseInt(mainObject.getString("delivery_charge"));
             localdatabase.kitchenClosedText = mainObject.getString("kitchen_closed_text");
+            localdatabase.location_id = mainObject.getString("location_id");
+
+            Log.i("mainresponse","location_id:"+localdatabase.location_id);
 
             if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
                 showDialog2(Splash.this,"Please go to app store and download the latest version.");

@@ -92,4 +92,6 @@ public class localdatabase {
 
     public static String sublocality = "";
 
+    public static String location_id = "";
+
 }

@@ -325,6 +325,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 maps.put("comments",comments);
                 maps.put("kitchen_price",String.valueOf(totalRAmount));
                 maps.put("discount",String.valueOf(discount));
+                maps.put("location_id",localdatabase.location_id);
+
                 return maps;
             }
         };
