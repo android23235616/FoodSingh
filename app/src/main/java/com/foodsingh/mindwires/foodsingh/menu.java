@@ -506,7 +506,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
                     Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
-                    location.setText(localdatabase.city);
+                    location.setText(localdatabase.sublocality);
                     Log.i("broadcastreceiver1menu3", localdatabase.city+"");
                 }
 
