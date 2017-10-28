@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -148,7 +149,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onResponse(final String response) {
 
-            final Handler h = new Handler();
+            /*final Handler h = new Handler();
 
                 t = new Thread(new Runnable() {
                     @Override
@@ -162,14 +163,17 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
                 t.start();
 
+                */
+                startThread(response);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Display(error.toString());
-                Log.i("mainresponse", error.toString());
+                Log.i("mainresponse", "1"+error.toString());
                 Display("Please start the app again");
-                Log.i("mainresponse",error.toString());
+                Log.i("mainresponse","2"+error.toString());
                 //finish();
 
             }
@@ -192,7 +196,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
-    private void startThread(String response,Handler h){
+    private void startThread(String response){
         dataLoaded = true;
 
         try {
@@ -297,7 +301,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         } catch (Exception e) {
             e.printStackTrace();
             Display("Please start the app again");
-            Log.i("mainresponse",e.toString());
+            Log.i("mainresponse","3"+e.toString());
             // finish();
         }finally {
 
