@@ -181,6 +181,9 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 Map<String,String> map = new HashMap<>();
                 map.put("latitude",localdatabase.deliveryLocation.getLatitude()+"");
                 map.put("longitude",localdatabase.deliveryLocation.getLongitude()+"");
+                String mobile = sharedPreferences.getString("mobile", null);
+                map.put("mobile", mobile);
+                map.put("app_version",""+BuildConfig.VERSION_CODE);
                 return map;
             }
         };

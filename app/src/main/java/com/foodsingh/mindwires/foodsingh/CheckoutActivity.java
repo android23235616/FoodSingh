@@ -102,14 +102,38 @@ public class CheckoutActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!statusAddress.equals("HOME")) {
+                    String lane1 = etLane1.getText().toString();
+                    String lane2 = etLane2.getText().toString();
+                    String locality = etLocality.getText().toString();
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString(statusAddress + "_lane1", lane1);
+                    editor.putString(statusAddress + "_lane2", lane2);
+                    editor.putString(statusAddress + "_locality", locality);
+                    editor.commit();
+                }
+
                 statusAddress = "HOME";
                 updateUI();
+
             }
         });
 
         btnWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!statusAddress.equals("WORK")) {
+                    String lane1 = etLane1.getText().toString();
+                    String lane2 = etLane2.getText().toString();
+                    String locality = etLocality.getText().toString();
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString(statusAddress + "_lane1", lane1);
+                    editor.putString(statusAddress + "_lane2", lane2);
+                    editor.putString(statusAddress + "_locality", locality);
+                    editor.commit();
+                }
+
                 statusAddress = "WORK";
                 updateUI();
             }
@@ -119,7 +143,7 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 statusPayment = "CASH";
-                updateUI();
+                updatePaymentUI();
             }
         });
 
@@ -127,7 +151,7 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 statusPayment = "ONLINE";
-                updateUI();
+                updatePaymentUI();
             }
         });
 
@@ -360,6 +384,9 @@ public class CheckoutActivity extends AppCompatActivity {
         etLocality.setText(localdatabase.sublocality);
         etLane2.setText(localdatabase.lane2);
 
+    }
+
+    void updatePaymentUI(){
         if(statusPayment.equals("CASH")){
             btnCash.setBackgroundResource(R.drawable.card_addition_edittext);
             btnOnline.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -368,7 +395,6 @@ public class CheckoutActivity extends AppCompatActivity {
             btnOnline.setBackgroundResource(R.drawable.card_addition_edittext);
             btnCash.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
-
     }
 
     void addBottomToolbar(){
