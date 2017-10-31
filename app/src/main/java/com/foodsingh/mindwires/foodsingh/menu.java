@@ -2,7 +2,10 @@ package com.foodsingh.mindwires.foodsingh;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -117,7 +120,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
 
-        KitchenService.startActionFoo(this,"","");
+      //  KitchenService.startActionFoo(this,"","");
 
 //FOR NAVIGATION DRAWERo
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +453,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
-
+      //  setUpJobScheduler();
+        JobSchedulerClass.setUpJobScheduler(this);
         SetupBroadcastReceiver();
 
         if(localdatabase.couponClassList.size()>0){
@@ -486,6 +490,8 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void infiniteViewPager() {
     }
+
+
 
     Runnable run;
     private void SetupBroadcastReceiver() {
@@ -631,7 +637,9 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private void initialize() {
         ad1  = (ImageView)findViewById(R.id.advertisement1);
         ad2 = (ImageView)findViewById(R.id.advertisement2);
+        if(localdatabase.couponClassList.size()>0)
         Glide.with(this).load(localdatabase.couponClassList.get(0).getUrl()).into(ad1);
+        if(localdatabase.couponClassList.size()>1)
         Glide.with(this).load(localdatabase.couponClassList.get(1).getUrl()).into(ad2);
         pager = (ViewPagerCustomDuration) findViewById(R.id.view_pager);
         pager.addOnPageChangeListener(this);
@@ -683,7 +691,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 pager.setCurrentItem(pageritem);
                 getPositionsForDots(pageritem);
-                handler.postDelayed(runnable,2500);
+                handler.postDelayed(runnable,5000);
             }
         };
 
@@ -1088,7 +1096,7 @@ if(local.metaData!=null) {
 
         Intent i = new Intent(this, KitchenService.class);
 
-        stopService(i);
+
 
         Log.i("getting unregistered","bakchodi");
 
