@@ -102,7 +102,6 @@ public class Signup_OTP extends AppCompatActivity {
             public void onResponse(String response) {
               if(progress.isShowing())
               {   progress.dismiss();
-           //       Display(response);
                   Intent as=new Intent(getApplicationContext(),verifying_otp.class);
                   Bundle a=new Bundle();
                   a.putString("mob",mob);
@@ -142,19 +141,14 @@ public class Signup_OTP extends AppCompatActivity {
     }
 
     private void initialize() {
-
         signup=(Button)findViewById(R.id.btnSignup);
         loginme=(Button)findViewById(R.id.btnLinkToLoginScreen);
         mobnumber=(EditText)findViewById(R.id.mob);
         password=(EditText)findViewById(R.id.password);
-
         name=(EditText)findViewById(R.id.name);
         email=(EditText)findViewById(R.id.email);
-
         progress=new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-        //Glide.with(this).load(R.drawable.background_image2).into(main_image);
         setTypeface();
     }
 

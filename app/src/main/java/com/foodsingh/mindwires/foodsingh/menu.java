@@ -117,7 +117,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
 
-
+        KitchenService.startActionFoo(this,"","");
 
 //FOR NAVIGATION DRAWERo
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +156,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         attack = (TextView)findViewById(R.id.attack);
         handler = new Handler();
         initialize();
+
+        Typeface tf1 = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+
+        attack.setTypeface(tf1);
 
         next = (ImageButton) findViewById(R.id.right_arrow);
         back = (ImageButton) findViewById(R.id.left_arrow);
@@ -508,8 +512,22 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                 }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
                     location.setText(localdatabase.sublocality);
                     Log.i("broadcastreceiver1menu3", localdatabase.city+"");
-                }
+                }else if(intent.getAction().equals(constants.kitchenStatusBroadcast)) {
+                    Log.i("broadcastreceiver1menu4", localdatabase.metaData.getservice() + "");
 
+                    if (local.metaData != null) {
+                        if (local.metaData.getservice().equals("true")) {
+                            // Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
+                            attack.setText("KITCHEN IS OPEN");
+                            attack.setBackgroundColor(Color.parseColor("#7ee591"));
+                            //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
+                        }else{
+                            attack.setText("KITCHEN IS CLOSED");
+                            attack.setBackgroundColor(Color.parseColor("#56FF0000"));
+                        }
+
+                    }
+                }
             }
 
 
@@ -521,9 +539,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         IntentFilter intentFilter3 = new IntentFilter();
         intentFilter3.addAction(constants.menugetcitybroadcast);
 
+        IntentFilter serviceFilter = new IntentFilter();
+        serviceFilter.addAction(constants.kitchenStatusBroadcast);
+
         registerReceiver(broadcastReceiver,intentFilter);
         registerReceiver(broadcastReceiver,intentFilter2);
         registerReceiver(broadcastReceiver,intentFilter3);
+        registerReceiver(broadcastReceiver,serviceFilter);
     }
 
 
@@ -804,7 +826,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 if(local.metaData!=null) {
     if (local.metaData.getservice().equals("true")) {
        // Toast.makeText(this, "Kitchen is Open", Toast.LENGTH_SHORT).show();
-        attack.setText("Kitchen is Open.");
+        attack.setText("KITCHEN IS OPEN");
         attack.setBackgroundColor(Color.parseColor("#7ee591"));
         //showDialog(this,"Kitchen is Closed\nPlease come back from 6 to 10",R.drawable.store);
     } else {
@@ -816,7 +838,7 @@ if(local.metaData!=null) {
            }
         }
         //Toast.makeText(this, "Kitchen is closed", Toast.LENGTH_SHORT).show();
-        attack.setText("Kitchen is Closed.");
+        attack.setText("KITCHEN IS CLOSED");
         attack.setBackgroundColor(Color.parseColor("#56FF0000"));
     }
 }
@@ -1064,58 +1086,16 @@ if(local.metaData!=null) {
             Log.i("getting unregistered","");
         }
 
+        Intent i = new Intent(this, KitchenService.class);
+
+        stopService(i);
+
         Log.i("getting unregistered","bakchodi");
         deleteCache(this);
 
     }
 
 
-
-    private class LoadBitmap1 extends AsyncTask<String, Void, Bitmap>{
-    private int img;
-        public LoadBitmap1(int bitmap){
-
-            this.img = bitmap;
-
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if(bitmap==null)
-                return;
-        if(img==0) {
-            ad1.setImageBitmap(bitmap);
-            ad1.setVisibility(View.VISIBLE);
-        }else{
-            ad2.setImageBitmap(bitmap);
-            ad2.setVisibility(View.VISIBLE);
-        }
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-
-            return getBitmapFromURL(strings[0]);
-        }
-        public Bitmap getBitmapFromURL(String strURL) {
-            try {
-                URL url = new URL(strURL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-
-                return myBitmap;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-
-    }
     private void setClipboard(Context context, String text) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);

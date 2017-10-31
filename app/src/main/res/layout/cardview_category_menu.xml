@@ -122,7 +122,7 @@
                     android:layout_height="30dp"
                     android:layout_toLeftOf="@id/item_quantity_slide"
                     android:layout_marginRight="4dp"
-                    android:background="@drawable/ic_remove_circle_outline_black_24dp"
+                    android:background="@drawable/ic_remove_circle_black_24dp"
                     />
 
 

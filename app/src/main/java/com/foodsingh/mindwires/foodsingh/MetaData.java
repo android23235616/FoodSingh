@@ -38,4 +38,8 @@ public class MetaData {
     public String getMsg_api(){
         return msg_api;
     }
+
+    public void setService(String s){
+        service = s;
+    }
 }

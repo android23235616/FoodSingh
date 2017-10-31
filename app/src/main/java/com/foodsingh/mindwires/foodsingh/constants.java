@@ -15,13 +15,14 @@ public class constants {
     public static final String broaadcastReceiverMenu2 = "com.exaamalsdhlasdkhjaple.menu";
     public static final String broadCastReceiverNotification2 = "askdahsdlasdkjAKDSHKASD";
     public static final String notifAmount = "jhsdjds";
-
+    public static final String kitchenStatusBroadcast = "asadjaldjkfdhasjh";
     public static final String fav = "akjsdy[=0012";
     public static final String foodsinghNotif = "asdasdasd";
     private static final String api_key = "AAAAeTtmoZw:APA91bGuRszKxQmOydJil94AdIycgoAGMXFz-IASW0U8wea-PYS7eZCwsUuOLWAULQ6d6OwUhk6CtsvpwCcrGTnOVERQbb0v6gM4awUBBLtySimtAPG_Li8RA0zw-U2uaOupMN8quG-K";
     public static final String foodsingh1 = "kjhkjh";
     public static final String foodsingh = "kashdd70s";
     public static String main_url = "http://mindwires.in/foodsingh/app/get_data.php";
+    public static String service_status_url = "http://mindwires.in/foodsingh/app/get_service_status.php";
     public static String token_url = "http://mindwires.in/foodsingh/app/update_token.php";
     public static String order_details = "http://mindwires.in/foodsingh/app/get_order_details.php";
     public static String login_details_url="http://mindwires.in/foodsingh/app/logini_save_and_check.php";

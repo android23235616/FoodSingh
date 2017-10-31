@@ -1,47 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
 
 
     >
+
     <FrameLayout
 
 
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+
         <ImageView
 
-            android:src="@drawable/my"
-            android:scaleType="centerCrop"
             android:id="@+id/main_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="270dp"
+                android:layout_height="213dp"
+                android:layout_alignBottom="@+id/real_progressbar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="14dp"
+                app:srcCompat="@drawable/bt" />
+
+            <ProgressBar
+                android:id="@+id/real_progressbar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="76dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
 
 
     </FrameLayout>
 
 
-<ProgressBar
-    android:id="@+id/real_progressbar"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_gravity="center"
-    android:layout_marginTop="240dp"/>
+    <TextView
+        android:id="@+id/metadata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-<TextView
-    android:textStyle="bold"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="35dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="Loading Metadata...\nDetecting Current Location"
+        android:textColor="@color/colorAccent"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
-    android:text="Loading Metadata...\nDetecting Current Location"
-    android:textSize="16dp"
-    android:id="@+id/metadata"
-    android:textColor="@color/colorAccent"
-    android:fontFamily="monospace"
-    android:gravity="center"
-    android:layout_marginTop="470dp"/>
-</FrameLayout>
+</RelativeLayout>

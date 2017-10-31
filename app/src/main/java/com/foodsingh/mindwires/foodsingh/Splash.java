@@ -192,8 +192,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
        // RequestQueue queue = new RequestQueue(new NoCache(),new BasicNetwork(new HurlStack()));
 
         sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        re.add(sr);
+        if(i==1)
+            re.add(sr);
 
     }
 
