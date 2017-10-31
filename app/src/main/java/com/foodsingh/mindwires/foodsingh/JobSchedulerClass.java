@@ -14,8 +14,8 @@ public class JobSchedulerClass {
     public static void setUpJobScheduler(Context context){
         ComponentName comp = new ComponentName(context, KitchenService.class);
         JobInfo.Builder builder = new JobInfo.Builder(0,comp);
-        builder.setMinimumLatency(100);
-        builder.setOverrideDeadline(1000);
+        builder.setMinimumLatency(1000);
+        builder.setOverrideDeadline(10000);
 
         JobScheduler job = context.getSystemService(JobScheduler.class);
         job.schedule(builder.build());

@@ -1096,8 +1096,9 @@ if(local.metaData!=null) {
 
         Intent i = new Intent(this, KitchenService.class);
 
+        JobScheduler job = this.getSystemService(JobScheduler.class);
 
-
+        job.cancelAll();
         Log.i("getting unregistered","bakchodi");
 
 

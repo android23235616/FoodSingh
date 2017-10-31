@@ -44,6 +44,7 @@ public class KitchenService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
+        if(localdatabase.metaData!=null)
         getKitchenStatus(constants.service_status_url);
 
         return true;
