@@ -1091,7 +1091,7 @@ if(local.metaData!=null) {
         stopService(i);
 
         Log.i("getting unregistered","bakchodi");
-        deleteCache(this);
+
 
     }
 

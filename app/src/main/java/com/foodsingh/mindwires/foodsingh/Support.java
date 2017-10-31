@@ -42,7 +42,6 @@ public class Support extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support);
-
         mWebView = (WebView) findViewById(R.id.support_web);
         back=(ImageView)findViewById(R.id.back);
         progress=new ProgressDialog(this);
@@ -54,6 +53,19 @@ public class Support extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
 
         mWebView.setWebViewClient(new myWebClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+               if(request.getUrl().toString().startsWith("http:")||request.getUrl().toString().startsWith("https:")){
+                   return false;
+               }else{
+                   Intent i = new Intent(Intent.ACTION_VIEW, request.getUrl());
+                   startActivity(i);
+                   return true;
+
+               }
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 if(progress.isShowing())
@@ -71,7 +83,7 @@ public class Support extends AppCompatActivity {
 
      //   mWebView.loadUrl("axuip.foodsingh.com/login.php");
 
-       mWebView.loadUrl("http://foodsingh.com/support");
+       mWebView.loadUrl("http://www.foodsingh.com/support/");
         SetupBroadcastReceiver();
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +130,14 @@ public class Support extends AppCompatActivity {
         registerReceiver(broadcastReceiver,intentFilter2);
     }
 
+
+
+    @Override
+
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
