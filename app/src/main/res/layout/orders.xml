@@ -260,7 +260,7 @@
             android:textSize="13dp"
             android:id="@+id/info"
             android:layout_below="@+id/logisticinfo"
-            android:text="Kundu"
+            android:text="Not Available"
             android:textStyle="bold"
             android:fontFamily="monospace"
             android:gravity="left"
@@ -277,7 +277,7 @@
             android:layout_marginLeft="120dp"
             android:layout_marginRight="10dp"
             android:layout_below="@+id/logisticinfo"
-            android:text="1234444234"
+            android:text="Not Available"
 
             android:fontFamily="monospace"
             android:gravity="right"
