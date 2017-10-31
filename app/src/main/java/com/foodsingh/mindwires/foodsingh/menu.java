@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -46,6 +47,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.gcm.GcmNetworkManager;
+import com.google.android.gms.gcm.PeriodicTask;
+import com.google.android.gms.gcm.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,6 +91,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     int counter_button4=0;
     boolean nav=true;
     TextView attack;
+    private GcmNetworkManager gcmNetworkManager;
     pagerAdapter pageradater;
     NavigationView navigationView;
     TextView location;
@@ -120,7 +125,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
 
-      //  KitchenService.startActionFoo(this,"","");
+      //
 
 //FOR NAVIGATION DRAWERo
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -454,8 +459,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         });
 
       //  setUpJobScheduler();
-        JobSchedulerClass.setUpJobScheduler(this);
+
         SetupBroadcastReceiver();
+
+            setupGcmNetWorkManager();
+
 
         if(localdatabase.couponClassList.size()>0){
           //  LoadBitmaps();
@@ -632,6 +640,19 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     public void onStop(){
         super.onStop();
         Log.i("getting unregistered","stopped");
+    }
+
+    private void setupGcmNetWorkManager(){
+        gcmNetworkManager = GcmNetworkManager.getInstance(this);
+        Task task = new PeriodicTask.Builder()
+                .setService(KitchenServiceLollipop.class)
+                .setPeriod(5)
+                .setFlex(10)
+                .setTag(constants.kitchenStatusBroadcast)
+                .setPersisted(true)
+                .build();
+
+        gcmNetworkManager.schedule(task);
     }
 
     private void initialize() {
@@ -1094,12 +1115,6 @@ if(local.metaData!=null) {
             Log.i("getting unregistered","");
         }
 
-        Intent i = new Intent(this, KitchenService.class);
-
-        JobScheduler job = this.getSystemService(JobScheduler.class);
-
-        job.cancelAll();
-        Log.i("getting unregistered","bakchodi");
 
 
     }

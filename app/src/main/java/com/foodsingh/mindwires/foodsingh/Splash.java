@@ -82,7 +82,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     TextView header;
 
     ProgressBar progressbar;
-    private boolean dataLoaded = false;
+    private boolean dataLoaded = false,locationisthere = false;
     GoogleApiClient apiClient;
     boolean redundent = false;
     private boolean LocationChecked = false, LocationPermission = false;
@@ -148,6 +148,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
             public void onResponse(final String response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Log.i("mainresponse" + i, response);
 
             /*final Handler h = new Handler();
@@ -459,7 +460,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
-    public void showDialog2(Context activity, String msg){
+    public void showDialog2(Context activity,final String msg){
          dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -477,6 +478,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(msg.equals("Please go to app store and download the latest version.")){
+                    finish();
+                }
                 dialog.dismiss();
             }
         });
@@ -523,8 +528,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode==2){
             if(resultCode!=RESULT_OK){
+                locationisthere = false;
                Display("You Won't be able to use this application right now.");
                 finish();
+            }else{
+                locationisthere = true;
             }
         }
     }
@@ -556,8 +564,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         switch (status.getStatusCode()) {
                             case LocationSettingsStatusCodes.SUCCESS:
                                 Log.i(TAG, "All location settings are satisfied.");
+                                locationisthere = true;
                                 break;
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                locationisthere = false;
                                 Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
 
                                 try {
@@ -569,6 +579,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                 }
                                 break;
                             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                locationisthere = false;
                                 Log.i(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
 
                                 break;
@@ -611,6 +622,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         if(i==0) {
           //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
+            if(locationisthere)
             Initiate_Meta_Data();
 
         }

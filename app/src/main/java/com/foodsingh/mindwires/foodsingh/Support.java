@@ -55,11 +55,11 @@ public class Support extends AppCompatActivity {
         mWebView.setWebViewClient(new myWebClient(){
 
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-               if(request.getUrl().toString().startsWith("http:")||request.getUrl().toString().startsWith("https:")){
+            public boolean shouldOverrideUrlLoading(WebView view, String request) {
+               if(request.startsWith("http:")||request.startsWith("https:")){
                    return false;
                }else{
-                   Intent i = new Intent(Intent.ACTION_VIEW, request.getUrl());
+                   Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(request));
                    startActivity(i);
                    return true;
 
