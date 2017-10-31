@@ -272,6 +272,9 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         unregisterReceiver(broadcastReceiver);
     }
 
+
+
+
     private void manipulatenavigationdrawer() {
         View v = navigationView.getHeaderView(0);
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/COPRGTB.TTF");
@@ -551,6 +554,9 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
 
         if (id == R.id.menu) {
             // Handle the camera action
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
         } else if (id == R.id.cart) {
 
             Intent a=new Intent(getApplicationContext(),cart.class);
@@ -580,9 +586,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         }
         else if(id==R.id.details)
         {
-            Intent a=new Intent(getApplicationContext(),details.class);
-            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(a);
+
 
         }else if(id==R.id.notifications){
             final Intent a=new Intent(getApplicationContext(),NotificationActivity.class);
