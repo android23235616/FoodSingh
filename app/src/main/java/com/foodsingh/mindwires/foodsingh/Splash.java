@@ -225,6 +225,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             if(Integer.parseInt(localdatabase.metaData.getLatest_version())>BuildConfig.VERSION_CODE){
                 showDialog2(Splash.this,"Please go to app store and download the latest version.");
                 return;
+            }else{
+
             }
 
             JSONArray Categories = mainObject.getJSONArray("categories");
@@ -461,6 +463,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
 
     public void showDialog2(Context activity,final String msg){
+        Log.i("mainresponse","called");
          dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -481,8 +484,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
                 if(msg.equals("Please go to app store and download the latest version.")){
                     finish();
+                }else{
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
+
             }
         });
 
@@ -574,6 +579,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                     // Show the dialog by calling startResolutionForResult(), and check the result
                                     // in onActivityResult().
                                     status.startResolutionForResult(Splash.this, 2);
+                                    finish();
                                 } catch (IntentSender.SendIntentException e) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }
@@ -622,7 +628,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         if(i==0) {
           //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
-            if(locationisthere)
+
             Initiate_Meta_Data();
 
         }
