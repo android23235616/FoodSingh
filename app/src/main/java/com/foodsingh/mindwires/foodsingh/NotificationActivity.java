@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
-
     Gson gson;
     NotificationLists notificationLists;
     SharedPreferences sharedPreferences;
@@ -45,7 +44,6 @@ public class NotificationActivity extends AppCompatActivity {
     String text = "Are You sure that you want to remove all the notifications?";
     static TextView clear, notifamount;
     // static TextView localdatabase.no;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
