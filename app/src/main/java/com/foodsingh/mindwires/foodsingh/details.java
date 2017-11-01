@@ -266,6 +266,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     }
 
 
+
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -283,7 +284,11 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
         TextView location = (TextView)v.findViewById(R.id.location);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
-        location.setText(localdatabase.city);
+
+        SharedPreferences sh=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
+        String city=sh.getString("location","No Location Found");
+        location.setText(city);
+
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,6 +364,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                     progress.dismiss();
                 }
                 Display("Some error Occured may be due to bad internet connection or Server issue");
+                Log.i("checkerror",error.toString());
             }
         }){
             @Override

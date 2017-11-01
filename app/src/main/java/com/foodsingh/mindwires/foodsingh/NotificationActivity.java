@@ -293,6 +293,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 clearNotification();
+                dialog.dismiss();
             }
         });
 

@@ -3,6 +3,7 @@ package com.foodsingh.mindwires.foodsingh;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
@@ -90,7 +91,21 @@ public class AddressFetchingService extends IntentService {
         double latitude = Double.parseDouble(param1);
         double longitude = Double.parseDouble(param2);
 
-        localdatabase.city = getCity(latitude,longitude);
+        String city_temp = getCity(latitude,longitude);
+        if((!(city_temp.equalsIgnoreCase("Location Not Found"))) || (city_temp!=null))
+        {
+            localdatabase.city=city_temp;
+            SharedPreferences sharedPreferences=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
+            SharedPreferences.Editor edit=sharedPreferences.edit();
+            edit.putString("location",city_temp);
+            edit.commit();
+        }
+        else
+        {
+            SharedPreferences sharedPreferences=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
+            localdatabase.city=sharedPreferences.getString("location","Location Not Found");
+        }
+
         Intent i = new Intent();
         i.setAction(constants.menugetcitybroadcast);
         sendBroadcast(i);

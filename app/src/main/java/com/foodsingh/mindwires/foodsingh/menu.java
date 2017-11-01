@@ -524,7 +524,11 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
                     Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
-                    location.setText(localdatabase.city);
+
+                    SharedPreferences sh=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
+                    String city=sh.getString("location","No Location Found");
+                    location.setText(city);
+
                     Log.i("broadcastreceiver1menu3", localdatabase.city+"");
                 }else if(intent.getAction().equals(constants.kitchenStatusBroadcast)) {
                     Log.i("broadcastreceiver1menu4", localdatabase.metaData.getservice() + "");
@@ -588,7 +592,12 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
-        location.setText(localdatabase.city);
+
+        SharedPreferences sh=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
+        String city=sh.getString("location","No Location Found");
+        location.setText(city);
+
+
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -692,10 +701,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn=(TextView) findViewById(R.id.time);
         combo_btn=(TextView) findViewById(R.id.combo);
 
-        cuisine_btn.setText(localdatabase.superCategoriesList.get(0).getName());
-        time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
-        combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
-        drinks.setText(localdatabase.superCategoriesList.get(3).getName());
+        if(localdatabase.superCategoriesList.size()>3) {
+
+            cuisine_btn.setText(localdatabase.superCategoriesList.get(0).getName());
+            time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
+            combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
+            drinks.setText(localdatabase.superCategoriesList.get(3).getName());
+        }else{
+            Intent i = new Intent(this, login_page.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
         pager.setScrollDurationFactor(3.5);
         pager.setCurrentItem(pageritem);
         getPositionsForDots(pageritem);
