@@ -524,7 +524,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
                     Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
-                    location.setText(localdatabase.sublocality);
+                    location.setText(localdatabase.city);
                     Log.i("broadcastreceiver1menu3", localdatabase.city+"");
                 }else if(intent.getAction().equals(constants.kitchenStatusBroadcast)) {
                     Log.i("broadcastreceiver1menu4", localdatabase.metaData.getservice() + "");
@@ -588,7 +588,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
-     //  location.setText(localdatabase.city);
+        location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

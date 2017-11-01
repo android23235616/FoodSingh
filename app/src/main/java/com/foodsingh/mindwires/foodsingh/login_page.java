@@ -80,7 +80,7 @@ public class login_page extends AppCompatActivity {
                         if(!progress.isShowing()){
                             progress.setMessage("Fetching Details. Please Wait");
                             progress.setCancelable(false);
-                            login.setClickable(false);
+                            //login.setClickable(false);
                             progress.show();
                         }
                         num="91"+num;
