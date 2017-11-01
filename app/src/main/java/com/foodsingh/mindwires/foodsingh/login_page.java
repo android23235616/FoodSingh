@@ -40,6 +40,7 @@ public class login_page extends AppCompatActivity {
     TextView forgot_password;
 
     Typeface tf;
+    int sta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,9 @@ public class login_page extends AppCompatActivity {
                 {
                     if(checking_net_permission())
                     {
-                        send_forgot_password(mobile_number);
+                        get_mobile_confirmation(mobile_number);
+
+                    //    send_forgot_password(mobile_number);
                     }
                     else
                     {
@@ -146,6 +149,61 @@ public class login_page extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    private void get_mobile_confirmation(final String mob) {
+
+        if(!progress.isShowing())
+        {
+            progress.setMessage("Loading,Please Wait...");
+            progress.setCancelable(false);
+            progress.show();
+        }
+        StringRequest str=new StringRequest(Request.Method.POST, constants.check_mobile, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                try {
+                    JSONObject a=new JSONObject(response);
+                    String t=a.getString("result");
+                    if(t.equalsIgnoreCase("true"))
+                    {
+                        send_forgot_password(mob);
+                    }
+                    else
+                    {
+                        Toast.makeText(login_page.this, "This number does not exist..", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Display("Some Error Occured..");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                Display("Some Error Occured...");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> maps=new HashMap<>();
+                maps.put("mobile",mob);
+                return maps;
+            }
+        };
+
+        RequestQueue que=Volley.newRequestQueue(this);
+        que.add(str);
 
     }
 
