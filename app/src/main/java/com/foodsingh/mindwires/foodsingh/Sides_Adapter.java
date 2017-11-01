@@ -62,8 +62,7 @@ public class Sides_Adapter extends RecyclerView.Adapter<Sides_Adapter.ViewHolder
             mi=(ImageView) itemView.findViewById(R.id.minus_slide2);
             Typeface t = Typeface.createFromAsset(diname.getContext().getAssets(), "fonts/MTCORSVA.TTF");
             diname.setTypeface(t);
-           // diprice.setTypeface(t);
-          //  item_quantity.setTypeface(t);
+
         }
     }
 

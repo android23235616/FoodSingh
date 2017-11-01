@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -113,6 +114,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     TextView combo_btn;
 
      int c=0;
+
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -121,6 +133,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         RemoveTop();
 
         setContentView(R.layout.activity_menu);
+
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+
+        }
+
+    //    AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
 
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
@@ -511,16 +530,17 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
+
                 if(intent.getAction().equals(constants.broaadcastReceiverMenu)){
 
-
+                        localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
                         localdatabase.notifmount.setVisibility(View.VISIBLE);
                         localdatabase.notifmount.setText(localdatabase.notifications+"");
 
 
                     Log.i("broadcastreceiver1menu", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menu2BroadcastReceiver)){
+                    localdatabase.notifmount = (TextView)actionView.findViewById(R.id.notification_badge);
                     localdatabase.notifmount.setVisibility(View.INVISIBLE);
                     Log.i("broadcastreceiver1menu2", localdatabase.notifications+"");
                 }else if(intent.getAction().equals(constants.menugetcitybroadcast)){
@@ -1113,8 +1133,11 @@ if(local.metaData!=null) {
     @Override
     protected void onResume() {
         super.onResume();
+        if(appBarLayout!=null)
         appBarLayout.addOnOffsetChangedListener(this);
-        AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
+
+
+
     }
 
     @Override
@@ -1135,6 +1158,8 @@ if(local.metaData!=null) {
 
 
     }
+
+
 
 
     private void setClipboard(Context context, String text) {

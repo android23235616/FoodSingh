@@ -45,7 +45,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private String statusAddress = "HOME", statusPayment = "CASH";
     private TextView tvTotalAmount;
     FoodItem getItems;
-    private int totalAmount, totalRAmount, discount;
+    private int totalAmount=-1, totalRAmount=-1, discount=-1;
     public static TextView cartitemcount1;
     BroadcastReceiver broadcastReceiver;
     View actionView;
@@ -58,6 +58,10 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+        }
 
         addBottomToolbar();
 
@@ -81,17 +85,23 @@ public class CheckoutActivity extends AppCompatActivity {
             }else{
                 //Display("here");
             }
-            if(check==0) {
+            if(check==0&&localdatabase.loaded) {
                 Bundle aa = intent.getExtras();
                 totalAmount = aa.getInt("total_amount");
                 totalRAmount = aa.getInt("total_r_amount");
                 discount = aa.getInt("discount");
                 tvTotalAmount.setText("₹" + totalAmount);
-            }else{
+            }else if(localdatabase.loaded){
                 items = intent.getStringExtra("items");
                 totalAmount = Integer.parseInt(intent.getStringExtra("price"));
                 tvTotalAmount.setText("₹" + totalAmount);
 
+            }else{
+                SharedPreferences sharedPreferences =getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+                totalAmount = sharedPreferences.getInt("total_amount",-1);
+                totalRAmount = sharedPreferences.getInt("total_r_amount",-1);
+                discount = sharedPreferences.getInt("discount",-1);
+                items = sharedPreferences.getString("items","");
             }
         }
         else {
@@ -355,6 +365,10 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         };
         RequestQueue re= Volley.newRequestQueue(this);
+
+        if(totalRAmount<0||totalAmount<0||discount<0||items.equals("")){
+            Display("Some Problem is There. Please restart the app.");
+        }else
         re.add(str);
         str.setRetryPolicy(new DefaultRetryPolicy(0,  DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
@@ -442,6 +456,20 @@ public class CheckoutActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+
+    public void onPause(){
+        super.onPause();
+       SharedPreferences sharedPreferences =getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("total_amount",totalAmount);
+        edit.putInt("total_r_amount",totalRAmount);
+        edit.putInt("discount",discount);
+        edit.putString("items",items);
+        edit.apply();
     }
 
 }

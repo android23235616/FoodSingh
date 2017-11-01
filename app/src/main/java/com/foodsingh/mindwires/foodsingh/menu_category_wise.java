@@ -65,6 +65,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     public static TextView cartitemcount, toolbarText,text,notifamount;
 
     RecyclerView recyclerView;
+
     List<String> dish_name=new ArrayList<>();
     List<String> dish_price=new ArrayList<>();
     View actionView;
@@ -88,6 +89,12 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_category_wise);
+        if(!localdatabase.loaded){
+            Intent i = new Intent(this, login_page.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
         text = (TextView)findViewById(R.id.text);
         Typeface tp = Typeface.createFromAsset(getAssets(), "fonts/gadugi.ttf");
         text.setTypeface(tp);
@@ -112,6 +119,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
         initialize();
+
+
 
         getting_category_from_previous_activity();
 

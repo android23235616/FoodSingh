@@ -63,6 +63,10 @@ public class Tracker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RemoveTop();
         setContentView(R.layout.orders);
+
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+        }
         addBottomToolbar();
         tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/COPRGTB.TTF");

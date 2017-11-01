@@ -37,7 +37,10 @@
             >
         </android.support.v7.widget.RecyclerView>
 
-        <include layout="@layout/slides_recycler"/>
+        <include layout="@layout/slides_recycler"
+
+
+            />
         <include android:id="@+id/cart_addition" layout="@layout/card_addition"/>
     </LinearLayout>
 

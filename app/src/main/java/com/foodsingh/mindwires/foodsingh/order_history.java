@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -79,9 +80,22 @@ Typeface tf1;
     SharedPreferences shared;
 
     @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+        }
         tf1 = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
         toolbarText = (TextView)findViewById(R.id.toolbarText);
         toolbarText.setTypeface(tf1);

@@ -3,7 +3,10 @@ package com.foodsingh.mindwires.foodsingh;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.util.Log;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -103,6 +106,23 @@ public class RestoreResponse {
                             superCategories.getJSONObject(i).getString("name"));
                     localdatabase.superCategoriesList.add(su);
                     Log.i("super_categories", localdatabase.superCategoriesList.get(i).getName());
+                }
+
+              Location l = new Location("provider");
+
+                double latitude = sharedPreferences.getFloat("latitude",0);
+                double longitude = sharedPreferences.getFloat("longitude",0);
+                l.setLatitude(latitude);
+                l.setLongitude(longitude);
+
+                localdatabase.deliveryLocation = l;
+
+                String temp = sharedPreferences.getString(constants.cartrestore,"");
+                if(temp!=""){
+                    Gson gson = new Gson();
+                    Carerestore care = gson.fromJson(temp,Carerestore.class);
+                    localdatabase.cartList = care.getCart();
+                    localdatabase.sidesList = (ArrayList<MenuItems>) care.getSides();
                 }
 
 

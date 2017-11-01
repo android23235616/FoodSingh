@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.v4.view.MenuItemCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -60,6 +61,15 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     public static TextView cartitemcount1,notifamount;
     
     TextView tvName, tvEmail, tvMobile;
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        if(localdatabase.loaded==false){
+            RestoreResponse.getResponse(this);
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -629,11 +629,20 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
         showLog("Location at "+location.getLongitude()+", "+location.getLongitude());
         localdatabase.deliveryLocation = location;
+
+
      //  localdatabase.city  = getCity(location.getLatitude(),location.getLongitude());
         LocationChecked = true;
 
         if(i==0) {
           //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
+
+            SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putFloat("latitude", (float) location.getLatitude());
+            edit.putFloat("longitude", (float) location.getLongitude());
+
+            edit.apply();
 
             Initiate_Meta_Data();
 

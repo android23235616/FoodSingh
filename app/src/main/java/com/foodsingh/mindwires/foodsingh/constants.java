@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class constants {
+    public static final String cartrestore = "ajsdhKldjh";
     public static final String mainresponsesharedpreferences = "jaslmadakjsdh";
     public static final String menu2BroadcastReceiver = "jhffjfjfjf";
     public static final String menugetcitybroadcast = "lklklklklklk";

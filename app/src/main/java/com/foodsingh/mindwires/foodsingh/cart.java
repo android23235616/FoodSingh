@@ -51,6 +51,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,6 +83,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
     //TextView tvCouponCode;
     static TextView tvDisAmt;
 
+    static View sideView;
+
     static TextView tvDeliveryCharge, tvTotalAmount, tvTotalAmount2;
 
     static int totalAmount, totalRAmount;
@@ -96,6 +99,12 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 /////////////////////////////////////////
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -104,12 +113,15 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         //////////////////////////////////
 
+
+
 //Toast.makeText(this, constants.item_quant_deb.size()+"",Toast.LENGTH_LONG).show();
 
         //////////////////////
 
 
         setContentView(R.layout.activity_cart);
+
 
 
         Typeface t = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
@@ -134,6 +146,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
         //CODING CODING CODING
         initialize();
+
 //        tvCouponCode.setText(localdatabase.couponCode);
         send_to_adapter();
 
@@ -666,6 +679,18 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         sides.setItemAnimator(new DefaultItemAnimator());
         recycler.setItemAnimator(new DefaultItemAnimator());
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Carerestore restore = new Carerestore(localdatabase.cartList,localdatabase.sidesList);
+        Gson gson = new Gson();
+        String temp = gson.toJson(restore);
+        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(constants.cartrestore,temp);
+        edit.apply();
     }
 
 
