@@ -9,6 +9,8 @@ import java.util.List;
 
 public class localdatabase {
 
+    public static boolean loaded = false;
+
     public static String drinks = "false";
 
     public static List<SuperCategories> superCategoriesList = new ArrayList<>();
