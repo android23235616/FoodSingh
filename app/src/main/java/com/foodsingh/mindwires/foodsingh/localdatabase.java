@@ -6,22 +6,31 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Tanmay on 16-09-2016.
- */
+
 public class localdatabase {
 
     public static String drinks = "false";
+
     public static List<SuperCategories> superCategoriesList = new ArrayList<>();
+
     public static String share_text, share_url;
+
     public static String lane;
+
     public static int kitchen  = 0;
+
     public static TextView notifmount;
+
     public static String delivery = "";
+
     public static int cache = 0;
+
     public static String about_text, about_img;
+
     public static List<CouponClass> couponClassList = new ArrayList<>();
+
     public static String cartCoupon = "false";
+
     public static final String url[] = {
             "http://foodsingh.com/images/app/sliders/k-timing.jpg" ,
             "https://static.pexels.com/photos/5317/food-salad-restaurant-person-medium.jpg",
@@ -68,7 +77,6 @@ public class localdatabase {
 
     public static String city = null;
 
-
     public static ArrayList<MenuItems> sidesList=new ArrayList<>();
 
 
@@ -93,5 +101,7 @@ public class localdatabase {
     public static String sublocality = "";
 
     public static String location_id = "";
+
+    public static String shared_location_key="location";
 
 }
