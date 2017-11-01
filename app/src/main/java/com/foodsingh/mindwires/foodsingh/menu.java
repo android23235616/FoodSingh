@@ -692,10 +692,18 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         time_btn=(TextView) findViewById(R.id.time);
         combo_btn=(TextView) findViewById(R.id.combo);
 
-        cuisine_btn.setText(localdatabase.superCategoriesList.get(0).getName());
-        time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
-        combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
-        drinks.setText(localdatabase.superCategoriesList.get(3).getName());
+        if(localdatabase.superCategoriesList.size()>3) {
+
+            cuisine_btn.setText(localdatabase.superCategoriesList.get(0).getName());
+            time_btn.setText(localdatabase.superCategoriesList.get(1).getName());
+            combo_btn.setText(localdatabase.superCategoriesList.get(2).getName());
+            drinks.setText(localdatabase.superCategoriesList.get(3).getName());
+        }else{
+            Intent i = new Intent(this, login_page.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
         pager.setScrollDurationFactor(3.5);
         pager.setCurrentItem(pageritem);
         getPositionsForDots(pageritem);

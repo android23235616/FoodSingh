@@ -266,6 +266,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
     }
 
 
+
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -359,6 +360,7 @@ public class details extends AppCompatActivity implements NavigationView.OnNavig
                     progress.dismiss();
                 }
                 Display("Some error Occured may be due to bad internet connection or Server issue");
+                Log.i("checkerror",error.toString());
             }
         }){
             @Override

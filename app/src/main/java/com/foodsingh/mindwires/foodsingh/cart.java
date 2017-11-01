@@ -147,7 +147,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 checkout.setClickable(false);
             }
         }else{
-            Display("Sorry, Some Problem occured. Please start the app again.");
+            Intent i = new Intent(this, login_page.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
         }
 
         checkout.setOnClickListener(new View.OnClickListener() {
