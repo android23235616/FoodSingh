@@ -111,7 +111,7 @@ TextView text_about;
         TextView location = (TextView)v.findViewById(R.id.location);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
-        location.setText(localdatabase.sublocality);
+        location.setText(localdatabase.city);
         ImageView back = (ImageView)v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

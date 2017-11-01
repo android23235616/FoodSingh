@@ -511,6 +511,9 @@ public class menu_item_details extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu) {
+            Intent a=new Intent(getApplicationContext(),menu.class);
+            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(a);
             // Handle the camera action
         } else if (id == R.id.cart) {
 
