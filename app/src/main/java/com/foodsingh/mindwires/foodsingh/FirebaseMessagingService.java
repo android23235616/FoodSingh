@@ -42,7 +42,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String img = map.get("icon");
 
-        if(!img.equals("null")){
+        if(img!=null){
             try {
                 h = getBitmapFromURL(img,remoteMessage);
             } catch (Exception e) {

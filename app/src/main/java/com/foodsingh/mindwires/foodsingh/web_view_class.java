@@ -10,7 +10,12 @@ import android.webkit.WebViewClient;
 public class web_view_class extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
-        return true;
+
+        if(url.startsWith("https:")||url.startsWith("http:")) {
+            view.loadUrl(url);
+            return true;
+        }else {
+            return true;
+        }
     }
 }

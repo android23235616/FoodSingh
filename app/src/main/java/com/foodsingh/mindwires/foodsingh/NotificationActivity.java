@@ -36,42 +36,44 @@ public class NotificationActivity extends AppCompatActivity {
     Gson gson;
     NotificationLists notificationLists;
     SharedPreferences sharedPreferences;
-    public static int read=0;
+    Dialog dialog;
+    public static int read = 0;
     BroadcastReceiver broadcastReceiver;
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
     android.support.design.widget.FloatingActionButton floatingActionButton;
-    static TextView clear,notifamount;
-   // static TextView localdatabase.no;
+    String text = "Are You sure that you want to remove all the notifications?";
+    static TextView clear, notifamount;
+    // static TextView localdatabase.no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RemoveTop();
-       
+
         setContentView(R.layout.activity_notification);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        clear = (TextView)findViewById(R.id.text);
-        floatingActionButton = (android.support.design.widget.FloatingActionButton)findViewById(R.id.new_clear);
+        clear = (TextView) findViewById(R.id.text);
+        floatingActionButton = (android.support.design.widget.FloatingActionButton) findViewById(R.id.new_clear);
 
 
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
-        recyclerView = (RecyclerView)findViewById(R.id.notificationRecycler);
+        recyclerView = (RecyclerView) findViewById(R.id.notificationRecycler);
         gson = new Gson();
-        String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
+        String tempJson = sharedPreferences.getString(constants.foodsinghNotif, "");
 
-        if(tempJson.equals("")){
-            if(read==0) {
+        if (tempJson.equals("")) {
+            if (read == 0) {
                 showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
             }
 
-        }else{
-            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
+        } else {
+            notificationLists = gson.fromJson(tempJson, NotificationLists.class);
             List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
             Collections.reverse(shallowCopy);
-            notificationAdapter = new NotificationAdapter(shallowCopy,this);
+            notificationAdapter = new NotificationAdapter(shallowCopy, this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(notificationAdapter);
@@ -93,20 +95,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-                edit.putString(constants.foodsinghNotif,"");
-                edit.putInt(constants.notifAmount,0);
-                localdatabase.notifications = 0;
-              // notifamount.setVisibility(View.INVISIBLE);
-                edit.apply();
-                Intent i = new Intent();
-                i.setAction(constants.menu2BroadcastReceiver);
-
-                sendBroadcast(i);
-                Intent q1 = new Intent();
-                q1.setAction(constants.broadCastReceiverNotification2);
-                sendBroadcast(q1);
-                recreate();
+                showDialog2(NotificationActivity.this, text);
 
             }
         });
@@ -119,19 +108,17 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(NotificationActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
-                if(localdatabase.masterList.size()>0){
-                    Intent a=new Intent(NotificationActivity.this,menu.class);
-                            a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                   startActivity(a);
-                }
-                else if(localdatabase.masterList.size() == 0 && localdatabase.delivery.equals("NA")){
-                    Intent a=new Intent(NotificationActivity.this,menu.class);
+                if (localdatabase.masterList.size() > 0) {
+                    Intent a = new Intent(NotificationActivity.this, menu.class);
+                    a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(a);
+                } else if (localdatabase.masterList.size() == 0 && localdatabase.delivery.equals("NA")) {
+                    Intent a = new Intent(NotificationActivity.this, menu.class);
                     a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(a);
 
-                }
-                else {
-                    Intent a=new Intent(NotificationActivity.this,Splash.class);
+                } else {
+                    Intent a = new Intent(NotificationActivity.this, Splash.class);
                     a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(a);
 
@@ -139,6 +126,23 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void clearNotification() {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(constants.foodsinghNotif, "");
+        edit.putInt(constants.notifAmount, 0);
+        localdatabase.notifications = 0;
+        // notifamount.setVisibility(View.INVISIBLE);
+        edit.apply();
+        Intent i = new Intent();
+        i.setAction(constants.menu2BroadcastReceiver);
+
+        sendBroadcast(i);
+        Intent q1 = new Intent();
+        q1.setAction(constants.broadCastReceiverNotification2);
+        sendBroadcast(q1);
+        recreate();
     }
 
     private void setUpReceiver() {
@@ -155,7 +159,7 @@ public class NotificationActivity extends AppCompatActivity {
                     public void run() {
                         UpdateUi();
                     }
-                },1000);
+                }, 1000);
                 Log.i("checkerbroadacast", "called");
 
             }
@@ -163,22 +167,22 @@ public class NotificationActivity extends AppCompatActivity {
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    private void UpdateUi(){
+    private void UpdateUi() {
 
 
         //recreate();
-        String tempJson = sharedPreferences.getString(constants.foodsinghNotif,"");
+        String tempJson = sharedPreferences.getString(constants.foodsinghNotif, "");
 
-        if(tempJson.equals("")){
-            if(read==0) {
+        if (tempJson.equals("")) {
+            if (read == 0) {
                 showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
             }
 
-        }else{
-            notificationLists = gson.fromJson(tempJson,NotificationLists.class);
+        } else {
+            notificationLists = gson.fromJson(tempJson, NotificationLists.class);
             List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());
             Collections.reverse(shallowCopy);
-            notificationAdapter = new NotificationAdapter(shallowCopy,this);
+            notificationAdapter = new NotificationAdapter(shallowCopy, this);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(notificationAdapter);
@@ -187,14 +191,12 @@ public class NotificationActivity extends AppCompatActivity {
 
         }
 
-        int diff = notificationLists.getNotification().size()-localdatabase.cache;
-
-
+//        int diff = notificationLists.getNotification().size() - localdatabase.cache;
 
 
     }
 
-    private void RemoveTop(){
+    private void RemoveTop() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -206,52 +208,52 @@ public class NotificationActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
 
-        MenuItem menuItem=menu.findItem(R.id.action_cart);
-        View actionView= MenuItemCompat.getActionView(menuItem);
-        TextView cartitemcount1=(TextView) actionView.findViewById(R.id.cart_badge);
+        MenuItem menuItem = menu.findItem(R.id.action_cart);
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        TextView cartitemcount1 = (TextView) actionView.findViewById(R.id.cart_badge);
 
         cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
-        ImageView cart = (ImageView)actionView.findViewById(R.id.cartimage);
+        ImageView cart = (ImageView) actionView.findViewById(R.id.cartimage);
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(localdatabase.masterList.size()>0){
+                if (localdatabase.masterList.size() > 0) {
                     startActivity(new Intent(NotificationActivity.this, cart.class));
-                }
-                else {
+                } else {
                     startActivity(new Intent(NotificationActivity.this, Splash.class));
                     finish();
                 }
             }
         });
 
-        ImageView notif = (ImageView)actionView.findViewById(R.id.notif);
+        ImageView notif = (ImageView) actionView.findViewById(R.id.notif);
 
 
-        notifamount = (TextView)actionView.findViewById(R.id.notification_badge);
+        notifamount = (TextView) actionView.findViewById(R.id.notification_badge);
         notifamount.setVisibility(View.INVISIBLE);
-        if(localdatabase.notifications==0){
-           notifamount.setVisibility(View.INVISIBLE);
-        }else {
-          // notifamount.setVisibility(View.VISIBLE);
-           //notifamount.setVisibility(View.VISIBLE);
-           notifamount.setText(localdatabase.notifications+"");
+        if (localdatabase.notifications == 0) {
+            notifamount.setVisibility(View.INVISIBLE);
+        } else {
+            // notifamount.setVisibility(View.VISIBLE);
+            //notifamount.setVisibility(View.VISIBLE);
+            notifamount.setText(localdatabase.notifications + "");
         }
 
         return true;
     }
-    private void Display(String s){
-        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+
+    private void Display(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
 
-    public void showDialog(Activity activity, String msg, int pic){
+    public void showDialog(Activity activity, String msg, int pic) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -259,13 +261,13 @@ public class NotificationActivity extends AppCompatActivity {
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
 
         text.setTypeface(tf);
 
         ImageView image = (ImageView) dialog.findViewById(R.id.btn_dialog);
-        image.setImageBitmap(BitmapFactory.decodeResource(getResources(),pic));
-        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+        image.setImageBitmap(BitmapFactory.decodeResource(getResources(), pic));
+        TextView dialogButton = (TextView) dialog.findViewById(R.id.cancel);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,6 +279,44 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
+    public void showDialog2(Context activity, final String msg) {
+        Log.i("mainresponse", "called");
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog2);
+
+        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        text.setText(msg);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
+
+        text.setTypeface(tf);
+
+        TextView image = (TextView) dialog.findViewById(R.id.btn_dialog);
+        // Glide.with(activity).load(pic).into(image);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearNotification();
+            }
+        });
+
+        TextView dialogButton = (TextView) dialog.findViewById(R.id.cancel);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (msg.equals("Please go to app store and download the latest version.")) {
+                    finish();
+                } else {
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+    dialog.show();
+    }
 }
 
 
