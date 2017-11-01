@@ -55,8 +55,6 @@ public class NotificationActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         clear = (TextView) findViewById(R.id.text);
         floatingActionButton = (android.support.design.widget.FloatingActionButton) findViewById(R.id.new_clear);
-
-
         sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
         recyclerView = (RecyclerView) findViewById(R.id.notificationRecycler);
         gson = new Gson();
