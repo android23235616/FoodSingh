@@ -94,14 +94,18 @@ public class CheckoutActivity extends AppCompatActivity {
             }else if(localdatabase.loaded){
                 items = intent.getStringExtra("items");
                 totalAmount = Integer.parseInt(intent.getStringExtra("price"));
+                totalRAmount = 0;
+                discount = 0;
                 tvTotalAmount.setText("₹" + totalAmount);
 
             }else{
                 SharedPreferences sharedPreferences =getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
                 totalAmount = sharedPreferences.getInt("total_amount",-1);
-                totalRAmount = sharedPreferences.getInt("total_r_amount",-1);
-                discount = sharedPreferences.getInt("discount",-1);
+                totalRAmount = sharedPreferences.getInt("total_r_amount",0);
+                discount = sharedPreferences.getInt("discount",0);
                 items = sharedPreferences.getString("items","");
+                sharedPreferences.edit().remove("total_amount");
+                sharedPreferences.edit().apply();
             }
         }
         else {
@@ -290,6 +294,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 items += ", ";
             }
         }
+
+
     }
 
 
@@ -329,6 +335,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         Bundle b = new Bundle();
                         b.putParcelable("object",myItem);
                         intent.putExtras(b);
+                        localdatabase.cartList.clear();
                         startActivity(intent);
                         finish();
                     }else{
