@@ -64,7 +64,6 @@ public class NotificationActivity extends AppCompatActivity {
             if (read == 0) {
                 showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
             }
-
         } else {
             notificationLists = gson.fromJson(tempJson, NotificationLists.class);
             List<NotificationItem> shallowCopy = notificationLists.getNotification().subList(0, notificationLists.getNotification().size());

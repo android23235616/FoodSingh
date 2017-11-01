@@ -52,6 +52,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -148,6 +149,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
             @Override
             public void onResponse(final String response) {
+                localdatabase.loaded = true;
                 progressBar.setVisibility(View.INVISIBLE);
                 Log.i("mainresponse" + i, response);
 
@@ -290,6 +292,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             }
 
             if(LocationChecked&&dataLoaded) {
+                SharedPreferences  sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(constants.mainresponsesharedpreferences,response);
+                editor.apply();
                 if(!redundent) {
                     redundent = true;
 
