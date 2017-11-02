@@ -549,7 +549,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
                     String city=sh.getString("location","No Location Found");
                     location.setText(city);
 
-                    Log.i("broadcastreceiver1menu3", localdatabase.city+"");
+                    Log.i("broadcastreceiver1menu3", city+"");
                 }else if(intent.getAction().equals(constants.kitchenStatusBroadcast)) {
                     Log.i("broadcastreceiver1menu4", localdatabase.metaData.getservice() + "");
 
@@ -608,13 +608,13 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         TextView t = (TextView) v.findViewById(R.id.welcome);
 
         t.setTypeface(tp);
-       location = (TextView)v.findViewById(R.id.location);
+        location = (TextView)v.findViewById(R.id.location);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
         location.setTypeface(tf);
 
         SharedPreferences sh=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
-        String city=sh.getString("location","No Location Found");
+        String city=(sh.getString("location","No Location Found"));
         location.setText(city);
 
 
@@ -1178,6 +1178,7 @@ if(local.metaData!=null) {
         super.onStart();
 
     }
+
 
 
 }
