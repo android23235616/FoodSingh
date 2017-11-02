@@ -493,8 +493,15 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
                String h= String.valueOf(localdatabase.couponClassList.get(0).getCouponCode());
            //     Toast.makeText(menu.this, h, Toast.LENGTH_SHORT).show();
-                setClipboard(getApplicationContext(),h);
-                Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+                if(h.equalsIgnoreCase(""))
+                {
+                    //nothing to do
+                }
+                else
+                {
+                    setClipboard(getApplicationContext(),h);
+                    Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -504,8 +511,16 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(View view) {
                 String h= String.valueOf(localdatabase.couponClassList.get(1).getCouponCode());
             //    Toast.makeText(menu.this, h, Toast.LENGTH_SHORT).show();
-                setClipboard(getApplicationContext(),h);
-                Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+                if(h.equalsIgnoreCase(""))
+                {
+                    //nothing
+                }
+                else
+                {
+                    setClipboard(getApplicationContext(),h);
+                    Toast.makeText(menu.this, "Coupon Code copied to clipboard", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
@@ -687,6 +702,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
     private void initialize() {
         ad1  = (ImageView)findViewById(R.id.advertisement1);
         ad2 = (ImageView)findViewById(R.id.advertisement2);
+
         if(localdatabase.couponClassList.size()>0)
         Glide.with(this).load(localdatabase.couponClassList.get(0).getUrl()).into(ad1);
         if(localdatabase.couponClassList.size()>1)
