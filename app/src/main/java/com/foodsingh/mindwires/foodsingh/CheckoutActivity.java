@@ -287,6 +287,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
     if(check!=1) {
+        items="";
         for (int i = 0; i < localdatabase.cartList.size(); i++) {
             MenuItems item = localdatabase.cartList.get(i);
             items += item.getName() + "-" + item.getQuantity();
@@ -325,7 +326,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     Log.d("DATA","ID -"+id);
                     if(main_status.equals("SUCCESS")){
                         Toast.makeText(CheckoutActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
-                        localdatabase.cartList.clear();
+                      //  localdatabase.cartList.clear();
                         Intent intent = new Intent(CheckoutActivity.this, OrderPlacedActivity.class);
                         intent.putExtra("id", id);
                         intent.putExtra("amount", ""+totalAmount);
@@ -335,7 +336,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         Bundle b = new Bundle();
                         b.putParcelable("object",myItem);
                         intent.putExtras(b);
-                        localdatabase.cartList.clear();
+
                         startActivity(intent);
                         finish();
                     }else{
