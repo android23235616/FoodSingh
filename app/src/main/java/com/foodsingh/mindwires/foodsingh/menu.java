@@ -139,7 +139,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
 
-      //  AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
+        AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
 
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());

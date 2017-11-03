@@ -156,21 +156,10 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 progressBar.setVisibility(View.INVISIBLE);
                 Log.i("mainresponse" + i, response);
 
-            /*final Handler h = new Handler();
-
-                t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startThread(response,h);
-                    }
-                });
-
-                t.start();
-
-                */
                 if(!temp) {
                     startThread(response);
                     temp = true;
+
                 }
 
 
@@ -182,6 +171,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 Log.i("mainresponse", "1"+error.toString());
                 Display("Please start the app again");
                 Log.i("mainresponse","2"+error.toString());
+                temp = false;
                 //finish();
 
             }
