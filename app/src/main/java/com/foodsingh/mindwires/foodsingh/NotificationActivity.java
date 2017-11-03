@@ -41,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     NotificationAdapter notificationAdapter;
     android.support.design.widget.FloatingActionButton floatingActionButton;
-    String text = "Are You sure that you want to remove all the notifications?";
+    String text = "Are you sure that you want to remove all the notifications?";
     static TextView clear, notifamount;
     // static TextView localdatabase.no;
     @Override
@@ -170,7 +170,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         if (tempJson.equals("")) {
             if (read == 0) {
-                showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
+                showDialog(this, "You have no notifications.\nStay tuned for more coupons.", R.drawable.notification);
             }
 
         } else {
