@@ -567,25 +567,41 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 LocationPermission = false;
 
 
+            } else {
 
-            }else {
 
                 LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
                 builder.setAlwaysShow(true);
                 final String TAG = "LOCATION PERMISSION";
                 PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(apiClient, builder.build());
                 result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                    @Override
-                    public void onResult(LocationSettingsResult result) {
-                        final Status status = result.getStatus();
-                        switch (status.getStatusCode()) {
-                            case LocationSettingsStatusCodes.SUCCESS:
+                                             @Override
+                                             public void onResult(LocationSettingsResult result) {
+
+                                                 final Status status = result.getStatus();
+
+                                                 if (!isCoarseLocationEnabled(Splash.this)) {
+                                                     locationisthere = false;
+                                                     try {
+                                                         status.startResolutionForResult(Splash.this, 2);
+                                                     } catch (IntentSender.SendIntentException e) {
+                                                         e.printStackTrace();
+                                                         Display(e.toString());
+                                                     }
+                                                 }else{
+                                                     locationisthere = true;
+                                                 }
+                                                 // switch (status.getStatusCode()) {
+                         /*   case LocationSettingsStatusCodes.SUCCESS:
                                 Log.i(TAG, "All location settings are satisfied.");
+                                Display("here1");
                                 locationisthere = true;
                                 break;
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                                 locationisthere = false;
                                 Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
+
+                                Display("here");
 
                                 try {
                                     // Show the dialog by calling startResolutionForResult(), and check the result
@@ -597,26 +613,31 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                 }
                                 break;
                             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                Display("here3");
                                 locationisthere = false;
                                 Log.i(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
 
                                 break;
-                        }
-                    }
-                });
+
+                            default:
+                                Display("here4");*/
+                                             }
+                                         }
+                );
 
 
                 LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, Splash.this);
                 LocationPermission = true;
-                if(!isLocationEnabled(this)){
+                if (!isLocationEnabled(this)) {
                     GoToLocations();
-                }else{
-                   // Initiate_Meta_Data();
+                } else {
+                    // Initiate_Meta_Data();
                 }
             }
 
+        }
     }
-    }
+
 
 
 
