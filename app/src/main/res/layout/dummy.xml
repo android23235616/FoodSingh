@@ -31,7 +31,9 @@
             android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+       android:layout_marginTop="5dp"
         android:id="@+id/advertisement1"
+        android:layout_marginBottom="10dp"
         />
     <TextView
         android:layout_width="wrap_content"

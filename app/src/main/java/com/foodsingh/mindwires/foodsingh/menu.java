@@ -481,7 +481,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         SetupBroadcastReceiver();
 
-           // setupGcmNetWorkManager();
+            setupGcmNetWorkManager();
 
 
         if(localdatabase.couponClassList.size()>0){

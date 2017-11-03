@@ -221,6 +221,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PAYMENT"
+        android:visibility="gone"
         android:textAppearance="?android:textAppearanceMedium"
         android:fontFamily="monospace"
         android:id="@+id/txt_payment"
@@ -232,6 +233,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:layout_below="@+id/txt_payment"
         android:layout_marginStart="16dp"
         android:id="@+id/grp_payment_type"
