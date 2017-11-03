@@ -90,7 +90,7 @@ public class Tracker extends AppCompatActivity {
         i = getIntent();
         order_no.setTypeface(tf);
         repeat_order.setTypeface(tf);
-        if(localdatabase.delivery.equals("NA")||localdatabase.metaData.getservice().equals("false")){
+        if(localdatabase.location_id.equals("NA")||localdatabase.metaData.getservice().equals("false")){
             repeat_order.setClickable(false);
         }
         items.setTypeface(tf1);
