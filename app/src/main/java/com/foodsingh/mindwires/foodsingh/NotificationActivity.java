@@ -25,11 +25,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
-
 import java.util.Collections;
 import java.util.List;
+
+
+
 
 public class NotificationActivity extends AppCompatActivity {
     Gson gson;
