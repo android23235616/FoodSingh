@@ -62,7 +62,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         if (tempJson.equals("")) {
             if (read == 0) {
-                showDialog(this, "You Have No Notifications.\nStay tuned for more coupons.", R.drawable.notification);
+                showDialog(this, "You have no notifications.\nStay tuned for more coupons.", R.drawable.notification);
             }
         } else {
             notificationLists = gson.fromJson(tempJson, NotificationLists.class);
