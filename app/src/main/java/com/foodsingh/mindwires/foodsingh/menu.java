@@ -139,7 +139,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         }
 
-        AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
+      //  AddressFetchingService.startActionFoo(this,localdatabase.deliveryLocation.getLatitude()+"",localdatabase.deliveryLocation.getLongitude()+"");
 
         noitem = (TextView)findViewById(R.id.noitem);
         //Display(versionStatus());
@@ -481,7 +481,7 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         SetupBroadcastReceiver();
 
-            setupGcmNetWorkManager();
+           // setupGcmNetWorkManager();
 
 
         if(localdatabase.couponClassList.size()>0){
@@ -1144,6 +1144,8 @@ if(local.metaData!=null) {
     protected void onPause() {
         super.onPause();
         appBarLayout.removeOnOffsetChangedListener(this);
+       // Intent i = new Intent(this, AddressFetchingService.class);
+        //stopService(i);
     }
 
     @Override

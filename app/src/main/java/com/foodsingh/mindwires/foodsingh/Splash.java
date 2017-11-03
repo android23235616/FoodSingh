@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -71,6 +72,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     RequestQueue req;
+    boolean temp = false;
     Thread t;
     ProgressBar progressBar;
     StringRequest sr;
@@ -140,10 +142,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
 
     private void New_Details(String name, String number, final String main_url) {
+
         i++;
 
 
-        Calendar calendar = Calendar.getInstance();
+
         RequestQueue re = Volley.newRequestQueue(this);
 
         sr = new StringRequest(Request.Method.POST, main_url, new Response.Listener<String>() {
@@ -165,7 +168,11 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 t.start();
 
                 */
-                startThread(response);
+                if(!temp) {
+                    startThread(response);
+                    temp = true;
+                }
+
 
             }
         }, new Response.ErrorListener() {
@@ -194,7 +201,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         sr.setShouldCache(false);
        // RequestQueue queue = new RequestQueue(new NoCache(),new BasicNetwork(new HurlStack()));
 
-        sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        sr.setRetryPolicy(new DefaultRetryPolicy(10000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if(i==1)
             re.add(sr);
 
@@ -202,6 +209,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     private void startThread(String response){
         dataLoaded = true;
+
 
         try {
             JSONObject mainObject = new JSONObject(response);
@@ -299,13 +307,15 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 if(!redundent) {
                     redundent = true;
 
-                   h.postDelayed(new Runnable() {
-                       @Override
-                       public void run() {
-                           startActivity(new Intent(Splash.this, menu.class));
-                           finish();
-                       }
-                   },500);
+                //   h.postDelayed(new Runnable() {
+                       //@Override
+                       //public void run() {
+                           if(isCoarseLocationEnabled(Splash.this)) {
+                               startActivity(new Intent(Splash.this, menu.class));
+                               finish();
+                           }
+                      // }
+                   //},500);
 
 
                 }
@@ -536,14 +546,20 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     @Override
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode==2){
-            if(resultCode!=RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 2) {
+            if (resultCode != RESULT_OK) {
                 locationisthere = false;
-               Display("You Won't be able to use this application right now.");
+                Display("You Won't be able to use this application right now.");
                 finish();
-            }else{
+            } else if (temp) {
                 locationisthere = true;
+
+                if (isCoarseLocationEnabled(Splash.this)) {
+                    temp = false;
+                    startActivity(new Intent(Splash.this, menu.class));
+                    finish();
+                }
             }
         }
     }
@@ -585,7 +601,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                                     // Show the dialog by calling startResolutionForResult(), and check the result
                                     // in onActivityResult().
                                     status.startResolutionForResult(Splash.this, 2);
-                                    finish();
+
                                 } catch (IntentSender.SendIntentException e) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }
@@ -612,6 +628,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     }
     }
 
+
+
     @Override
     public void onConnectionSuspended(int i) {
         showLog("Connection Suspended");
@@ -624,6 +642,19 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
+    public boolean isCoarseLocationEnabled(Context context) {
+        if (context != null) {
+            LocationManager manager = (LocationManager) context.getSystemService(android.content.Context.LOCATION_SERVICE);
+            if (!manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                return false;
+            } else
+                return true;
+
+        }
+
+        return false;
+    }
+
     @Override
     public void onLocationChanged(final Location location) {
 
@@ -634,59 +665,25 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
      //  localdatabase.city  = getCity(location.getLatitude(),location.getLongitude());
         LocationChecked = true;
 
+
+        doit();
+
+    }
+
+    private void doit(){
         if(i==0) {
-          //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
+            //  AddressFetchingService.startActionFoo(this,location.getLatitude()+"",location.getLongitude()+"");
 
             SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.putFloat("latitude", (float) location.getLatitude());
-            edit.putFloat("longitude", (float) location.getLongitude());
+            edit.putFloat("latitude", (float) localdatabase.deliveryLocation.getLatitude());
+            edit.putFloat("longitude", (float) localdatabase.deliveryLocation.getLongitude());
 
             edit.apply();
 
             Initiate_Meta_Data();
 
+
         }
-
-
-    }
-
-
-
-    private String getCity(double latitude, double longitude){
-        Geocoder geocoder;
-        List<Address> addresses = new ArrayList<>();
-        geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-        } catch (IOException e) {
-            e.printStackTrace();
-            //Display(e.toString());
-        }
-        String address, city;
-        if(addresses.size()>0) {
-            address = addresses.get(0).getAddressLine(0)+" , , "; // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            city = addresses.get(0).getLocality();
-            Log.i("addressmine",addresses.get(0).getAdminArea()+", "+addresses.get(0).getFeatureName()+" , "+addresses.get(0).getLocality()+", "+address);
-            localdatabase.lane = address;
-            localdatabase.sublocality = addresses.get(0).getSubLocality();
-
-            int comma = 0;
-            for (int i =0; comma != 2; i++ ){
-                if(address.charAt(i) == ','){
-                    comma++;
-                }
-                if(comma == 2){
-                    break;
-                }
-                localdatabase.lane2 += address.charAt(i);
-            }
-
-
-            return city;
-        }
-
-        return "Location Not Found";
     }
 }
