@@ -285,7 +285,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                        String result = obj.getString("result");
 
                        if(result.equals("false")){
-                           showDialog2(cart.this, "Sorry, but you have entered an\ninvalid coupon.");
+                           showDialog2(cart.this, "Sorry, you have entered an\ninvalid coupon.");
                        }else if(result.equals("redeemed")){
                            showDialog2(cart.this, "You Have Already applied the coupon.");
                        }else{
@@ -301,7 +301,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                            couponDilog.dismiss();
                        }
                        e.printStackTrace();
-                      showDialog2(cart.this, e.toString());
+                      showDialog2(cart.this, "Some error occured, may be due to server or bad internet connection");
                    }
 
                }
@@ -319,7 +319,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 if(!couponDilog.isShowing()){
                     couponDilog.dismiss();
                 }
-                showDialog2(cart.this, error.toString());
+                showDialog2(cart.this,"Some error occured, may be due to server or bad internet connection");
             }
         }){
             @Override

@@ -24,8 +24,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="184dp"
+        android:layout_marginBottom="165dp"
         android:id="@+id/ll"
+
         >
 
 
@@ -38,7 +39,6 @@
         </android.support.v7.widget.RecyclerView>
 
         <include layout="@layout/slides_recycler"
-
 
             />
         <include android:id="@+id/cart_addition" layout="@layout/card_addition"/>
