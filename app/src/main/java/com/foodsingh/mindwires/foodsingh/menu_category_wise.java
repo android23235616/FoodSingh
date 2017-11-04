@@ -635,7 +635,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
     public static void updateCartIcon(){
-        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+            cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+
     }
 
 
