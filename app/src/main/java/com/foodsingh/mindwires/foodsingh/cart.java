@@ -251,6 +251,10 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
         SetupBroadcastReceiver();
     }
 
+    public static void updateCartIcon(){
+        cartitemcount1.setText(String.valueOf(localdatabase.cartList.size()));
+    }
+
     private void getDiscount(String url){
 
         if(progress.isShowing())
@@ -497,7 +501,14 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 }
 
             }
-        });
+        }){
+            @Override
+            public Map<String,String> getParams(){
+                Map<String,String> map = new HashMap<>();
+                map.put("location_id",localdatabase.location_id);
+                return map;
+            }
+        };
 
         RequestQueue re= Volley.newRequestQueue(this);
         re.add(str);

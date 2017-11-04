@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     boolean check=false;
 
     int p;
+    
+    int count=0;
 
     ImageView plus,minus,fav,image;
 
@@ -75,9 +78,11 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView diname,diprice,item_quantity, unavailable;
+        public CardView card;
         ImageView pl,mi, image,fav;
         public ViewHolder(View itemView) {
             super(itemView);
+            card= (CardView)itemView.findViewById(R.id.cardView);
             diname=(TextView) itemView.findViewById(R.id.dish_name_slide);
             diprice=(TextView) itemView.findViewById(R.id.dish_price);
             unavailable=(TextView) itemView.findViewById(R.id.txt_unavailable);
@@ -118,14 +123,16 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         if(menu_category_wise.position==-1){
             holder.fav.setVisibility(View.VISIBLE);
             holder.fav.setClickable(true);
+           
+            
         }
 
 
 
 
          menuItem = menuItems.get(holder.getAdapterPosition());
-
-        if(Exists(menuItem)>-1){
+        int isthere = Exists(menuItem);
+        if(isthere>-1){
             holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
         }else{
             holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_not_fav));
@@ -174,6 +181,28 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     check = false;
                     holder.unavailable.setVisibility(View.GONE);
                 }
+
+
+                //checking for the un availability in favourites
+
+        if(menu_category_wise.position==-1) {
+            int tempPosition = findId(menuItem.getCategory());
+
+            if (tempPosition == -1) {
+                holder.card.setVisibility(View.GONE);
+            } else {
+                int tempPosition2 = findAvailability(tempPosition, menuItem.getName());
+                if (tempPosition2 == 0) {
+                    holder.card.setVisibility(View.VISIBLE);
+                    holder.unavailable.setVisibility(View.INVISIBLE);
+                } else if (tempPosition2 == 1) {
+                    holder.card.setVisibility(View.VISIBLE);
+                    holder.unavailable.setVisibility(View.VISIBLE);
+                } else {
+                    holder.unavailable.setVisibility(View.GONE);
+                }
+            }
+        }
 
         String url = menuItem.getImage();
         Glide.with(mContext).load(url.trim()).skipMemoryCache(true).thumbnail(0.01f)
@@ -358,6 +387,31 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+    
+    public int  findId(String category){
+        for(int i=0; i<localdatabase.masterList.size(); i++){
+            if (localdatabase.masterList.get(i).getName().equalsIgnoreCase(category)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private int findAvailability(int position, String name){
+        
+        List<MenuItems> tempList = localdatabase.masterList.get(position).getMenuList();
+        
+        for(int i=0; i<tempList.size(); i++){
+            if(tempList.get(i).getName().equalsIgnoreCase(name)){
+               if(tempList.get(i).getStatus().equalsIgnoreCase("live")){
+                   return 0;
+               }else{
+                   return 1;
+               }
+            }
+        }
+        return -1;
     }
 
     @Override
