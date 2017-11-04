@@ -122,8 +122,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     String locality = etLocality.getText().toString();
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(statusAddress + "_lane1", lane1);
-                    editor.putString(statusAddress + "_lane2", lane2);
-                    editor.putString(statusAddress + "_locality", locality);
+                    //editor.putString(statusAddress + "_lane2", lane2);
+                    //editor.putString(statusAddress + "_locality", locality);
                     editor.commit();
                 }
 
@@ -143,8 +143,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     String locality = etLocality.getText().toString();
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(statusAddress + "_lane1", lane1);
-                    editor.putString(statusAddress + "_lane2", lane2);
-                    editor.putString(statusAddress + "_locality", locality);
+                    //editor.putString(statusAddress + "_lane2", lane2);
+                    //editor.putString(statusAddress + "_locality", locality);
                     editor.commit();
                 }
 
@@ -272,8 +272,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(statusAddress+"_lane1", lane1);
-        editor.putString(statusAddress+"_lane2", lane2);
-        editor.putString(statusAddress+"_locality", locality);
+        //editor.putString(statusAddress+"_lane2", lane2);
+        //editor.putString(statusAddress+"_locality", locality);
         editor.commit();
 
         final String address = lane1+", "+lane2+", "+locality;
@@ -400,8 +400,8 @@ public class CheckoutActivity extends AppCompatActivity {
             btnHome.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        etLane1.setText(sp.getString(statusAddress+"_lane1",""));
-        etLane2.setText(sp.getString(statusAddress+"_lane2",""));
+        //etLane1.setText(sp.getString(statusAddress+"_lane1",""));
+       // etLane2.setText(sp.getString(statusAddress+"_lane2",""));
         //etLocality.setText(sp.getString(statusAddress+"_locality",""));
         etLocality.setText(localdatabase.sublocality);
         etLane2.setText(localdatabase.lane2);

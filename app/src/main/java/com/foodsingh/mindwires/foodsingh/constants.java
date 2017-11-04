@@ -22,7 +22,7 @@ public class constants {
     public static final String foodsinghNotif = "asddasdasd";
     private static final String api_key = "AAAAeTtmoZw:APA91bGuRszKxQmOydJil94AdIycgoAGMXFz-IASW0U8wea-PYS7eZCwsUuOLWAULQ6d6OwUhk6CtsvpwCcrGTnOVERQbb0v6gM4awUBBLtySimtAPG_Li8RA0zw-U2uaOupMN8quG-K";
     public static final String foodsingh1 = "kjhkjh";
-    public static final String foodsingh = "kashd'd70s";
+    public static final String foodsingh = "kashd'd70]s";
     public static  final String all_data_cart="";
     public static final String check_mobile="http://mindwires.in/foodsingh/app/check_mobile.php";
 

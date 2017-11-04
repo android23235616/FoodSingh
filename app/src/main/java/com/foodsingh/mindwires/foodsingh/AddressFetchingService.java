@@ -134,6 +134,7 @@ public class AddressFetchingService extends IntentService {
             localdatabase.sublocality = addresses.get(0).getSubLocality();
 
             int comma = 0;
+            localdatabase.lane2 = "";
             for (int i =0; comma != 2; i++ ){
                 if(address.charAt(i) == ','){
                     comma++;
