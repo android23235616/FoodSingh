@@ -12,11 +12,11 @@ public class MenuItems implements Parcelable{
 
 
 
-    private String Id, Name, Category, Price, Image, Status, Detail,R_price;
+    private String Id, Name, Category, Price, Image, Status, Detail,R_price,location_id;
 
     private int quantity = 0;
 
-    MenuItems(String Id, String Name, String Category, String Price, String Image, String Status, String Detail, String R_price){
+    MenuItems(String Id, String Name, String Category, String Price, String Image, String Status, String Detail, String R_price, String location_id){
         this.Id = Id;
         this.Name = Name;
         this.Category = Category;
@@ -25,6 +25,8 @@ public class MenuItems implements Parcelable{
         this.Status = Status;
         this.Detail = Detail;
         this.R_price = R_price;
+        this.location_id = location_id;
+
     }
 
     protected MenuItems(Parcel in) {
@@ -37,6 +39,7 @@ public class MenuItems implements Parcelable{
         Detail = in.readString();
         Status = in.readString();
         R_price = in.readString();
+        location_id = in.readString();
     }
 
     public String getR_price() {
@@ -113,5 +116,10 @@ public class MenuItems implements Parcelable{
         parcel.writeString(Detail);
         parcel.writeString(Status);
         parcel.writeString(R_price);
+        parcel.writeString(location_id);
+    }
+
+    public String getLocation_id(){
+        return location_id;
     }
 }

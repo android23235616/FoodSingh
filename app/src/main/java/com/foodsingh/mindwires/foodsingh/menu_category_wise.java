@@ -19,6 +19,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
@@ -33,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -64,9 +66,14 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
     public static TextView cartitemcount, toolbarText,text,notifamount;
 
-    RecyclerView recyclerView;
+    static MenuItemAdapter adapter;
+
+    static RecyclerView recyclerView;
+
+    static List<MenuItems> youList = new ArrayList<>();
 
     List<String> dish_name=new ArrayList<>();
+    ItemTouchHelper itemTouchHelper;
     List<String> dish_price=new ArrayList<>();
     View actionView;
     BroadcastReceiver broadcastReceiver;
@@ -168,6 +175,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
         SetupBroadcastReceiver();
+
     }
 
     @Override
@@ -176,7 +184,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         populateUI();
     }
 
-    public void showDialog(Activity activity, String msg, int pic){
+    public static void showDialog(Activity activity, String msg, int pic){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -356,6 +364,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         toolbarText.setTypeface(t);
 
         shared=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
+
+
     }
 
     private void send_to_adapter()
@@ -366,6 +376,10 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
+
+
+
+
     private Boolean checking_net_permission() {
         final ConnectivityManager connectivityManager = ((ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
@@ -375,7 +389,6 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     {
         Toast.makeText(this, S, Toast.LENGTH_SHORT).show();
     }
-
 
 
 
@@ -507,6 +520,9 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         }
 
         return true;
+
+
+
     }
 
 
@@ -627,7 +643,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
 
     public void populateUI() {
-        MenuItemAdapter adapter = null;
+         adapter = null;
 
         if(position!=-1) {
 
@@ -646,6 +662,7 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
                 if(menuItemses.size()<=0){
                     showDialog(this,"You have no Favourites. You need to eat more!", R.drawable.ic_fav);
                 }
+                menuItemses=modifyAdapter(menuItemses);
                 adapter = new MenuItemAdapter(this, menuItemses,position);
 
             }
@@ -662,6 +679,25 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
 
         //Toast.makeText(this, ""+Splash.masterMenuItems.size(), Toast.LENGTH_LONG).show();
         //Toast.makeText(this, ""+localdatabase.masterList.get(position).getMenuList(), Toast.LENGTH_LONG).show();
+
+    }
+
+    private List<MenuItems> modifyAdapter(List<MenuItems> m) {
+
+        List<MenuItems> new_list = new ArrayList<>();
+
+        for(int i=0; i<m.size(); i++){
+            if(!m.get(i).getLocation_id().equalsIgnoreCase(localdatabase.location_id)){
+                Log.i("asdasdasd",m.get(i).getName()+" , "+m.get(i).getLocation_id());
+
+
+            }else{
+                Log.i("asdasdasd2",m.get(i).getName()+" , "+m.get(i).getLocation_id());
+                new_list.add(m.get(i));
+            }
+
+        }
+        return new_list;
 
     }
 

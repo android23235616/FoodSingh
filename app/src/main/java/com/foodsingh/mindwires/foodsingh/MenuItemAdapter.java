@@ -35,6 +35,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     MenuItems menuItem;
     String status;
 
+
     Gson gson = new Gson();
 
     private List<MenuItems> FavItems = new ArrayList<>();
@@ -113,6 +114,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         DisplayList(menuItems);
 
 
+
         return vh;
     }
 
@@ -181,28 +183,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                     check = false;
                     holder.unavailable.setVisibility(View.GONE);
                 }
-
-
-                //checking for the un availability in favourites
-
-        if(menu_category_wise.position==-1) {
-            int tempPosition = findId(menuItem.getCategory());
-
-            if (tempPosition == -1) {
-                holder.card.setVisibility(View.GONE);
-            } else {
-                int tempPosition2 = findAvailability(tempPosition, menuItem.getName());
-                if (tempPosition2 == 0) {
-                    holder.card.setVisibility(View.VISIBLE);
-                    holder.unavailable.setVisibility(View.INVISIBLE);
-                } else if (tempPosition2 == 1) {
-                    holder.card.setVisibility(View.VISIBLE);
-                    holder.unavailable.setVisibility(View.VISIBLE);
-                } else {
-                    holder.unavailable.setVisibility(View.GONE);
-                }
-            }
-        }
 
         String url = menuItem.getImage();
         Glide.with(mContext).load(url.trim()).skipMemoryCache(true).thumbnail(0.01f)
@@ -339,7 +319,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                 holder.fav.setImageBitmap(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ic_fav));
                 FavItems.add(item);
             }
-           // DisplayList(FavItems);
+            DisplayList(FavItems);
             FavouritesList f = new FavouritesList(FavItems);
             String tempJson = gson.toJson(f);
             SharedPreferences.Editor edit = store.edit();
@@ -348,12 +328,18 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
 
         }
     });
+        Log.i("MenuItemAdapter", menuItems.size()+" , "+count);
+        if(menuItems.size()-count<=0){
+            menu_category_wise.showDialog((Activity)mContext,"You have no Favourites. You need to eat more!", R.drawable.ic_fav);
+
+        }
+
     }
 
 
     private void DisplayList(List<MenuItems> m){
         for(int i=0; i<m.size(); i++){
-            Log.i("activityhere"+i, m.get(i).getName()+" , "+m.get(i).getId()+" , "+m.get(i).getStatus());
+            Log.i("activityhere"+i, m.get(i).getName()+" , "+m.get(i).getId()+" , "+m.get(i).getStatus()+" , "+m.get(i).getLocation_id());
         }
     }
 
@@ -389,30 +375,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
     
-    public int  findId(String category){
-        for(int i=0; i<localdatabase.masterList.size(); i++){
-            if (localdatabase.masterList.get(i).getName().equalsIgnoreCase(category)){
-                return i;
-            }
-        }
-        return -1;
-    }
+
     
-    private int findAvailability(int position, String name){
-        
-        List<MenuItems> tempList = localdatabase.masterList.get(position).getMenuList();
-        
-        for(int i=0; i<tempList.size(); i++){
-            if(tempList.get(i).getName().equalsIgnoreCase(name)){
-               if(tempList.get(i).getStatus().equalsIgnoreCase("live")){
-                   return 0;
-               }else{
-                   return 1;
-               }
-            }
-        }
-        return -1;
-    }
 
     @Override
     public int getItemCount() {

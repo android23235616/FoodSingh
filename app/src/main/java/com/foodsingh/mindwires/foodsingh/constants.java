@@ -18,11 +18,11 @@ public class constants {
     public static final String broadCastReceiverNotification2 = "askdahsdlasdkjAKDSHKASD";
     public static final String notifAmount = "jhsdjds";
     public static final String kitchenStatusBroadcast = "asadjaldjkfdhasjh";
-    public static final String fav = "akjsdy[=0012";
+    public static final String fav = "akjsdy[=0012p";
     public static final String foodsinghNotif = "asddasdasd";
     private static final String api_key = "AAAAeTtmoZw:APA91bGuRszKxQmOydJil94AdIycgoAGMXFz-IASW0U8wea-PYS7eZCwsUuOLWAULQ6d6OwUhk6CtsvpwCcrGTnOVERQbb0v6gM4awUBBLtySimtAPG_Li8RA0zw-U2uaOupMN8quG-K";
     public static final String foodsingh1 = "kjhkjh";
-    public static final String foodsingh = "kashdd70s";
+    public static final String foodsingh = "kashd'd70s";
 
     public static final String check_mobile="http://mindwires.in/foodsingh/app/check_mobile.php";
 
@@ -32,7 +32,7 @@ public class constants {
     public static String order_details = "http://mindwires.in/foodsingh/app/get_order_details.php";
     public static String login_details_url="http://mindwires.in/foodsingh/app/logini_save_and_check.php";
     public static String login_check_url="http://mindwires.in/foodsingh/app/login.php";
-    public static String coupon_url="http://mindwires.in/foodsingh/app/check_coupon.php";
+    public static String coupon_url="http://mindwires.in/foodsingh/app/check_coupon3.php";
     public  static  String get_categories="http://mindwires.in/foodsingh/app/get_categories2.php";
     public static int min_order=-1;
     public static String get_menu_category_wise="http://mindwires.in/foodsingh/app/get_menu.php";
