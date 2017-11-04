@@ -105,6 +105,7 @@ public class order_history_Adapter extends RecyclerView.Adapter<order_history_Ad
                 Intent i = new Intent(holder.arrow.getContext(), Tracker.class);
                 Bundle b = new Bundle();
                 b.putParcelable("object",item);
+                b.putBoolean("getter",false);
                 i.putExtras(b);
                 holder.arrow.getContext().startActivity(i);
             }

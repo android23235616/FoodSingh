@@ -192,6 +192,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 else
                 {
                     Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
+                    aas.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     aas.putExtra("key",0);
                     Bundle a=new Bundle();
                     a.putInt("total_amount", totalAmount);
@@ -199,6 +200,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                     a.putInt("discount", discountAmount);
                     aas.putExtras(a);
                     startActivity(aas);
+
                 }
 
 
@@ -1043,6 +1045,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 a.putInt("discount", Integer.parseInt(disc));
                 aas.putExtras(a);
                 startActivity(aas);
+                finish();
             }
         });
 

@@ -50,6 +50,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
                 Intent i = new Intent(view.getContext(), Tracker.class);
                 Bundle b = new Bundle();
                 b.putParcelable("object",itemss);
+                b.putBoolean("getter",true);
                 i.putExtras(b);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

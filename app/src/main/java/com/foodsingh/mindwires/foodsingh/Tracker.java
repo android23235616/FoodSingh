@@ -47,8 +47,9 @@ public class Tracker extends AppCompatActivity {
     boolean canheorder = true;
     final String prompt = "Sorry. But you are too far from the restaurant.";
     ImageView trackimage;
+    int discount = 0;
     Typeface tf,tf1;
-    static List<String> myLocation = new ArrayList<>();
+
     TextView toolbarText;
     View actionView;
     TextView cartitemcount1;
@@ -112,6 +113,15 @@ public class Tracker extends AppCompatActivity {
         if(i!=null){
             item = i.getExtras().getParcelable("object");
            //processFoodNames(item.getItem());
+            //checking the activity
+            boolean check = i.getExtras().getBoolean("getter");
+
+            if(check){
+                repeat_order.setVisibility(View.INVISIBLE);
+            }else {
+
+                repeat_order.setVisibility(View.VISIBLE);
+            }
             if(item!=null) {
                   test(item.getItem());
                    price.setText(item.getAmount());
@@ -134,8 +144,8 @@ public class Tracker extends AppCompatActivity {
                 Intent i = new Intent(view.getContext(), CheckoutActivity.class);
                 i.putExtra("items", item.getItem());
                 i.putExtra("key", 1);
-
-                i.putExtra("price", item.getAmount());
+                int amount = Integer.parseInt(item.getAmount())+discount;
+                i.putExtra("price", amount+"");
                 Log.i("tracker_price", itemsString.substring(0, itemsString.length() - 1) + "," + item.getAmount());
                 startActivity(i);
             } else {
@@ -383,6 +393,7 @@ public class Tracker extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(response);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     status = jsonObject.getString("status");
+                    discount = Integer.parseInt(jsonObject.getString("discount"));
                     TextView name = (TextView) findViewById(R.id.info);
                     TextView mob = (TextView) findViewById(R.id.number_info);
 

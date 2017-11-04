@@ -43,6 +43,7 @@
         android:maxLength="16"
         android:id="@+id/code"
         android:paddingStart="8dp"
+
         android:paddingEnd="8dp"
         android:background="@drawable/card_addition_edittext"
         android:fontFamily="monospace"
