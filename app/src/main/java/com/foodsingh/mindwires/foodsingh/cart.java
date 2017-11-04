@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,6 +44,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,6 +58,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -229,6 +232,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 couponDilog.setMessage("Validating your coupon.");
                 getDiscount(constants.coupon_url);
 
+
                /* if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
                     discountPercent = localdatabase.discount;
                     calculateTotal();
@@ -285,21 +289,30 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
                    try {
                        JSONObject obj = new JSONObject(response);
-                       String discount= obj.getString("discount");
                        String result = obj.getString("result");
 
-                       if(result.equals("false")){
-                           showDialog2(cart.this, "Sorry, you have entered an\ninvalid coupon.");
-                       }else if(result.equals("redeemed")){
-                           showDialog2(cart.this, "You Have Already applied the coupon.");
-                       }else{
-                           localdatabase.discount = Integer.parseInt(discount);
+                       if(result.equals("true")){
+                       //    showDialog2(cart.this, "Sorry, you have entered an\ninvalid coupon.");
+                            String messg=obj.getString("message");
 
-                           discountPercent = localdatabase.discount;
-                           calculateTotal();
+                           String dis= obj.getString("new_total_discount");
+                           String deli=obj.getString("new_delivery_charge");
+                           String total=obj.getString("new_total_amount");
 
-                           showDialog2(cart.this, "Congratulations. "+discountPercent+"% discount applied.");
+                           showDialog_coupon(cart.this,messg,dis,deli,total);
+
+                       }else if(result.equals("false")){
+                          String mess=obj.getString("message");
+                           showDialog2(cart.this, mess);
+
                        }
+                       else if(result.equals("0"))
+                       {
+                           String messg=obj.getString("message");
+                           showDialog2(cart.this,messg);
+                       }
+
+
                    } catch (JSONException e) {
                        if(!couponDilog.isShowing()){
                            couponDilog.dismiss();
@@ -331,6 +344,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
                 Map<String, String> map = new HashMap<>();
                 map.put("mobile",sharedPreferences.getString("mobile",""));
                 map.put("coupon",coupon.getText().toString());
+                map.put("total_amount", String.valueOf(totalAmount));
+                map.put("delivery_charge", String.valueOf(localdatabase.deliveryCharge));
                 return map;
             }
         };
@@ -568,6 +583,8 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
 
     }
+
+
 
     private void applyFontToMenuItem(MenuItem mi) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
@@ -883,6 +900,7 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
     }
 
+
     public void showDialog(Activity activity, String msg,int pic){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -918,5 +936,118 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
             clipboard.setPrimaryClip(clip);
         }
+    }
+
+
+    public void showDialog_coupon(final Activity activity, String msg, final String disc, String deliv, final String tota){
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialogcoupon);
+
+        TextView dis = (TextView) dialog.findViewById(R.id.discount);
+        TextView dilv = (TextView) dialog.findViewById(R.id.delivery);
+        TextView total = (TextView) dialog.findViewById(R.id.total);
+        TextView mss=(TextView) dialog.findViewById(R.id.text_dialog);
+
+        dis.setText("Discount is Rs."+disc);
+        dilv.setText("Delivery charge is Rs."+deliv);
+        total.setText("Total Amount is Rs."+tota);
+        mss.setText(msg);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/OratorStd.otf");
+        dis.setTypeface(tf);
+        dilv.setTypeface(tf);
+        total.setTypeface(tf);
+        mss.setTypeface(tf);
+
+        TextView dialogButton = (TextView)dialog.findViewById(R.id.cancel);
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+          //      Toast.makeText(getApplicationContext(), coupon.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                final SharedPreferences sharedPreferences=getSharedPreferences(constants.foodsingh,MODE_PRIVATE);
+                if(progress.isShowing())
+                {
+                    progress.dismiss();
+                }
+                progress.setMessage("Wait for a while.....");
+                progress.setCancelable(false);
+                progress.show();
+
+                StringRequest str=new StringRequest(Request.Method.POST, constants.remove_coupon, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(progress.isShowing())
+                        {
+                            progress.dismiss();
+                        }
+
+                        try {
+                            JSONObject a=new JSONObject(response);
+                            String s=a.getString("result");
+                            if(s.equalsIgnoreCase("true"))
+                            {
+                                dialog.dismiss();
+                            }
+                            else
+                            {
+                                Display("Some error occured, kindly close it again.");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if(progress.isShowing())
+                        {
+                            progress.dismiss();
+                        }
+                        Display("Unsuccessfull operation, please cancel it again");
+                    }
+                }){
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> maps=new HashMap<>();
+                        maps.put("mobile",sharedPreferences.getString("mobile","38245"));
+                        maps.put("coupon",coupon.getText().toString());
+                        return maps;
+                    }
+                };
+
+                RequestQueue r=Volley.newRequestQueue(getApplicationContext());
+                r.add(str);
+
+            }
+        });
+
+        TextView btn_proceed=(TextView) dialog.findViewById(R.id.btn_dialog);
+
+        btn_proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent aas=new Intent(getApplicationContext(),CheckoutActivity.class);
+                aas.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                aas.putExtra("key",0);
+                Bundle a=new Bundle();
+                a.putInt("total_amount", Integer.parseInt(tota));
+                a.putInt("total_r_amount", totalRAmount);
+                a.putInt("discount", Integer.parseInt(disc));
+                aas.putExtras(a);
+                startActivity(aas);
+            }
+        });
+
+
+        dialog.show();
+
     }
 }

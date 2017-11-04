@@ -23,7 +23,7 @@ public class constants {
     private static final String api_key = "AAAAeTtmoZw:APA91bGuRszKxQmOydJil94AdIycgoAGMXFz-IASW0U8wea-PYS7eZCwsUuOLWAULQ6d6OwUhk6CtsvpwCcrGTnOVERQbb0v6gM4awUBBLtySimtAPG_Li8RA0zw-U2uaOupMN8quG-K";
     public static final String foodsingh1 = "kjhkjh";
     public static final String foodsingh = "kashd'd70s";
-
+    public static  final String all_data_cart="";
     public static final String check_mobile="http://mindwires.in/foodsingh/app/check_mobile.php";
 
     public static String main_url = "http://mindwires.in/foodsingh/app/get_data.php";
@@ -35,6 +35,7 @@ public class constants {
     public static String coupon_url="http://mindwires.in/foodsingh/app/check_coupon3.php";
     public  static  String get_categories="http://mindwires.in/foodsingh/app/get_categories2.php";
     public static int min_order=-1;
+    public static String remove_coupon="http://mindwires.in/foodsingh/app/remove_coupon.php";
     public static String get_menu_category_wise="http://mindwires.in/foodsingh/app/get_menu.php";
     public static String update_password="http://mindwires.in/foodsingh/app/update_password.php";
     public static String send_to_debian="http://mindwires.in/foodsingh/app/place_order.php";
