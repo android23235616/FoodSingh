@@ -147,6 +147,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     //.setLights(Color.WHITE, 500, 500)
                     .setContentText(remote.getNotification().getBody());
         } else {
+            Log.i("please", "i ws clled");
 
             mBuilder.setContentTitle(title);
             mBuilder.setContentText(body);

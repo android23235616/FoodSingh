@@ -88,6 +88,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         item= notificationItems.get(holder.getAdapterPosition());
 
 
+        if(item.getUrl().equals("-")){
+            holder.knowmore1.setVisibility(View.INVISIBLE);
+            holder.knowmore2.setVisibility(View.INVISIBLE);
+        }else{
+
+            holder.knowmore1.setVisibility(View.VISIBLE);
+            holder.knowmore2.setVisibility(View.VISIBLE);
+
+        }
+
+        if(item.getCoupon().equals("-")){
+            holder.copycode.setVisibility(View.INVISIBLE);
+            holder.copycode.setVisibility(View.INVISIBLE);
+        }else{
+
+            holder.copycode.setVisibility(View.VISIBLE);
+            holder.copycode.setVisibility(View.VISIBLE);
+
+        }
+
         if(item.getNotificationType().equals("1")){
             holder.l2.setVisibility(View.GONE);
             holder.l22.setVisibility(View.GONE);
@@ -237,10 +257,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if(localdatabase.notifications!=0) {
             localdatabase.notifications--;
             if(localdatabase.notifications!=0) {
-              localdatabase.notifmount.setVisibility(View.VISIBLE);
-               localdatabase.notifmount.setText(localdatabase.notifications + "");
+             // localdatabase.notifmount.setVisibility(View.VISIBLE);
+              // localdatabase.notifmount.setText(localdatabase.notifications + "");
             }else{
-             localdatabase.notifmount.setVisibility(View.INVISIBLE);
+             //localdatabase.notifmount.setVisibility(View.INVISIBLE);
             }
         }else{
 

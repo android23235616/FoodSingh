@@ -33,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,8 +44,11 @@ public class Tracker extends AppCompatActivity {
 
     static TextView order_no, repeat_order,price,date,
             fooditems,foodqt,driverinfo,driver_number, items,logistics,issue,notifamount;
+    boolean canheorder = true;
+    final String prompt = "Sorry. But you are too far from the restaurant.";
     ImageView trackimage;
     Typeface tf,tf1;
+    static List<String> myLocation = new ArrayList<>();
     TextView toolbarText;
     View actionView;
     TextView cartitemcount1;
@@ -51,6 +56,8 @@ public class Tracker extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver;
     String drivern, driverm;
     boolean megacheck = false;
+
+
 
     String status;
 
@@ -122,20 +129,23 @@ public class Tracker extends AppCompatActivity {
         repeat_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+        if(canheorder) {
+            if (!megacheck) {
+                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                i.putExtra("items", item.getItem());
+                i.putExtra("key", 1);
 
-                if(!megacheck){
-                    Intent i = new Intent(view.getContext(), CheckoutActivity.class);
-                    i.putExtra("items",item.getItem());
-                    i.putExtra("key",1);
-
-                    i.putExtra("price",item.getAmount());
-                    Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
-                    startActivity(i);
-                }else{
-                    String temp = itemsString;
-                    temp.replace(",","\n");
-                    showDialog2(Tracker.this,"Sorry!Only the following items are available right now. \n\n"+temp+"\n");
-                }
+                i.putExtra("price", item.getAmount());
+                Log.i("tracker_price", itemsString.substring(0, itemsString.length() - 1) + "," + item.getAmount());
+                startActivity(i);
+            } else {
+                String temp = itemsString;
+                temp.replace(",", "\n");
+                showDialog2(Tracker.this, "Sorry!Only the following items are available right now. \n\n" + temp + "\n");
+            }
+        }else{
+            showDialog2(Tracker.this, prompt);
+        }
 
             }
         });
@@ -203,7 +213,10 @@ public class Tracker extends AppCompatActivity {
 
         return true;
     }
-    public void showDialog2(Context activity, String msg){
+
+
+
+    public void showDialog2(Context activity, final String msg){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -232,16 +245,24 @@ public class Tracker extends AppCompatActivity {
             }
         });
 
+       if(msg.equals(prompt)){
+           image.setText("Okay");
+       }
+
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
-                i.putExtra("items",itemsString);
-                i.putExtra("key",1);
+               if(!msg.equals(prompt)){
+                   Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                   i.putExtra("items",itemsString);
+                   i.putExtra("key",1);
 
-                i.putExtra("price", newItem.getAmount());
-                Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
-                startActivity(i);
+                   i.putExtra("price", newItem.getAmount());
+                   Log.i("tracker_price",itemsString.substring(0,itemsString.length()-1)+","+item.getAmount());
+                   startActivity(i);
+               }else{
+                   dialog.dismiss();
+               }
             }
         });
 
@@ -262,9 +283,6 @@ public class Tracker extends AppCompatActivity {
         fooditems.append(" ");
         String[] foods = foods1.split(",");
 
-        for(int i=0; i<localdatabase.unavailableItemsList.size(); i++){
-            Log.i("tracker2323",localdatabase.unavailableItemsList.get(i).getName());
-        }
 
 
         Pattern p1 = Pattern.compile("-\\d+");
@@ -278,6 +296,7 @@ public class Tracker extends AppCompatActivity {
                 String qt =m.group(0);
                 qt = qt.substring(1);
                 String name = foods[i].substring(0, foods[i].length() - qt.length() - 1);
+
                 fooditems.append(name+"\n");
                 foodqt.append(qt+"\n");
                 boolean uChecker = false;
@@ -410,6 +429,14 @@ public class Tracker extends AppCompatActivity {
                         trackimage.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.orderplaced));
                         name.setText("NOT AVAILABLE");
                         mob.setText("NOT AVAILABLE");
+                    }
+
+                    String location_id = jsonObject.getString("location_id");
+
+                    if(location_id.equals(localdatabase.location_id)){
+                        canheorder = true;
+                    }else{
+                        canheorder = false;
                     }
 
                 } catch (JSONException e) {
