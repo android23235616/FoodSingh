@@ -456,6 +456,7 @@ public class Tracker extends AppCompatActivity {
                 //
                 Map<String, String> map = new HashMap<>();
                 map.put("id",item.getId().substring(2));
+
                 return  map;
             }
         };
