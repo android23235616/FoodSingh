@@ -230,9 +230,14 @@ public class cart extends AppCompatActivity implements NavigationView.OnNavigati
 
             @Override
             public void onClick(View v) {
-                couponDilog = new ProgressDialog(v.getContext());
-                couponDilog.setMessage("Validating your coupon.");
-                getDiscount(constants.coupon_url);
+                if(localdatabase.metaData.getservice().equals("false")){
+                    showDialog(cart.this, localdatabase.kitchenClosedText, R.drawable.store);
+                }else {
+
+                    couponDilog = new ProgressDialog(v.getContext());
+                    couponDilog.setMessage("Validating your coupon.");
+                    getDiscount(constants.coupon_url);
+                }
 
 
                /* if(coupon.getText().toString().equals(localdatabase.couponCode) && localdatabase.cartList.size()>0){
