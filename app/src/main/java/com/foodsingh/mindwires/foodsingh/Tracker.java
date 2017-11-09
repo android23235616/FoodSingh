@@ -268,7 +268,7 @@ public class Tracker extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               if(!msg.equals(prompt)){
+               if(!(msg.equals(prompt)||msg.equals(promp2))){
                    Intent i = new Intent(view.getContext(), CheckoutActivity.class);
                    i.putExtra("items",itemsString);
                    i.putExtra("key",1);

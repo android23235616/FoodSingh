@@ -392,10 +392,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
 
 
-    private Boolean checking_net_permission() {
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-    }
+
 
     private void Display(final String s) {
 
@@ -407,11 +404,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
        });
     }
 
-    private String getAppVersion() {
-        int versionCode = BuildConfig.VERSION_CODE;
-        String versionName = BuildConfig.VERSION_NAME;
-        return versionCode + "";
-    }
+
 
 
     @Override
