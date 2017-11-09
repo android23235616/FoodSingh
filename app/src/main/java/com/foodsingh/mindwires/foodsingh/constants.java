@@ -26,10 +26,10 @@ public class constants {
     public static  final String all_data_cart="";
     public static final String check_mobile="http://mindwires.in/foodsingh/app/check_mobile.php";
 
-    public static String main_url = "http://mindwires.in/foodsingh/app/get_data.php";
-    public static String service_status_url = "http://mindwires.in/foodsingh/app/get_service_status.php";
-    public static String token_url = "http://mindwires.in/foodsingh/app/update_token.php";
-    public static String order_details = "http://mindwires.in/foodsingh/app/get_order_details.php";
+    public static final String main_url = "http://mindwires.in/foodsingh/app/get_data.php";
+    public static final String service_status_url = "http://mindwires.in/foodsingh/app/get_service_status.php";
+    public static final String token_url = "http://mindwires.in/foodsingh/app/update_token.php";
+    public static final String order_details = "http://mindwires.in/foodsingh/app/get_order_details.php";
     public static String login_details_url="http://mindwires.in/foodsingh/app/logini_save_and_check.php";
     public static String login_check_url="http://mindwires.in/foodsingh/app/login.php";
     public static String coupon_url="http://mindwires.in/foodsingh/app/check_coupon3.php";
