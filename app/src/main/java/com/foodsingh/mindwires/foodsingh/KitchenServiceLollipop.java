@@ -18,6 +18,9 @@ import com.google.android.gms.gcm.TaskParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Tanmay on 01-11-2017.
  */
@@ -53,9 +56,16 @@ public class KitchenServiceLollipop extends GcmTaskService {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.i("kitchenservice",error.toString());
             }
-        });
+        }){
+            @Override
+            public Map getParams(){
+                Map<String,String> map = new HashMap<>();
+                map.put("location_id",localdatabase.location_id);
+                return map;
+            }
+        };
 
         sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 

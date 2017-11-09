@@ -46,6 +46,7 @@ public class Tracker extends AppCompatActivity {
             fooditems,foodqt,driverinfo,driver_number, items,logistics,issue,notifamount;
     boolean canheorder = true;
     final String prompt = "Sorry. But you are too far from the restaurant.";
+    final String promp2 = "Sorry, but this kitchen is closed right now.";
     ImageView trackimage;
     int discount = 0;
     Typeface tf,tf1;
@@ -139,24 +140,29 @@ public class Tracker extends AppCompatActivity {
         repeat_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        if(canheorder) {
-            if (!megacheck) {
-                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
-                i.putExtra("items", item.getItem());
-                i.putExtra("key", 1);
-                int amount = Integer.parseInt(item.getAmount())+discount;
-                i.putExtra("price", amount+"");
-                Log.i("tracker_price", itemsString.substring(0, itemsString.length() - 1) + "," + item.getAmount());
-                startActivity(i);
-            } else {
-                String temp = itemsString;
-                temp.replace(",", "\n");
-                showDialog2(Tracker.this, "Sorry!Only the following items are available right now. \n\n" + temp + "\n");
-            }
-        }else{
-            showDialog2(Tracker.this, prompt);
-        }
-
+                if(localdatabase.metaData!=null) {
+                    if (localdatabase.metaData.getservice().equals("true")) {
+                        if (canheorder) {
+                            if (!megacheck) {
+                                Intent i = new Intent(view.getContext(), CheckoutActivity.class);
+                                i.putExtra("items", item.getItem());
+                                i.putExtra("key", 1);
+                                int amount = Integer.parseInt(item.getAmount()) + discount;
+                                i.putExtra("price", amount + "");
+                                Log.i("tracker_price", itemsString.substring(0, itemsString.length() - 1) + "," + item.getAmount());
+                                startActivity(i);
+                            } else {
+                                String temp = itemsString;
+                                temp.replace(",", "\n");
+                                showDialog2(Tracker.this, "Sorry!Only the following items are available right now. \n\n" + temp + "\n");
+                            }
+                        } else {
+                            showDialog2(Tracker.this, prompt);
+                        }
+                    }else{
+                        showDialog2(Tracker.this, promp2);
+                    }
+                }
             }
         });
 
@@ -255,7 +261,7 @@ public class Tracker extends AppCompatActivity {
             }
         });
 
-       if(msg.equals(prompt)){
+       if(msg.equals(prompt)||msg.equals(promp2)){
            image.setText("Okay");
        }
 
