@@ -258,6 +258,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         b.putString("desc", men.getDetail());
                         b.putParcelable("object", item);
                         b.putString("id", men.getId());
+                        Log.i("asdasdasd2",status);
                         b.putString("status", status);
                         b.putString("category", men.getCategory());
                         b.putString("item_quantity", String.valueOf(men.getQuantity()));
@@ -280,6 +281,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
                         Bundle b = new Bundle();
                         MenuItems men = menuItems.get(holder.getAdapterPosition());
                         b.putString("item_name", men.getName());
+                        b.putString("status", "NA");
                         b.putString("item_image", men.getImage());
                         b.putString("item_price", men.getPrice());
                         b.putParcelable("object", item);
