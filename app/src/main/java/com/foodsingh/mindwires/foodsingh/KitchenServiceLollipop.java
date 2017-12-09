@@ -44,12 +44,14 @@ public class KitchenServiceLollipop extends GcmTaskService {
                     JSONObject object = new JSONObject(response);
                     String status = object.getString("service");
                     Intent i = new Intent();
+                    Log.i("kitchenservice",status);
                     localdatabase.metaData.setService(status);
                     i.setAction(constants.kitchenStatusBroadcast);
                     sendBroadcast(i);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.i("kitchenservice",e.toString());
                 }
 
             }
