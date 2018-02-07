@@ -125,6 +125,10 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
         }
     }
 
+    private void load(final String url){
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
