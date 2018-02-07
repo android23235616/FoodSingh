@@ -19,10 +19,10 @@
 
         <ImageView
             android:layout_width="100dp"
-            android:background="@drawable/whatsapp"
+
             android:layout_height="100dp"
             android:layout_marginRight="8dp"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:id="@+id/image1"
             android:alpha="0.8"
             android:src="@drawable/whatsapp"
@@ -127,8 +127,8 @@
             android:layout_height="150dp"
             android:id="@+id/image2"
             android:alpha="0.8"
-            android:scaleType="centerCrop"
-            android:background="@drawable/whatsapp"
+            android:scaleType="centerInside"
+
             android:layout_marginBottom="4dp"
             android:src="@drawable/whatsapp"
             />

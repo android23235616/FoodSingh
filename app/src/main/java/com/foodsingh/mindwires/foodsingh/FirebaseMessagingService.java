@@ -41,8 +41,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
         String img = map.get("icon");
+        String title = map.get("title");
+        String body = map.get("body");
+        String sound = map.get("sound");
+        String activity = map.get("activity");
+        String notification = map.get("notification");
+        String url = map.get("url");
+        String coupon = map.get("coupon");
 
-        if(img!=null){
+
+        if(img!=null&&title!=null&&body!=null&&sound!=null&&activity!=null&&notification!=null&&url!=null&&coupon!=null){
             try {
                 h = getBitmapFromURL(img,remoteMessage);
             } catch (Exception e) {
@@ -147,7 +155,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     //.setLights(Color.WHITE, 500, 500)
                     .setContentText(remote.getNotification().getBody());
         } else {
-            Log.i("please", "i ws clled");
+            Log.i("please", "i was clled");
 
             mBuilder.setContentTitle(title);
             mBuilder.setContentText(body);
