@@ -34,7 +34,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
 
-        save();
+
 
         Map<String,String> map = remoteMessage.getData();
 
@@ -50,18 +50,23 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         String coupon = map.get("coupon");
 
 
-        if(img!=null&&title!=null&&body!=null&&sound!=null&&activity!=null&&notification!=null&&url!=null&&coupon!=null){
+        if(img.length()!=0&&title.length()!=0&&body.length()!=0&&sound.length()!=0
+                &&activity.length()!=0&&notification.length()!=0&&url.length()!=0&&coupon.length()!=0){
             try {
                 h = getBitmapFromURL(img,remoteMessage);
+
+                Log.i("notification","("+body.length()+")");
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("notificationException",e.toString());
                 sendNotification2(remoteMessage.getData(),remoteMessage,null);
+                Log.i("android_notification3","null notification received.");
             }finally {
-               // sendNotification2(remoteMessage.getData(),remoteMessage,h);
+             //   sendNotification2(remoteMessage.getData(),remoteMessage,h);
             }
         }else{
             sendNotification2(remoteMessage.getData(),remoteMessage,null);
+            Log.i("android_notification4","null notification received.");
         }
 
 
@@ -79,6 +84,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
+            Log.i("android_notification--","null notification received.");
             return null;
         }
     }
@@ -105,75 +111,79 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
     private void sendNotification2(Map<String,String> map, RemoteMessage remote,Bitmap bitmap){
+        if(bitmap!=null){
+            save();
 
-        List<NotificationItem> nn = new ArrayList<>();
-        SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString(constants.foodsinghNotif,"");
-        SharedPreferences.Editor edit = sharedPreferences.edit();
+            List<NotificationItem> nn = new ArrayList<>();
+            SharedPreferences sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
+            String json = sharedPreferences.getString(constants.foodsinghNotif,"");
+            SharedPreferences.Editor edit = sharedPreferences.edit();
 
-        if(json.equals("")){
+            if(json.equals("")){
 
-            nn.add(getNotificationItem(map,remote.getSentTime()));
-            Gson gson = new Gson();
-            NotificationLists li = new NotificationLists(nn);
-            String tempJson = gson.toJson(li);
-            edit.putString(constants.foodsinghNotif,tempJson);
-            edit.apply();
+                nn.add(getNotificationItem(map,remote.getSentTime()));
+                Gson gson = new Gson();
+                NotificationLists li = new NotificationLists(nn);
+                String tempJson = gson.toJson(li);
+                edit.putString(constants.foodsinghNotif,tempJson);
+                edit.apply();
 
-        }else{
-            Gson gson  = new Gson();
-            NotificationLists li = gson.fromJson(json,NotificationLists.class);
-            nn = li.getNotification();
-            nn.add(getNotificationItem(map,remote.getSentTime()));
-            li = new NotificationLists(nn);
-            OnLog(li.getNotification());
-            String tempJson = gson.toJson(li);
-            edit.putString(constants.foodsinghNotif,tempJson);
-            edit.apply();
-        }
+            }else{
+                Gson gson  = new Gson();
+                NotificationLists li = gson.fromJson(json,NotificationLists.class);
+                nn = li.getNotification();
+                nn.add(getNotificationItem(map,remote.getSentTime()));
+                li = new NotificationLists(nn);
+                OnLog(li.getNotification());
+                String tempJson = gson.toJson(li);
+                edit.putString(constants.foodsinghNotif,tempJson);
+                edit.apply();
+            }
 
-        final String title = map.get("title");
-        String body = map.get("body");
+            final String title = map.get("title");
+            String body = map.get("body");
 
-        Context context = this;
+            Context context = this;
 
-        Intent intent= new Intent(this, NotificationActivity.class);
+            Intent intent= new Intent(this, NotificationActivity.class);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            NotificationManager mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 
 // Android 2.x does not support remote view + custom notification concept using
 // support library
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            mBuilder.setSmallIcon(R.drawable.logo7);
-            mBuilder.setContentTitle("FS")
-                    .setStyle(
-                            new NotificationCompat.BigTextStyle()
-                                    .bigText(body))
-                    .setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
-                    //.setLights(Color.WHITE, 500, 500)
-                    .setContentText(remote.getNotification().getBody());
-        } else {
-            Log.i("please", "i was clled");
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                mBuilder.setSmallIcon(R.drawable.logo7);
+                mBuilder.setContentTitle("FS")
+                        .setStyle(
+                                new NotificationCompat.BigTextStyle()
+                                        .bigText(body))
+                        .setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
+                        //.setLights(Color.WHITE, 500, 500)
+                        .setContentText(remote.getNotification().getBody());
+            } else {
+                Log.i("please", "i was clled");
 
-            mBuilder.setContentTitle(title);
-            mBuilder.setContentText(body);
-            if(bitmap==null)
-                mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources(),R.drawable.background)).setBigContentTitle(title));
-            else{
-                mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).setBigContentTitle(title));
-            }
-            mBuilder.setSmallIcon(R.drawable.logo7);
-            mBuilder.setAutoCancel(true);
-            mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+                mBuilder.setContentTitle(title);
+                mBuilder.setContentText(body);
+                if(bitmap==null)
+                    mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(getResources(),R.drawable.background)).setBigContentTitle(title));
+                else{
+                    mBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).setBigContentTitle(title));
+                }
+                mBuilder.setSmallIcon(R.drawable.logo7);
+                mBuilder.setAutoCancel(true);
+                mBuilder.setDefaults(Notification.DEFAULT_SOUND);
 
-           // mBuilder.setLights(Color.WHITE, 500, 500);
-        }//
+                // mBuilder.setLights(Color.WHITE, 500, 500);
+            }//
 // build notification
-        mBuilder.setContentIntent(pendingIntent);
-        mNotificationManager.notify((int)System.currentTimeMillis()%1000, mBuilder.build());
-
+            mBuilder.setContentIntent(pendingIntent);
+            mNotificationManager.notify((int)System.currentTimeMillis()%1000, mBuilder.build());
+        }else{
+            Log.i("android_notification","null notification received.");
+        }
     }
 
     private void OnLog(List<NotificationItem> nn) {

@@ -35,9 +35,6 @@ public class fcm extends FirebaseInstanceIdService {
         Log.d(TAG, "Refreshed token: " + refreshedToken);
        sendRegistrationToServer(refreshedToken,constants.token_url);
 
-
-
-
     }
 
     private void sendRegistrationToServer(final String refreshedToken, String url) {
