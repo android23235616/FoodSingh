@@ -4,16 +4,21 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +41,14 @@ import java.util.Map;
 public class login_page extends AppCompatActivity {
     EditText mobile,password;
     Button login,new_user;
+    ScrollView scrollView;
+    Handler h;
     ProgressDialog progress;
+    FrameLayout root;
     TextView forgot_password;
+
+    boolean hasFocus = false;
+    boolean hasFocus2 = false;
 
     Typeface tf;
     int sta;
@@ -50,6 +61,11 @@ public class login_page extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_page);
 
+        this.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        h = new Handler();
+
 
         tf = Typeface.createFromAsset(getAssets(), "fonts/OratorStd.otf");
 
@@ -57,9 +73,8 @@ public class login_page extends AppCompatActivity {
 
         setTypeFace();
 
-        if(check_if_logged_in())
-        {
-            Intent as1=new Intent(getApplicationContext(),Splash.class);
+        if (check_if_logged_in()) {
+            Intent as1 = new Intent(getApplicationContext(), Splash.class);
             startActivity(as1);
             finish();
         }
@@ -68,38 +83,32 @@ public class login_page extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String num=mobile.getText().toString();
-                String pass=password.getText().toString();
+                String num = mobile.getText().toString();
+                String pass = password.getText().toString();
 
 
-
-                if(checking_net_permission())
-                {
-                    if(num.length()==10 & pass.length()>=4)
+                if (checking_net_permission()) {
+                    if (num.length() == 10 & pass.length() >= 4)
 
                     {
-                        if(!progress.isShowing()){
+                        if (!progress.isShowing()) {
                             progress.setMessage("Fetching Details. Please Wait");
                             progress.setCancelable(false);
                             //login.setClickable(false);
                             progress.show();
                         }
-                        num="91"+num;
-                        check_login_details(num,pass);
-                    }
-                    else
-                    {
+                        num = "91" + num;
+                        check_login_details(num, pass);
+                    } else {
                         Display("Enter 10 Digit mobile number & password should have atleast 4 characters");
                     }
 
-                }
-                else
-                {
-                   // Display("No internet connection,kindly have it to proceed");
+                } else {
+                    // Display("No internet connection,kindly have it to proceed");
                     setContentView(R.layout.no_internet);
                     Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
-                    TextView calm = (TextView)findViewById(R.id.calm);
-                    final TextView retry = (TextView)findViewById(R.id.menu);
+                    TextView calm = (TextView) findViewById(R.id.calm);
+                    final TextView retry = (TextView) findViewById(R.id.menu);
                     calm.setTypeface(tf);
                     retry.setTypeface(tf);
                     retry.setOnClickListener(new View.OnClickListener() {
@@ -116,25 +125,19 @@ public class login_page extends AppCompatActivity {
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mobile_number=mobile.getText().toString();
-                mobile_number="91"+mobile_number;
+                String mobile_number = mobile.getText().toString();
+                mobile_number = "91" + mobile_number;
 
-                if(mobile.length()==10)
-                {
-                    if(checking_net_permission())
-                    {
+                if (mobile.length() == 10) {
+                    if (checking_net_permission()) {
                         get_mobile_confirmation(mobile_number);
 
-                    //    send_forgot_password(mobile_number);
-                    }
-                    else
-                    {
+                        //    send_forgot_password(mobile_number);
+                    } else {
                         Display("No Internet Connection,Kindly have Connection to proceed");
                     }
 
-                }
-                else
-                {
+                } else {
                     Display("Please enter your 10 Digit Mobile number, and then press this");
                 }
 
@@ -144,12 +147,52 @@ public class login_page extends AppCompatActivity {
         new_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a=new Intent(getApplicationContext(),Signup_OTP.class);
+                Intent a = new Intent(getApplicationContext(), Signup_OTP.class);
                 startActivity(a);
                 finish();
             }
         });
 
+
+        mobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!hasFocus)
+                    changeScroll(1000, 1000);
+                else {
+                    hasFocus = true;
+                }
+            }
+        });
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!hasFocus2)
+                    changeScroll(1000, 1000);
+                else {
+                    hasFocus2 = true;
+                }
+            }
+        });
+
+    }
+
+
+    private boolean isKeyboardShown(View rootView) {
+    /* 128dp = 32dp * 4, minimum button height 32dp and generic 4 rows soft keyboard */
+        final int SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128;
+
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+    /* heightDiff = rootView height - status bar height (r.top) - visible frame height (r.bottom - r.top) */
+        int heightDiff = rootView.getBottom() - r.bottom;
+    /* Threshold size: dp to pixels, multiply with display density */
+        boolean isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
+
+
+
+        return isKeyboardShown;
     }
 
     private void get_mobile_confirmation(final String mob) {
@@ -426,6 +469,11 @@ public class login_page extends AppCompatActivity {
         }
     }
 
+    private void changeScroll(int x, int y){
+        ScrollView scroll = (ScrollView)findViewById(R.id.scroll);
+        scroll.scrollTo(x,y);
+    }
+
     private void check_login_details(final String numy, final String passy) {
 
 
@@ -505,5 +553,8 @@ public class login_page extends AppCompatActivity {
         new_user=(Button)findViewById(R.id.btnToSignUp);
         progress=new ProgressDialog(this);
         forgot_password=(TextView)findViewById(R.id.Forgot_Password);
+        scrollView = (ScrollView)findViewById(R.id.scroll);
+        root = (FrameLayout) findViewById(R.id.loginlayout);
+
     }
 }
