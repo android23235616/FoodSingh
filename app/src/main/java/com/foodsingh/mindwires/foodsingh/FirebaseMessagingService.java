@@ -68,8 +68,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             sendNotification2(remoteMessage.getData(),remoteMessage,null);
             Log.i("android_notification4","null notification received.");
         }
-
-
     }
 
     public Bitmap getBitmapFromURL(String strURL, RemoteMessage remoteMessage) {
@@ -88,9 +86,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             return null;
         }
     }
-
-
-
 
     private NotificationItem getNotificationItem(Map<String,String> map,long time){
         String title=map.get("title");
