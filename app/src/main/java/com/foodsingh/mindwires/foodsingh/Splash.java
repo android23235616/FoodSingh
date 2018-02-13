@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -89,6 +91,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
     boolean rec = false;
 
     TextView header;
+    TextView retry_menu;
 
     ProgressBar progressbar;
     private boolean dataLoaded = false,locationisthere = false;
@@ -105,22 +108,32 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         checker = false;
         rec = false;
         ctx = this;
-       // req = Volley.newRequestQueue(this);
+        // req = Volley.newRequestQueue(this);
         h = new Handler();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.splash);
-       progressBar = (ProgressBar)findViewById(R.id.real_progressbar) ;
-        sharedPreferences = getSharedPreferences(constants.foodsingh,Context.MODE_PRIVATE);
-        localdatabase.notifications = sharedPreferences.getInt(constants.notifAmount,0);
-        header = (TextView)findViewById(R.id.metadata);
+        if (!InternetConnection_check()) {
+            setContentView(R.layout.no_internet);
+            retry_menu= (TextView) findViewById(R.id.menu_retry);
+            retry_menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
+        } else {
+            setContentView(R.layout.splash);
+
+        progressBar = (ProgressBar) findViewById(R.id.real_progressbar);
+        sharedPreferences = getSharedPreferences(constants.foodsingh, Context.MODE_PRIVATE);
+        localdatabase.notifications = sharedPreferences.getInt(constants.notifAmount, 0);
+        header = (TextView) findViewById(R.id.metadata);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/android.ttf");
         header.setTypeface(tf);
 
         // Glide.with(this).load(R.drawable.signin).into(AnimationTarget);
         //Display("Loading! Please Wait");
-
 
 
         editor = sharedPreferences.edit();
@@ -131,16 +144,16 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
 
             LocationPermission = false;
-        }else{
+        } else {
             LocationPermission = true;
-           if(!isLocationEnabled(this)){
+            if (!isLocationEnabled(this)) {
                 GoToLocations();
-           }else{
-             //  Initiate_Meta_Data();
-           }
+            } else {
+                //  Initiate_Meta_Data();
+            }
         }
 
-
+    }
 
     }
 
@@ -695,7 +708,12 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
         }
     }
 
+    public Boolean InternetConnection_check()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null;
+    }
 
 
     @Override

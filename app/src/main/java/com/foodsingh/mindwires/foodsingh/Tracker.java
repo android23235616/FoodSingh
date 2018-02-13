@@ -121,7 +121,9 @@ public class Tracker extends AppCompatActivity {
                 repeat_order.setVisibility(View.INVISIBLE);
             }else {
 
-                repeat_order.setVisibility(View.VISIBLE);
+                //repeat_order.setVisibility(View.VISIBLE);
+                repeat_order.setVisibility(View.INVISIBLE);
+
             }
             if(item!=null) {
                   test(item.getItem());
