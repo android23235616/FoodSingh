@@ -103,7 +103,8 @@ public class AddressFetchingService extends IntentService {
         else
         {
             SharedPreferences sharedPreferences=getSharedPreferences(localdatabase.shared_location_key,MODE_PRIVATE);
-            localdatabase.city=sharedPreferences.getString("location","Location Not Found");
+            localdatabase.city=sharedPreferences.getString("location","Bhubaneswar");
+
         }
 
         Intent i = new Intent();
