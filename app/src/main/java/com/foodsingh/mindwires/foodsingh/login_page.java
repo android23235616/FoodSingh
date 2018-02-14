@@ -158,7 +158,7 @@ public class login_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!hasFocus)
-                    changeScroll(1000, 1000);
+                    changeScroll(700, 700);
                 else {
                     hasFocus = true;
                 }
@@ -168,7 +168,7 @@ public class login_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!hasFocus2)
-                    changeScroll(1000, 1000);
+                    changeScroll(700, 700);
                 else {
                     hasFocus2 = true;
                 }

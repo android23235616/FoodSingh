@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detail lawda lasun"
+            android:text="1234567890123456789012"
             android:gravity="center"
             android:textSize="18sp"
             android:id="@+id/detail"
