@@ -24,28 +24,28 @@ public class constants {
     public static final String foodsingh1 = "kjhkjh";
     public static final String foodsingh = "kashd'd70]s";
     public static  final String all_data_cart="";
-    public static final String check_mobile="http://mindwires.in/foodsingh/app/check_mobile.php";
+    public static final String check_mobile="http://foodsingh.com/app_files/usercheck_mobile.php";
 
     public static final String main_url = "http://foodsingh.com/app_files/user/get_data.php";
-    public static final String service_status_url = "http://mindwires.in/foodsingh/app/get_service_status.php";
-    public static final String token_url = "http://mindwires.in/foodsingh/app/update_token.php";
-    public static final String order_details = "http://mindwires.in/foodsingh/app/get_order_details.php";
-    public static String login_details_url="http://mindwires.in/foodsingh/app/logini_save_and_check.php";
-    public static String login_check_url="http://mindwires.in/foodsingh/app/login.php";
-    public static String coupon_url="http://mindwires.in/foodsingh/app/check_coupon3.php";
-    public  static  String get_categories="http://mindwires.in/foodsingh/app/get_categories2.php";
+    public static final String service_status_url = "http://foodsingh.com/app_files/userget_service_status.php";
+    public static final String token_url = "http://foodsingh.com/app_files/userupdate_token.php";
+    public static final String order_details = "http://foodsingh.com/app_files/userget_order_details.php";
+    public static String login_details_url="http://foodsingh.com/app_files/userlogini_save_and_check.php";
+    public static String login_check_url="http://foodsingh.com/app_files/userlogin.php";
+    public static String coupon_url="http://foodsingh.com/app_files/usercheck_coupon3.php";
+    public  static  String get_categories="http://foodsingh.com/app_files/userget_categories2.php";
     public static int min_order=-1;
-    public static String remove_coupon="http://mindwires.in/foodsingh/app/remove_coupon.php";
-    public static String get_menu_category_wise="http://mindwires.in/foodsingh/app/get_menu.php";
-    public static String update_password="http://mindwires.in/foodsingh/app/update_password.php";
-    public static String send_to_debian="http://mindwires.in/foodsingh/app/place_order.php";
-    public static String order_history="http://mindwires.in/foodsingh/app/get_order_history.php";
-    public static String discount_coupon="http://mindwires.in/foodsingh/app/get_discount.php";
-    public static String forgot_password="http://mindwires.in/foodsingh/app/forgot_password.php";
-    public static String update_details="http://mindwires.in/foodsingh/app/update_user_data.php";
-    public static String get_details="http://mindwires.in/foodsingh/app/get_user_data.php";
+    public static String remove_coupon="http://foodsingh.com/app_files/userremove_coupon.php";
+    public static String get_menu_category_wise="http://foodsingh.com/app_files/userget_menu.php";
+    public static String update_password="http://foodsingh.com/app_files/userupdate_password.php";
+    public static String send_to_debian="http://foodsingh.com/app_files/userplace_order.php";
+    public static String order_history="http://foodsingh.com/app_files/userget_order_history.php";
+    public static String discount_coupon="http://foodsingh.com/app_files/userget_discount.php";
+    public static String forgot_password="http://foodsingh.com/app_files/userforgot_password.php";
+    public static String update_details="http://foodsingh.com/app_files/userupdate_user_data.php";
+    public static String get_details="http://foodsingh.com/app_files/userget_user_data.php";
 
-    public static String get_service_status="http://mindwires.in/foodsingh/app/get_service_status.php";
+    public static String get_service_status="http://foodsingh.com/app_files/userget_service_status.php";
     public static String logTag = "android23235616";
 
     public static List<String> items_name=new ArrayList<>();
@@ -56,9 +56,9 @@ public class constants {
     public static List<String> item_name_deb=new ArrayList<>();
     public static List<String>  item_quant_deb=new ArrayList<>();
 
-    public static String set_version="http://mindwires.in/foodsingh/app/set_version.php";
+    public static String set_version="http://foodsingh.com/app_files/userset_version.php";
 
-    public static String get_sides="http://mindwires.in/foodsingh/app/get_sides.php";
+    public static String get_sides="http://foodsingh.com/app_files/userget_sides.php";
 
 
 }
