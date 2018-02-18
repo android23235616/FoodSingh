@@ -24,14 +24,18 @@ public class constants {
     public static final String foodsingh1 = "kjhkjh";
     public static final String foodsingh = "kashd'd70]s";
     public static  final String all_data_cart="";
+
     public static final String check_mobile="http://foodsingh.com/app_files/usercheck_mobile.php";
 
     public static final String main_url = "http://foodsingh.com/app_files/user/get_data.php";
     public static final String service_status_url = "http://foodsingh.com/app_files/userget_service_status.php";
     public static final String token_url = "http://foodsingh.com/app_files/userupdate_token.php";
     public static final String order_details = "http://foodsingh.com/app_files/userget_order_details.php";
+
+    //yahan pe chnange kr
     public static String login_details_url="http://foodsingh.com/app_files/userlogini_save_and_check.php";
     public static String login_check_url="http://foodsingh.com/app_files/userlogin.php";
+
     public static String coupon_url="http://foodsingh.com/app_files/usercheck_coupon3.php";
     public  static  String get_categories="http://foodsingh.com/app_files/userget_categories2.php";
     public static int min_order=-1;

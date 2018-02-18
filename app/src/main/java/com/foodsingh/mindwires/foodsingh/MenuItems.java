@@ -77,6 +77,8 @@ public class MenuItems implements Parcelable{
     public String getName(){
         return Name;
     }
+
+
     public String getCategory(){
         return Category;
     }

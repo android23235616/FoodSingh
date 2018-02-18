@@ -308,18 +308,32 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
 
             JSONArray Categories = mainObject.getJSONArray("categories");
             for (int i=0; i<Categories.length(); i++){
-                String name,image,cuisine, time, combo;
+                String name,image,cuisine, time, combo,default_no;
+                boolean default_bool;
                 List<MenuItems> menuItemsList = new ArrayList<>();
                 JSONObject tempObject = Categories.getJSONObject(i);
                 name = tempObject.getString("name");
                 image = tempObject.getString("image");
                 cuisine = tempObject.getString("cuisine");
                 time = tempObject.getString("time");
+
+                default_no=tempObject.getString("default");
+                if(default_no.equals("1"))
+                {
+                    default_bool=true;
+                }
+                else
+                {
+                    default_bool=false;
+                }
+
                 combo = tempObject.getString("combo");
+
                 JSONArray miniMenu = tempObject.getJSONArray("menu");
 
                 for(int j=0; j<miniMenu.length(); j++){
                     String id, name_, category, price, image_, status, detail, r_price;
+
                     JSONObject miniTempObject = miniMenu.getJSONObject(j);
                     id = miniTempObject.getString("id");
                     name_ = miniTempObject.getString("name");
@@ -329,7 +343,8 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                     status = miniTempObject.getString("status");
                     detail = miniTempObject.getString("detail");
                     r_price = miniTempObject.getString("r_price");
-                   // detail = "";
+
+
                     MenuItems menuItems = new MenuItems(id,name_,category,price,image_, status, detail, r_price,localdatabase.location_id);
                     menuItemsList.add(menuItems);
                     String available = miniTempObject.getString("status");
@@ -339,7 +354,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                         localdatabase.unavailableItemsList.add(ii);
                     }
                 }
-                MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"), tempObject.getString("detail"));
+                MasterMenuItems menuItemsObject = new MasterMenuItems(name,image,cuisine, combo,menuItemsList,time,tempObject.getString("drinks"), tempObject.getString("detail"),default_bool);
                 Log.i("checking details", tempObject.getString("drinks"));
                 localdatabase.masterList.add(menuItemsObject);
             }

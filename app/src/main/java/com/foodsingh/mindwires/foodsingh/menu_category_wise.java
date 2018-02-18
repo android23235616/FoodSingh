@@ -40,7 +40,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,12 +48,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,15 +59,10 @@ import java.util.Map;
 public class menu_category_wise extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ProgressDialog progress;
-
     public static TextView cartitemcount, toolbarText,text,notifamount;
-
     static MenuItemAdapter adapter;
-
     static RecyclerView recyclerView;
-
     static List<MenuItems> youList = new ArrayList<>();
-
     List<String> dish_name=new ArrayList<>();
     ItemTouchHelper itemTouchHelper;
     List<String> dish_price=new ArrayList<>();
@@ -81,11 +72,8 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
     public static TextView cartitemcount1;
     NavigationView navigationView;
     RecyclerView.LayoutManager layoutManager;
-
-
     String category=null;
     static int position;
-
     SharedPreferences shared;
 
     @Override
@@ -277,7 +265,6 @@ public class menu_category_wise extends AppCompatActivity implements NavigationV
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mi.setTitle(mNewTitle);
-
     }
 
     private void receive_menu_for_category(final String cat) {

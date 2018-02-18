@@ -872,15 +872,20 @@ public class menu extends AppCompatActivity implements NavigationView.OnNavigati
             MasterMenuItems a=localdatabase.masterList.get(i);
             String name=a.getName();
             String img=a.getImage();
-            if((categories.contains(a.getName())) & (images.contains(a.getImage())))
+            if((categories.contains(a.getName())) & (images.contains(a.getImage())) )
             {
                 //nothing should be added
             }
             else
             {
-                categories.add(name);
-                images.add(img);
-
+                if(a.getDefault())
+                {
+                    categories.add(name);
+                    images.add(img);
+                }
+                else{
+                    Display("No Items to Display");
+                }
             }
         }
         send_to_adapter();

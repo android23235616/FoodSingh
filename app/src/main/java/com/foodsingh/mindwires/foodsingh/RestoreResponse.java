@@ -51,6 +51,8 @@ public class RestoreResponse {
                 JSONArray Categories = mainObject.getJSONArray("categories");
                 for (int i = 0; i < Categories.length(); i++) {
                     String name, image, cuisine, time, combo;
+                    String default_no;
+                    Boolean defau_bool;
                     List<MenuItems> menuItemsList = new ArrayList<>();
                     JSONObject tempObject = Categories.getJSONObject(i);
                     name = tempObject.getString("name");
@@ -59,6 +61,15 @@ public class RestoreResponse {
                     time = tempObject.getString("time");
                     combo = tempObject.getString("combo");
                     JSONArray miniMenu = tempObject.getJSONArray("menu");
+                    default_no=tempObject.getString("default");
+                    if(default_no.equals("1"))
+                    {
+                        defau_bool=true;
+                    }
+                    else
+                    {
+                        defau_bool=false;
+                    }
 
                     for (int j = 0; j < miniMenu.length(); j++) {
                         String id, name_, category, price, image_, status, detail, r_price;
@@ -81,7 +92,7 @@ public class RestoreResponse {
                             localdatabase.unavailableItemsList.add(ii);
                         }
                     }
-                    MasterMenuItems menuItemsObject = new MasterMenuItems(name, image, cuisine, combo, menuItemsList, time, tempObject.getString("drinks"), tempObject.getString("detail"));
+                    MasterMenuItems menuItemsObject = new MasterMenuItems(name, image, cuisine, combo, menuItemsList, time, tempObject.getString("drinks"), tempObject.getString("detail"),defau_bool);
                     Log.i("checking details", tempObject.getString("drinks"));
                     localdatabase.masterList.add(menuItemsObject);
                 }
