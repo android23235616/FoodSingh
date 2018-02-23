@@ -57,20 +57,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="vertical">
     <TextView
         android:id="@+id/text_char_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="left"
+
+
+
+        android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="@color/menu_text"
         android:fontFamily="cursive"
         android:text="My Food"
-        android:textSize="30dp"/>
+        android:textSize="25dp"/>
 
         <TextView
             android:layout_width="wrap_content"

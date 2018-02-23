@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -87,11 +89,23 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         new_name = new_name.toUpperCase();
 
         new_name+=name.substring(1,name.length());
+        int offset = 130;
 
         if(index%2==0){
-            holder.txt.setGravity(Gravity.LEFT);
+
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            buttonLayoutParams.rightMargin = holder.txt.getText().toString().length()+offset+80;
+            buttonLayoutParams.rightMargin = offset+80;
+            buttonLayoutParams.leftMargin = 0;
+            holder.txt.setLayoutParams(buttonLayoutParams);
+
         }else{
-            holder.txt.setGravity(Gravity.RIGHT);
+
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+           // buttonLayoutParams.leftMargin = -holder.txt.getText().toString().length()+offset;
+            buttonLayoutParams.leftMargin = offset+80;
+            buttonLayoutParams.rightMargin = 0;
+            holder.txt.setLayoutParams(buttonLayoutParams);
         }
         index++;
 
