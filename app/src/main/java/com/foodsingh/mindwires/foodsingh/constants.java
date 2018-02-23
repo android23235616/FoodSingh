@@ -60,9 +60,9 @@ public class constants {
     public static List<String> item_name_deb=new ArrayList<>();
     public static List<String>  item_quant_deb=new ArrayList<>();
 
-    public static String set_version="http://foodsingh.com/app_files/userset_version.php";
+    public static String set_version="http://foodsingh.com/app_files/user/set_version.php";
 
-    public static String get_sides="http://foodsingh.com/app_files/userget_sides.php";
+    public static String get_sides="http://foodsingh.com/app_files/user/get_sides.php";
 
 
 }
