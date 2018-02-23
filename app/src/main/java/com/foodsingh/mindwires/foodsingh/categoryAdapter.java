@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
     private List<String> categories;
     private List<String> images_data;
     ImageView img_cat;
+    static int index=0;
 
     public categoryAdapter(Context mContext, List<String> categories,List<String> images) {
         this.mContext=mContext;
@@ -85,6 +87,13 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
         new_name = new_name.toUpperCase();
 
         new_name+=name.substring(1,name.length());
+
+        if(index%2==0){
+            holder.txt.setGravity(Gravity.LEFT);
+        }else{
+            holder.txt.setGravity(Gravity.RIGHT);
+        }
+        index++;
 
         //Glide.with(mContext).load(path).skipMemoryCache(true).thumbnail(0.05f).diskCacheStrategy(DiskCacheStrategy.RESULT).centerCrop().into(holder.img);
         holder.txt.setText(new_name);

@@ -519,6 +519,7 @@ public class login_page extends AppCompatActivity {
                 {
                     progress.dismiss();
                 }
+
                 Display("Some error Occured may be due to bad internet connection");
             }
         })
