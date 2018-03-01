@@ -40,7 +40,7 @@ public class constants {
     public  static  String get_categories="http://foodsingh.com/app_files/user/get_categories2.php";
     public static int min_order=-1;
     public static String remove_coupon="http://foodsingh.com/app_files/user/remove_coupon.php";
-    public static String get_menu_category_wise="http://foodsingh.com/app_files/userget_menu.php";
+    public static String get_menu_category_wise="http://foodsingh.com/app_files/user/get_menu.php";
     public static String update_password="http://foodsingh.com/app_files/user/update_password.php";
     public static String send_to_debian="http://foodsingh.com/app_files/user/place_order.php";
     public static String order_history="http://foodsingh.com/app_files/user/get_order_history.php";
