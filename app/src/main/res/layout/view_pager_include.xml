@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+
+    app:cardCornerRadius="10dp"
+
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -86,3 +95,4 @@
 
     </LinearLayout>
 </FrameLayout>
+</android.support.v7.widget.CardView>
