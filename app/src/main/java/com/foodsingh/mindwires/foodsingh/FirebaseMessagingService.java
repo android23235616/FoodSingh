@@ -99,6 +99,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String url = map.get("url");
 
+        Log.i("notificiationtesting",map.get("coupon"));
+
         return new NotificationItem(body,title,img,url,activity, notificationType,time+"",false, map.get("coupon"));
     }
 

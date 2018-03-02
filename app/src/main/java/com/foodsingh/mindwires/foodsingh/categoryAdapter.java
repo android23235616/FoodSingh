@@ -59,7 +59,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
             txt=(TextView) itemView.findViewById(R.id.text_char_name);
             txt2=(TextView) itemView.findViewById(R.id.text_char_name2);
             detail=(TextView) itemView.findViewById(R.id.detail);
-            detail2=(TextView) itemView.findViewById(R.id.detail);
+            detail2=(TextView) itemView.findViewById(R.id.detail2);
             cardView=(CardView) itemView.findViewById(R.id.card_view);
             cardView2=(CardView) itemView.findViewById(R.id.card_view2);
             Typeface t = Typeface.createFromAsset(txt.getContext().getAssets(), "fonts/Alisandra Demo.ttf");

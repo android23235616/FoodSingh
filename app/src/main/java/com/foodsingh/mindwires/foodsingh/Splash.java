@@ -316,6 +316,7 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.OnConne
                 image = tempObject.getString("image");
                 cuisine = tempObject.getString("cuisine");
                 time = tempObject.getString("time");
+                Log.i("testingdetails",name+" , "+tempObject.getString("detail"));
 
                 default_no=tempObject.getString("default");
                 if(default_no.equals("1"))
